@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל - מערכת אוטומטית + טבלאות בתים</title>
+    <title>דשבורד מונדיאל - טבלאות חיים ו-48 נבחרות</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
@@ -15,7 +15,6 @@
         }
         body { font-family: 'Heebo', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; }
         
-        /* Navbar & Stats */
         .top-nav { max-width: 1600px; margin: 0 auto 30px auto; text-align: center; }
         .nav-title { font-size: 2.2rem; margin-bottom: 20px; letter-spacing: 1px; font-weight: 800; color: var(--text-main); text-shadow: 0 2px 10px rgba(102, 252, 241, 0.3); }
         .stats-panel { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
@@ -26,7 +25,6 @@
         .stat-value.trend { color: var(--color-trend); text-shadow: 0 0 10px rgba(255,179,0,0.3); }
         .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
-        /* Filters */
         .filters-row { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; background-color: var(--card-bg); padding: 15px 30px; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid var(--border-color); width: fit-content; margin: 0 auto; max-width: 95%; }
         .filter-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .filter-label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-left: 5px; }
@@ -36,7 +34,6 @@
         .filter-btn.active { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); box-shadow: 0 2px 8px rgba(69, 162, 158, 0.4); }
         .special-btn { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
-        /* Standings Tables */
         #standings-container { display: none; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1600px; margin: 0 auto 30px auto; animation: tabFadeIn 0.4s ease; }
         .group-table-card { background-color: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 15px; width: 350px; box-shadow: var(--shadow); }
         .group-table-title { color: var(--accent-cyan); font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
@@ -47,7 +44,6 @@
         .team-cell { display: flex; align-items: center; gap: 8px; font-weight: 600; text-align: right; }
         .team-cell img { width: 20px; border-radius: 2px; }
 
-        /* Grid & Cards */
         .matches-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1600px; margin: 0 auto; }
         @media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .matches-grid { grid-template-columns: 1fr; } }
@@ -73,13 +69,13 @@
         .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
         .chart-container { padding: 5px 15px; height: 180px; position: relative; }
         
-        /* Tabs & Insights */
         .inner-tabs { display: flex; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.15); }
         .inner-tab-btn { flex: 1; background: none; border: none; padding: 10px; color: var(--text-muted); font-family: 'Heebo', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
         .inner-tab-btn.active { color: var(--accent-cyan); border-bottom: 2px solid var(--accent-cyan); background-color: rgba(102, 252, 241, 0.05); }
         .inner-tab-btn:disabled { color: #4a4f5c; cursor: not-allowed; }
         .tab-content { display: none; padding: 15px; flex-grow: 1; animation: tabFadeIn 0.3s ease; }
         .tab-content.active { display: block; }
+        @keyframes tabFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .insight-title { font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 5px; font-weight: 800; }
         .insight-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
         .status-bar { padding: 10px; text-align: center; font-size: 0.8rem; font-weight: 600; }
@@ -88,7 +84,6 @@
         .status-trend-ui { background-color: rgba(255, 179, 0, 0.05); color: var(--color-trend); border-top: 1px solid rgba(255,179,0,0.2); }
         .status-wrong-ui { background-color: rgba(255, 51, 51, 0.05); color: var(--color-wrong); border-top: 1px solid rgba(255,51,51,0.2); }
 
-        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); width: 90%; max-width: 500px; padding: 25px; position: relative; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -116,8 +111,7 @@
 
         <div class="filters-row">
             <div class="filter-group">
-                <!-- כפתור חדש להצגת טבלאות -->
-                <button class="filter-btn special-btn" onclick="toggleStandings()" id="btn-standings">📊 טבלת בתים</button>
+                <button class="filter-btn special-btn" onclick="toggleStandings()" id="btn-standings">📊 טבלת בתים מעודכנת</button>
             </div>
             
             <div class="filter-divider">|</div>
@@ -144,13 +138,24 @@
                 <button class="filter-btn stage-btn" data-stage="H">ח'</button>
                 <button class="filter-btn stage-btn" data-stage="I">ט'</button>
                 <button class="filter-btn stage-btn" data-stage="J">י'</button>
-                <button class="filter-btn stage-btn" data-stage="K">י"א</button>
-                <button class="filter-btn stage-btn" data-stage="L">י"ב</button>
+                <button class="filter-btn stage-btn" data-stage="K">כ'</button>
+                <button class="filter-btn stage-btn" data-stage="L">ל'</button>
+            </div>
+
+            <div class="filter-divider">|</div>
+
+            <div class="filter-group">
+                <span class="filter-label">נוקאוט:</span>
+                <button class="filter-btn stage-btn" data-stage="R32">32 האחרונות</button>
+                <button class="filter-btn stage-btn" data-stage="R16">שמינית</button>
+                <button class="filter-btn stage-btn" data-stage="QF">רבע</button>
+                <button class="filter-btn stage-btn" data-stage="SF">חצי</button>
+                <button class="filter-btn stage-btn" data-stage="FIN">גמר</button>
             </div>
         </div>
     </div>
 
-    <!-- אזור טבלאות הבתים החדש -->
+    <!-- Container for dynamic standings -->
     <div id="standings-container"></div>
 
     <div class="matches-grid" id="matches-container"></div>
@@ -185,72 +190,94 @@
             `;
         }
 
-        // --- מנוע חדש לחישוב טבלאות דינמיות ---
         function calculateAndRenderStandings() {
+            const officialGroups = {
+                'A': ['מקסיקו', 'קוריאה הדרומית', 'צ\'כיה', 'דרום אפריקה'],
+                'B': ['שוויץ', 'בוסניה והרצגובינה', 'קנדה', 'קטר'],
+                'C': ['סקוטלנד', 'מרוקו', 'ברזיל', 'האיטי'],
+                'D': ['ארצות הברית', 'אוסטרליה', 'טורקיה', 'פרגוואי'],
+                'E': ['גרמניה', 'חוף השנהב', 'אקוודור', 'קוראסאו'],
+                'F': ['שוודיה', 'יפן', 'הולנד', 'תוניסיה'],
+                'G': ['בלגיה', 'מצרים', 'איראן', 'ניו זלנד'],
+                'H': ['ספרד', 'קף ורדה', 'ערב הסעודית', 'אורוגוואי'],
+                'I': ['צרפת', 'סנגל', 'עיראק', 'נורווגיה'],
+                'J': ['ארגנטינה', 'אלג\'יריה', 'אוסטריה', 'ירדן'],
+                'K': ['פורטוגל', 'קונגו', 'אוזבקיסטן', 'קולומביה'],
+                'L': ['אנגליה', 'קרואטיה', 'גאנה', 'פנמה']
+            };
+            const teamFlags = {
+                'מקסיקו': 'mx', 'קוריאה הדרומית': 'kr', 'צ\'כיה': 'cz', 'דרום אפריקה': 'za', 'שוויץ': 'ch', 'בוסניה והרצגובינה': 'ba', 'קנדה': 'ca', 'קטר': 'qa',
+                'סקוטלנד': 'gb-sct', 'מרוקו': 'ma', 'ברזיל': 'br', 'האיטי': 'ht', 'ארצות הברית': 'us', 'אוסטרליה': 'au', 'טורקיה': 'tr', 'פרגוואי': 'py',
+                'גרמניה': 'de', 'חוף השנהב': 'ci', 'אקוודור': 'ec', 'קוראסאו': 'cw', 'שוודיה': 'se', 'יפן': 'jp', 'הולנד': 'nl', 'תוניסיה': 'tn',
+                'בלגיה': 'be', 'מצרים': 'eg', 'איראן': 'ir', 'ניו זלנד': 'nz', 'ספרד': 'es', 'קף ורדה': 'cv', 'ערב הסעודית': 'sa', 'אורוגוואי': 'uy',
+                'צרפת': 'fr', 'סנגל': 'sn', 'עיראק': 'iq', 'נורווגיה': 'no', 'ארגנטינה': 'ar', 'אלג\'יריה': 'dz', 'אוסטריה': 'at', 'ירדן': 'jo',
+                'פורטוגל': 'pt', 'קונגו': 'cg', 'אוזבקיסטן': 'uz', 'קולומביה': 'co', 'אנגליה': 'gb-eng', 'קרואטיה': 'hr', 'גאנה': 'gh', 'פנמה': 'pa'
+            };
+
             const standings = {};
-            // איסוף התוצאות
+            for (const grp in officialGroups) {
+                standings[grp] = {};
+                officialGroups[grp].forEach(team => {
+                    standings[grp][team] = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, flag: teamFlags[team] };
+                });
+            }
+
             for (const key in matchDatabase) {
                 const match = matchDatabase[key];
                 if (match.timeStatus === 'past' && match.score.actual.includes('-')) {
                     const group = match.stage;
-                    if(!standings[group]) standings[group] = {};
-                    
                     const tH = match.teamHome.name, tA = match.teamAway.name;
-                    if(!standings[group][tH]) standings[group][tH] = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, flag: match.teamHome.flagCode };
-                    if(!standings[group][tA]) standings[group][tA] = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, flag: match.teamAway.flagCode };
+                    if(standings[group] && standings[group][tH] && standings[group][tA]) {
+                        const scores = match.score.actual.split('-');
+                        const gH = parseInt(scores[0].trim());
+                        const gA = parseInt(scores[1].trim());
 
-                    const scores = match.score.actual.split('-');
-                    const gH = parseInt(scores[0].trim());
-                    const gA = parseInt(scores[1].trim());
+                        standings[group][tH].p++; standings[group][tH].gf += gH; standings[group][tH].ga += gA;
+                        standings[group][tA].p++; standings[group][tA].gf += gA; standings[group][tA].ga += gH;
 
-                    standings[group][tH].p++; standings[group][tH].gf += gH; standings[group][tH].ga += gA;
-                    standings[group][tA].p++; standings[group][tA].gf += gA; standings[group][tA].ga += gH;
-
-                    if (gH > gA) { standings[group][tH].w++; standings[group][tH].pts += 3; standings[group][tA].l++; } 
-                    else if (gA > gH) { standings[group][tA].w++; standings[group][tA].pts += 3; standings[group][tH].l++; } 
-                    else { standings[group][tH].d++; standings[group][tA].d++; standings[group][tH].pts += 1; standings[group][tA].pts += 1; }
+                        if (gH > gA) { standings[group][tH].w++; standings[group][tH].pts += 3; standings[group][tA].l++; } 
+                        else if (gA > gH) { standings[group][tA].w++; standings[group][tA].pts += 3; standings[group][tH].l++; } 
+                        else { standings[group][tH].d++; standings[group][tA].d++; standings[group][tH].pts += 1; standings[group][tA].pts += 1; }
+                    }
                 }
             }
 
-            // יצירת ה-HTML
             const container = document.getElementById('standings-container');
             container.innerHTML = '';
-            
-            // סדר אלפביתי של הבתים
             const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
-            const groupNamesHeb = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': "י\"א", 'L': "י\"ב"};
+            const groupNamesHeb = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': "כ'", 'L': "ל'"};
 
             groupOrder.forEach(grp => {
-                if(standings[grp]) {
-                    // מיון לפי נקודות -> הפרש שערים -> שערי זכות
-                    const sortedTeams = Object.keys(standings[grp]).map(name => {
-                        const t = standings[grp][name]; t.name = name; t.gd = t.gf - t.ga; return t;
-                    }).sort((a, b) => {
-                        if (b.pts !== a.pts) return b.pts - a.pts;
-                        if (b.gd !== a.gd) return b.gd - a.gd;
-                        return b.gf - a.gf;
-                    });
+                const sortedTeams = Object.keys(standings[grp]).map(name => {
+                    const t = standings[grp][name]; t.name = name; t.gd = t.gf - t.ga; return t;
+                }).sort((a, b) => {
+                    if (b.pts !== a.pts) return b.pts - a.pts;
+                    if (b.gd !== a.gd) return b.gd - a.gd;
+                    return b.gf - a.gf;
+                });
 
-                    let trs = '';
-                    sortedTeams.forEach((t, i) => {
-                        trs += `<tr>
-                            <td style="color:var(--text-muted)">${i+1}</td>
-                            <td><div class="team-cell"><img src="https://flagcdn.com/w20/${t.flag}.png"> ${t.name}</div></td>
-                            <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
-                            <td>${t.gf}-${t.ga}</td><td>${t.gd > 0 ? '+'+t.gd : t.gd}</td>
-                            <td style="font-weight:900; color:var(--accent-cyan)">${t.pts}</td>
-                        </tr>`;
-                    });
+                let trs = '';
+                sortedTeams.forEach((t, i) => {
+                    const isTopTwo = i < 2;
+                    const rowStyle = isTopTwo ? 'background-color: rgba(0, 230, 118, 0.08);' : '';
+                    const rankStyle = isTopTwo ? 'color: var(--color-exact); font-weight: 900;' : 'color:var(--text-muted)';
+                    trs += `<tr style="${rowStyle}">
+                        <td style="${rankStyle}">${i+1}</td>
+                        <td><div class="team-cell"><img src="https://flagcdn.com/w20/${t.flag}.png"> ${t.name}</div></td>
+                        <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+                        <td>${t.gf}-${t.ga}</td><td style="direction:ltr">${t.gd > 0 ? '+'+t.gd : t.gd}</td>
+                        <td style="font-weight:900; color:var(--accent-cyan)">${t.pts}</td>
+                    </tr>`;
+                });
 
-                    container.innerHTML += `
-                    <div class="group-table-card">
-                        <div class="group-table-title">בית ${groupNamesHeb[grp]}</div>
-                        <table class="standings-table">
-                            <tr><th>#</th><th style="text-align:right">נבחרת</th><th>מ</th><th>נ</th><th>ת</th><th>ה</th><th>שערים</th><th>הפ'</th><th>נק'</th></tr>
-                            ${trs}
-                        </table>
-                    </div>`;
-                }
+                container.innerHTML += `
+                <div class="group-table-card">
+                    <div class="group-table-title">בית ${groupNamesHeb[grp]}</div>
+                    <table class="standings-table">
+                        <tr><th>#</th><th style="text-align:right">נבחרת</th><th>מ</th><th>נ</th><th>ת</th><th>ה</th><th>שערים</th><th>הפ'</th><th>נק'</th></tr>
+                        ${trs}
+                    </table>
+                </div>`;
             });
         }
 
@@ -299,7 +326,6 @@
             }
 
             Chart.defaults.color = '#cbd5e1'; Chart.defaults.font.family = 'Heebo';
-            // עדכון חובה: הוספת 6 התוויות לרדאר
             const opts = { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, pointLabels: { font: { size: 10, weight: '800' }, color: '#e2e8f0' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } };
             const lbls = ['טכניקה', 'החזקה', 'נייחים', 'מנטלי', 'פיזיות', 'איכות סגל'];
 
