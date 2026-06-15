@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל - מערכת אוטומטית (48 נבחרות)</title>
+    <title>דשבורד מונדיאל - מערכת אוטומטית + טבלאות בתים</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
@@ -15,26 +15,18 @@
         }
         body { font-family: 'Heebo', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; }
         
-        /* Navbar & Filters */
+        /* Navbar & Stats */
         .top-nav { max-width: 1600px; margin: 0 auto 30px auto; text-align: center; }
         .nav-title { font-size: 2.2rem; margin-bottom: 20px; letter-spacing: 1px; font-weight: 800; color: var(--text-main); text-shadow: 0 2px 10px rgba(102, 252, 241, 0.3); }
-        
-        /* --- Performance Stats Panel --- */
-        .stats-panel {
-            display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
-            margin-bottom: 25px;
-        }
-        .stat-box {
-            background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
-            padding: 15px 25px; text-align: center; box-shadow: var(--shadow); min-width: 120px;
-            transition: transform 0.2s ease;
-        }
+        .stats-panel { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 25px; }
+        .stat-box { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 25px; text-align: center; box-shadow: var(--shadow); min-width: 120px; transition: transform 0.2s ease; }
         .stat-box:hover { transform: translateY(-3px); }
         .stat-value { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 5px; }
         .stat-value.exact { color: var(--color-exact); text-shadow: 0 0 10px rgba(0,230,118,0.3); }
         .stat-value.trend { color: var(--color-trend); text-shadow: 0 0 10px rgba(255,179,0,0.3); }
         .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;}
 
+        /* Filters */
         .filters-row { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; background-color: var(--card-bg); padding: 15px 30px; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid var(--border-color); width: fit-content; margin: 0 auto; max-width: 95%; }
         .filter-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
         .filter-label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-left: 5px; }
@@ -42,18 +34,27 @@
         .filter-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 6px 14px; border-radius: 30px; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
         .filter-btn:hover { border-color: var(--accent-cyan); color: var(--text-main); background-color: rgba(102, 252, 241, 0.05); }
         .filter-btn.active { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); box-shadow: 0 2px 8px rgba(69, 162, 158, 0.4); }
+        .special-btn { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
-        /* Grid */
+        /* Standings Tables */
+        #standings-container { display: none; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1600px; margin: 0 auto 30px auto; animation: tabFadeIn 0.4s ease; }
+        .group-table-card { background-color: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 15px; width: 350px; box-shadow: var(--shadow); }
+        .group-table-title { color: var(--accent-cyan); font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
+        .standings-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: center; }
+        .standings-table th { color: var(--text-muted); padding: 5px; border-bottom: 1px solid var(--border-color); }
+        .standings-table td { padding: 8px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .standings-table tr:last-child td { border-bottom: none; }
+        .team-cell { display: flex; align-items: center; gap: 8px; font-weight: 600; text-align: right; }
+        .team-cell img { width: 20px; border-radius: 2px; }
+
+        /* Grid & Cards */
         .matches-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1600px; margin: 0 auto; }
         @media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .matches-grid { grid-template-columns: 1fr; } }
-
-        /* Card Elements */
         .match-card { background-color: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; opacity: 0; transform: translateY(15px); will-change: transform, opacity; }
         .match-card.animate-in { animation: cardFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         @keyframes cardFadeIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .match-header { background-color: rgba(0, 0, 0, 0.15); padding: 10px; text-align: center; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
-        .stage-highlight { color: var(--accent-cyan); font-weight: 800; }
         .match-hero { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px 10px; background: linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 100%); min-height: 100px;}
         .team { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .team-flag { width: 45px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: transform 0.2s; }
@@ -79,7 +80,6 @@
         .inner-tab-btn:disabled { color: #4a4f5c; cursor: not-allowed; }
         .tab-content { display: none; padding: 15px; flex-grow: 1; animation: tabFadeIn 0.3s ease; }
         .tab-content.active { display: block; }
-        @keyframes tabFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .insight-title { font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 5px; font-weight: 800; }
         .insight-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
         .status-bar { padding: 10px; text-align: center; font-size: 0.8rem; font-weight: 600; }
@@ -112,12 +112,16 @@
     <div class="top-nav">
         <div class="nav-title">מערכת ניתוח מונדיאל היברידית</div>
         
-        <!-- לוח מדדי הביצועים של המודל -->
-        <div class="stats-panel" id="stats-panel">
-            <!-- יוזרק דינמית ע"י JS -->
-        </div>
+        <div class="stats-panel" id="stats-panel"></div>
 
         <div class="filters-row">
+            <div class="filter-group">
+                <!-- כפתור חדש להצגת טבלאות -->
+                <button class="filter-btn special-btn" onclick="toggleStandings()" id="btn-standings">📊 טבלת בתים</button>
+            </div>
+            
+            <div class="filter-divider">|</div>
+
             <div class="filter-group">
                 <span class="filter-label">זמן:</span>
                 <button class="filter-btn time-btn active" data-time="all">הכל</button>
@@ -143,19 +147,11 @@
                 <button class="filter-btn stage-btn" data-stage="K">י"א</button>
                 <button class="filter-btn stage-btn" data-stage="L">י"ב</button>
             </div>
-
-            <div class="filter-divider">|</div>
-
-            <div class="filter-group">
-                <span class="filter-label">נוקאוט:</span>
-                <button class="filter-btn stage-btn" data-stage="R32">32 האחרונות</button>
-                <button class="filter-btn stage-btn" data-stage="R16">שמינית</button>
-                <button class="filter-btn stage-btn" data-stage="QF">רבע</button>
-                <button class="filter-btn stage-btn" data-stage="SF">חצי</button>
-                <button class="filter-btn stage-btn" data-stage="FIN">גמר</button>
-            </div>
         </div>
     </div>
+
+    <!-- אזור טבלאות הבתים החדש -->
+    <div id="standings-container"></div>
 
     <div class="matches-grid" id="matches-container"></div>
 
@@ -168,12 +164,8 @@
     </div>
 
     <script>
-        // חישוב והצגת הסטטיסטיקה של המודל
         function renderStats() {
-            let totalPast = 0;
-            let exactHits = 0;
-            let trendHits = 0;
-
+            let totalPast = 0; let exactHits = 0; let trendHits = 0;
             for (const key in matchDatabase) {
                 if (matchDatabase[key].timeStatus === 'past') {
                     totalPast++;
@@ -181,30 +173,95 @@
                     if (matchDatabase[key].score.accuracyClass === 'trend') trendHits++;
                 }
             }
-
             const exactPercent = totalPast === 0 ? 0 : Math.round((exactHits / totalPast) * 100);
             const trendPercent = totalPast === 0 ? 0 : Math.round((trendHits / totalPast) * 100);
             const totalAccuracy = totalPast === 0 ? 0 : Math.round(((exactHits + trendHits) / totalPast) * 100);
 
-            const statsContainer = document.getElementById('stats-panel');
-            statsContainer.innerHTML = `
-                <div class="stat-box">
-                    <div class="stat-value" style="color: var(--accent-cyan)">${totalPast}</div>
-                    <div class="stat-label">משחקים שוחקו</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value exact">${exactPercent}%</div>
-                    <div class="stat-label">פגיעה בול (מדויק)</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-value trend">${trendPercent}%</div>
-                    <div class="stat-label">פגיעת כיוון (מגמה)</div>
-                </div>
-                <div class="stat-box" style="border-bottom: 3px solid var(--accent-cyan); background-color: rgba(102, 252, 241, 0.05);">
-                    <div class="stat-value" style="color: #fff">${totalAccuracy}%</div>
-                    <div class="stat-label">הצלחה כללית</div>
-                </div>
+            document.getElementById('stats-panel').innerHTML = `
+                <div class="stat-box"><div class="stat-value" style="color: var(--accent-cyan)">${totalPast}</div><div class="stat-label">משחקים שוחקו</div></div>
+                <div class="stat-box"><div class="stat-value exact">${exactPercent}%</div><div class="stat-label">פגיעה בול (מדויק)</div></div>
+                <div class="stat-box"><div class="stat-value trend">${trendPercent}%</div><div class="stat-label">פגיעת כיוון (מגמה)</div></div>
+                <div class="stat-box" style="border-bottom: 3px solid var(--accent-cyan); background-color: rgba(102, 252, 241, 0.05);"><div class="stat-value" style="color: #fff">${totalAccuracy}%</div><div class="stat-label">הצלחה כללית</div></div>
             `;
+        }
+
+        // --- מנוע חדש לחישוב טבלאות דינמיות ---
+        function calculateAndRenderStandings() {
+            const standings = {};
+            // איסוף התוצאות
+            for (const key in matchDatabase) {
+                const match = matchDatabase[key];
+                if (match.timeStatus === 'past' && match.score.actual.includes('-')) {
+                    const group = match.stage;
+                    if(!standings[group]) standings[group] = {};
+                    
+                    const tH = match.teamHome.name, tA = match.teamAway.name;
+                    if(!standings[group][tH]) standings[group][tH] = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, flag: match.teamHome.flagCode };
+                    if(!standings[group][tA]) standings[group][tA] = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, flag: match.teamAway.flagCode };
+
+                    const scores = match.score.actual.split('-');
+                    const gH = parseInt(scores[0].trim());
+                    const gA = parseInt(scores[1].trim());
+
+                    standings[group][tH].p++; standings[group][tH].gf += gH; standings[group][tH].ga += gA;
+                    standings[group][tA].p++; standings[group][tA].gf += gA; standings[group][tA].ga += gH;
+
+                    if (gH > gA) { standings[group][tH].w++; standings[group][tH].pts += 3; standings[group][tA].l++; } 
+                    else if (gA > gH) { standings[group][tA].w++; standings[group][tA].pts += 3; standings[group][tH].l++; } 
+                    else { standings[group][tH].d++; standings[group][tA].d++; standings[group][tH].pts += 1; standings[group][tA].pts += 1; }
+                }
+            }
+
+            // יצירת ה-HTML
+            const container = document.getElementById('standings-container');
+            container.innerHTML = '';
+            
+            // סדר אלפביתי של הבתים
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+            const groupNamesHeb = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': "י\"א", 'L': "י\"ב"};
+
+            groupOrder.forEach(grp => {
+                if(standings[grp]) {
+                    // מיון לפי נקודות -> הפרש שערים -> שערי זכות
+                    const sortedTeams = Object.keys(standings[grp]).map(name => {
+                        const t = standings[grp][name]; t.name = name; t.gd = t.gf - t.ga; return t;
+                    }).sort((a, b) => {
+                        if (b.pts !== a.pts) return b.pts - a.pts;
+                        if (b.gd !== a.gd) return b.gd - a.gd;
+                        return b.gf - a.gf;
+                    });
+
+                    let trs = '';
+                    sortedTeams.forEach((t, i) => {
+                        trs += `<tr>
+                            <td style="color:var(--text-muted)">${i+1}</td>
+                            <td><div class="team-cell"><img src="https://flagcdn.com/w20/${t.flag}.png"> ${t.name}</div></td>
+                            <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+                            <td>${t.gf}-${t.ga}</td><td>${t.gd > 0 ? '+'+t.gd : t.gd}</td>
+                            <td style="font-weight:900; color:var(--accent-cyan)">${t.pts}</td>
+                        </tr>`;
+                    });
+
+                    container.innerHTML += `
+                    <div class="group-table-card">
+                        <div class="group-table-title">בית ${groupNamesHeb[grp]}</div>
+                        <table class="standings-table">
+                            <tr><th>#</th><th style="text-align:right">נבחרת</th><th>מ</th><th>נ</th><th>ת</th><th>ה</th><th>שערים</th><th>הפ'</th><th>נק'</th></tr>
+                            ${trs}
+                        </table>
+                    </div>`;
+                }
+            });
+        }
+
+        function toggleStandings() {
+            const el = document.getElementById('standings-container');
+            const btn = document.getElementById('btn-standings');
+            if(el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'flex'; btn.classList.add('active');
+            } else {
+                el.style.display = 'none'; btn.classList.remove('active');
+            }
         }
 
         function renderMatches() {
@@ -212,61 +269,39 @@
             container.innerHTML = ''; 
 
             for (const [matchId, data] of Object.entries(matchDatabase)) {
-                const homeCardsHTML = data.teamHome.cards.yellow.map(() => `<div class="card-icon yellow-card" onclick="openCardModal('${matchId}', 'teamHome', 'yellow')"></div>`).join('') +
-                                      data.teamHome.cards.red.map(() => `<div class="card-icon red-card" onclick="openCardModal('${matchId}', 'teamHome', 'red')"></div>`).join('');
-                const awayCardsHTML = data.teamAway.cards.yellow.map(() => `<div class="card-icon yellow-card" onclick="openCardModal('${matchId}', 'teamAway', 'yellow')"></div>`).join('') +
-                                      data.teamAway.cards.red.map(() => `<div class="card-icon red-card" onclick="openCardModal('${matchId}', 'teamAway', 'red')"></div>`).join('');
+                const homeCardsHTML = data.teamHome.cards.yellow.map(() => `<div class="card-icon yellow-card" onclick="openCardModal('${matchId}', 'teamHome', 'yellow')"></div>`).join('') + data.teamHome.cards.red.map(() => `<div class="card-icon red-card" onclick="openCardModal('${matchId}', 'teamHome', 'red')"></div>`).join('');
+                const awayCardsHTML = data.teamAway.cards.yellow.map(() => `<div class="card-icon yellow-card" onclick="openCardModal('${matchId}', 'teamAway', 'yellow')"></div>`).join('') + data.teamAway.cards.red.map(() => `<div class="card-icon red-card" onclick="openCardModal('${matchId}', 'teamAway', 'red')"></div>`).join('');
 
                 const isPast = data.timeStatus === 'past';
                 const sumButtonLabel = isPast ? 'תוצאת אמת (לחץ לפירוט)' : 'סיכום 🔒';
-                
                 let statusBarHTML = '';
                 if (!isPast) statusBarHTML = `<div class="status-bar status-pending-ui">⏳ ממתין לסיום</div>`;
                 else if (data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
                 else if (data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
                 else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
 
-                const html = `
+                container.innerHTML += `
                 <div class="match-card" data-time="${data.timeStatus}" data-stage="${data.stage}">
                     <div class="match-header">${data.dateText}</div>
                     <div class="match-hero">
-                        <div class="team">
-                            <img src="https://flagcdn.com/w80/${data.teamHome.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamHome')">
-                            <div class="team-name">${data.teamHome.name}</div>
-                            <div class="cards-container">${homeCardsHTML}</div>
-                        </div>
-                        <div class="score-center">
-                            <div class="score-label" id="${matchId}-label">תחזית מוקדמת</div>
-                            <div class="score-number" id="${matchId}-score" onclick="openGoalsModal('${matchId}')">${data.score.prediction}</div>
-                        </div>
-                        <div class="team">
-                            <img src="https://flagcdn.com/w80/${data.teamAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamAway')">
-                            <div class="team-name">${data.teamAway.name}</div>
-                            <div class="cards-container">${awayCardsHTML}</div>
-                        </div>
+                        <div class="team"><img src="https://flagcdn.com/w80/${data.teamHome.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamHome')"><div class="team-name">${data.teamHome.name}</div><div class="cards-container">${homeCardsHTML}</div></div>
+                        <div class="score-center"><div class="score-label" id="${matchId}-label">תחזית מוקדמת</div><div class="score-number" id="${matchId}-score" onclick="openGoalsModal('${matchId}')">${data.score.prediction}</div></div>
+                        <div class="team"><img src="https://flagcdn.com/w80/${data.teamAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamAway')"><div class="team-name">${data.teamAway.name}</div><div class="cards-container">${awayCardsHTML}</div></div>
                     </div>
                     <div class="chart-container"><canvas id="chart-${matchId}"></canvas></div>
                     <div class="inner-tabs">
                         <button class="inner-tab-btn active" onclick="switchCardTab('${matchId}', 'pred', '${data.score.prediction}', 'תחזית מוקדמת', '')">תחזית</button>
                         <button class="inner-tab-btn" ${!isPast ? 'disabled' : ''} onclick="switchCardTab('${matchId}', 'sum', '${data.score.actual}', '${sumButtonLabel}', '${data.score.accuracyClass}')">סיכום</button>
                     </div>
-                    <div id="${matchId}-pred" class="tab-content active">
-                        <div class="insight-title">🔑 אקס-פקטור מקדימה</div>
-                        <div class="insight-text">${data.insight.prediction}</div>
-                        ${!isPast ? statusBarHTML : ''}
-                    </div>
-                    <div id="${matchId}-sum" class="tab-content">
-                        <div class="insight-title">🎯 פוסט-משחק</div>
-                        <div class="insight-text">${data.insight.actual}</div>
-                        ${isPast ? statusBarHTML : ''}
-                    </div>
+                    <div id="${matchId}-pred" class="tab-content active"><div class="insight-title">🔑 אקס-פקטור מקדימה</div><div class="insight-text">${data.insight.prediction}</div>${!isPast ? statusBarHTML : ''}</div>
+                    <div id="${matchId}-sum" class="tab-content"><div class="insight-title">🎯 פוסט-משחק</div><div class="insight-text">${data.insight.actual}</div>${isPast ? statusBarHTML : ''}</div>
                 </div>`;
-                container.innerHTML += html;
             }
 
             Chart.defaults.color = '#cbd5e1'; Chart.defaults.font.family = 'Heebo';
+            // עדכון חובה: הוספת 6 התוויות לרדאר
             const opts = { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, pointLabels: { font: { size: 10, weight: '800' }, color: '#e2e8f0' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } };
-            const lbls = ['טכניקה', 'החזקה', 'נייחים', 'מנטלי', 'פיזיות'];
+            const lbls = ['טכניקה', 'החזקה', 'נייחים', 'מנטלי', 'פיזיות', 'איכות סגל'];
 
             for (const [matchId, data] of Object.entries(matchDatabase)) {
                 new Chart(document.getElementById(`chart-${matchId}`).getContext('2d'), { 
@@ -274,8 +309,7 @@
                     data: { labels: lbls, datasets: [ 
                         { data: data.radarStats.home, borderColor: data.teamHome.color, backgroundColor: `${data.teamHome.color}4D`, pointBackgroundColor: data.teamHome.color, borderWidth: 2 }, 
                         { data: data.radarStats.away, borderColor: data.teamAway.color, backgroundColor: `${data.teamAway.color}4D`, pointBackgroundColor: data.teamAway.color, borderWidth: 2 } 
-                    ]}, 
-                    options: opts 
+                    ]}, options: opts 
                 });
             }
         }
@@ -283,75 +317,18 @@
         const modal = document.getElementById('infoModal'), modalTitle = document.getElementById('modalTitle'), modalBody = document.getElementById('modalBody');
         function openModal(title, contentHTML) { modalTitle.innerHTML = title; modalBody.innerHTML = contentHTML; modal.style.display = 'flex'; }
         function closeModal(e) { if(e) e.preventDefault(); modal.style.display = 'none'; }
-
-        function openGoalsModal(matchId) {
-            const scoreEl = document.getElementById(`${matchId}-score`);
-            if(!scoreEl.classList.contains('is-actual')) return;
-            const data = matchDatabase[matchId];
-            let html = '';
-            data.goals.forEach(g => { html += `<div class="goal-item"><span>⚽ ${g.player} (${g.minute})</span><span style="color: var(--text-muted); font-size:0.85rem">${g.team}</span></div>`; });
-            if(data.goals.length === 0) html = "<div style='text-align:center'>0-0 (אין שערים)</div>";
-            openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html);
-        }
-
-        function openSquadModal(matchId, side) {
-            const data = matchDatabase[matchId];
-            const squadKey = side === 'teamHome' ? 'home' : 'away'; 
-            if(data.squads[squadKey].predicted.length === 0) { openModal("סגל", "נתוני סגל טרם פורסמו."); return; }
-            const predHTML = data.squads[squadKey].predicted.map(p => `<li>${p}</li>`).join('');
-            const actualHTML = data.squads[squadKey].actual.length > 0 ? data.squads[squadKey].actual.map(p => `<li class="${p.includes('(חריגה)') ? 'diff-player' : ''}">${p}</li>`).join('') : "<li>טרם נקבע</li>";
-            const html = `<div class="squad-grid"><div class="squad-col"><h4>תחזית המודל</h4><ul class="squad-list">${predHTML}</ul></div><div class="squad-col"><h4>שיחקו בפועל</h4><ul class="squad-list">${actualHTML}</ul></div></div>`;
-            openModal(`סגל נבחרת ${data[side].name}`, html);
-        }
-
-        function openCardModal(matchId, side, type) {
-            const data = matchDatabase[matchId];
-            const colorName = type === 'yellow' ? 'צהוב' : 'אדום';
-            const iconColor = type === 'yellow' ? '#f1c40f' : '#e74c3c';
-            let html = '';
-            data[side].cards[type].forEach(c => { html += `<div class="card-detail" style="margin-bottom: 10px;"><div style="width: 15px; height: 20px; background-color: ${iconColor}; border-radius: 3px;"></div><span>${c}</span></div>`; });
-            openModal(`כרטיס ${colorName} - ${data[side].name}`, html);
-        }
+        function openGoalsModal(matchId) { const scoreEl = document.getElementById(`${matchId}-score`); if(!scoreEl.classList.contains('is-actual')) return; const data = matchDatabase[matchId]; let html = ''; data.goals.forEach(g => { html += `<div class="goal-item"><span>⚽ ${g.player} (${g.minute})</span><span style="color: var(--text-muted); font-size:0.85rem">${g.team}</span></div>`; }); if(data.goals.length === 0) html = "<div style='text-align:center'>0-0 (אין שערים)</div>"; openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); }
+        function openSquadModal(matchId, side) { const data = matchDatabase[matchId]; const squadKey = side === 'teamHome' ? 'home' : 'away'; if(data.squads[squadKey].predicted.length === 0) { openModal("סגל", "נתוני סגל טרם פורסמו."); return; } const predHTML = data.squads[squadKey].predicted.map(p => `<li>${p}</li>`).join(''); const actualHTML = data.squads[squadKey].actual.length > 0 ? data.squads[squadKey].actual.map(p => `<li class="${p.includes('(חריגה)') ? 'diff-player' : ''}">${p}</li>`).join('') : "<li>טרם נקבע</li>"; const html = `<div class="squad-grid"><div class="squad-col"><h4>תחזית המודל</h4><ul class="squad-list">${predHTML}</ul></div><div class="squad-col"><h4>שיחקו בפועל</h4><ul class="squad-list">${actualHTML}</ul></div></div>`; openModal(`סגל נבחרת ${data[side].name}`, html); }
+        function openCardModal(matchId, side, type) { const data = matchDatabase[matchId]; const colorName = type === 'yellow' ? 'צהוב' : 'אדום'; const iconColor = type === 'yellow' ? '#f1c40f' : '#e74c3c'; let html = ''; data[side].cards[type].forEach(c => { html += `<div class="card-detail" style="margin-bottom: 10px;"><div style="width: 15px; height: 20px; background-color: ${iconColor}; border-radius: 3px;"></div><span>${c}</span></div>`; }); openModal(`כרטיס ${colorName} - ${data[side].name}`, html); }
 
         let currentTimeFilter = 'all'; let currentStageFilter = 'all';
-        function applyFilters() {
-            document.querySelectorAll('.match-card').forEach(card => {
-                const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === card.getAttribute('data-time'));
-                const sMatch = (currentStageFilter === 'all' || currentStageFilter === card.getAttribute('data-stage'));
-                if (tMatch && sMatch) { if (card.style.display === 'none' || card.style.display === '') card.style.display = 'flex'; card.classList.remove('animate-in'); void card.offsetWidth; card.classList.add('animate-in'); } 
-                else { card.classList.remove('animate-in'); card.style.display = 'none'; }
-            });
-        }
-        
+        function applyFilters() { document.querySelectorAll('.match-card').forEach(card => { const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === card.getAttribute('data-time')); const sMatch = (currentStageFilter === 'all' || currentStageFilter === card.getAttribute('data-stage')); if (tMatch && sMatch) { if (card.style.display === 'none' || card.style.display === '') card.style.display = 'flex'; card.classList.remove('animate-in'); void card.offsetWidth; card.classList.add('animate-in'); } else { card.classList.remove('animate-in'); card.style.display = 'none'; } }); }
         document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); }));
         document.querySelectorAll('.stage-btn').forEach(btn => btn.addEventListener('click', (e) => { document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); currentStageFilter = e.target.getAttribute('data-stage'); applyFilters(); }));
 
-        function switchCardTab(cardId, tabType, scoreText, labelText, accuracyLevel) {
-            const predTab = document.getElementById(`${cardId}-pred`), sumTab = document.getElementById(`${cardId}-sum`);
-            const btns = predTab.parentElement.querySelectorAll('.inner-tab-btn');
-            btns.forEach(b => b.classList.remove('active')); predTab.classList.remove('active'); sumTab.classList.remove('active');
-            if (tabType === 'pred') { btns[0].classList.add('active'); predTab.classList.add('active'); } else { btns[1].classList.add('active'); sumTab.classList.add('active'); }
-            
-            const labelEl = document.getElementById(`${cardId}-label`), scoreEl = document.getElementById(`${cardId}-score`);
-            labelEl.innerText = labelText; scoreEl.innerText = scoreText;
-            scoreEl.classList.remove('is-actual', 'exact', 'trend', 'wrong');
-            
-            if(tabType === 'sum') { 
-                scoreEl.classList.add('is-actual'); 
-                if (accuracyLevel) {
-                    scoreEl.classList.add(accuracyLevel);
-                    if(accuracyLevel === 'exact') labelEl.style.color = 'var(--color-exact)';
-                    else if(accuracyLevel === 'trend') labelEl.style.color = 'var(--color-trend)';
-                    else if(accuracyLevel === 'wrong') labelEl.style.color = 'var(--color-wrong)';
-                }
-            } else { labelEl.style.color = 'var(--accent-cyan)'; }
-        }
+        function switchCardTab(cardId, tabType, scoreText, labelText, accuracyLevel) { const predTab = document.getElementById(`${cardId}-pred`), sumTab = document.getElementById(`${cardId}-sum`); const btns = predTab.parentElement.querySelectorAll('.inner-tab-btn'); btns.forEach(b => b.classList.remove('active')); predTab.classList.remove('active'); sumTab.classList.remove('active'); if (tabType === 'pred') { btns[0].classList.add('active'); predTab.classList.add('active'); } else { btns[1].classList.add('active'); sumTab.classList.add('active'); } const labelEl = document.getElementById(`${cardId}-label`), scoreEl = document.getElementById(`${cardId}-score`); labelEl.innerText = labelText; scoreEl.innerText = scoreText; scoreEl.classList.remove('is-actual', 'exact', 'trend', 'wrong'); if(tabType === 'sum') { scoreEl.classList.add('is-actual'); if (accuracyLevel) { scoreEl.classList.add(accuracyLevel); if(accuracyLevel === 'exact') labelEl.style.color = 'var(--color-exact)'; else if(accuracyLevel === 'trend') labelEl.style.color = 'var(--color-trend)'; else if(accuracyLevel === 'wrong') labelEl.style.color = 'var(--color-wrong)'; } } else { labelEl.style.color = 'var(--accent-cyan)'; } }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderStats(); // קריאה ליצירת הסטטיסטיקה העליונה
-            renderMatches();
-            applyFilters();
-        });
+        window.addEventListener('DOMContentLoaded', () => { renderStats(); calculateAndRenderStandings(); renderMatches(); applyFilters(); });
     </script>
 </body>
 </html>
