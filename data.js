@@ -1,4 +1,4 @@
-// מסד הנתונים הרשמי - מונדיאל 2026 
+// מסד הנתונים הרשמי - מונדיאל 2026 כולל מדדי עומק (Advanced Stats)
 const matchDatabase = {
     // --- בית א' ---
     'match1': {
@@ -20,8 +20,8 @@ const matchDatabase = {
         teamAway: { name: 'שוויץ', flagCode: 'ch', color: '#FF0000', cards: { yellow: ["גראניט ג'אקה (72')"], red: [] } },
         score: { prediction: '0 - 2', actual: '1 - 1', accuracyClass: 'wrong' },
         radarStats: { home: [50, 40, 55, 85, 65, 5], away: [80, 70, 75, 60, 75, 85] },
-        advancedStats: { home: { xG: 0.65, restDays: 4, altitudeImpact: 'מותאם למזג האוויר' }, away: { xG: 2.10, restDays: 4, altitudeImpact: 'השפעת לחות גבוהה' } },
-        insight: { prediction: "שוויץ עדיפה טכנית. מזהים סיכון לקריסה מנטלית של קטר תחת הלחץ.", actual: "פספוס של המודל: קטר הפגינה חוסן מנטלי מרשים וסחטה נקודה." },
+        advancedStats: { home: { xG: 0.65, restDays: 4, altitudeImpact: 'קשה' }, away: { xG: 2.10, restDays: 4, altitudeImpact: 'בינוני' } },
+        insight: { prediction: "שוויץ עדיפה טכנית. מזהים סיכון לקריסה מנטלית של קטר תחת הלחץ.", actual: "ה-xG מראה שוויץ שלטה (2.10) אבל קטר ניצלה מצב בודד בצורה מושלמת." },
         goals: [{ team: 'שוויץ', player: "שרדאן שאקירי", minute: "30'" }, { team: 'קטר', player: "אלמועז עלי", minute: "87'" }],
         squads: { home: { predicted: ["ברשם", "עפיף", "אלמועז"], actual: ["ברשם", "עפיף", "אלמועז"] }, away: { predicted: ["זומר", "ג'אקה", "שאקירי"], actual: ["זומר", "ג'אקה", "שאקירי"] } }
     },
@@ -59,7 +59,7 @@ const matchDatabase = {
         score: { prediction: '2 - 0', actual: '4 - 1', accuracyClass: 'trend' },
         radarStats: { home: [75, 60, 80, 85, 85, 65], away: [70, 50, 75, 80, 90, 40] },
         advancedStats: { home: { xG: 3.12, restDays: 5, altitudeImpact: 'מארחת / ביתי' }, away: { xG: 0.88, restDays: 4, altitudeImpact: 'עייפות טיסה גדולה' } },
-        insight: { prediction: "ארצות הברית תנצל עליונות פיזית ויתרון ביתיות.", actual: "פגיעה במגמה: ארה\"ב התפוצצה על המגרש עם רביעייה והוכיחה עליונות מוחלטת." },
+        insight: { prediction: "ארצות הברית תנצל עליונות פיזית ויתרון ביתיות.", actual: "ה-xG של ארה\"ב מעיד על דומיננטיות מוחלטת והתפוצצות התקפית." },
         goals: [{ team: 'ארצות הברית', player: "כריסטיאן פוליסיק", minute: "12'" }, { team: 'ארצות הברית', player: "טימותי וואה", minute: "34'" }, { team: 'ארצות הברית', player: "פולארין באלוגאן", minute: "52'" }, { team: 'פרגוואי', player: "מיגל אלמירון", minute: "71'" }, { team: 'ארצות הברית', player: "ג'ובאני ריינה", minute: "88'" }],
         squads: { home: { predicted: ["טרנר", "מקני", "פוליסיק"], actual: ["טרנר", "מקני", "פוליסיק"] }, away: { predicted: ["קורונל", "אלמירון", "גומז"], actual: ["קורונל", "אלמירון", "גומז"] } }
     },
@@ -95,7 +95,7 @@ const matchDatabase = {
         teamAway: { name: 'אקוודור', flagCode: 'ec', color: '#FFD100', cards: { yellow: ["טורס (41')", "פלאטה (66')"], red: [] } },
         score: { prediction: '1 - 1', actual: '1 - 0', accuracyClass: 'wrong' },
         radarStats: { home: [80, 65, 70, 75, 90, 65], away: [75, 60, 75, 80, 85, 55] },
-        advancedStats: { home: { xG: 1.25, restDays: 4, altitudeImpact: 'לחות מעיקה' }, away: { xG: 0.95, restDays: 4, altitudeImpact: 'מותאם גובה' } },
+        advancedStats: { home: { xG: 1.25, restDays: 4, altitudeImpact: 'לחות מעיקה' }, away: { xG: 0.95, restDays: 4, altitudeImpact: 'קל (רגילים לגובה)' } },
         insight: { prediction: "קרב אדיר על האמצע מרובה פיזיות, הכל מצביע על חלוקת נקודות.", actual: "פספוס במודל: הפיזיות של חוף השנהב הכריעה את המשחק, שער בודד שבר את ההגנה." },
         goals: [{ team: 'חוף השנהב', player: "סבסטיאן האלר", minute: "67'" }],
         squads: { home: { predicted: ["פופאנה", "פפה", "האלר"], actual: ["פופאנה", "פפה", "האלר"] }, away: { predicted: ["דומינגס", "קאיסדו", "ולנסיה"], actual: ["דומינגס", "קאיסדו", "ולנסיה"] } }
@@ -110,7 +110,7 @@ const matchDatabase = {
         radarStats: { home: [88, 85, 75, 80, 80, 90], away: [80, 65, 65, 85, 85, 45] },
         advancedStats: { home: { xG: 1.85, restDays: 3, altitudeImpact: 'עייפות טיסה קלה' }, away: { xG: 1.70, restDays: 4, altitudeImpact: 'רגיל' } },
         insight: { prediction: "הולנד תניע כדור בסבלנות מול היפנים העיקשים. איכות ההתקפה תכריע בדוחק.", actual: "פספוס של המודל! יפן לא נשברת, נלחמה כמו אריות וחילצה תיקו הירואי מהולנד." },
-        goals: [{ team: 'הולנד', player: "קודי גאקפו", minute: "22'" }, { team: 'יפן', player: "קאורו מיטומה", minute: "40'" }, { team: 'הולנד', player: "צ'אבי סימונס", minute: "55'" }, { team: 'יפן', player: "ריטסו dואן", minute: "89'" }],
+        goals: [{ team: 'הולנד', player: "קודי גאקפו", minute: "22'" }, { team: 'יפן', player: "קאורו מיטומה", minute: "40'" }, { team: 'הולנד', player: "צ'אבי סימונס", minute: "55'" }, { team: 'יפן', player: "ריטסו דואן", minute: "89'" }],
         squads: { home: { predicted: ["ורברוחן", "ואן דייק", "גאקפו"], actual: ["ורברוחן", "ואן דייק", "גאקפו"] }, away: { predicted: ["גונדה", "טומייאסו", "מיטומה"], actual: ["גונדה", "טומייאסו", "מיטומה"] } }
     },
 
@@ -122,7 +122,7 @@ const matchDatabase = {
         radarStats: { home: [82, 70, 85, 80, 85, 75], away: [75, 65, 60, 85, 75, 40] },
         advancedStats: { home: { xG: 3.10, restDays: 4, altitudeImpact: 'רגיל' }, away: { xG: 0.65, restDays: 3, altitudeImpact: 'עייפות אקלים' } },
         insight: { prediction: "ההגנה התוניסאית קשוחה, אך העוצמה בכדורי גובה תשבור אותה.", actual: "פגיעה במגמה! שוודיה רמסה את תוניסיה עם תצוגה התקפית אדירה." },
-        goals: [{ team: 'שוודיה', player: "אלכסנדר איסק", minute: "14'" }, { team: 'שוודיה', player: "امיל פורסברג", minute: "28'" }, { team: 'שוודיה', player: "ויקטור גיוקרס", minute: "41'" }, { team: 'תוניסיה', player: "והבי חאזרי", minute: "55'" }, { team: 'שוודיה', player: "דיאן קולוסבסקי", minute: "66'" }, { team: 'שוודיה', player: "אלכסנדר איסק", minute: "80'" }],
+        goals: [{ team: 'שוודיה', player: "אלכסנדר איסק", minute: "14'" }, { team: 'שוודיה', player: "אמיל פורסברג", minute: "28'" }, { team: 'שוודיה', player: "ויקטור גיוקרס", minute: "41'" }, { team: 'תוניסיה', player: "והבי חאזרי", minute: "55'" }, { team: 'שוודיה', player: "דיאן קולוסבסקי", minute: "66'" }, { team: 'שוודיה', player: "אלכסנדר איסק", minute: "80'" }],
         squads: { home: { predicted: ["אולסן", "איסק", "גיוקרס"], actual: ["אולסן", "איסק", "גיוקרס"] }, away: { predicted: ["דחמן", "חאזרי", "מסאקני"], actual: ["דחמן", "חאזרי", "מסאקני"] } }
     },
 
@@ -134,7 +134,7 @@ const matchDatabase = {
         score: { prediction: '2 - 1', actual: '1 - 2', accuracyClass: 'wrong' },
         radarStats: { home: [85, 80, 75, 70, 70, 85], away: [75, 65, 70, 80, 75, 55] },
         advancedStats: { home: { xG: 1.45, restDays: 4, altitudeImpact: 'השפעה שלילית' }, away: { xG: 1.95, restDays: 4, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "סלאח ומרמוש יאתגרו את ההגנה, אך דה בראונה יעשה את ההבדל.", actual: "הפתעה מדהימה! סלאח ומרמוש פירקו את ההגנה הבלגית במתפרצות." },
+        insight: { prediction: "סלאח ומרמוש יאתגרו את ההגנה, אך דה בראונה יעשה את ההבדל.", actual: "המתפרצות של מצרים היו קטלניות - הם הגיעו למצבים איכותיים יותר (xG 1.95)." },
         goals: [{ team: 'מצרים', player: "עומר מרמוש", minute: "32'" }, { team: 'בלגיה', player: "רומלו לוקאקו", minute: "50'" }, { team: 'מצרים', player: "מוחמד סלאח", minute: "78'" }],
         squads: { home: { predicted: ["קסטילס", "דה בראונה", "לוקאקו"], actual: ["קסטילס", "דה בראונה", "לוקאקו"] }, away: { predicted: ["אל שנאווי", "סלאח", "מרמוש"], actual: ["אל שנאווי", "סלאח", "מרמוש"] } }
     },
@@ -158,8 +158,8 @@ const matchDatabase = {
         teamAway: { name: 'קף ורדה', flagCode: 'cv', color: '#003893', cards: { yellow: ["לופס (22')", "בבה (88')"], red: [] } },
         score: { prediction: '3 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
         radarStats: { home: [95, 95, 75, 85, 70, 95], away: [70, 55, 65, 75, 80, 35] },
-        advancedStats: { home: { xG: 2.40, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.10, restDays: 5, altitudeImpact: 'לחות מקשה' } },
-        insight: { prediction: "שליטה מוחלטת של ספרד בהחזקת הכדור. הטיקי-טאקה יכריע.", actual: "בונקר הירואי של קף ורדה! הספרדים החזיקו בכדור 80% מהזמן אבל לא מצאו את הרשת." },
+        advancedStats: { home: { xG: 2.40, restDays: 5, altitudeImpact: 'קל' }, away: { xG: 0.10, restDays: 5, altitudeImpact: 'בינוני' } },
+        insight: { prediction: "שליטה מוחלטת של ספרד בהחזקת הכדור. הטיקי-טאקה יכריע.", actual: "ספרד הגיעה למצבים של 2.4 שערים בטוחים אך נתקלה ביום חלומי של השוער." },
         goals: [],
         squads: { home: { predicted: ["סימון", "ימאל", "מוראטה"], actual: ["סימון", "ימאל", "מוראטה"] }, away: { predicted: ["ווזיניה", "טאבארס", "בבה"], actual: ["ווזיניה", "טאבארס", "בבה"] } }
     },
@@ -170,7 +170,8 @@ const matchDatabase = {
         teamAway: { name: 'אורוגוואי', flagCode: 'uy', color: '#0038A8', cards: { yellow: ["אוגרטה (45')"], red: [] } },
         score: { prediction: '0 - 2', actual: '2 - 1', accuracyClass: 'wrong' },
         radarStats: { home: [70, 60, 65, 75, 70, 25], away: [85, 75, 80, 95, 90, 80] },
-        insight: { prediction: "ביאלסה ואורוגוואי יביאו לחץ גבוה שערב הסעודית לא תוכל לעמוד בו.", actual: "שחזור מונדיאל 2022! הסעודים חזרו מפיגור והיממו את אורוגוואי עם צמד מהיר במחצית השנייה." },
+        advancedStats: { home: { xG: 1.15, restDays: 5, altitudeImpact: 'קל (רגילים לחום)' }, away: { xG: 1.90, restDays: 5, altitudeImpact: 'קשה' } }, // תוקן רשמית!
+        insight: { prediction: "ביאלסה ואורוגוואי יביאו לחץ גבוה שערב הסעודית לא תוכל לעמוד בו.", actual: "אורוגוואי הייתה מסוכנת יותר, אך התעייפה משמעותית בסיום מה שאפשר מהפך סעודי." },
         goals: [{ team: 'אורוגוואי', player: "דרווין נונייס", minute: "22'" }, { team: 'ערב הסעודית', player: "סאלם אל-דאווסרי", minute: "55'" }, { team: 'ערב הסעודית', player: "סאלח אל-שחרי", minute: "63'" }],
         squads: { home: { predicted: ["אל-עוויס", "אל-דאווסרי", "אל-שחרי"], actual: ["אל-עוויס", "אל-דאווסרי", "אל-שחרי"] }, away: { predicted: ["רוצ'ט", "ואלוורדה", "נונייס"], actual: ["רוצ'ט", "ואלוורדה", "נונייס"] } }
     },
@@ -182,10 +183,10 @@ const matchDatabase = {
         teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
         radarStats: { home: [95, 85, 80, 85, 90, 98], away: [70, 40, 75, 80, 95, 55] },
-        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.80 (צפי)', restDays: 5, altitudeImpact: 'רגיל' } },
+        advancedStats: { home: { xG: '2.1 (צפי)', restDays: 0, altitudeImpact: 'בינוני' }, away: { xG: '0.8 (צפי)', restDays: 0, altitudeImpact: 'קל' } },
         insight: { prediction: "העומק של צרפת פשוט גדול מדי על ההגנה הסנגלית. אמבפה צפוי לחגוג.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["מניאן", "גריזמן", "אמבפה"], actual: [] }, away: { predicted: ["מנדי", "קוליבאלי", "מאנה"], actual: [] } }
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
     'match16': {
@@ -194,9 +195,9 @@ const matchDatabase = {
         teamAway: { name: 'קונגו', flagCode: 'cg', color: '#FCD116', cards: { yellow: [], red: [] } },
         score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' },
         radarStats: { home: [90, 80, 85, 80, 75, 90], away: [60, 45, 55, 75, 80, 15] },
-        advancedStats: { home: { xG: '2.80 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.50 (צפי)', restDays: 4, altitudeImpact: 'לחות גבוהה' } },
+        advancedStats: { home: { xG: '2.8 (צפי)', restDays: 0, altitudeImpact: 'קל' }, away: { xG: '0.5 (צפי)', restDays: 0, altitudeImpact: 'בינוני' } },
         insight: { prediction: "פורטוגל תכבוש מוקדם ותשייט לניצחון קל על הנייר.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["קושטה", "פרננדש", "רונאלדו"], actual: [] }, away: { predicted: ["נדזילה", "גנבולה", "مבנזה"], actual: [] } }
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     }
 };
