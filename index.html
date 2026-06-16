@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל - מערכת פרו (External Data)</title>
+    <title>דשבורד מונדיאל - מודל הסתברותי (Pro)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
@@ -46,11 +46,12 @@
         .matches-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1600px; margin: 0 auto; }
         @media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .matches-grid { grid-template-columns: 1fr; } }
+        
         .match-card { background-color: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; opacity: 0; transform: translateY(15px); will-change: transform, opacity; }
         .match-card.animate-in { animation: cardFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         @keyframes cardFadeIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .match-header { background-color: rgba(0, 0, 0, 0.15); padding: 10px; text-align: center; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
-        .match-hero { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px 10px; background: linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 100%); min-height: 100px;}
+        .match-hero { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px 5px; background: linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 100%); min-height: 100px;}
         .team { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .team-flag { width: 45px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: transform 0.2s; }
         .team-flag:hover { transform: scale(1.1); border-color: var(--accent-cyan); }
@@ -59,6 +60,7 @@
         .card-icon { width: 12px; height: 16px; border-radius: 2px; cursor: pointer; border: 1px solid rgba(0,0,0,0.3); transition: transform 0.2s; }
         .card-icon:hover { transform: scale(1.2) translateY(-2px); }
         .yellow-card { background-color: #f1c40f; } .red-card { background-color: #e74c3c; }
+        
         .score-center { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 5px; }
         .score-label { font-size: 0.7rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; white-space: nowrap; transition: color 0.3s ease; }
         .score-number { font-size: 1.6rem; font-weight: 900; background-color: rgba(0, 0, 0, 0.3); padding: 4px 15px; border-radius: 8px; border: 1px solid var(--border-color); letter-spacing: 2px; white-space: nowrap; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: all 0.3s ease; cursor: pointer;}
@@ -66,7 +68,16 @@
         .score-number.is-actual.exact { color: var(--color-exact); border-color: rgba(0, 230, 118, 0.4); background-color: rgba(0, 230, 118, 0.1); text-shadow: 0 0 12px rgba(0, 230, 118, 0.4); }
         .score-number.is-actual.trend { color: var(--color-trend); border-color: rgba(255, 179, 0, 0.4); background-color: rgba(255, 179, 0, 0.1); text-shadow: 0 0 12px rgba(255, 179, 0, 0.4); }
         .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
-        .chart-container { padding: 5px 15px; height: 180px; position: relative; }
+        
+        /* New Probabilities UI */
+        .match-probabilities { padding: 0 20px 15px 20px; }
+        .prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; direction: ltr;}
+        .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); }
+        .prob-home { background-color: var(--accent-cyan); transition: width 0.5s ease;}
+        .prob-draw { background-color: #8892b0; transition: width 0.5s ease;}
+        .prob-away { background-color: #ff4d4d; transition: width 0.5s ease;}
+        
+        .chart-container { padding: 5px 15px; height: 160px; position: relative; }
         
         .inner-tabs { display: flex; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.15); }
         .inner-tab-btn { flex: 1; background: none; border: none; padding: 10px 5px; color: var(--text-muted); font-family: 'Heebo', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
@@ -75,7 +86,16 @@
         .tab-content { display: none; padding: 15px; flex-grow: 1; animation: tabFadeIn 0.3s ease; }
         .tab-content.active { display: block; }
         @keyframes tabFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .insight-title { font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 5px; font-weight: 800; }
+        
+        .insight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .insight-title { font-size: 0.85rem; color: var(--accent-blue); font-weight: 800; }
+        
+        /* Risk Badges */
+        .risk-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 12px; font-weight: 800; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .risk-safe { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.4); }
+        .risk-draw { background: rgba(255,179,0,0.15); color: #ffb300; border: 1px solid rgba(255,179,0,0.4); }
+        .risk-upset { background: rgba(255,51,51,0.15); color: #ff3333; border: 1px solid rgba(255,51,51,0.4); }
+
         .insight-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
         
         .adv-stats-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 5px;}
@@ -109,7 +129,7 @@
     <script src="data.js"></script>
 
     <div class="top-nav">
-        <div class="nav-title">מערכת ניתוח מונדיאל (Pro)</div>
+        <div class="nav-title">מערכת מודל הסתברותי (Pro)</div>
         <div class="stats-panel" id="stats-panel"></div>
 
         <div class="filters-row">
@@ -272,6 +292,7 @@
 
             for (const [matchId, data] of Object.entries(matchDatabase)) {
                 const adv = data.advancedStats || { home: { xG: '-', restDays: '-', altitudeImpact: '-' }, away: { xG: '-', restDays: '-', altitudeImpact: '-' } };
+                const prob = data.probabilities || { home: 33, draw: 34, away: 33 };
                 const tHome = data.teamHome || { cards: { yellow: [], red: [] } };
                 const tAway = data.teamAway || { cards: { yellow: [], red: [] } };
                 
@@ -285,13 +306,18 @@
 
                 const isPast = data.timeStatus === 'past';
                 const currentScoreDisplay = isPast ? data.score.actual : data.score.prediction;
-                const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית מוקדמת';
+                const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית ו-xG מוקדם';
                 
                 let statusBarHTML = '';
                 if (!isPast) statusBarHTML = `<div class="status-bar status-pending-ui">⏳ ממתין לשריקה</div>`;
                 else if (data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
                 else if (data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
                 else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
+
+                let riskHTML = '';
+                if (data.matchRisk === 'Safe') riskHTML = '<span class="risk-badge risk-safe">🛡️ סבירות גבוהה</span>';
+                else if (data.matchRisk === 'Draw Booster') riskHTML = '<span class="risk-badge risk-draw">⚠️ התראת בונקר/תיקו</span>';
+                else if (data.matchRisk === 'Upset Alert') riskHTML = '<span class="risk-badge risk-upset">🚨 פוטנציאל להפתעה!</span>';
 
                 const chunk = `
                 <div class="match-card" data-time="${data.timeStatus}" data-stage="${data.stage}">
@@ -301,13 +327,27 @@
                         <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${isPast ? 'is-actual ' + data.score.accuracyClass : ''}" id="${matchId}-score" onclick="openGoalsModal('${matchId}')">${currentScoreDisplay}</div></div>
                         <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamAway')"><div class="team-name">${tAway.name}</div><div class="cards-container">${awayCardsHTML}</div></div>
                     </div>
+                    
+                    <div class="match-probabilities">
+                        <div class="prob-labels">
+                            <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
+                            <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
+                            <span style="color: #ff4d4d">2: ${prob.away}%</span>
+                        </div>
+                        <div class="prob-bar-container">
+                            <div class="prob-home" style="width: ${prob.home}%"></div>
+                            <div class="prob-draw" style="width: ${prob.draw}%"></div>
+                            <div class="prob-away" style="width: ${prob.away}%"></div>
+                        </div>
+                    </div>
+
                     <div class="chart-container"><canvas id="chart-${matchId}"></canvas></div>
                     <div class="inner-tabs">
-                        <button class="inner-tab-btn" onclick="switchCardTab('${matchId}', 'pred', '${data.score.prediction}', 'תחזית מוקדמת', '')">תחזית</button>
+                        <button class="inner-tab-btn" onclick="switchCardTab('${matchId}', 'pred', '${data.score.prediction}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
                         <button class="inner-tab-btn ${isPast ? 'active' : ''}" ${!isPast ? 'disabled' : ''} onclick="switchCardTab('${matchId}', 'sum', '${data.score.actual}', 'תוצאת סיום', '${data.score.accuracyClass}')">סיכום</button>
                         <button class="inner-tab-btn ${!isPast ? 'active' : ''}" onclick="switchCardTab('${matchId}', 'adv', '${currentScoreDisplay}', '${currentScoreLabel}', '${isPast ? data.score.accuracyClass : ''}')">עומק</button>
                     </div>
-                    <div id="${matchId}-pred" class="tab-content"><div class="insight-title">🔑 אקס-פקטור מקדימה</div><div class="insight-text">${data.insight.prediction}</div>${!isPast ? statusBarHTML : ''}</div>
+                    <div id="${matchId}-pred" class="tab-content"><div class="insight-header"><div class="insight-title">🔑 אקס-פקטור מקדימה</div>${riskHTML}</div><div class="insight-text">${data.insight.prediction}</div>${!isPast ? statusBarHTML : ''}</div>
                     <div id="${matchId}-sum" class="tab-content ${isPast ? 'active' : ''}"><div class="insight-title">🎯 פוסט-משחק</div><div class="insight-text">${data.insight.actual}</div>${isPast ? statusBarHTML : ''}</div>
                     <div id="${matchId}-adv" class="tab-content ${!isPast ? 'active' : ''}">
                         <div class="insight-title">🔬 מדדי עומק (Advanced)</div>
@@ -351,7 +391,7 @@
             let html = ''; 
             (data.goals || []).forEach(g => { html += `<div class="goal-item"><span>⚽ ${g.player} (${g.minute})</span><span style="color: var(--text-muted); font-size:0.85rem">${g.team}</span></div>`; }); 
             if(!data.goals || data.goals.length === 0) html = "<div style='text-align:center'>0-0 (אין שערים)</div>"; 
-            openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); // תוקן רשמית כאן!
+            openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); 
         }
 
         function openSquadModal(matchId, side) { 
@@ -406,10 +446,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => { 
-            renderStats(); 
-            calculateAndRenderStandings(); 
-            renderMatches(); 
-            applyFilters(); 
+            renderStats(); calculateAndRenderStandings(); renderMatches(); applyFilters(); 
         });
     </script>
 </body>
