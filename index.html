@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל - טבלאות ומדדי עומק (Pro)</title>
+    <title>דשבורד מונדיאל - מערכת פרו (External Data)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
@@ -68,7 +68,6 @@
         .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
         .chart-container { padding: 5px 15px; height: 180px; position: relative; }
         
-        /* 3 Tabs Design */
         .inner-tabs { display: flex; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background-color: rgba(0,0,0,0.15); }
         .inner-tab-btn { flex: 1; background: none; border: none; padding: 10px 5px; color: var(--text-muted); font-family: 'Heebo', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
         .inner-tab-btn.active { color: var(--accent-cyan); border-bottom: 2px solid var(--accent-cyan); background-color: rgba(102, 252, 241, 0.05); }
@@ -79,7 +78,6 @@
         .insight-title { font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 5px; font-weight: 800; }
         .insight-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
         
-        /* Advanced Stats Grid */
         .adv-stats-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 5px;}
         .adv-stats-table th { color: var(--text-muted); font-weight: 400; padding: 4px 0; border-bottom: 1px dashed var(--border-color); }
         .adv-stats-table td { padding: 8px 0; text-align: center; font-weight: 600; }
@@ -102,13 +100,13 @@
         .squad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .squad-col h4 { margin: 0 0 10px 0; color: var(--text-muted); font-size: 0.9rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 5px;}
         .squad-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
-        .squad-list li { margin-bottom: 4px; }
-        .diff-player { color: var(--color-trend); font-weight: 600; }
         .goal-item { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; }
         .card-detail { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
+
+    <script src="data.js"></script>
 
     <div class="top-nav">
         <div class="nav-title">מערכת ניתוח מונדיאל (Pro)</div>
@@ -158,6 +156,7 @@
 
     <script>
         function renderStats() {
+            if (typeof matchDatabase === 'undefined') return;
             let totalPast = 0; let exactHits = 0; let trendHits = 0;
             for (const key in matchDatabase) {
                 if (matchDatabase[key].timeStatus === 'past') {
@@ -179,6 +178,7 @@
         }
 
         function calculateAndRenderStandings() {
+            if (typeof matchDatabase === 'undefined') return;
             const officialGroups = {
                 'A': ['מקסיקו', 'קוריאה הדרומית', 'צ\'כיה', 'דרום אפריקה'], 'B': ['שוויץ', 'בוסניה והרצגובינה', 'קנדה', 'קטר'],
                 'C': ['סקוטלנד', 'מרוקו', 'ברזיל', 'האיטי'], 'D': ['ארצות הברית', 'אוסטרליה', 'טורקיה', 'פרגוואי'],
@@ -266,16 +266,15 @@
 
         function renderMatches() {
             const container = document.getElementById('matches-container');
-            if (!container) return;
+            if (!container || typeof matchDatabase === 'undefined') return;
             
             let htmlChunks = [];
 
             for (const [matchId, data] of Object.entries(matchDatabase)) {
-                
-                // קוד הגנתי נגד קריסות אם חסר נתון!
                 const adv = data.advancedStats || { home: { xG: '-', restDays: '-', altitudeImpact: '-' }, away: { xG: '-', restDays: '-', altitudeImpact: '-' } };
                 const tHome = data.teamHome || { cards: { yellow: [], red: [] } };
                 const tAway = data.teamAway || { cards: { yellow: [], red: [] } };
+                
                 const cardsHomeYellow = tHome.cards?.yellow || [];
                 const cardsHomeRed = tHome.cards?.red || [];
                 const cardsAwayYellow = tAway.cards?.yellow || [];
@@ -352,7 +351,7 @@
             let html = ''; 
             (data.goals || []).forEach(g => { html += `<div class="goal-item"><span>⚽ ${g.player} (${g.minute})</span><span style="color: var(--text-muted); font-size:0.85rem">${g.team}</span></div>`; }); 
             if(!data.goals || data.goals.length === 0) html = "<div style='text-align:center'>0-0 (אין שערים)</div>"; 
-            openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); 
+            openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); // תוקן רשמית כאן!
         }
 
         function openSquadModal(matchId, side) { 
@@ -406,7 +405,12 @@
             } else { labelEl.style.color = 'var(--accent-cyan)'; } 
         }
 
-        window.addEventListener('DOMContentLoaded', () => { renderStats(); calculateAndRenderStandings(); renderMatches(); applyFilters(); });
+        window.addEventListener('DOMContentLoaded', () => { 
+            renderStats(); 
+            calculateAndRenderStandings(); 
+            renderMatches(); 
+            applyFilters(); 
+        });
     </script>
 </body>
 </html>
