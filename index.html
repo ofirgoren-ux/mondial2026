@@ -69,9 +69,10 @@
         .score-number.is-actual.trend { color: var(--color-trend); border-color: rgba(255, 179, 0, 0.4); background-color: rgba(255, 179, 0, 0.1); text-shadow: 0 0 12px rgba(255, 179, 0, 0.4); }
         .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
         
+        /* חלוקת הסתברויות מתוקנת LTR */
         .match-probabilities { padding: 0 20px 15px 20px; }
         .prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; direction: ltr;}
-        .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); }
+        .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); direction: ltr;}
         .prob-home { background-color: var(--accent-cyan); transition: width 0.5s ease;}
         .prob-draw { background-color: #8892b0; transition: width 0.5s ease;}
         .prob-away { background-color: #ff4d4d; transition: width 0.5s ease;}
@@ -172,7 +173,6 @@
     </div>
 
     <script>
-        // בסיס הנתונים מוטמע כאן, אין צורך בקובץ data.js חיצוני!
         const matchDatabase = {
             'match1': {
                 timeStatus: 'past', stage: 'A', dateText: "בית א' | 9 ביוני",
@@ -610,7 +610,6 @@
 
             for (const [matchId, data] of Object.entries(matchDatabase)) {
                 
-                // קוד הגנתי נגד קריסות פוטנציאליות
                 const adv = data.advancedStats || { home: { xG: '-', restDays: '-', altitudeImpact: '-' }, away: { xG: '-', restDays: '-', altitudeImpact: '-' } };
                 const prob = data.probabilities || { home: 33, draw: 34, away: 33 };
                 const tHome = data.teamHome || { name: 'Unknown', flagCode: 'un', color: '#000', cards: { yellow: [], red: [] } };
