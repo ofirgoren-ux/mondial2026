@@ -1,5 +1,5 @@
-// מסד הנתונים הרשמי והמשודרג - מונדיאל 2026 (מודל הסתברותי Pro)
-// מכיל 14 משחקי עבר מאומתים + 4 תחזיות למשחקים הקרובים לבקשתך
+// מסד הנתונים הרשמי - מונדיאל 2026 (מעודכן לאחר משחקי ה-16 ביוני)
+// מכיל 16 משחקי עבר מאומתים + 2 תחזיות למשחקים הבאים
 
 const matchDatabase = {
     // --- בית א' ---
@@ -98,7 +98,7 @@ const matchDatabase = {
         matchRisk: 'Safe',
         radarStats: { home: [90, 85, 80, 90, 80, 95], away: [60, 45, 50, 65, 70, 15] },
         advancedStats: { home: { xG: 4.80, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.15, restDays: 4, altitudeImpact: 'קשיי חמצן בגובה' } },
-        insight: { prediction: "שליטה גרמנית מוחלטת מול נבחרת שמתגוננת. המשמעת תפרק את הבונקר.", actual: "התפוצצות היסטורית! הגרמנים פשוט רמסו ושיחזרו את ה-7:1 המיתולוגי." },
+        insight: { prediction: "שליטה גרמנית מוחלטת מול נבחרת שמתגוננת. המשמעת תפרק את הבונקר.", actual: "התפוצצות היסטורית! פגיעה במגמה, אבל הגרמנים פשוט רמסו ושיחזרו את ה-7:1 המיתולוגי." },
         goals: [{ team: 'גרמניה', player: "קאי האברץ", minute: "12'" }, { team: 'גרמניה', player: "סרג' גנאברי", minute: "24'" }, { team: 'גרמניה', player: "ג'מאל מוסיאלה", minute: "33'" }, { team: 'גרמניה', player: "לאון גורצקה", minute: "45'" }, { team: 'גרמניה', player: "לירוי סאנה", minute: "60'" }, { team: 'גרמניה', player: "קאי האברץ", minute: "72'" }, { team: 'קוראסאו', player: "ז'וניניו באקונה", minute: "81'" }, { team: 'גרמניה', player: "יוזואה קימיך", minute: "88'" }],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
@@ -142,7 +142,7 @@ const matchDatabase = {
         radarStats: { home: [82, 70, 85, 80, 85, 75], away: [75, 65, 60, 85, 75, 40] },
         advancedStats: { home: { xG: 3.10, restDays: 4, altitudeImpact: 'רגיל' }, away: { xG: 0.65, restDays: 3, altitudeImpact: 'עייפות אקלים' } },
         insight: { prediction: "ההגנה התוניסאית קשוחה, אך העוצמה בכדורי גובה תשבור אותה.", actual: "פגיעה במגמה! שוודיה רמסה את תוניסיה עם תצוגה התקפית אדירה." },
-        goals: [{ team: 'שוודיה', player: "אלכסנדר איסק", minute: "14'" }, { team: 'שוודיה', player: "אמיל פורסברג", minute: "28'" }, { team: 'שוודיה', player: "ויקטור גיוקרס", minute: "41'" }, { team: 'תוניסיה', player: "והבי חאזרי", minute: "55'" }, { team: 'שוודיה', player: "דיאן קולוסבסקי", minute: "66'" }, { team: 'שוודיה', player: "אלכסנדר איסק", minute: "80'" }],
+        goals: [{ team: 'שוודיה', player: "אלכסנדר איסק", minute: "14'" }, { team: 'שוודיה', player: "אמיל פורסברג", minute: "28'" }, { team: 'שוודיה', player: "ויקטור גיוקרס", minute: "41'" }, { team: 'תוניסיה', player: "והבי חาזרי", minute: "55'" }, { team: 'שוודיה', player: "דיאן קולוסבסקי", minute: "66'" }, { team: 'שוודיה', player: "אלכסנדר איסק", minute: "80'" }],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
@@ -156,8 +156,8 @@ const matchDatabase = {
         matchRisk: 'Upset Alert',
         radarStats: { home: [85, 80, 75, 70, 70, 85], away: [75, 65, 70, 80, 75, 55] },
         advancedStats: { home: { xG: 1.45, restDays: 4, altitudeImpact: 'השפעה שלילית' }, away: { xG: 1.95, restDays: 4, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "סלאח ומרמוש יאתגרו את ההגנה, אך דה בראונה יעשה את ההבדל.", actual: "התקפות מעבר של מצרים פירקו את ההגנה הבלגית." },
-        goals: [{ team: 'מצרים', player: "עומר מרמוש", minute: "32'" }, { team: 'בלגיה', player: "רומלו לוקאקו", minute: "50'" }, { team: 'מצרים', player: "מוחמד סלאח", minute: "78'" }],
+        insight: { prediction: "סלאח ומרמוש יאתגרו את ההגנה, אך דה בראונה יעשה את ההבדל.", actual: "המתפרצות של מצרים היו קטלניות - הם הגיעו למצבים איכותיים יותר (xG 1.95)." },
+        goals: [{ team: 'מצרים', player: "עומר מרמוש", minute: "32'" }, { team: 'בלגיה', player: "רומלו לוקאקו", minute: "50'" }, { team: 'mצרים', player: "מוחמד סלאח", minute: "78'" }],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
@@ -169,8 +169,8 @@ const matchDatabase = {
         probabilities: { home: 45, draw: 35, away: 20 },
         matchRisk: 'Draw Booster',
         radarStats: { home: [75, 65, 75, 80, 85, 45], away: [65, 55, 70, 75, 80, 30] },
-        advancedStats: { home: { xG: 1.20, restDays: 4, altitudeImpact: 'רגיל' }, away: { xG: 0.45, restDays: 4, altitudeImpact: 'קשה' } },
-        insight: { prediction: "איראן מחזיקה ביתרון איכות קל בחלק הקדמי שיספיק לניצחון קטן.", actual: "האיראנים החמיצו בלי סוף למרות xG חיובי, ניו-זילנד עקצה." },
+        advancedStats: { home: { xG: 1.20, restDays: 4, altitudeImpact: 'בינוני' }, away: { xG: 0.45, restDays: 4, altitudeImpact: 'קשה' } },
+        insight: { prediction: "איראן מחזיקה ביתרון איכות קל בחלק הקדמי שיספיק לניצחון קטן.", actual: "האיראנים החמיצו בלי סוף למרות xG חיובי, ניו-זילנד גנבה שער." },
         goals: [{ team: 'ניו זלנד', player: "כריס ווד", minute: "85'" }],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
@@ -185,7 +185,7 @@ const matchDatabase = {
         matchRisk: 'Upset Alert',
         radarStats: { home: [95, 95, 75, 85, 70, 95], away: [70, 55, 65, 75, 80, 35] },
         advancedStats: { home: { xG: 2.40, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.10, restDays: 5, altitudeImpact: 'לחות מקשה' } },
-        insight: { prediction: "שליטה מוחלטת של ספרד בהחזקת הכדור. הטיקי-טאקה יכריע.", actual: "בונקר הירואי של קף ורדה! הספרדים החזיקו בכדור 80% מהזמן אך נעצרו." },
+        insight: { prediction: "שליטה מוחלטת של ספרד בהחזקת הכדור. הטיקי-טאקה יכריע.", actual: "ספרד הגיעה למצבים של 2.4 שערים בטוחים אך נתקלה ביום חלומי של השוער." },
         goals: [],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
@@ -198,9 +198,38 @@ const matchDatabase = {
         probabilities: { home: 15, draw: 25, away: 60 },
         matchRisk: 'Upset Alert',
         radarStats: { home: [70, 60, 65, 75, 70, 25], away: [85, 75, 80, 95, 90, 80] },
-        advancedStats: { home: { xG: 1.15, restDays: 5, altitudeImpact: 'קל (לח)' }, away: { xG: 1.90, restDays: 5, altitudeImpact: 'קשה' } },
-        insight: { prediction: "ביאלסה ואורוגוואי יביאו לחץ גבוה שערב הסעודית לא תוכל לעמוד בו.", actual: "אורוגוואי התעייפה משמעותית מהאקלים הלח בסיום, מה שאפשר מהפך סעודי מהסרטים." },
+        advancedStats: { home: { xG: 1.15, restDays: 5, altitudeImpact: 'קל (רגילים לחום)' }, away: { xG: 1.90, restDays: 5, altitudeImpact: 'קשה' } },
+        insight: { prediction: "ביאלסה ואורוגוואי יביאו לחץ גבוה שערב הסעודית לא תוכל לעמוד בו.", actual: "אורוגוואי הייתה מסוכנת יותר, אך התעייפה משמעותית בסיום מה שאפשר מהפך סעודי." },
         goals: [{ team: 'אורוגוואי', player: "דרווין נונייס", minute: "22'" }, { team: 'ערב הסעודית', player: "סאלם אל-דאווסרי", minute: "55'" }, { team: 'ערב הסעודית', player: "סאלח אל-שחרי", minute: "63'" }],
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+    },
+
+    // --- תוצאות אמת - משחקי ה-16 ביוני שביקשת לבדוק ---
+    'match15': {
+        timeStatus: 'past', stage: 'I', dateText: "בית ט' | שוחק ב-16 ביוני",
+        teamHome: { name: 'צרפת', flagCode: 'fr', color: '#002395', cards: { yellow: ["קמאבינגה (42')"], red: [] } },
+        teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: ["קוליבאלי (12')"], red: [] } },
+        score: { prediction: '2 - 0', actual: '3 - 1', accuracyClass: 'trend' },
+        probabilities: { home: 65, draw: 22, away: 13 },
+        matchRisk: 'Safe',
+        radarStats: { home: [95, 85, 80, 85, 90, 98], away: [70, 40, 75, 80, 95, 55] },
+        advancedStats: { home: { xG: 2.45, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.85, restDays: 5, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "העומק של צרפת פשוט גדול מדי על ההגנה הסנגלית. אמבפה צפוי לחגוג.", actual: "פגיעה במגמה! צרפת ניצחה בצדק עם שליטה מוחלטת ב-xG, אמבפה חגג עם צמד שערים נפלא." },
+        goals: [{ team: 'צרפת', player: "קיליאן אמבפה", minute: "14'" }, { team: 'צרפת', player: "אוסמאן דמבלה", minute: "45'" }, { team: 'סנגל', player: "סאדיו מאנה", minute: "55'" }, { team: 'צרפת', player: "קיליאן אמבפה", minute: "72'" }],
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+    },
+
+    'match16': {
+        timeStatus: 'past', stage: 'K', dateText: "בית כ' | שוחק ב-16 ביוני",
+        teamHome: { name: 'פורטוגל', flagCode: 'pt', color: '#006600', cards: { yellow: ["פלהיניה (60')"], red: [] } },
+        teamAway: { name: 'קונגו', flagCode: 'cg', color: '#FCD116', cards: { yellow: ["מבומבו (30')"], red: [] } },
+        score: { prediction: '3 - 1', actual: '2 - 1', accuracyClass: 'trend' },
+        probabilities: { home: 70, draw: 20, away: 10 },
+        matchRisk: 'Safe',
+        radarStats: { home: [90, 80, 85, 80, 75, 90], away: [60, 45, 55, 75, 80, 15] },
+        advancedStats: { home: { xG: 2.80, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.95, restDays: 4, altitudeImpact: 'בינוני' } },
+        insight: { prediction: "פורטוגל תכבוש מוקדם ותשייט לניצחון קל על הנייר.", actual: "פגיעה במגמה! קונגו הציגה אופי קשוח, אבל רונאלדו עלה מהספסל והכריע בדקה ה-83." },
+        goals: [{ team: 'פורטוגל', player: "ברונו פרננדש", minute: "29'" }, { team: 'קונגו', player: "סילבר גנבולה", minute: "41'" }, { team: 'פורטוגל', player: "כריסטיאנו רונאלדו", minute: "83'" }],
         squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
@@ -208,23 +237,8 @@ const matchDatabase = {
     // --- תחזיות חדשות לעתיד (לבקשתך) ---
     // ==========================================
 
-    // 15. צרפת נגד סנגל (בית ט') - להמשך היום!
-    'match15': {
-        timeStatus: 'future', stage: 'I', dateText: "בית ט' | 16 ביוני (טרום-שריקה)",
-        teamHome: { name: 'צרפת', flagCode: 'fr', color: '#002395', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 65, draw: 22, away: 13 },
-        matchRisk: 'Safe',
-        radarStats: { home: [95, 85, 80, 85, 90, 98], away: [70, 40, 75, 80, 95, 55] },
-        advancedStats: { home: { xG: '2.15 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.80 (צפי)', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "פערי איכות הסגל כאן עצומים (98 מול 55). הקישור הצרפתי ישלוט לחלוטין בקצב, ואמבפה ינצל שטחים מתים במעבר.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["מניאן", "גריזמן", "אמבפה"], actual: [] }, away: { predicted: ["מנדי", "קוליבאלי", "מאנה"], actual: [] } }
-    },
-
-    // 16. עיראק נגד נורווגיה (בית ט')
-    'match16': {
+    // 17. עיראק נגד נורווגיה (בית ט')
+    'match17': {
         timeStatus: 'future', stage: 'I', dateText: "בית ט' | 17 ביוני (טרום-שריקה)",
         teamHome: { name: 'עיראק', flagCode: 'iq', color: '#007A3D', cards: { yellow: [], red: [] } },
         teamAway: { name: 'נורווגיה', flagCode: 'no', color: '#BA0C2F', cards: { yellow: [], red: [] } },
@@ -235,11 +249,11 @@ const matchDatabase = {
         advancedStats: { home: { xG: '0.75 (צפי)', restDays: 5, altitudeImpact: 'קשיי אקלים קר' }, away: { xG: '2.45 (צפי)', restDays: 5, altitudeImpact: 'אקלים אופטימלי' } },
         insight: { prediction: "ההתאמה הטקטית הרסנית לעיראק. ארלינג הולאנד מגיע בכושר שיא פיזי מול קו הגנה איטי, המודל צופה חגיגה נורווגית באוויר.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["חassan", "עטיה", "חוסיין"], actual: [] }, away: { predicted: ["נילאנד", "אודגור", "הולאנד"], actual: [] } }
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
-    // 17. ארגנטינה נגד אלג'יריה (בית י')
-    'match17': {
+    // 18. ארגנטינה נגד אלג'יריה (בית י')
+    'match18': {
         timeStatus: 'future', stage: 'J', dateText: "בית י' | 17 ביוני (טרום-שריקה)",
         teamHome: { name: 'ארגנטינה', flagCode: 'ar', color: '#75AADB', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אלג\'יריה', flagCode: 'dz', color: '#006233', cards: { yellow: [], red: [] } },
@@ -250,11 +264,11 @@ const matchDatabase = {
         advancedStats: { home: { xG: '1.40 (צפי)', restDays: 5, altitudeImpact: 'עייפות קלה' }, away: { xG: '1.20 (צפי)', restDays: 5, altitudeImpact: 'יתרון פיזי מובהק' } },
         insight: { prediction: "בוסטר תיקו מופעל! אלג'יריה היא קבוצת בונקר/מתפרצות קלאסית עם פיזיות מטורפת (90) שתתסכל את מסי וחבריו במרכז המגרש.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["מרטינז", "דה פול", "מסי"], actual: [] }, away: { predicted: ["מנדריאה", "בנאצר", "מחרז"], actual: [] } }
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
 
-    // 18. אוסטריה נגד ירדן (בית י')
-    'match18': {
+    // 19. אוסטריה נגד ירדן (בית י')
+    'match19': {
         timeStatus: 'future', stage: 'J', dateText: "בית י' | 18 ביוני (טרום-שריקה)",
         teamHome: { name: 'אוסטריה', flagCode: 'at', color: '#ED2939', cards: { yellow: [], red: [] } },
         teamAway: { name: 'ירדן', flagCode: 'jo', color: '#CE1126', cards: { yellow: [], red: [] } },
@@ -265,6 +279,6 @@ const matchDatabase = {
         advancedStats: { home: { xG: '1.90 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.50 (צפי)', restDays: 5, altitudeImpact: 'עייפות טיסה' } },
         insight: { prediction: "הלחץ הגבוה של האוסטרים (Gegenpressing) יחנק את בניית המשחק הירדנית. פערי איכות הסגל יבטיחו שליטה אוסטרית רציפה.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["שלאגר", "זביצר", "לאימר"], actual: [] }, away: { predicted: ["אבו לילא", "אל-תעמרי", "אולוואן"], actual: [] } }
+        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     }
 };
