@@ -10,14 +10,15 @@
 <body>
 
     <!-- תפריט הצד עם סנן המחזורים החדש -->
-    <nav class="sidebar">
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+    <nav class="sidebar" id="main-sidebar">
         <div class="sidebar-logo">
             MUNDIAL 2026
             <span>AI Dashboard</span>
         </div>
         <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">🏠 שלב הבתים</a>
         
-        <!-- התפריט הפנימי לסינון מחזורים -->
         <div class="sidebar-submenu" id="submenu-matchdays">
             <button class="submenu-btn active" data-md="all">כל המשחקים</button>
             <button class="submenu-btn" data-md="1">מחזור 1</button>
@@ -31,10 +32,12 @@
         <a id="nav-bracket" class="nav-link" style="opacity: 0.5; cursor: not-allowed;">🏆 עץ נוקאאוט (בקרוב)</a>
     </nav>
 
-    <!-- אזור תוכן ראשי -->
     <main class="main-content">
         <header class="topbar">
-            <div class="topbar-title" id="main-title">שלב הבתים - מודל הסתברותי</div>
+            <div class="topbar-header-row">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                <div class="topbar-title" id="main-title">שלב הבתים - מודל הסתברותי</div>
+            </div>
             <div class="topbar-stats">
                 <div class="mini-stat">משחקים: <span id="stat-total" style="color:var(--accent-cyan)">0</span></div>
                 <div class="mini-stat">פגיעה בול: <span id="stat-exact" style="color:var(--color-exact)">0%</span></div>
@@ -42,7 +45,6 @@
                 <div class="mini-stat" style="border-bottom: 2px solid var(--accent-cyan);">הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
             </div>
         </header>
-
         <div class="content-wrapper">
             <div id="matches-view">
                 <!-- הפילטרים קוצצו כי המחזור עבר הצידה -->
