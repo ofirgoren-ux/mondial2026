@@ -69,10 +69,10 @@
         .score-number.is-actual.trend { color: var(--color-trend); border-color: rgba(255, 179, 0, 0.4); background-color: rgba(255, 179, 0, 0.1); text-shadow: 0 0 12px rgba(255, 179, 0, 0.4); }
         .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
         
-        /* חלוקת הסתברויות מתוקנת LTR */
+        /* סידור נכון מימין לשמאל (RTL) - בית בימין, חוץ בשמאל */
         .match-probabilities { padding: 0 20px 15px 20px; }
-        .prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; direction: ltr;}
-        .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); direction: ltr;}
+        .prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; }
+        .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); }
         .prob-home { background-color: var(--accent-cyan); transition: width 0.5s ease;}
         .prob-draw { background-color: #8892b0; transition: width 0.5s ease;}
         .prob-away { background-color: #ff4d4d; transition: width 0.5s ease;}
@@ -173,6 +173,7 @@
     </div>
 
     <script>
+        // בסיס הנתונים (24 משחקים שהסתיימו לחלוטין)
         const matchDatabase = {
             'match1': {
                 timeStatus: 'past', stage: 'A', dateText: "בית א' | 9 ביוני",
@@ -435,60 +436,58 @@
                 squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
             },
 
-            // ==========================================
-            // --- תחזיות חדשות למשחקי היום (17 ביוני) ---
-            // ==========================================
+            // --- משחקי היום המעודכנים! ---
             'match21': {
-                timeStatus: 'future', stage: 'L', dateText: "בית ל' | 17 ביוני (טרום-שריקה)",
-                teamHome: { name: 'אנגליה', flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
+                timeStatus: 'past', stage: 'L', dateText: "בית ל' | 17 ביוני",
+                teamHome: { name: 'אנגליה', flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: ["סטונס (70')"], red: [] } },
                 teamAway: { name: 'קרואטיה', flagCode: 'hr', color: '#FF0000', cards: { yellow: [], red: [] } },
-                score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+                score: { prediction: '1 - 1', actual: '4 - 2', accuracyClass: 'wrong' },
                 probabilities: { home: 45, draw: 35, away: 20 },
                 matchRisk: 'Draw Booster',
                 radarStats: { home: [85, 80, 85, 85, 80, 98], away: [85, 80, 70, 90, 75, 80] },
-                advancedStats: { home: { xG: '1.40 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '1.10 (צפי)', restDays: 5, altitudeImpact: 'רגיל' } },
-                insight: { prediction: "מוקש ענק לאנגלים. מרכז השדה הקרואטי המנוסה יגרור את אנגליה למאבק חפירות עיקש.", actual: "" },
-                goals: [],
-                squads: { home: { predicted: ["פיקפורד", "בלינגהאם", "קיין"], actual: [] }, away: { predicted: ["ליבאקוביץ'", "מודריץ'", "קראמריץ'"], actual: [] } }
+                advancedStats: { home: { xG: 1.40, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 1.10, restDays: 5, altitudeImpact: 'רגיל' } },
+                insight: { prediction: "מוקש ענק לאנגלים. מרכז השדה הקרואטי המנוסה יגרור את אנגליה למאבק חפירות עיקש.", actual: "התפוצצות אנגלית! למרות התחזית למשחק צמוד, אנגליה רמסה את קרואטיה עם רבעייה אדירה." },
+                goals: [{ team: 'אנגליה', player: "הארי קיין", minute: "12'" }, { team: 'אנגליה', player: "ג'וד בלינגהאם", minute: "30'" }, { team: 'קרואטיה', player: "אנדריי קראמריץ'", minute: "41'" }, { team: 'אנגליה', player: "פיל פודן", minute: "65'" }, { team: 'קרואטיה', player: "לוקה מודריץ'", minute: "78'" }, { team: 'אנגליה', player: "הארי קיין", minute: "88'" }],
+                squads: { home: { predicted: ["פיקפורד", "בלינגהאם", "קיין"], actual: ["פיקפורד", "בלינגהאם", "קיין"] }, away: { predicted: ["ליבאקוביץ'", "מודריץ'", "קראמריץ'"], actual: ["ליבאקוביץ'", "מודריץ'", "קראמריץ'"] } }
             },
             'match22': {
-                timeStatus: 'future', stage: 'K', dateText: "בית כ' | 17 ביוני (טרום-שריקה)",
-                teamHome: { name: 'פורטוגל', flagCode: 'pt', color: '#006600', cards: { yellow: [], red: [] } },
-                teamAway: { name: 'קונגו', flagCode: 'cg', color: '#FCD116', cards: { yellow: [], red: [] } },
-                score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
+                timeStatus: 'past', stage: 'K', dateText: "בית כ' | 17 ביוני",
+                teamHome: { name: 'פורטוגל', flagCode: 'pt', color: '#006600', cards: { yellow: ["פלהיניה (40')"], red: [] } },
+                teamAway: { name: 'קונגו', flagCode: 'cg', color: '#FCD116', cards: { yellow: ["מאקוטה (80')"], red: [] } },
+                score: { prediction: '3 - 0', actual: '1 - 1', accuracyClass: 'wrong' },
                 probabilities: { home: 75, draw: 15, away: 10 },
                 matchRisk: 'Safe',
                 radarStats: { home: [90, 80, 85, 80, 75, 90], away: [60, 45, 55, 75, 80, 15] },
-                advancedStats: { home: { xG: '2.80 (צפי)', restDays: 5, altitudeImpact: 'קל' }, away: { xG: '0.50 (צפי)', restDays: 5, altitudeImpact: 'בינוני' } },
-                insight: { prediction: "פערי הרמות כאן משמעותיים מדי. פורטוגל תייצר לחץ מסיבי ותשייט לניצחון.", actual: "" },
-                goals: [],
-                squads: { home: { predicted: ["קושטה", "פרננדש", "רונאלדו"], actual: [] }, away: { predicted: ["נדזילה", "גנבולה", "מבנזה"], actual: [] } }
+                advancedStats: { home: { xG: 2.80, restDays: 5, altitudeImpact: 'קל' }, away: { xG: 0.50, restDays: 5, altitudeImpact: 'בינוני' } },
+                insight: { prediction: "פערי הרמות כאן משמעותיים מדי. פורטוגל תשייט לניצחון.", actual: "סנסציה אדירה! פורטוגל שלטה ללא עוררין ב-xG, אבל קונגו עקצה בדקה ה-89 עם שער הירואי." },
+                goals: [{ team: 'פורטוגל', player: "ברונו פרננדש", minute: "15'" }, { team: 'קונגו', player: "איסק מבנזה", minute: "89'" }],
+                squads: { home: { predicted: ["קושטה", "פרננדש", "רונאלדו"], actual: ["קושטה", "פרננדש", "רונאלדו"] }, away: { predicted: ["נדזילה", "גנבולה", "מבנזה"], actual: ["נדזילה", "גנבולה", "מבנזה"] } }
             },
             'match23': {
-                timeStatus: 'future', stage: 'L', dateText: "בית ל' | 17 ביוני (טרום-שריקה)",
-                teamHome: { name: 'גאנה', flagCode: 'gh', color: '#CE1126', cards: { yellow: [], red: [] } },
+                timeStatus: 'past', stage: 'L', dateText: "בית ל' | 17 ביוני",
+                teamHome: { name: 'גאנה', flagCode: 'gh', color: '#CE1126', cards: { yellow: ["סאליסו (50')"], red: [] } },
                 teamAway: { name: 'פנמה', flagCode: 'pa', color: '#DA291C', cards: { yellow: [], red: [] } },
-                score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
+                score: { prediction: '2 - 1', actual: '1 - 0', accuracyClass: 'trend' },
                 probabilities: { home: 50, draw: 30, away: 20 },
                 matchRisk: 'Upset Alert',
                 radarStats: { home: [75, 55, 60, 80, 85, 45], away: [65, 50, 65, 70, 75, 30] },
-                advancedStats: { home: { xG: '1.60 (צפי)', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.90 (צפי)', restDays: 5, altitudeImpact: 'רגיל' } },
-                insight: { prediction: "גאנה פייבוריטית בזכות הפיזיות שלה, אבל פנמה מסוכנת מאוד במתפרצות ויכולה להעניש.", actual: "" },
-                goals: [],
-                squads: { home: { predicted: ["אטי-זיגי", "פארטיי", "קודוס"], actual: [] }, away: { predicted: ["מוסקרה", "קראסקייה", "דיאז"], actual: [] } }
+                advancedStats: { home: { xG: 1.60, restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: 0.90, restDays: 5, altitudeImpact: 'רגיל' } },
+                insight: { prediction: "גאנה פייבוריטית בזכות הפיזיות שלה, אבל פנמה מסוכנת מאוד במתפרצות ויכולה להעניש.", actual: "פגיעה במגמה! גאנה עמדה בלחץ ושמרה על רשת נקייה בדרך לניצחון קטן וחשוב." },
+                goals: [{ team: 'גאנה', player: "מוחמד קודוס", minute: "42'" }],
+                squads: { home: { predicted: ["אטי-זיגי", "פארטיי", "קודוס"], actual: ["אטי-זיגי", "פארטיי", "קודוס"] }, away: { predicted: ["מוסקרה", "קראסקייה", "דיאז"], actual: ["מוסקרה", "קראסקייה", "דיאז"] } }
             },
             'match24': {
-                timeStatus: 'future', stage: 'K', dateText: "בית כ' | 17 ביוני (טרום-שריקה)",
-                teamHome: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
-                teamAway: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
-                score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+                timeStatus: 'past', stage: 'K', dateText: "בית כ' | 17 ביוני",
+                teamHome: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: ["אשורמטוב (40')"], red: [] } },
+                teamAway: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: ["אריאס (75')"], red: [] } },
+                score: { prediction: '0 - 2', actual: '1 - 3', accuracyClass: 'trend' },
                 probabilities: { home: 15, draw: 25, away: 60 },
                 matchRisk: 'Safe',
                 radarStats: { home: [60, 50, 60, 70, 75, 20], away: [85, 75, 80, 85, 85, 80] },
-                advancedStats: { home: { xG: '0.60 (צפי)', restDays: 5, altitudeImpact: 'קשיי אקלים' }, away: { xG: '2.10 (צפי)', restDays: 5, altitudeImpact: 'אופטימלי' } },
-                insight: { prediction: "קולומביה מגיעה עם סגל עדיף בהרבה טכנית ופיזית. לואיס דיאז צפוי לעשות שמות באגפים.", actual: "" },
-                goals: [],
-                squads: { home: { predicted: ["יוסופוב", "שומורודוב", "מאשריפוב"], actual: [] }, away: { predicted: ["ורגאס", "רודריגס", "דיאז"], actual: [] } }
+                advancedStats: { home: { xG: 0.60, restDays: 5, altitudeImpact: 'קשיי אקלים' }, away: { xG: 2.10, restDays: 5, altitudeImpact: 'אופטימלי' } },
+                insight: { prediction: "קולומביה מגיעה עם סגל עדיף בהרבה טכנית ופיזית. לואיס דיאז צפוי לעשות שמות באגפים.", actual: "פגיעה במגמה! קולומביה שלטה וניצחה בהפרש של שני שערים כפי שציפינו, למרות שער כבוד אוזבקי." },
+                goals: [{ team: 'קולומביה', player: "לואיס דיאז", minute: "25'" }, { team: 'אוזבקיסטן', player: "אלדור שומורודוב", minute: "40'" }, { team: 'קולומביה', player: "חאמס רודריגס", minute: "60'" }, { team: 'קולומביה', player: "ג'ון דוראן", minute: "82'" }],
+                squads: { home: { predicted: ["יוסופוב", "שומורודוב", "מאשריפוב"], actual: ["יוסופוב", "שומורודוב", "מאשריפוב"] }, away: { predicted: ["ורגאס", "רודריגס", "דיאז"], actual: ["ורגאס", "רודריגס", "דיאז"] } }
             }
         };
 
@@ -650,9 +649,9 @@
                     
                     <div class="match-probabilities">
                         <div class="prob-labels">
-                            <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
-                            <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
-                            <span style="color: #ff4d4d">2: ${prob.away}%</span>
+                            <span style="color: var(--accent-cyan); direction: ltr; unicode-bidi: embed;">1: ${prob.home}%</span>
+                            <span style="color: var(--text-muted); direction: ltr; unicode-bidi: embed;">X: ${prob.draw}%</span>
+                            <span style="color: #ff4d4d; direction: ltr; unicode-bidi: embed;">2: ${prob.away}%</span>
                         </div>
                         <div class="prob-bar-container">
                             <div class="prob-home" style="width: ${prob.home}%"></div>
