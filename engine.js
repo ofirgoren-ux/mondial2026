@@ -1,7 +1,51 @@
 // ==========================================
-// engine.js - מנוע הדשבורד המעודכן
-// תמיכה בטאבים דינמיים ופילטר תפריט צד
+// engine.js - המנוע הראשי של הדשבורד
 // ==========================================
+
+// פתיחה וסגירת תפריט במובייל
+window.toggleMobileMenu = function() {
+    document.getElementById('main-sidebar').classList.toggle('open');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+        setTimeout(() => overlay.style.display = 'none', 300); 
+    } else {
+        overlay.style.display = 'block';
+        setTimeout(() => overlay.classList.add('active'), 10);
+    }
+}
+
+function closeMobileMenuIfOpen() {
+    if (window.innerWidth <= 900 && document.getElementById('main-sidebar').classList.contains('open')) {
+        window.toggleMobileMenu();
+    }
+}
+
+// ניווט בין המסכים (SPA)
+window.switchView = function(viewName) {
+    closeMobileMenuIfOpen();
+    
+    document.getElementById('matches-view').style.display = 'none';
+    document.getElementById('standings-view').style.display = 'none';
+    document.getElementById('scorers-view').style.display = 'none';
+    
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
+    document.getElementById('nav-' + viewName).classList.add('active');
+
+    const titleEl = document.getElementById('main-title');
+    if (viewName === 'matches') {
+        document.getElementById('matches-view').style.display = 'block';
+        titleEl.innerText = "שלב הבתים - מודל הסתברותי";
+    } else if (viewName === 'standings') {
+        document.getElementById('standings-view').style.display = 'flex';
+        titleEl.innerText = "טבלאות הבתים - עדכני";
+        calculateAndRenderStandings();
+    } else if (viewName === 'scorers') {
+        document.getElementById('scorers-view').style.display = 'block';
+        titleEl.innerText = "מלך השערים - נעל הזהב";
+        calculateAndRenderTopScorers();
+    }
+}
 
 function renderStats() {
     if (typeof matchDatabase === 'undefined') return;
@@ -17,15 +61,10 @@ function renderStats() {
     const trendPercent = totalPast === 0 ? 0 : Math.round((trendHits / totalPast) * 100);
     const totalAccuracy = totalPast === 0 ? 0 : Math.round(((exactHits + trendHits) / totalPast) * 100);
 
-    const elTotal = document.getElementById('stat-total');
-    const elExact = document.getElementById('stat-exact');
-    const elTrend = document.getElementById('stat-trend');
-    const elOverall = document.getElementById('stat-overall');
-    
-    if(elTotal) elTotal.innerText = totalPast;
-    if(elExact) elExact.innerText = exactPercent + "%";
-    if(elTrend) elTrend.innerText = trendPercent + "%";
-    if(elOverall) elOverall.innerText = totalAccuracy + "%";
+    if(document.getElementById('stat-total')) document.getElementById('stat-total').innerText = totalPast;
+    if(document.getElementById('stat-exact')) document.getElementById('stat-exact').innerText = exactPercent + "%";
+    if(document.getElementById('stat-trend')) document.getElementById('stat-trend').innerText = trendPercent + "%";
+    if(document.getElementById('stat-overall')) document.getElementById('stat-overall').innerText = totalAccuracy + "%";
 }
 
 function calculateAndRenderStandings() {
@@ -194,7 +233,6 @@ function renderMatches() {
                 </div>
             `;
         } else {
-            // משחק שטרם שוחק - טאב הסיכום מושמט לחלוטין!
             tabsHTML = `
                 <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score.prediction}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score.prediction}', 'תחזית ו-xG מוקדם', '')">עומק</button>
@@ -262,12 +300,13 @@ function renderMatches() {
 }
 
 // --- מודאלים ---
-function openModal(title, contentHTML) { 
+window.openModal = function(title, contentHTML) { 
     const modal = document.getElementById('infoModal');
     if(modal) { document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalBody').innerHTML = contentHTML; modal.style.display = 'flex'; }
 }
-function closeModal(e) { if(e) e.preventDefault(); const modal = document.getElementById('infoModal'); if(modal) modal.style.display = 'none'; }
-function openGoalsModal(matchId) { 
+window.closeModal = function(e) { if(e) e.preventDefault(); const modal = document.getElementById('infoModal'); if(modal) modal.style.display = 'none'; }
+
+window.openGoalsModal = function(matchId) { 
     const scoreEl = document.getElementById(`${matchId}-score`); 
     if(!scoreEl || !scoreEl.classList.contains('is-actual')) return; 
     const data = matchDatabase[matchId]; 
@@ -276,7 +315,7 @@ function openGoalsModal(matchId) {
     if(!data.goals || data.goals.length === 0) html = "<div style='text-align:center'>0-0 (אין שערים)</div>"; 
     openModal(`פירוט שערים - ${data.teamHome.name} מול ${data.teamAway.name}`, html); 
 }
-function openSquadModal(matchId, side) { 
+window.openSquadModal = function(matchId, side) { 
     const data = matchDatabase[matchId]; const squadKey = side === 'teamHome' ? 'home' : 'away'; 
     if(!data.squads || !data.squads[squadKey] || !data.squads[squadKey].predicted || data.squads[squadKey].predicted.length === 0) { openModal("סגל", "נתוני סגל מפורטים יועלו בהמשך הטורניר."); return; } 
     const predHTML = data.squads[squadKey].predicted.map(p => `<li>${p}</li>`).join(''); 
@@ -284,37 +323,14 @@ function openSquadModal(matchId, side) {
     const html = `<div class="squad-grid"><div class="squad-col"><h4>תחזית המודל</h4><ul class="squad-list">${predHTML}</ul></div><div class="squad-col"><h4>שיחקו בפועל</h4><ul class="squad-list">${actualHTML}</ul></div></div>`; 
     openModal(`סגל נבחרת ${data[side].name}`, html); 
 }
-function openCardModal(matchId, side, type) { 
+window.openCardModal = function(matchId, side, type) { 
     const data = matchDatabase[matchId]; const iconColor = type === 'yellow' ? '#f1c40f' : '#e74c3c'; 
     let html = ''; 
     (data[side].cards[type] || []).forEach(c => { html += `<div class="card-detail" style="margin-bottom: 10px;"><div style="width: 15px; height: 20px; background-color: ${iconColor}; border-radius: 3px;"></div><span>${c}</span></div>`; }); 
     openModal(`פירוט כרטיסים - ${data[side].name}`, html); 
 }
 
-// --- ניווט וטאבים דינמיים ---
-window.switchView = function(viewName) {
-    document.getElementById('matches-view').style.display = 'none';
-    document.getElementById('standings-view').style.display = 'none';
-    document.getElementById('scorers-view').style.display = 'none';
-    
-    document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
-    document.getElementById('nav-' + viewName).classList.add('active');
-
-    const titleEl = document.getElementById('main-title');
-    if (viewName === 'matches') {
-        document.getElementById('matches-view').style.display = 'block';
-        titleEl.innerText = "שלב הבתים - מודל הסתברותי";
-    } else if (viewName === 'standings') {
-        document.getElementById('standings-view').style.display = 'flex';
-        titleEl.innerText = "טבלאות הבתים - עדכני";
-        calculateAndRenderStandings();
-    } else if (viewName === 'scorers') {
-        document.getElementById('scorers-view').style.display = 'block';
-        titleEl.innerText = "מלך השערים - נעל הזהב";
-        calculateAndRenderTopScorers();
-    }
-}
-
+// --- ניווט טאבים בכרטיסיות ---
 window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accuracyLevel) { 
     const card = btn.closest('.match-card');
     const tabs = card.querySelectorAll('.tab-content');
@@ -385,5 +401,6 @@ window.addEventListener('DOMContentLoaded', () => {
         currentMdFilter = e.target.getAttribute('data-md'); 
         if (document.getElementById('matches-view').style.display === 'none') switchView('matches');
         applyFilters(); 
+        closeMobileMenuIfOpen();
     }));
 });

@@ -19,7 +19,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .nav-link:hover { background-color: rgba(102, 252, 241, 0.05); color: var(--text-main); }
 .nav-link.active { background-color: var(--accent-blue); color: #fff; box-shadow: 0 4px 15px rgba(69, 162, 158, 0.4); }
 
-/* תפריט פנימי לסינון מחזורים */
 .sidebar-submenu { display: flex; flex-direction: column; gap: 5px; margin-right: 35px; margin-bottom: 15px; }
 .submenu-btn { background: none; border: none; color: var(--text-muted); text-align: right; padding: 8px 10px; font-size: 0.85rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
 .submenu-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
@@ -29,8 +28,8 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .main-content { margin-right: 260px; flex: 1; min-height: 100vh; padding: 0; display: flex; flex-direction: column; }
 .content-wrapper { padding: 30px 40px; max-width: 1600px; margin: 0 auto; width: 100%; }
 
-/* סרגל סטטיסטיקות צף (Topbar) */
 .topbar { background-color: rgba(21, 26, 40, 0.85); backdrop-filter: blur(10px); padding: 15px 40px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.topbar-header-row { display: flex; align-items: center; gap: 15px; }
 .topbar-title { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
 .topbar-stats { display: flex; gap: 15px; }
 .mini-stat { background: var(--card-bg); padding: 8px 15px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
@@ -70,11 +69,9 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .scorer-team { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 2px;}
 .scorer-goals { font-size: 1.5rem; font-weight: 900; color: var(--accent-cyan); background: rgba(102, 252, 241, 0.1); padding: 4px 15px; border-radius: 8px; border: 1px solid rgba(102, 252, 241, 0.2); }
 
-/* --- כרטיסיות משחקים (Matches Grid & Cards) --- */
+/* --- כרטיסיות משחקים --- */
 #matches-view { display: block; animation: tabFadeIn 0.4s ease; }
 .matches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 900px) { .sidebar { display: none; } .main-content { margin-right: 0; } .matches-grid { grid-template-columns: 1fr; } }
 
 .match-card { background-color: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; opacity: 0; transform: translateY(15px); will-change: transform, opacity; }
 .match-card.animate-in { animation: cardFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -97,12 +94,10 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .score-number { font-size: 1.6rem; font-weight: 900; background-color: rgba(0, 0, 0, 0.3); padding: 4px 15px; border-radius: 8px; border: 1px solid var(--border-color); letter-spacing: 2px; white-space: nowrap; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: all 0.3s ease; cursor: pointer;}
 .score-number:hover { transform: scale(1.05); }
 
-/* צבעי סטאטוס לפגיעות המודל בכרטיסייה */
 .score-number.is-actual.exact { color: var(--color-exact); border-color: rgba(0, 230, 118, 0.4); background-color: rgba(0, 230, 118, 0.1); text-shadow: 0 0 12px rgba(0, 230, 118, 0.4); }
 .score-number.is-actual.trend { color: var(--color-trend); border-color: rgba(255, 179, 0, 0.4); background-color: rgba(255, 179, 0, 0.1); text-shadow: 0 0 12px rgba(255, 179, 0, 0.4); }
 .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
 
-/* פסי הסתברות */
 .match-probabilities { padding: 0 20px 15px 20px; }
 .prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; direction: ltr;}
 .prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); direction: ltr;}
@@ -112,7 +107,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 
 .chart-container { padding: 5px 15px; height: 160px; position: relative; }
 
-/* טאבים פנימיים מעוצבים (Segmented Control) בכרטיסיות */
+/* טאבים פנימיים */
 .inner-tabs { display: flex; background-color: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; margin: 0 15px 15px 15px; border: 1px solid rgba(255,255,255,0.05); }
 .inner-tab-btn { flex: 1; background: transparent; border: none; padding: 8px 5px; color: var(--text-muted); font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; border-radius: 6px; }
 .inner-tab-btn:hover:not(:disabled) { background-color: rgba(255,255,255,0.05); color: var(--text-main); }
@@ -121,7 +116,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 
 .tab-content { display: none; padding: 0 15px 15px 15px; flex-grow: 1; animation: tabFadeIn 0.3s ease; }
 .tab-content.active { display: block; }
-@keyframes tabFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 .insight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .insight-title { font-size: 0.85rem; color: var(--accent-cyan); font-weight: 800; }
@@ -145,7 +139,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .status-trend-ui { background-color: rgba(255, 179, 0, 0.05); color: var(--color-trend); border-top: 1px solid rgba(255,179,0,0.2); }
 .status-wrong-ui { background-color: rgba(255, 51, 51, 0.05); color: var(--color-wrong); border-top: 1px solid rgba(255,51,51,0.2); }
 
-/* --- מודאלים לחלונות קופצים (Modals) --- */
+/* --- מודאלים --- */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
 .modal-content { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); width: 90%; max-width: 500px; padding: 25px; position: relative; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
@@ -159,3 +153,23 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .diff-player { color: var(--color-trend); font-weight: 600; }
 .goal-item { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; }
 .card-detail { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+
+/* --- תמיכה במובייל --- */
+.mobile-menu-btn { display: none; background: none; border: none; color: var(--text-main); font-size: 1.8rem; cursor: pointer; padding: 0; }
+.sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 95; backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.3s ease; }
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+    .mobile-menu-btn { display: block; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 15px; padding: 15px 20px; }
+    .topbar-stats { width: 100%; overflow-x: auto; padding-bottom: 5px; justify-content: flex-start; }
+    
+    .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; }
+    .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
+    
+    .main-content { margin-right: 0; }
+    .content-wrapper { padding: 15px 15px; }
+    .matches-grid { grid-template-columns: 1fr; }
+    .filters-row { flex-direction: column; border-radius: 20px; padding: 15px; }
+}

@@ -9,8 +9,7 @@
 </head>
 <body>
 
-    <!-- תפריט הצד עם סנן המחזורים החדש -->
-<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <nav class="sidebar" id="main-sidebar">
         <div class="sidebar-logo">
@@ -45,9 +44,9 @@
                 <div class="mini-stat" style="border-bottom: 2px solid var(--accent-cyan);">הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
             </div>
         </header>
+
         <div class="content-wrapper">
             <div id="matches-view">
-                <!-- הפילטרים קוצצו כי המחזור עבר הצידה -->
                 <div class="filters-row">
                     <div class="filter-group">
                         <span class="filter-label">זמן:</span>
@@ -89,11 +88,8 @@
         </div>
     </div>
 
-    <!-- חיבור למאגרי הנתונים -->
-<script src="data/md1.js"></script>
-
+    <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
-
     <script src="engine.js"></script>
 </body>
 </html>
