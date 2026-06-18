@@ -1,5 +1,5 @@
 // data/md2.js - מחזור 2 (Matchday 2)
-// מעודכן לזמן ישראל: המשחקים מוגדרים כעתידיים (טרום-שריקה)
+// משחקים שטרם החלו, מותאם לשעון אמריקה/ישראל
 
 const matchday2Database = {
     'match25': {
@@ -76,7 +76,6 @@ const matchday2Database = {
     }
 };
 
-// הזרקה אוטומטית למאגר הראשי של המערכת
 if (typeof matchDatabase !== 'undefined') {
     Object.assign(matchDatabase, matchday2Database);
 }
