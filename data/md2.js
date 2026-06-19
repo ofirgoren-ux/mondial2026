@@ -1,5 +1,5 @@
 // data/md2.js - מחזור 2 (Matchday 2)
-// מעודכן: כולל את תוצאות משחקי הלילה (18 ביוני) ותחזיות ל-4 המשחקים הבאים.
+// מעודכן: כולל את תוצאות משחקי העבר ואת לוח הזמנים המדויק (שעון ישראל) להמשך המחזור.
 
 const matchday2Database = {
     // --- משחקים שהסתיימו (18 ביוני) ---
@@ -40,21 +40,33 @@ const matchday2Database = {
         squads: { home: { predicted: ["ברשאם", "ח'וח'י", "עלי"], actual: ["ברשאם", "ח'וח'י", "עפיף"] }, away: { predicted: ["בוריאן", "דייוויס", "דייוויד"], actual: ["בוריאן", "דייוויס", "דייוויד"] } }
     },
 
-    // --- 4 המשחקים הבאים (19-20 ביוני) ---
+    // --- משחקים עתידיים (לפי שעון ישראל) ---
     'match28': {
-        timeStatus: 'future', matchday: 2, stage: 'B', dateText: "בית ב' | 19 ביוני",
-        teamHome: { name: 'שוויץ', flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'בוסניה והרצגובינה', flagCode: 'ba', color: '#002F6C', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 55, draw: 28, away: 17 }, matchRisk: 'Safe',
-        radarStats: { home: [82, 75, 70, 80, 75, 80], away: [70, 60, 75, 75, 80, 65] },
-        advancedStats: { home: { xG: '1.85 (צפי)', restDays: 9, altitudeImpact: 'אופטימלי' }, away: { xG: '0.90 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "המשמעת הטקטית של שוויץ תנצח במרכז השדה, אך אדין דז'קו הוותיק תמיד מסוכן בכדורי גובה.", actual: "" },
+        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | היום, 22:00",
+        teamHome: { name: 'ארצות הברית', flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'אוסטרליה', flagCode: 'au', color: '#FFD100', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
+        radarStats: { home: [75, 60, 80, 85, 85, 65], away: [65, 45, 85, 90, 95, 30] },
+        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 7, altitudeImpact: 'מארחת / ביתי' }, away: { xG: '0.80 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "ארצות הברית פייבוריטית מובהקת בבית ותשלוט בקצב המשחק מתחילתו.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["זומר", "ג'אקה", "שאקירי"], actual: [] }, away: { predicted: ["שחיץ'", "פיאניץ'", "דז'קו"], actual: [] } }
+        squads: { home: { predicted: ["טרנר", "מקני", "פוליסיק"], actual: [] }, away: { predicted: ["ריאן", "אירביין", "דיוק"], actual: [] } }
     },
     'match29': {
-        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | 19 ביוני",
+        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | מחר, 01:00",
+        teamHome: { name: 'סקוטלנד', flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'מרוקו', flagCode: 'ma', color: '#FF3333', cards: { yellow: [], red: [] } },
+        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 38, draw: 38, away: 24 }, matchRisk: 'Draw Booster',
+        radarStats: { home: [80, 65, 85, 75, 75, 70], away: [78, 55, 80, 90, 90, 75] },
+        advancedStats: { home: { xG: '1.10 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '1.20 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "בוסטר תיקו פעיל! שתי נבחרות סופר קשוחות והגנתיות. המשחק יתנהל בעיקר על כדורים ארוכים, נייחים ומאבקי פיזיות.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: [] }, away: { predicted: ["בונו", "חכימי", "זיאש"], actual: [] } }
+    },
+    'match30': {
+        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | מחר, 03:30",
         teamHome: { name: 'ברזיל', flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } },
         teamAway: { name: 'האיטי', flagCode: 'ht', color: '#00209F', cards: { yellow: [], red: [] } },
         score: { prediction: '4 - 0', actual: '', accuracyClass: 'pending' },
@@ -65,29 +77,29 @@ const matchday2Database = {
         goals: [],
         squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס"], actual: [] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: [] } }
     },
-    'match30': {
-        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | 19 ביוני",
-        teamHome: { name: 'מרוקו', flagCode: 'ma', color: '#FF3333', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'סקוטלנד', flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 38, draw: 38, away: 24 }, matchRisk: 'Draw Booster',
-        radarStats: { home: [78, 55, 80, 90, 90, 75], away: [80, 65, 85, 75, 75, 70] },
-        advancedStats: { home: { xG: '1.20 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '1.10 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "בוסטר תיקו פעיל! שתי נבחרות סופר קשוחות והגנתיות. המשחק יתנהל בעיקר על כדורים ארוכים, נייחים ומאבקי פיזיות.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["בונו", "חכימי", "זיאש"], actual: [] }, away: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: [] } }
-    },
     'match31': {
-        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | 20 ביוני",
-        teamHome: { name: 'ארצות הברית', flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'טורקיה', flagCode: 'tr', color: '#FF4444', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 2', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 42, draw: 30, away: 28 }, matchRisk: 'Upset Alert',
-        radarStats: { home: [75, 60, 80, 85, 85, 65], away: [88, 75, 65, 75, 70, 75] },
-        advancedStats: { home: { xG: '1.95 (צפי)', restDays: 8, altitudeImpact: 'מארחת / ביתי' }, away: { xG: '1.80 (צפי)', restDays: 8, altitudeImpact: 'יתרון אקלים' } },
-        insight: { prediction: "קרב אדיר על ראשות הבית. שתי קבוצות סופר התקפיות שניצחו במחזור הראשון. צפו למבול של מצבים ולמשחק פתוח לחלוטין.", actual: "" },
+        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | מחר, 06:00",
+        teamHome: { name: 'טורקיה', flagCode: 'tr', color: '#FF4444', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'פרגוואי', flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 48, draw: 30, away: 22 }, matchRisk: 'Upset Alert',
+        radarStats: { home: [88, 75, 65, 75, 70, 75], away: [70, 50, 75, 80, 90, 40] },
+        advancedStats: { home: { xG: '1.60 (צפי)', restDays: 8, altitudeImpact: 'יתרון אקלים' }, away: { xG: '0.90 (צפי)', restDays: 8, altitudeImpact: 'עייפות' } },
+        insight: { prediction: "הטורקים ינסו להכתיב את הקצב, אך פרגוואי מסוכנת במתפרצות מהירות ויכולה לעקוץ.", actual: "" },
         goals: [],
-        squads: { home: { predicted: ["טרנר", "מקני", "פוליסיק"], actual: [] }, away: { predicted: ["גונק", "צ'להאנולו", "גולר"], actual: [] } }
+        squads: { home: { predicted: ["גונק", "צ'להאנולו", "גולר"], actual: [] }, away: { predicted: ["סילבה", "אלמירון", "גומז"], actual: [] } }
+    },
+    'match32': {
+        timeStatus: 'future', matchday: 2, stage: 'F', dateText: "בית ו' | מחר, 20:00",
+        teamHome: { name: 'הולנד', flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'שוודיה', flagCode: 'se', color: '#006AA7', cards: { yellow: [], red: [] } },
+        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 40, draw: 35, away: 25 }, matchRisk: 'Draw Booster',
+        radarStats: { home: [88, 85, 75, 80, 80, 90], away: [82, 70, 85, 80, 85, 75] },
+        advancedStats: { home: { xG: '1.40 (צפי)', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '1.20 (צפי)', restDays: 6, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "קרב אירופאי קלאסי וקשוח. המודל מזהה סבירות גבוהה לחלוקת נקודות בין שתי נבחרות חזקות טקטית.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["ורברוחן", "ואן דייק", "גאקפו"], actual: [] }, away: { predicted: ["אולסן", "לינדלוף", "איסק"], actual: [] } }
     }
 };
 
