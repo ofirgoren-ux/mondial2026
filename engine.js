@@ -1,4 +1,183 @@
-// ==========================================
+// engine.js - המנוע המקורי מ-18 ביוני
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof matchDatabase !== 'undefined') {
+        renderMatches();
+        renderStats();
+        switchView('matches');
+        
+        if (!document.getElementById('dynamic-modal')) {
+            document.body.insertAdjacentHTML('beforeend', `
+            <div id="dynamic-modal" class="modal-overlay" onclick="closeModal(event)">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="forceCloseModal()">×</button>
+                    <div id="modal-title" class="modal-title"></div>
+                    <div id="modal-body" class="modal-body"></div>
+                </div>
+            </div>`);
+        }
+    } else {
+        alert("שגיאה: קובץ נתונים לא נטען. ודא שתיקיית data קיימת ומחוברת.");
+    }
+});
+
+window.toggleMobileMenu = function() {
+    document.getElementById('main-sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').style.display = 
+        document.getElementById('main-sidebar').classList.contains('open') ? 'block' : 'none';
+}
+
+window.switchView = function(viewName) {
+    document.querySelectorAll('#matches-view, #standings-view, #scorers-view').forEach(v => v.style.display = 'none');
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.getElementById(viewName + '-view').style.display = 'block';
+    document.getElementById('nav-' + viewName).classList.add('active');
+}
+
+function renderStats() {
+    let past = 0, exact = 0, trend = 0;
+    for (let key in matchDatabase) {
+        if (matchDatabase[key].timeStatus === 'past') {
+            past++;
+            if (matchDatabase[key].score.accuracyClass === 'exact') exact++;
+            if (matchDatabase[key].score.accuracyClass === 'trend') trend++;
+        }
+    }
+    document.getElementById('stat-total').innerText = past;
+    document.getElementById('stat-exact').innerText = past ? Math.round((exact/past)*100) + '%' : '0%';
+    document.getElementById('stat-trend').innerText = past ? Math.round((trend/past)*100) + '%' : '0%';
+    document.getElementById('stat-overall').innerText = past ? Math.round(((exact+trend)/past)*100) + '%' : '0%';
+}
+
+function renderMatches() {
+    const container = document.getElementById('matches-container');
+    let html = '';
+
+    for (const [id, data] of Object.entries(matchDatabase)) {
+        const isPast = data.timeStatus === 'past';
+        const scoreActual = isPast ? data.score.actual : data.score.prediction;
+        const scoreClass = isPast ? data.score.accuracyClass : '';
+        
+        const advH = data.advancedStats?.home || { xG: '-', restDays: '-', altitudeImpact: '-' };
+        const advA = data.advancedStats?.away || { xG: '-', restDays: '-', altitudeImpact: '-' };
+
+        html += `
+        <div class="match-card match-item" data-stage="${data.stage}" data-time="${data.timeStatus}" data-md="md${data.matchday}">
+            <div class="match-header">${data.dateText}</div>
+            <div class="match-hero">
+                <div class="team">
+                    <img src="https://flagcdn.com/w80/${data.teamHome.flagCode}.png" class="team-flag" onclick="openSquadModal('${id}', 'home')">
+                    <div class="team-name">${data.teamHome.name}</div>
+                </div>
+                <div class="score-center">
+                    <div class="score-label" id="lbl-${id}">${isPast ? 'סיום' : 'תחזית'}</div>
+                    <div class="score-number ${scoreClass}" onclick="openGoalsModal('${id}')">${scoreActual}</div>
+                </div>
+                <div class="team">
+                    <img src="https://flagcdn.com/w80/${data.teamAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${id}', 'away')">
+                    <div class="team-name">${data.teamAway.name}</div>
+                </div>
+            </div>
+            
+            <div class="inner-tabs">
+                <button class="inner-tab-btn active" onclick="switchCardTab(this, '${id}', 'pred')">תחזית</button>
+                ${isPast ? `<button class="inner-tab-btn" onclick="switchCardTab(this, '${id}', 'sum')">סיכום</button>` : ''}
+                <button class="inner-tab-btn" onclick="switchCardTab(this, '${id}', 'adv')">עומק</button>
+            </div>
+
+            <div id="${id}-pred" class="tab-content active">
+                <div class="insight-title">🔑 אקס-פקטור</div>
+                <div class="insight-text">${data.insight.prediction}</div>
+            </div>
+            
+            ${isPast ? `
+            <div id="${id}-sum" class="tab-content">
+                <div class="insight-title">🎯 פוסט-משחק</div>
+                <div class="insight-text">${data.insight.actual}</div>
+            </div>` : ''}
+
+            <div id="${id}-adv" class="tab-content">
+                <div class="insight-title">📊 נתונים מתקדמים</div>
+                <div class="adv-stats-row">
+                    <div style="text-align: right;">
+                        <div>xG צפוי: <strong>${advH.xG}</strong></div>
+                        <div>מנוחה: <strong>${advH.restDays}</strong> ימים</div>
+                    </div>
+                    <div style="text-align: left;">
+                        <div>xG צפוי: <strong>${advA.xG}</strong></div>
+                        <div>מנוחה: <strong>${advA.restDays}</strong> ימים</div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+    
+    container.innerHTML = html;
+}
+
+window.switchCardTab = function(btn, matchId, tabId) {
+    const card = btn.closest('.match-card');
+    card.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active'));
+    card.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    card.querySelector(`#${matchId}-${tabId}`).classList.add('active');
+}
+
+window.applyFilter = function(filter) {
+    const btn = event.target;
+    btn.closest('.filter-group, .sidebar-submenu').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.match-item').forEach(card => {
+        const stage = card.getAttribute('data-stage');
+        const time = card.getAttribute('data-time');
+        const md = card.getAttribute('data-md');
+        
+        let show = false;
+        if (filter === 'all') show = true;
+        else if (filter === time || filter === md || filter === stage) show = true;
+        
+        card.style.display = show ? 'flex' : 'none';
+    });
+}
+
+window.openModal = function(title, html) {
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('dynamic-modal').style.display = 'flex';
+}
+window.closeModal = function(e) { if(e.target.id === 'dynamic-modal') forceCloseModal(); }
+window.forceCloseModal = function() { document.getElementById('dynamic-modal').style.display = 'none'; }
+
+window.openSquadModal = function(matchId, side) {
+    const data = matchDatabase[matchId];
+    const team = side === 'home' ? data.teamHome : data.teamAway;
+    const squads = data.squads ? data.squads[side] : null;
+    let html = '';
+    if (squads && squads.predicted) {
+        html += `<div class="squad-grid"><div class="squad-col"><h4>תחזית הרכב</h4><ul class="squad-list">`;
+        squads.predicted.forEach(p => html += `<li>👕 ${p}</li>`);
+        html += `</ul></div>`;
+        if (data.timeStatus === 'past' && squads.actual && squads.actual.length > 0) {
+            html += `<div class="squad-col"><h4>הרכב בפועל</h4><ul class="squad-list">`;
+            squads.actual.forEach(p => html += `<li>👕 ${p}</li>`);
+            html += `</ul></div>`;
+        }
+        html += `</div>`;
+    } else {
+        html += `<p style="text-align:center;">אין נתוני סגל.</p>`;
+    }
+    openModal(`סגל: ${team.name}`, html);
+}
+
+window.openGoalsModal = function(matchId) {
+    const data = matchDatabase[matchId];
+    if(!data.goals || data.goals.length === 0) return;
+    let html = '<ul class="squad-list">';
+    data.goals.forEach(g => html += `<li>⚽ ${g.player} <span style="color:var(--accent-cyan)">${g.minute}</span></li>`);
+    html += '</ul>';
+    openModal(`אירועי שערים`, html);
+}// ==========================================
 // engine.js - המנוע הראשי המלא של הדשבורד (גרסת Dark Mode & Matchup)
 // ==========================================
 
