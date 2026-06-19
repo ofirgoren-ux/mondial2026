@@ -99,8 +99,8 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
 
 .match-probabilities { padding: 0 20px 15px 20px; }
-.prob-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 800; direction: ltr;}
-.prob-bar-container { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background-color: rgba(0,0,0,0.5); direction: ltr;}
+.prob-labels { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; direction: rtl; }
+.prob-bar { width: 100%; height: 10px; display: flex; border-radius: 5px; overflow: hidden; direction: rtl; }
 .prob-home { background-color: var(--accent-cyan); transition: width 0.5s ease;}
 .prob-draw { background-color: #8892b0; transition: width 0.5s ease;}
 .prob-away { background-color: #ff4d4d; transition: width 0.5s ease;}
