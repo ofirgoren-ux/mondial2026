@@ -260,12 +260,12 @@ function renderMatches() {
             </div>
             
             <div class="match-probabilities">
-                <div class="prob-labels" style="direction: ltr; unicode-bidi: embed;">
+                <div class="prob-labels" style="direction: rtl; unicode-bidi: embed;">
                     <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
                     <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
                     <span style="color: #ff4d4d">2: ${prob.away}%</span>
                 </div>
-                <div class="prob-bar-container" style="direction: ltr;">
+                <div class="prob-bar-container" style="direction: rtl;">
                     <div class="prob-home" style="width: ${prob.home}%"></div>
                     <div class="prob-draw" style="width: ${prob.draw}%"></div>
                     <div class="prob-away" style="width: ${prob.away}%"></div>
