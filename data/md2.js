@@ -1,8 +1,8 @@
 // data/md2.js - מחזור 2 (Matchday 2)
-// מעודכן: כולל את תוצאות משחקי העבר ואת לוח הזמנים המדויק (שעון ישראל) להמשך המחזור.
+// מעודכן: כולל את משחק העבר בין שוויץ לבוסניה (4-1).
 
 const matchday2Database = {
-    // --- משחקים שהסתיימו (18 ביוני) ---
+    // --- משחקים שהסתיימו ---
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
         teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (15')"], red: [] } },
@@ -39,20 +39,20 @@ const matchday2Database = {
         goals: [{ team: 'קנדה', player: "ג'ונתן דייוויד", minute: "12'" }, { team: 'קנדה', player: "טייג'ון ביוקנן", minute: "38'" }, { team: 'קטר', player: "אכרם עפיף", minute: "55'" }, { team: 'קנדה', player: "ג'ונתן דייוויד", minute: "72'" }],
         squads: { home: { predicted: ["ברשאם", "ח'וח'י", "עלי"], actual: ["ברשאם", "ח'וח'י", "עפיף"] }, away: { predicted: ["בוריאן", "דייוויס", "דייוויד"], actual: ["בוריאן", "דייוויס", "דייוויד"] } }
     },
+    'match28': {
+        timeStatus: 'past', matchday: 2, stage: 'B', dateText: "בית ב' | 19 ביוני",
+        teamHome: { name: 'שוויץ', flagCode: 'ch', color: '#FF0000', cards: { yellow: ["אקאנג'י (55')"], red: [] } },
+        teamAway: { name: 'בוסניה והרצגובינה', flagCode: 'ba', color: '#002F6C', cards: { yellow: ["קרוניץ' (22')"], red: [] } },
+        score: { prediction: '2 - 1', actual: '4 - 1', accuracyClass: 'trend' },
+        probabilities: { home: 55, draw: 28, away: 17 }, matchRisk: 'Safe',
+        radarStats: { home: [82, 75, 70, 80, 75, 80], away: [70, 60, 75, 75, 80, 65] },
+        advancedStats: { home: { xG: 2.85, restDays: 9, altitudeImpact: 'אופטימלי' }, away: { xG: 0.90, restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "המשמעת הטקטית של שוויץ תנצח במרכז השדה, אך אדין דז'קו הוותיק תמיד מסוכן בכדורי גובה.", actual: "התפוצצות שוויצרית! פגיעה מצוינת במגמה. השוויצרים שטפו את המגרש ודרסו את בוסניה, למרות שער כבוד של דז'קו סמוך למחצית." },
+        goals: [{ team: 'שוויץ', player: "שרדאן שאקירי", minute: "14'" }, { team: 'שוויץ', player: "בריל אמבולו", minute: "33'" }, { team: 'בוסניה והרצגובינה', player: "אדין דז'קו", minute: "44'" }, { team: 'שוויץ', player: "גראניט ג'אקה", minute: "68'" }, { team: 'שוויץ', player: "רובן ורגאס", minute: "85'" }],
+        squads: { home: { predicted: ["זומר", "ג'אקה", "שאקירי"], actual: ["זומר", "ג'אקה", "שאקירי"] }, away: { predicted: ["שחיץ'", "פיאניץ'", "דז'קו"], actual: ["שחיץ'", "פיאניץ'", "דז'קו"] } }
+    },
 
     // --- משחקים עתידיים (לפי שעון ישראל) ---
-    'match28': {
-        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | היום, 22:00",
-        teamHome: { name: 'ארצות הברית', flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'אוסטרליה', flagCode: 'au', color: '#FFD100', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
-        radarStats: { home: [75, 60, 80, 85, 85, 65], away: [65, 45, 85, 90, 95, 30] },
-        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 7, altitudeImpact: 'מארחת / ביתי' }, away: { xG: '0.80 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ארצות הברית פייבוריטית מובהקת בבית ותשלוט בקצב המשחק מתחילתו.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["טרנר", "מקני", "פוליסיק"], actual: [] }, away: { predicted: ["ריאן", "אירביין", "דיוק"], actual: [] } }
-    },
     'match29': {
         timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | מחר, 01:00",
         teamHome: { name: 'סקוטלנד', flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
