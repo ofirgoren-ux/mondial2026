@@ -3,68 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל 2026</title>
+    <title>מונדיאל 2026 - דשבורד פרו</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <div class="sidebar" id="main-sidebar">
-        <div class="sidebar-logo">מונדיאל 2026<span>תחזיות וסטטיסטיקה</span></div>
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+    <nav class="sidebar" id="main-sidebar">
+        <div class="sidebar-logo">
+            MUNDIAL 2026
+            <span>AI Dashboard</span>
+        </div>
+        <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">🏠 שלב הבתים</a>
         
-        <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">⚽ שלב הבתים</a>
-        <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלאות</a>
-        <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">👟 מלך השערים</a>
-    </div>
+        <div class="sidebar-submenu" id="submenu-matchdays">
+            <button class="submenu-btn active" data-md="all">כל המשחקים</button>
+            <button class="submenu-btn" data-md="1">מחזור 1</button>
+            <button class="submenu-btn" data-md="2">מחזור 2</button>
+            <button class="submenu-btn" data-md="3">מחזור 3</button>
+            <button class="submenu-btn" data-md="ko">נוקאאוט</button>
+        </div>
 
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+        <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלת בתים</a>
+        <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">⚽ מלך השערים</a>
+        <a id="nav-bracket" class="nav-link" style="opacity: 0.5; cursor: not-allowed;">🏆 עץ נוקאאוט (בקרוב)</a>
+    </nav>
 
-    <div class="main-content">
-        <div class="topbar">
+    <main class="main-content">
+        <header class="topbar">
             <div class="topbar-header-row">
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
                 <div class="topbar-title" id="main-title">שלב הבתים - מודל הסתברותי</div>
             </div>
-            
             <div class="topbar-stats">
-                <div class="mini-stat">משחקים: <span id="stat-total">0</span></div>
+                <div class="mini-stat">משחקים: <span id="stat-total" style="color:var(--accent-cyan)">0</span></div>
                 <div class="mini-stat">פגיעה בול: <span id="stat-exact" style="color:var(--color-exact)">0%</span></div>
                 <div class="mini-stat">מגמה: <span id="stat-trend" style="color:var(--color-trend)">0%</span></div>
-                <div class="mini-stat">הצלחה: <span id="stat-overall" style="color:var(--accent-cyan)">0%</span></div>
+                <div class="mini-stat" style="border-bottom: 2px solid var(--accent-cyan);">הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
             </div>
-        </div>
+        </header>
 
         <div class="content-wrapper">
             <div id="matches-view">
                 <div class="filters-row">
                     <div class="filter-group">
-                        <button class="filter-btn active" onclick="applyFilter('all')">הכל</button>
-                        <button class="filter-btn" onclick="applyFilter('past')">הסתיימו</button>
-                        <button class="filter-btn" onclick="applyFilter('future')">עתידיים</button>
+                        <span class="filter-label">זמן:</span>
+                        <button class="filter-btn time-btn active" data-time="all">הכל</button>
+                        <button class="filter-btn time-btn" data-time="past">שוחקו</button>
+                        <button class="filter-btn time-btn" data-time="future">עתיד</button>
                     </div>
-                    
-                    <span class="filter-divider hidden-mobile">|</span>
-                    
+                    <div class="filter-divider">|</div>
                     <div class="filter-group">
                         <span class="filter-label">בתים:</span>
-                        <button class="filter-btn" onclick="applyFilter('A')">א'</button>
-                        <button class="filter-btn" onclick="applyFilter('B')">ב'</button>
-                        <button class="filter-btn" onclick="applyFilter('C')">ג'</button>
-                        <button class="filter-btn" onclick="applyFilter('D')">ד'</button>
-                        <button class="filter-btn" onclick="applyFilter('E')">ה'</button>
-                        <button class="filter-btn" onclick="applyFilter('F')">ו'</button>
+                        <button class="filter-btn stage-btn active" data-stage="all">הכל</button>
+                        <button class="filter-btn stage-btn" data-stage="A">א'</button>
+                        <button class="filter-btn stage-btn" data-stage="B">ב'</button>
+                        <button class="filter-btn stage-btn" data-stage="C">ג'</button>
+                        <button class="filter-btn stage-btn" data-stage="D">ד'</button>
+                        <button class="filter-btn stage-btn" data-stage="E">ה'</button>
+                        <button class="filter-btn stage-btn" data-stage="F">ו'</button>
+                        <button class="filter-btn stage-btn" data-stage="G">ז'</button>
+                        <button class="filter-btn stage-btn" data-stage="H">ח'</button>
+                        <button class="filter-btn stage-btn" data-stage="I">ט'</button>
+                        <button class="filter-btn stage-btn" data-stage="J">י'</button>
+                        <button class="filter-btn stage-btn" data-stage="K">כ'</button>
+                        <button class="filter-btn stage-btn" data-stage="L">ל'</button>
                     </div>
                 </div>
-
-                <div class="matches-grid" id="matches-container"></div>
+                <div id="matches-container" class="matches-grid"></div>
             </div>
 
-            <div id="standings-view" style="display:none;"></div>
-            <div id="scorers-view" style="display:none;"></div>
+            <div id="standings-view"></div>
+            <div id="scorers-view"></div>
+        </div>
+    </main>
+
+    <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal(event)">×</button>
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
-    <script>const matchDatabase = {};</script>
+    <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
     <script src="engine.js"></script>
 </body>
