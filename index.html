@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד מונדיאל 2026 - גרסת פרו</title>
+    <title>דשבורד מונדיאל 2026 - פרו</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <div class="sidebar" id="main-sidebar">
         <div class="sidebar-logo">WC 2026<span>Predictor Pro</span></div>
         
-        <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">
-            ⚽ שלב הבתים
-        </a>
-        <a id="nav-standings" class="nav-link" onclick="switchView('standings')">
-            📊 טבלאות
-        </a>
-        <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">
-            👟 מלך השערים
-        </a>
+        <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">⚽ שלב הבתים</a>
+        
+        <div class="sidebar-submenu">
+            <button class="submenu-btn active" onclick="applyFilter('all')">כל המחזורים</button>
+            <button class="submenu-btn" onclick="applyFilter('md1')">מחזור 1</button>
+            <button class="submenu-btn" onclick="applyFilter('md2')">מחזור 2</button>
+            <button class="submenu-btn" onclick="applyFilter('md3')">מחזור 3</button>
+        </div>
+
+        <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלאות</a>
+        <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">👟 מלך השערים</a>
     </div>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
     <div class="main-content">
-        
         <div class="topbar">
             <div class="topbar-header-row">
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -42,24 +42,30 @@
         </div>
 
         <div class="content-wrapper">
-            
             <div id="matches-view">
                 <div class="filters-row">
                     <div class="filter-group">
-                        <button class="filter-btn active" onclick="applyFilter('all')">כל המשחקים</button>
-                        <span class="filter-divider">|</span>
+                        <button class="filter-btn active" onclick="applyFilter('all')">הכל</button>
                         <button class="filter-btn" onclick="applyFilter('past')">הסתיימו</button>
                         <button class="filter-btn" onclick="applyFilter('future')">עתידיים</button>
                     </div>
+                    
                     <span class="filter-divider hidden-mobile">|</span>
+                    
                     <div class="filter-group">
                         <span class="filter-label">בתים:</span>
-                        <button class="filter-btn" onclick="applyFilter('A')">A</button>
-                        <button class="filter-btn" onclick="applyFilter('B')">B</button>
-                        <button class="filter-btn" onclick="applyFilter('C')">C</button>
-                        <button class="filter-btn" onclick="applyFilter('D')">D</button>
-                        <button class="filter-btn" onclick="applyFilter('E')">E</button>
-                        <button class="filter-btn" onclick="applyFilter('F')">F</button>
+                        <button class="filter-btn" onclick="applyFilter('A')">א'</button>
+                        <button class="filter-btn" onclick="applyFilter('B')">ב'</button>
+                        <button class="filter-btn" onclick="applyFilter('C')">ג'</button>
+                        <button class="filter-btn" onclick="applyFilter('D')">ד'</button>
+                        <button class="filter-btn" onclick="applyFilter('E')">ה'</button>
+                        <button class="filter-btn" onclick="applyFilter('F')">ו'</button>
+                        <button class="filter-btn" onclick="applyFilter('G')">ז'</button>
+                        <button class="filter-btn" onclick="applyFilter('H')">ח'</button>
+                        <button class="filter-btn" onclick="applyFilter('I')">ט'</button>
+                        <button class="filter-btn" onclick="applyFilter('J')">י'</button>
+                        <button class="filter-btn" onclick="applyFilter('K')">י"א</button>
+                        <button class="filter-btn" onclick="applyFilter('L')">י"ב</button>
                     </div>
                 </div>
 
@@ -67,12 +73,13 @@
             </div>
 
             <div id="standings-view" style="display:none;"></div>
-
             <div id="scorers-view" style="display:none;"></div>
-
         </div>
     </div>
 
+    <script>const matchDatabase = {};</script>
+    
+    <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
     
     <script src="engine.js"></script>
