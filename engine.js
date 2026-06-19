@@ -245,3 +245,300 @@ function renderMatches() {
     if(typeof Chart !== 'undefined') {
         Chart.defaults.color = '#9aa7b5'; 
         Chart.defaults.font.family = "'Heebo', sans-serif";
+        
+        const radarOptions = { 
+            responsive: true, 
+            maintainAspectRatio: false, 
+            scales: { 
+                r: { 
+                    angleLines: { color: 'rgba(255,255,255,0.1)' }, 
+                    grid: { color: 'rgba(255,255,255,0.1)' }, 
+                    pointLabels: { font: { size: 10, weight: '600' }, color: '#cbd5e1' }, 
+                    ticks: { display: false, min: 0, max: 100 } 
+                } 
+            }, 
+            plugins: { legend: { display: false }, tooltip: { rtl: true } } 
+        };
+        
+        const radarLabels = ['חדירה מהאמצע', 'החזקת כדור', 'נייחים', 'הגנת רוחב', 'פיזיות', 'משחק אגפים'];
+
+        chartsToInit.forEach(chartData => {
+            const canvasElement = document.getElementById(`chart-${chartData.id}`);
+            if (canvasElement) {
+                new Chart(canvasElement.getContext('2d'), { 
+                    type: 'radar', 
+                    data: { 
+                        labels: radarLabels, 
+                        datasets: [ 
+                            { data: chartData.radarH, borderColor: chartData.home.color, backgroundColor: `${chartData.home.color}4D`, borderWidth: 2, pointBackgroundColor: chartData.home.color, pointRadius: 2 }, 
+                            { data: chartData.radarA, borderColor: chartData.away.color, backgroundColor: `${chartData.away.color}4D`, borderWidth: 2, pointBackgroundColor: chartData.away.color, pointRadius: 2 } 
+                        ]
+                    }, 
+                    options: radarOptions 
+                });
+            }
+        });
+    }
+}
+
+// --- 6. ניווט טאבים פנימי בתוך הכרטיסייה ---
+window.switchCardTab = function(btn, matchId, tabType, scoreText, labelText) { 
+    const card = btn.closest('.match-card');
+    const tabs = card.querySelectorAll('.tab-content');
+    const btns = card.querySelectorAll('.inner-tab-btn'); 
+    
+    btns.forEach(b => b.classList.remove('active')); 
+    tabs.forEach(t => t.classList.remove('active'));
+    
+    btn.classList.add('active');
+    const activeTab = card.querySelector(`#${matchId}-${tabType}`);
+    if(activeTab) activeTab.classList.add('active');
+    
+    const labelEl = card.querySelector(`#${matchId}-label`);
+    const scoreEl = card.querySelector(`#${matchId}-score`); 
+    if(labelEl) labelEl.innerText = labelText; 
+}
+
+// --- 7. מערכת פילטרים ---
+window.applyFilter = function(stageCode) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    const allMatches = document.querySelectorAll('.match-item');
+    allMatches.forEach(card => {
+        card.classList.remove('animate-in'); // איפוס אנימציה
+        card.style.display = 'none';
+        
+        const matchStage = card.getAttribute('data-stage');
+        const matchStatus = card.getAttribute('data-time');
+        
+        let shouldShow = false;
+        if (stageCode === 'all') shouldShow = true;
+        else if (stageCode === 'past' && matchStatus === 'past') shouldShow = true;
+        else if (stageCode === 'future' && matchStatus === 'future') shouldShow = true;
+        else if (matchStage === stageCode) shouldShow = true;
+
+        if (shouldShow) {
+            card.style.display = 'flex';
+            setTimeout(() => card.classList.add('animate-in'), 10);
+        }
+    });
+}
+
+// --- 8. טבלאות בתים ---
+function calculateAndRenderStandings() {
+    const container = document.getElementById('standings-view');
+    if (!container || typeof matchDatabase === 'undefined') return;
+
+    let groups = {};
+    for (const key in matchDatabase) {
+        const match = matchDatabase[key];
+        const stage = match.stage;
+        if (!['A','B','C','D','E','F','G','H','I','J','K','L'].includes(stage)) continue; // רק שלב בתים
+        
+        if (!groups[stage]) groups[stage] = {};
+        
+        const initTeam = (teamObj) => {
+            if (!groups[stage][teamObj.name]) {
+                groups[stage][teamObj.name] = { name: teamObj.name, flag: teamObj.flagCode, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 };
+            }
+        };
+
+        if (match.teamHome) initTeam(match.teamHome);
+        if (match.teamAway) initTeam(match.teamAway);
+
+        if (match.timeStatus === 'past' && match.score && match.score.actual) {
+            const actualObj = match.score.actual.split(' - ');
+            if (actualObj.length === 2) {
+                const goalsHome = parseInt(actualObj[0].trim());
+                const goalsAway = parseInt(actualObj[1].trim());
+                
+                const hTeam = groups[stage][match.teamHome.name];
+                const aTeam = groups[stage][match.teamAway.name];
+
+                hTeam.p++; aTeam.p++;
+                hTeam.gf += goalsHome; hTeam.ga += goalsAway;
+                aTeam.gf += goalsAway; aTeam.ga += goalsHome;
+
+                if (goalsHome > goalsAway) { hTeam.w++; hTeam.pts += 3; aTeam.l++; }
+                else if (goalsHome < goalsAway) { aTeam.w++; aTeam.pts += 3; hTeam.l++; }
+                else { hTeam.d++; aTeam.d++; hTeam.pts += 1; aTeam.pts += 1; }
+            }
+        }
+    }
+
+    let html = '';
+    const sortedGroups = Object.keys(groups).sort();
+    
+    for (const group of sortedGroups) {
+        const teams = Object.values(groups[group]);
+        teams.sort((a, b) => {
+            if (b.pts !== a.pts) return b.pts - a.pts; // נקודות
+            const gdA = a.gf - a.ga;
+            const gdB = b.gf - b.ga;
+            if (gdB !== gdA) return gdB - gdA; // הפרש שערים
+            return b.gf - a.gf; // שערי זכות
+        });
+
+        html += `<div class="group-table-card"><div class="group-table-title">בית ${group}'</div><table class="standings-table">`;
+        html += `<thead><tr><th>נבחרת</th><th>מש'</th><th>נצ'</th><th>תיקו</th><th>הפ'</th><th>שערים</th><th>הפרש</th><th>נק'</th></tr></thead><tbody>`;
+        
+        teams.forEach((t, index) => {
+            const gd = t.gf - t.ga;
+            const gdStr = gd > 0 ? `+${gd}` : gd;
+            const highlight = index < 2 ? 'style="background-color: rgba(102, 252, 241, 0.05);"' : '';
+            html += `<tr ${highlight}>
+                <td class="team-cell"><img src="https://flagcdn.com/w20/${t.flag}.png"> ${t.name}</td>
+                <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+                <td>${t.gf}-${t.ga}</td><td style="direction:ltr;">${gdStr}</td><td style="font-weight:bold; color:var(--accent-cyan);">${t.pts}</td>
+            </tr>`;
+        });
+        html += `</tbody></table></div>`;
+    }
+    container.innerHTML = html || '<div style="text-align:center; width:100%; padding: 50px;">אין נתונים לשלב הבתים כרגע.</div>';
+}
+
+// --- 9. מלך השערים ---
+function calculateAndRenderTopScorers() {
+    const container = document.getElementById('scorers-view');
+    if (!container || typeof matchDatabase === 'undefined') return;
+
+    let players = {};
+    for (const key in matchDatabase) {
+        const match = matchDatabase[key];
+        if (match.timeStatus === 'past' && match.goals && match.goals.length > 0) {
+            match.goals.forEach(goal => {
+                if (!players[goal.player]) {
+                    // מציאת דגל השחקן
+                    let flag = 'un';
+                    if (match.teamHome.name === goal.team) flag = match.teamHome.flagCode;
+                    if (match.teamAway.name === goal.team) flag = match.teamAway.flagCode;
+                    
+                    players[goal.player] = { name: goal.player, team: goal.team, flag: flag, goals: 0 };
+                }
+                players[goal.player].goals++;
+            });
+        }
+    }
+
+    const sortedPlayers = Object.values(players).sort((a, b) => b.goals - a.goals).slice(0, 10); // טופ 10
+
+    let html = `<div class="scorers-card"><div class="scorers-title">👟 נעל הזהב - מלך השערים</div>`;
+    
+    if (sortedPlayers.length === 0) {
+        html += `<div style="text-align:center; padding: 20px;">טרם נכבשו שערים בטורניר.</div>`;
+    } else {
+        sortedPlayers.forEach((p, index) => {
+            const rankClass = index === 0 ? 'top-1' : index === 1 ? 'top-2' : index === 2 ? 'top-3' : '';
+            html += `
+            <div class="scorer-row">
+                <div class="scorer-info">
+                    <div class="scorer-rank ${rankClass}">${index + 1}</div>
+                    <div>
+                        <div class="scorer-name">${p.name}</div>
+                        <div class="scorer-team"><img src="https://flagcdn.com/w20/${p.flag}.png" style="width:16px; border-radius:2px;"> ${p.team}</div>
+                    </div>
+                </div>
+                <div class="scorer-goals">${p.goals}</div>
+            </div>`;
+        });
+    }
+    html += `</div>`;
+    container.innerHTML = html;
+}
+
+// --- 10. מערכת מודאלים (חלונות קופצים) ---
+function createModalElement() {
+    const modalHTML = `
+    <div id="dynamic-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="forceCloseModal()">×</button>
+            <div id="modal-title" class="modal-title">כותרת</div>
+            <div id="modal-body" class="modal-body">תוכן</div>
+        </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+window.openModal = function(title, bodyHTML) {
+    const modal = document.getElementById('dynamic-modal');
+    if(!modal) return;
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-body').innerHTML = bodyHTML;
+    modal.style.display = 'flex';
+}
+
+window.closeModal = function(event) {
+    if (event.target.id === 'dynamic-modal') {
+        document.getElementById('dynamic-modal').style.display = 'none';
+    }
+}
+
+window.forceCloseModal = function() {
+    const modal = document.getElementById('dynamic-modal');
+    if(modal) modal.style.display = 'none';
+}
+
+window.openGoalsModal = function(matchId) {
+    if(typeof matchDatabase === 'undefined' || !matchDatabase[matchId]) return;
+    const data = matchDatabase[matchId];
+    if(data.timeStatus !== 'past' || !data.goals || data.goals.length === 0) return;
+    
+    let html = '<ul class="squad-list" style="margin-top:10px;">';
+    data.goals.forEach(g => {
+        html += `<li class="goal-item"><span>⚽ ${g.player}</span> <span style="color:var(--accent-cyan); font-weight:bold;">${g.minute}</span></li>`;
+    });
+    html += '</ul>';
+    openModal(`אירועי שערים: ${data.teamHome.name} - ${data.teamAway.name}`, html);
+}
+
+window.openSquadModal = function(matchId, teamSide) {
+    if(typeof matchDatabase === 'undefined' || !matchDatabase[matchId]) return;
+    const data = matchDatabase[matchId];
+    const teamObj = teamSide === 'home' ? data.teamHome : data.teamAway;
+    const squads = data.squads ? (teamSide === 'home' ? data.squads.home : data.squads.away) : null;
+    
+    let html = `<div style="text-align:center; margin-bottom:15px;"><img src="https://flagcdn.com/w80/${teamObj.flagCode}.png" style="border-radius:4px; box-shadow:0 2px 5px rgba(0,0,0,0.5);"></div>`;
+    
+    if (squads && squads.predicted && squads.predicted.length > 0) {
+        html += `<div class="squad-grid"><div class="squad-col"><h4>תחזית הרכב</h4><ul class="squad-list">`;
+        squads.predicted.forEach(p => html += `<li>👕 ${p}</li>`);
+        html += `</ul></div>`;
+        
+        if (data.timeStatus === 'past' && squads.actual && squads.actual.length > 0) {
+            html += `<div class="squad-col"><h4>הרכב בפועל</h4><ul class="squad-list">`;
+            squads.actual.forEach(p => {
+                const isDiff = !squads.predicted.includes(p);
+                html += `<li class="${isDiff ? 'diff-player' : ''}">👕 ${p} ${isDiff ? '(חדש)' : ''}</li>`;
+            });
+            html += `</ul></div>`;
+        }
+        html += `</div>`;
+    } else {
+        html += `<p style="text-align:center;">אין נתוני הרכב זמינים למשחק זה.</p>`;
+    }
+    
+    openModal(`סגל שחקנים: ${teamObj.name}`, html);
+}
+
+window.openCardModal = function(matchId, teamSide, cardColor) {
+    if(typeof matchDatabase === 'undefined' || !matchDatabase[matchId]) return;
+    const data = matchDatabase[matchId];
+    const teamObj = teamSide === 'home' ? data.teamHome : data.teamAway;
+    const cardsList = cardColor === 'yellow' ? teamObj.cards.yellow : teamObj.cards.red;
+    
+    const iconColor = cardColor === 'yellow' ? '#f1c40f' : '#e74c3c';
+    const cardName = cardColor === 'yellow' ? 'כרטיסים צהובים' : 'כרטיסים אדומים';
+    
+    let html = '<ul class="squad-list" style="margin-top:10px;">';
+    if(cardsList && cardsList.length > 0) {
+        cardsList.forEach(c => {
+            html += `<li class="goal-item"><div class="card-detail"><div style="width:12px; height:16px; background:${iconColor}; border-radius:2px;"></div> ${c}</div></li>`;
+        });
+    } else {
+         html += `<li>אין כרטיסים.</li>`;
+    }
+    html += '</ul>';
+    
+    openModal(`${cardName}: ${teamObj.name}`, html);
+}
