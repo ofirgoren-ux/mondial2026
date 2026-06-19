@@ -247,6 +247,38 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText) {
     const scoreEl = card.querySelector(`.score-number`); 
     labelEl.innerText = labelText; 
 }
+// ==========================================
+// מתג ההצתה - הפעלת המנוע בעת טעינת העמוד
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // בודק שמסד הנתונים אכן נטען בהצלחה מהקובץ שלו
+    if (typeof matchDatabase !== 'undefined') {
+        renderMatches(); // ציור כל כרטיסיות המשחקים
+        renderStats();   // עדכון הסטטיסטיקות בשורה העליונה
+        switchView('matches'); // הצגת מסך הבית (שלב הבתים) כברירת מחדל
+    } else {
+        console.error("🚨 שגיאה: מסד הנתונים (matchDatabase) לא נמצא! ודא שקובץ הנתונים נטען ב-HTML לפני המנוע.");
+    }
+});
+
+// --- פונקציות עזר (מודאלים) שאולי נדרסו - שים אותן גם כאן ליתר ביטחון ---
+window.openGoalsModal = function(matchId) {
+    if(!matchDatabase[matchId]) return;
+    const data = matchDatabase[matchId];
+    if(data.timeStatus !== 'past' || !data.goals || data.goals.length === 0) return;
+    // כאן תוכל לשים את קוד המודאל שלך להצגת כובשי השערים
+    console.log("Goals modal opened for", matchId);
+}
+
+window.openSquadModal = function(matchId, teamSide) {
+    // כאן תוכל לשים את קוד המודאל שלך להצגת הרכבים
+    console.log("Squad modal opened for", matchId, teamSide);
+}
+
+window.openCardModal = function(matchId, teamSide, cardColor) {
+    // מודאל כרטיסים צהובים/אדומים
+    console.log("Card modal opened for", matchId, teamSide, cardColor);
+}
 
 // השארתי פה את חתימות המודאלים והסננים הקיימות שלך כדי שהכל יעבוד (openModal, applyFilters וכו')
 // (הכנס לכאן את שאר הקוד הקיים מהגרסה הקודמת ששולט במודאלים של הסגלים והפילטרים למעלה).
