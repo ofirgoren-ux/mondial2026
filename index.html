@@ -28,7 +28,7 @@
 
         <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלת בתים</a>
         <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">⚽ מלך השערים</a>
-        <a id="nav-bracket" class="nav-link" style="opacity: 0.5; cursor: not-allowed;">🏆 עץ נוקאאוט (בקרוב)</a>
+        <a id="nav-bracket" class="nav-link" onclick="switchView('bracket')">🏆 עץ הנוקאאוט</a>
     </nav>
 
     <main class="main-content">
@@ -77,6 +77,36 @@
 
             <div id="standings-view"></div>
             <div id="scorers-view"></div>
+
+            <div id="bracket-view" style="display:none; animation: tabFadeIn 0.4s ease;">
+                <div class="knockout-container">
+                    <div class="tournament-bracket">
+                        <div class="bracket-column round-of-32">
+                            <h3 class="round-title">32 האחרונות</h3>
+                            
+                            <div class="bracket-match empty-match">
+                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מנצחת בית א'</span> <span class="score"></span></div>
+                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">סגנית בית ב'</span> <span class="score"></span></div>
+                            </div>
+
+                            <div class="bracket-match empty-match">
+                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מנצחת בית ג'</span> <span class="score"></span></div>
+                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מקום 3 ד'/ה'/ו'</span> <span class="score"></span></div>
+                            </div>
+                        </div>
+
+                        <div class="bracket-column round-of-16">
+                            <h3 class="round-title">שמינית גמר</h3>
+                            
+                            <div class="bracket-match empty-match">
+                                <div class="bracket-team"><span class="team-name">מנצחת משחק 1</span></div>
+                                <div class="bracket-team"><span class="team-name">מנצחת משחק 2</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
