@@ -1,7 +1,6 @@
-// data/md2.js - מחזור 2 המלא והמעודכן (משחקי עבר + תחזיות קדימה)
+// data/md2.js - מחזור 2 המלא והמעודכן
 
-Object.assign(matchDatabase, {
-    // --- משחקי עבר (כבר שוחקו במחזור 2) ---
+const matchday2Database = {
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
         teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (44')"], red: [] } },
@@ -50,7 +49,6 @@ Object.assign(matchDatabase, {
         goals: [{ team: 'שוויץ', player: "שאקירי", minute: "14'" }, { team: 'בוסניה והרצגובינה', player: "דז'קו", minute: "44'" }, { team: 'שוויץ', player: "ורגאס", minute: "60'" }, { team: 'שוויץ', player: "ורגאס", minute: "85'" }, { team: 'שוויץ', player: "ג'אקה", minute: "90+2'" }],
         squads: { home: { predicted: ["זומר", "ג'אקה", "שאקירי"], actual: ["זומר", "ג'אקה", "שאקירי"] }, away: { predicted: ["שחיץ'", "פיאניץ'", "דז'קו"], actual: ["שחיץ'", "פיאניץ'", "דז'קו"] } }
     },
-
     'match29': {
         timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 19 ביוני",
         teamHome: { name: 'ארצות הברית', flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
@@ -72,8 +70,8 @@ Object.assign(matchDatabase, {
         radarStats: { home: [80, 65, 85, 75, 75, 70], away: [78, 55, 80, 90, 90, 75] },
         advancedStats: { home: { xG: 1.05, restDays: 9, altitudeImpact: 'רגיל' }, away: { xG: 1.15, restDays: 9, altitudeImpact: 'רגיל' } },
         insight: { prediction: "בוסטר תיקו פעיל. משחק חפירות מרובה מאבקים פיזיים.", actual: "מרוקו שוב מוכיחה אופי ברזל ומשיגה ניצחון קטן וקריטי במשחק קשוח." },
-        goals: [{ team: 'מרוקו', player: "אן-נסירי", minute: "68'" }], // הוסף את הכובש המדויק אם יש לך
-        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: ["גאן", "מקטומיניי", "מקגין"] }, away: { predicted: ["בונו", "חכימי", "זיאש"], actual: ["בונו", "חכימי", "זיאש"] } }
+        goals: [{ team: 'מרוקו', player: "אן-נסירי", minute: "68'" }],
+        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: ["גאן", "מקטומיניי", "מקגין"] }, away: { predicted: ["בונו", "חכימי", "זיאש"], actual: ["בונו", "חכימי", "זיאש", "אן-נסירי"] } }
     },
     'match31': {
         timeStatus: 'past', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני",
@@ -84,8 +82,8 @@ Object.assign(matchDatabase, {
         radarStats: { home: [95, 85, 75, 80, 75, 95], away: [35, 30, 50, 40, 80, 5] },
         advancedStats: { home: { xG: 3.40, restDays: 9, altitudeImpact: 'אופטימלי' }, away: { xG: 0.25, restDays: 9, altitudeImpact: 'קשה' } },
         insight: { prediction: "משחק חד צדדי. הסלסאו מיועדים להתפוצץ על ההגנה של האיטי.", actual: "ניצחון חלק לברזיל. שייטו על הדשא ללא שום התנגדות ממשית מצד האיטי." },
-        goals: [{ team: 'ברזיל', player: "ויניסיוס", minute: "24'" }, { team: 'ברזיל', player: "רודריגו", minute: "55'" }, { team: 'ברזיל', player: "מרטינלי", minute: "81'" }], // עדכן כובשים במידת הצורך
-        squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס"], actual: ["אליסון", "קאסמירו", "ויניסיוס", "רודריגו"] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: ["פלאסיד", "ז'רום", "פיירו"] } }
+        goals: [{ team: 'ברזיל', player: "ויניסיוס", minute: "24'" }, { team: 'ברזיל', player: "רודריגו", minute: "55'" }, { team: 'ברזיל', player: "מרטינלי", minute: "81'" }],
+        squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס"], actual: ["אליסון", "קאסמירו", "ויניסיוס", "רודריגו", "מרטינלי"] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: ["פלאסיד", "ז'רום", "פיירו"] } }
     },
     'match32': {
         timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 20 ביוני",
@@ -99,3 +97,8 @@ Object.assign(matchDatabase, {
         goals: [{ team: 'פרגוואי', player: "גלארזה", minute: "2'" }],
         squads: { home: { predicted: ["גיונוק", "צ'להאנולו", "גולר"], actual: ["גיונוק", "צ'להאנולו", "גולר"] }, away: { predicted: ["קורונל", "אלמירון", "גומז", "גלארזה"], actual: ["קורונל", "אלמירון", "גומז", "גלארזה"] } }
     }
+};
+
+if (typeof matchDatabase !== 'undefined') {
+    Object.assign(matchDatabase, matchday2Database);
+}
