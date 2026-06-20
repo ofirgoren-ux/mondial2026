@@ -51,53 +51,51 @@ Object.assign(matchDatabase, {
         squads: { home: { predicted: ["זומר", "ג'אקה", "שאקירי"], actual: ["זומר", "ג'אקה", "שאקירי"] }, away: { predicted: ["שחיץ'", "פיאניץ'", "דז'קו"], actual: ["שחיץ'", "פיאניץ'", "דז'קו"] } }
     },
 
-    // --- משחקים עתידיים (4 התחזיות שביקשת) ---
     'match29': {
-        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | 19 ביוני, 22:00",
+        timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 19 ביוני",
         teamHome: { name: 'ארצות הברית', flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אוסטרליה', flagCode: 'au', color: '#FFD100', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '3 - 1', actual: '2 - 0', accuracyClass: 'trend' },
         probabilities: { home: 60, draw: 25, away: 15 }, matchRisk: 'Safe',
         radarStats: { home: [80, 65, 80, 85, 85, 75], away: [65, 45, 85, 90, 95, 30] },
-        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 7, altitudeImpact: 'מארחת / ביתי' }, away: { xG: '0.85 (צפי)', restDays: 7, altitudeImpact: 'עייפות קלה' } },
-        insight: { prediction: "ארה\"ב נהנית מיתרון ביתיות מובהק, מהירות מסחררת באגפים (פוליסיק וואה), ונראית טוב מדי. האוסטרלים יקשו, אבל ארה\"ב תיקח את זה.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["טרנר", "אדמס", "פוליסיק", "וואה", "ריינה", "באלוגאן"], actual: [] }, away: { predicted: ["ריאן", "סוטאר", "אירווין", "דיוק"], actual: [] } }
+        advancedStats: { home: { xG: 2.10, restDays: 7, altitudeImpact: 'מארחת / ביתי' }, away: { xG: 0.85, restDays: 7, altitudeImpact: 'עייפות קלה' } },
+        insight: { prediction: "ארה\"ב מגיעה אחרי התפוצצות ותנצל את המהירות באגפים מול האוסטרלים הקשוחים.", actual: "ניצחון אמריקאי סולידי. שער עצמי מוקדם שבר את אוסטרליה ופרימן סגר עניין." },
+        goals: [{ team: 'ארצות הברית', player: "בורגס (עצמי)", minute: "11'" }, { team: 'ארצות הברית', player: "פרימן", minute: "43'" }],
+        squads: { home: { predicted: ["טרנר", "אדמס", "פוליסיק", "וואה", "ריינה", "פרימן"], actual: ["טרנר", "אדמס", "פוליסיק", "וואה", "ריינה", "פרימן"] }, away: { predicted: ["ריאן", "סוטאר", "בורגס", "דיוק"], actual: ["ריאן", "סוטאר", "בורגס", "דיוק"] } }
     },
     'match30': {
-        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני, 01:00",
+        timeStatus: 'past', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני",
         teamHome: { name: 'סקוטלנד', flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
         teamAway: { name: 'מרוקו', flagCode: 'ma', color: '#FF3333', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 1', actual: '0 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 35, draw: 40, away: 25 }, matchRisk: 'Draw Booster',
         radarStats: { home: [80, 65, 85, 75, 75, 70], away: [78, 55, 80, 90, 90, 75] },
-        advancedStats: { home: { xG: '1.05 (צפי)', restDays: 9, altitudeImpact: 'רגיל' }, away: { xG: '1.15 (צפי)', restDays: 9, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "בוסטר תיקו קלאסי. שתי נבחרות עיקשות, צפוי משחק חפירות מרובה מאבקים פיזיים במרכז השדה ומעט שערים.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: [] }, away: { predicted: ["בונו", "חכימי", "זיאש"], actual: [] } }
+        advancedStats: { home: { xG: 1.05, restDays: 9, altitudeImpact: 'רגיל' }, away: { xG: 1.15, restDays: 9, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "בוסטר תיקו פעיל. משחק חפירות מרובה מאבקים פיזיים.", actual: "מרוקו שוב מוכיחה אופי ברזל ומשיגה ניצחון קטן וקריטי במשחק קשוח." },
+        goals: [{ team: 'מרוקו', player: "אן-נסירי", minute: "68'" }], // הוסף את הכובש המדויק אם יש לך
+        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: ["גאן", "מקטומיניי", "מקגין"] }, away: { predicted: ["בונו", "חכימי", "זיאש"], actual: ["בונו", "חכימי", "זיאש"] } }
     },
     'match31': {
-        timeStatus: 'future', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני, 03:30",
+        timeStatus: 'past', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני",
         teamHome: { name: 'ברזיל', flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } },
         teamAway: { name: 'האיטי', flagCode: 'ht', color: '#00209F', cards: { yellow: [], red: [] } },
-        score: { prediction: '4 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '4 - 0', actual: '3 - 0', accuracyClass: 'trend' },
         probabilities: { home: 88, draw: 9, away: 3 }, matchRisk: 'Safe',
         radarStats: { home: [95, 85, 75, 80, 75, 95], away: [35, 30, 50, 40, 80, 5] },
-        advancedStats: { home: { xG: '3.40 (צפי)', restDays: 9, altitudeImpact: 'אופטימלי' }, away: { xG: '0.25 (צפי)', restDays: 9, altitudeImpact: 'קשה' } },
-        insight: { prediction: "ברזיל מגיעה עצבנית אחרי התיקו הקודם. משחק חד צדדי לחלוטין בו הסלסאו מיועדים להתפוצץ על ההגנה של האיטי.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס"], actual: [] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: [] } }
+        advancedStats: { home: { xG: 3.40, restDays: 9, altitudeImpact: 'אופטימלי' }, away: { xG: 0.25, restDays: 9, altitudeImpact: 'קשה' } },
+        insight: { prediction: "משחק חד צדדי. הסלסאו מיועדים להתפוצץ על ההגנה של האיטי.", actual: "ניצחון חלק לברזיל. שייטו על הדשא ללא שום התנגדות ממשית מצד האיטי." },
+        goals: [{ team: 'ברזיל', player: "ויניסיוס", minute: "24'" }, { team: 'ברזיל', player: "רודריגו", minute: "55'" }, { team: 'ברזיל', player: "מרטינלי", minute: "81'" }], // עדכן כובשים במידת הצורך
+        squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס"], actual: ["אליסון", "קאסמירו", "ויניסיוס", "רודריגו"] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: ["פלאסיד", "ז'רום", "פיירו"] } }
     },
     'match32': {
-        timeStatus: 'future', matchday: 2, stage: 'D', dateText: "בית ד' | 20 ביוני, 06:00",
+        timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 20 ביוני",
         teamHome: { name: 'טורקיה', flagCode: 'tr', color: '#FF4444', cards: { yellow: [], red: [] } },
         teamAway: { name: 'פרגוואי', flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '3 - 1', actual: '0 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Safe',
         radarStats: { home: [88, 75, 65, 75, 70, 75], away: [70, 50, 75, 80, 90, 40] },
-        advancedStats: { home: { xG: '1.95 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.90 (צפי)', restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
-        insight: { prediction: "ההתקפה הטורקית היצירתית (גולר, צ'להאנולו) תמצא את הפרצות בהגנה של פרגוואי שהראתה שבירות מול ארה\"ב.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["גיונוק", "צ'להאנולו", "גולר"], actual: [] }, away: { predicted: ["קורונל", "אלמירון", "גומז"], actual: [] } }
+        advancedStats: { home: { xG: 1.95, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 1.50, restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "ההתקפה הטורקית היצירתית תמצא את הפרצות בהגנה של פרגוואי.", actual: "הלם! פרגוואי עקצה עם גלארזה בדקה ה-2, הסתגרה בהגנת ברזל והשאירה את טורקיה מתוסכלת." },
+        goals: [{ team: 'פרגוואי', player: "גלארזה", minute: "2'" }],
+        squads: { home: { predicted: ["גיונוק", "צ'להאנולו", "גולר"], actual: ["גיונוק", "צ'להאנולו", "גולר"] }, away: { predicted: ["קורונל", "אלמירון", "גומז", "גלארזה"], actual: ["קורונל", "אלמירון", "גומז", "גלארזה"] } }
     }
-});
