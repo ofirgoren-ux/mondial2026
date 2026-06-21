@@ -1,6 +1,7 @@
-// data/md2.js - מחזור 2 המלא והמעודכן (כולל בתים ה'-ו')
+// data/md2.js - מחזור 2 המלא והמעודכן (בתים א' עד ח')
 
 const matchday2Database = {
+    // --- משחקי עבר (הסתיימו) ---
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
         teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (44')"], red: [] } },
@@ -144,6 +145,56 @@ const matchday2Database = {
         insight: { prediction: "בוסטר תיקו. שתי נבחרות טקטיות וממושמעות שיעדיפו לא לעשות טעויות. צפוי משחק שקול מאוד.", actual: "קונצרט יפני! הסמוראים הכחולים פירקו לחלוטין את משחק ההגנה התוניסאי והוכיחו שהם כוח התקפי קטלני." },
         goals: [],
         squads: { home: { predicted: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"], actual: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"] }, away: { predicted: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"], actual: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"] } }
+    },
+
+    // --- משחקי עתיד (הערב והלילה) ---
+    'match37': {
+        timeStatus: 'future', matchday: 2, stage: 'H', dateText: "בית ח' | 21 ביוני, 19:00",
+        teamHome: { name: 'ספרד', flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'ערב הסעודית', flagCode: 'sa', color: '#006C35', cards: { yellow: [], red: [] } },
+        score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 85, draw: 10, away: 5 }, matchRisk: 'Safe',
+        radarStats: { home: [95, 90, 80, 85, 75, 90], away: [65, 55, 60, 70, 65, 60] },
+        advancedStats: { home: { xG: '2.60 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.45 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "ספרד תשטוף את המגרש עם טיקי-טאקה מודרני והחזקת כדור אבסולוטית. הסעודים ינסו להסתגר ולצמצם נזקים.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["סימון", "רודרי", "פדרי", "מוראטה"], actual: [] }, away: { predicted: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"], actual: [] } }
+    },
+    'match38': {
+        timeStatus: 'future', matchday: 2, stage: 'G', dateText: "בית ז' | 21 ביוני, 22:00",
+        teamHome: { name: 'בלגיה', flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'איראן', flagCode: 'ir', color: '#1BA15F', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 78, draw: 15, away: 7 }, matchRisk: 'Safe',
+        radarStats: { home: [85, 80, 75, 75, 80, 85], away: [65, 50, 70, 80, 80, 60] },
+        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.60 (צפי)', restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "איראן תעמיד אוטובוס ברחבה ותנסה לשבש את הקצב, אבל העומק והאיכות של דה בריינה והבלגים יפרצו את הסכר בסופו של דבר.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו"], actual: [] }, away: { predicted: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"], actual: [] } }
+    },
+    'match39': {
+        timeStatus: 'future', matchday: 2, stage: 'H', dateText: "בית ח' | 22 ביוני, 01:00",
+        teamHome: { name: 'אורוגוואי', flagCode: 'uy', color: '#0038A8', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'קף ורדה', flagCode: 'cv', color: '#003893', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 72, draw: 20, away: 8 }, matchRisk: 'Safe',
+        radarStats: { home: [80, 70, 80, 95, 90, 80], away: [65, 60, 65, 75, 80, 55] },
+        advancedStats: { home: { xG: '1.85 (צפי)', restDays: 8, altitudeImpact: 'אופטימלי' }, away: { xG: '0.70 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "הפיזיות של אורוגוואי והניסיון במרכז השדה יכריעו מול ההתלהבות של הקריביים. 'גראנדה גארה' מול מהירות אפריקאית.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"], actual: [] }, away: { predicted: ["ווזיניה", "פיקו", "מנדש", "בבה"], actual: [] } }
+    },
+    'match40': {
+        timeStatus: 'future', matchday: 2, stage: 'G', dateText: "בית ז' | 22 ביוני, 04:00",
+        teamHome: { name: 'ניו זלנד', flagCode: 'nz', color: '#000000', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'מצרים', flagCode: 'eg', color: '#CE1126', cards: { yellow: [], red: [] } },
+        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 15, draw: 25, away: 60 }, matchRisk: 'Safe',
+        radarStats: { home: [60, 50, 70, 75, 80, 50], away: [75, 65, 70, 80, 75, 75] },
+        advancedStats: { home: { xG: '0.55 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '1.75 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "מצרים טובה ומהירה יותר, ותנצל את השטחים שיתפנו. ניו זלנד הכבדה תתקשה להוות איום התקפי ממשי ותחפש מצבים נייחים.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["סייל", "ריד", "בל", "ווד"], actual: [] }, away: { predicted: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"], actual: [] } }
     }
 };
 
