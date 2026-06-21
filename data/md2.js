@@ -1,4 +1,4 @@
-// data/md2.js - מחזור 2 המלא והמעודכן
+// data/md2.js - מחזור 2 המלא והמעודכן (כולל בתים ה'-ו')
 
 const matchday2Database = {
     'match25': {
@@ -98,52 +98,52 @@ const matchday2Database = {
         squads: { home: { predicted: ["גיונוק", "צ'להאנולו", "גולר"], actual: ["גיונוק", "צ'להאנולו", "גולר"] }, away: { predicted: ["קורונל", "אלמירון", "גומז", "גלארזה"], actual: ["קורונל", "אלמירון", "גומז", "גלארזה"] } }
     },
     'match33': {
-        timeStatus: 'future', matchday: 2, stage: 'F', dateText: "בית ו' | 20 ביוני, 20:00",
+        timeStatus: 'past', matchday: 2, stage: 'F', dateText: "בית ו' | 20 ביוני",
         teamHome: { name: 'הולנד', flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } },
         teamAway: { name: 'שוודיה', flagCode: 'se', color: '#FFD700', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '2 - 1', actual: '5 - 1', accuracyClass: 'trend' },
         probabilities: { home: 55, draw: 30, away: 15 }, matchRisk: 'Safe',
         radarStats: { home: [85, 80, 85, 75, 80, 85], away: [70, 75, 65, 85, 85, 70] },
-        advancedStats: { home: { xG: '2.15 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.90 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "הולנד תכתיב את הקצב עם התקפה יצירתית, שוודיה תנסה לעקוץ במצבים נייחים. פערי האיכות יכריעו.", actual: "" },
+        advancedStats: { home: { xG: 2.15, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 0.90, restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "הולנד תכתיב את הקצב עם התקפה יצירתית, שוודיה תנסה לעקוץ במצבים נייחים. פערי האיכות יכריעו.", actual: "התפוצצות כתומה! הולנד פשוט דרסה את שוודיה ללא רחמים עם חמישייה מהדהדת שהפתיעה בעוצמתה." },
         goals: [],
-        squads: { home: { predicted: ["ורברוחן", "ואן דייק", "דה יונג", "חאקפו"], actual: [] }, away: { predicted: ["אולסן", "לינדלף", "קולוסבסקי", "איסאק"], actual: [] } }
+        squads: { home: { predicted: ["ורברוחן", "ואן דייק", "דה יונג", "חאקפו"], actual: ["ורברוחן", "ואן דייק", "דה יונג", "חאקפו"] }, away: { predicted: ["אולסן", "לינדלף", "קולוסבסקי", "איסאק"], actual: ["אולסן", "לינדלף", "קולוסבסקי", "איסאק"] } }
     },
     'match34': {
-        timeStatus: 'future', matchday: 2, stage: 'E', dateText: "בית ה' | 20 ביוני, 23:00",
+        timeStatus: 'past', matchday: 2, stage: 'E', dateText: "בית ה' | 20 ביוני",
         teamHome: { name: 'גרמניה', flagCode: 'de', color: '#000000', cards: { yellow: [], red: [] } },
         teamAway: { name: 'חוף השנהב', flagCode: 'ci', color: '#FF8200', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '3 - 1', actual: '2 - 1', accuracyClass: 'trend' },
         probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
         radarStats: { home: [90, 85, 90, 80, 85, 90], away: [75, 70, 80, 75, 85, 65] },
-        advancedStats: { home: { xG: '2.80 (צפי)', restDays: 7, altitudeImpact: 'אופטימלי' }, away: { xG: '1.05 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "הגרמנים במומנטום מפלצתי. חוף השנהב מסוכנת במתפרצות אבל תתקשה לעמוד בלחץ במרכז השדה.", actual: "" },
+        advancedStats: { home: { xG: 2.80, restDays: 7, altitudeImpact: 'אופטימלי' }, away: { xG: 1.05, restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "הגרמנים במומנטום מפלצתי. חוף השנהב מסוכנת במתפרצות אבל תתקשה לעמוד בלחץ במרכז השדה.", actual: "ניצחון קשוח לגרמנים. חוף השנהב נתנה פייט אדיר, אבל המאנשאפט ידעו לשמור על היתרון בדרך לשלב הבא." },
         goals: [],
-        squads: { home: { predicted: ["טר שטגן", "רודיגר", "קימיך", "מוסיאלה"], actual: [] }, away: { predicted: ["פופאנה", "נדיקה", "קסי", "האלר"], actual: [] } }
+        squads: { home: { predicted: ["טר שטגן", "רודיגר", "קימיך", "מוסיאלה"], actual: ["טר שטגן", "רודיגר", "קימיך", "מוסיאלה"] }, away: { predicted: ["פופאנה", "נדיקה", "קסי", "האלר"], actual: ["פופאנה", "נדיקה", "קסי", "האלר"] } }
     },
     'match35': {
-        timeStatus: 'future', matchday: 2, stage: 'E', dateText: "בית ה' | 21 ביוני, 03:00",
+        timeStatus: 'past', matchday: 2, stage: 'E', dateText: "בית ה' | 21 ביוני",
         teamHome: { name: 'אקוודור', flagCode: 'ec', color: '#FFD100', cards: { yellow: [], red: [] } },
         teamAway: { name: 'קוראסאו', flagCode: 'cw', color: '#002B7F', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '3 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 85, draw: 10, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [80, 75, 80, 85, 85, 75], away: [50, 40, 60, 55, 60, 45] },
-        advancedStats: { home: { xG: '2.40 (צפי)', restDays: 8, altitudeImpact: 'אופטימלי' }, away: { xG: '0.40 (צפי)', restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
-        insight: { prediction: "משחק חד צדדי. אקוודור תנצל את השבירות של קוראסאו כדי לשפר את הפרש השערים בבית.", actual: "" },
+        advancedStats: { home: { xG: 2.40, restDays: 8, altitudeImpact: 'אופטימלי' }, away: { xG: 0.40, restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "משחק חד צדדי. אקוודור תנצל את השבירות של קוראסאו כדי לשפר את הפרש השערים בבית.", actual: "סנסציה ענקית! קוראסאו התאוששה מהשביעייה שחטפה, הציגה הגנת ברזל וסחטה נקודה היסטורית מאקוודור ההמומה." },
         goals: [],
-        squads: { home: { predicted: ["דומינגס", "הינקאפיה", "קאיסדו", "ולנסיה"], actual: [] }, away: { predicted: ["רום", "מרטינה", "באקונה", "יאנגה"], actual: [] } }
+        squads: { home: { predicted: ["דומינגס", "הינקאפיה", "קאיסדו", "ולנסיה"], actual: ["דומינגס", "הינקאפיה", "קאיסדו", "ולנסיה"] }, away: { predicted: ["רום", "מרטינה", "באקונה", "יאנגה"], actual: ["רום", "מרטינה", "באקונה", "יאנגה"] } }
     },
     'match36': {
-        timeStatus: 'future', matchday: 2, stage: 'F', dateText: "בית ו' | 21 ביוני, 07:00",
+        timeStatus: 'past', matchday: 2, stage: 'F', dateText: "בית ו' | 21 ביוני",
         teamHome: { name: 'תוניסיה', flagCode: 'tn', color: '#E70013', cards: { yellow: [], red: [] } },
         teamAway: { name: 'יפן', flagCode: 'jp', color: '#000555', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 1', actual: '0 - 4', accuracyClass: 'wrong' },
         probabilities: { home: 30, draw: 45, away: 25 }, matchRisk: 'Draw Booster',
         radarStats: { home: [70, 65, 70, 85, 80, 65], away: [75, 75, 80, 70, 75, 75] },
-        advancedStats: { home: { xG: '0.90 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '1.10 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "בוסטר תיקו. שתי נבחרות טקטיות וממושמעות שיעדיפו לא לעשות טעויות. צפוי משחק שקול מאוד.", actual: "" },
+        advancedStats: { home: { xG: 0.90, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 1.10, restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "בוסטר תיקו. שתי נבחרות טקטיות וממושמעות שיעדיפו לא לעשות טעויות. צפוי משחק שקול מאוד.", actual: "קונצרט יפני! הסמוראים הכחולים פירקו לחלוטין את משחק ההגנה התוניסאי והוכיחו שהם כוח התקפי קטלני." },
         goals: [],
-        squads: { home: { predicted: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"], actual: [] }, away: { predicted: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"], actual: [] } }
+        squads: { home: { predicted: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"], actual: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"] }, away: { predicted: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"], actual: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"] } }
     }
 };
 
