@@ -11,7 +11,7 @@
 * { box-sizing: border-box; font-family: 'Heebo', sans-serif; }
 body { background-color: var(--bg-color); color: var(--text-main); margin: 0; display: flex; direction: rtl; overflow-x: hidden; }
 
-/* --- תפריט צד (Sidebar) --- */
+/* --- תפריט צד --- */
 .sidebar { width: 260px; background-color: var(--sidebar-bg); height: 100vh; position: fixed; right: 0; top: 0; border-left: 1px solid var(--border-color); padding: 30px 20px; display: flex; flex-direction: column; z-index: 100; overflow-y: auto;}
 .sidebar-logo { font-size: 1.8rem; font-weight: 900; color: var(--text-main); margin-bottom: 30px; text-align: center; text-shadow: 0 0 10px rgba(102, 252, 241, 0.4); line-height: 1.1; }
 .sidebar-logo span { color: var(--accent-cyan); display: block; font-size: 1.1rem; font-weight: 600; margin-top: 5px; }
@@ -24,7 +24,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .submenu-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
 .submenu-btn.active { color: var(--accent-cyan); background-color: rgba(102, 252, 241, 0.1); }
 
-/* --- אזור ראשי (Main Content) --- */
+/* --- אזור ראשי --- */
 .main-content { margin-right: 260px; flex: 1; min-height: 100vh; padding: 0; display: flex; flex-direction: column; }
 .content-wrapper { padding: 30px 40px; max-width: 1600px; margin: 0 auto; width: 100%; }
 
@@ -35,7 +35,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .mini-stat { background: var(--card-bg); padding: 8px 15px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
 .mini-stat span { font-weight: 800; margin-right: 5px; }
 
-/* --- פילטרים בכרטיסייה הראשית --- */
+/* --- פילטרים --- */
 .filters-row { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; background-color: var(--card-bg); padding: 15px 30px; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid var(--border-color); width: fit-content; margin: 0 auto 30px auto; max-width: 95%; }
 .filter-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
 .filter-label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-left: 5px; }
@@ -44,7 +44,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .filter-btn:hover { border-color: var(--accent-cyan); color: var(--text-main); background-color: rgba(102, 252, 241, 0.05); }
 .filter-btn.active { background-color: var(--accent-blue); color: #fff; border-color: var(--accent-blue); box-shadow: 0 2px 8px rgba(69, 162, 158, 0.4); }
 
-/* --- תצוגת טבלאות בתים --- */
+/* --- טבלאות ומלך השערים --- */
 #standings-view { display: none; flex-wrap: wrap; gap: 20px; justify-content: center; animation: tabFadeIn 0.4s ease; }
 .group-table-card { background-color: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 15px; width: 350px; box-shadow: var(--shadow); }
 .group-table-title { color: var(--accent-cyan); font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
@@ -54,7 +54,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .team-cell { display: flex; align-items: center; gap: 8px; font-weight: 600; text-align: right; }
 .team-cell img { width: 20px; border-radius: 2px; }
 
-/* --- תצוגת מלך השערים --- */
 #scorers-view { display: none; justify-content: center; animation: tabFadeIn 0.4s ease; width: 100%; }
 .scorers-card { background-color: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); padding: 25px; width: 100%; max-width: 600px; box-shadow: var(--shadow); margin: 0 auto; }
 .scorers-title { color: var(--accent-cyan); font-weight: 800; font-size: 1.5rem; margin-bottom: 20px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;}
@@ -63,8 +62,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .scorer-info { display: flex; align-items: center; gap: 15px; }
 .scorer-rank { font-weight: 900; color: var(--text-muted); width: 25px; text-align: center; font-size: 1.1rem;}
 .scorer-rank.top-1 { color: #ffd700; font-size: 1.4rem; text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
-.scorer-rank.top-2 { color: #c0c0c0; font-size: 1.3rem; }
-.scorer-rank.top-3 { color: #cd7f32; font-size: 1.2rem; }
 .scorer-name { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
 .scorer-team { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 2px;}
 .scorer-goals { font-size: 1.5rem; font-weight: 900; color: var(--accent-cyan); background: rgba(102, 252, 241, 0.1); padding: 4px 15px; border-radius: 8px; border: 1px solid rgba(102, 252, 241, 0.2); }
@@ -72,18 +69,15 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 /* --- כרטיסיות משחקים --- */
 #matches-view { display: block; animation: tabFadeIn 0.4s ease; }
 .matches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-
 .match-card { background-color: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; opacity: 0; transform: translateY(15px); will-change: transform, opacity; }
 .match-card.animate-in { animation: cardFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes cardFadeIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .match-header { background-color: rgba(0, 0, 0, 0.15); padding: 10px; text-align: center; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); }
 .match-hero { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 10px 5px; background: linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, transparent 100%); min-height: 100px;}
-
 .team { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .team-flag { width: 45px; height: auto; border-radius: 4px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: transform 0.2s; }
 .team-flag:hover { transform: scale(1.1); border-color: var(--accent-cyan); }
 .team-name { font-size: 1rem; font-weight: 800; white-space: nowrap; }
-
 .cards-container { display: flex; gap: 3px; height: 16px; margin-top: 2px; }
 .card-icon { width: 12px; height: 16px; border-radius: 2px; cursor: pointer; border: 1px solid rgba(0,0,0,0.3); transition: transform 0.2s; }
 .card-icon:hover { transform: scale(1.2) translateY(-2px); }
@@ -92,8 +86,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .score-center { flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 5px; }
 .score-label { font-size: 0.7rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; white-space: nowrap; transition: color 0.3s ease; }
 .score-number { font-size: 1.6rem; font-weight: 900; background-color: rgba(0, 0, 0, 0.3); padding: 4px 15px; border-radius: 8px; border: 1px solid var(--border-color); letter-spacing: 2px; white-space: nowrap; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); transition: all 0.3s ease; cursor: pointer;}
-.score-number:hover { transform: scale(1.05); }
-
 .score-number.is-actual.exact { color: var(--color-exact); border-color: rgba(0, 230, 118, 0.4); background-color: rgba(0, 230, 118, 0.1); text-shadow: 0 0 12px rgba(0, 230, 118, 0.4); }
 .score-number.is-actual.trend { color: var(--color-trend); border-color: rgba(255, 179, 0, 0.4); background-color: rgba(255, 179, 0, 0.1); text-shadow: 0 0 12px rgba(255, 179, 0, 0.4); }
 .score-number.is-actual.wrong { color: var(--color-wrong); border-color: rgba(255, 51, 51, 0.4); background-color: rgba(255, 51, 51, 0.1); text-shadow: 0 0 12px rgba(255, 51, 51, 0.4); }
@@ -106,44 +98,37 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .prob-away { background-color: #ff4d4d; transition: width 0.5s ease;}
 
 .chart-container { padding: 5px 15px; height: 160px; position: relative; }
-
-/* טאבים פנימיים */
 .inner-tabs { display: flex; background-color: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; margin: 0 15px 15px 15px; border: 1px solid rgba(255,255,255,0.05); }
 .inner-tab-btn { flex: 1; background: transparent; border: none; padding: 8px 5px; color: var(--text-muted); font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; border-radius: 6px; }
 .inner-tab-btn:hover:not(:disabled) { background-color: rgba(255,255,255,0.05); color: var(--text-main); }
 .inner-tab-btn.active { background-color: var(--accent-cyan); color: var(--bg-color); box-shadow: 0 2px 8px rgba(102, 252, 241, 0.4); }
-.inner-tab-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .tab-content { display: none; padding: 0 15px 15px 15px; flex-grow: 1; animation: tabFadeIn 0.3s ease; }
 .tab-content.active { display: block; }
-
 .insight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .insight-title { font-size: 0.85rem; color: var(--accent-cyan); font-weight: 800; }
 .insight-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 10px; }
-
 .adv-stats-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 5px;}
 .adv-stats-table th { color: var(--text-muted); font-weight: 400; padding: 4px 0; border-bottom: 1px dashed var(--border-color); }
 .adv-stats-table td { padding: 8px 0; text-align: center; font-weight: 600; }
 .adv-home { color: var(--text-main); text-align: right; }
 .adv-away { color: var(--text-main); text-align: left; }
 .adv-metric { color: var(--text-muted); font-size: 0.8rem; }
-
 .risk-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 12px; font-weight: 800; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 .risk-safe { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.4); }
 .risk-draw { background: rgba(255,179,0,0.15); color: #ffb300; border: 1px solid rgba(255,179,0,0.4); }
 .risk-upset { background: rgba(255,51,51,0.15); color: #ff3333; border: 1px solid rgba(255,51,51,0.4); }
-
 .status-bar { padding: 10px; text-align: center; font-size: 0.8rem; font-weight: 600; }
 .status-pending-ui { background-color: rgba(255, 215, 0, 0.05); color: var(--color-pending); border-top: 1px solid rgba(255,215,0,0.2); }
 .status-exact-ui { background-color: rgba(0, 230, 118, 0.05); color: var(--color-exact); border-top: 1px solid rgba(0,230,118,0.2); }
 .status-trend-ui { background-color: rgba(255, 179, 0, 0.05); color: var(--color-trend); border-top: 1px solid rgba(255,179,0,0.2); }
 .status-wrong-ui { background-color: rgba(255, 51, 51, 0.05); color: var(--color-wrong); border-top: 1px solid rgba(255,51,51,0.2); }
 
-/* --- מודאלים --- */
+/* --- מודאלים רגילים --- */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; }
 .modal-content { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); width: 90%; max-width: 500px; padding: 25px; position: relative; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-.modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; line-height: 1; }
+.modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; line-height: 1; z-index: 10; }
 .modal-close:hover { color: var(--color-wrong); }
 .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 20px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
 .modal-body { font-size: 1rem; line-height: 1.6; color: var(--text-main); }
@@ -154,45 +139,114 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .goal-item { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; }
 .card-detail { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
 
+/* --- מודאל מסע הנבחרת המורחב (Team Journey) --- */
+.journey-modal-content { max-width: 600px; padding: 0; overflow: hidden; }
+
+/* רקע הדגל בהאדר */
+.journey-header { 
+    position: relative;
+    padding: 80px 25px 25px; /* מרווח גדול כדי לתת לדגל נוכחות */
+    text-align: right; 
+    border-bottom: 2px solid var(--accent-cyan); 
+    background-size: cover; 
+    background-position: center; 
+    border-radius: 16px 16px 0 0; 
+}
+/* הגרדיאנט שמכהה את התחתית כדי שהשם יבלוט */
+.journey-header::before {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(to top, var(--card-bg) 0%, rgba(30, 35, 46, 0.4) 100%);
+    z-index: 1;
+}
+/* שם המדינה הענק */
+.journey-header h2 { 
+    position: relative; z-index: 2;
+    margin: 0; font-size: 2.8rem; font-weight: 900; color: #fff; 
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.8); 
+    letter-spacing: 1px;
+}
+/* כפתור סגירה לבן שיראה טוב על הדגל */
+.modal-close-light { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); top: 15px; right: 20px; }
+
+.journey-body { padding: 25px; max-height: 60vh; overflow-y: auto; }
+
+.geek-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+.geek-stat-box { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px 10px; text-align: center; }
+.geek-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--accent-cyan); margin-bottom: 5px; }
+.geek-stat-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+.geek-stat-na { color: #555; font-size: 1.1rem; }
+
+.timeline-title { font-size: 1.1rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; }
+.match-timeline { display: flex; flex-direction: column; gap: 15px; border-right: 2px solid var(--border-color); padding-right: 20px; margin-right: 10px; }
+.timeline-item { position: relative; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; }
+.timeline-item::before { content: ''; position: absolute; right: -27px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-blue); border: 2px solid var(--card-bg); }
+.timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
+.timeline-matchup { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+.timeline-matchup img { width: 24px; border-radius: 3px; }
+.timeline-res { display: inline-block; padding: 3px 10px; border-radius: 6px; font-weight: 900; font-size: 0.9rem; margin-top: 10px; }
+.res-win { background: rgba(0, 230, 118, 0.15); color: var(--color-exact); border: 1px solid rgba(0, 230, 118, 0.3); }
+.res-draw { background: rgba(255, 179, 0, 0.15); color: var(--color-trend); border: 1px solid rgba(255, 179, 0, 0.3); }
+.res-loss { background: rgba(255, 51, 51, 0.15); color: var(--color-wrong); border: 1px solid rgba(255, 51, 51, 0.3); }
+
+/* --- עץ הנוקאאוט --- */
+#bracket-view { width: 100%; overflow-x: auto; padding-bottom: 20px; }
+.knockout-container { background-color: transparent; border-radius: 12px; padding: 10px; }
+.tournament-bracket { display: flex; flex-direction: row; align-items: center; gap: 4rem; direction: rtl; min-width: 800px; }
+.bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
+.round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
+
+.bracket-match { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 260px; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; overflow: hidden;}
+.bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); }
+.round-of-16 .bracket-match::after { display: none; }
+
+.bracket-team { 
+    display: flex; align-items: center; padding: 14px 15px; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+    position: relative; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.bracket-team:hover { transform: scale(1.02); z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border-radius: 4px;}
+.bracket-team:last-child { border-bottom: none; }
+
+.bracket-team::before {
+    content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(to left, rgba(30, 35, 46, 0.1) 0%, rgba(30, 35, 46, 0.98) 75%);
+    z-index: 1; pointer-events: none;
+}
+
+.bracket-team .flag-bg {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 70%;
+    background-size: cover; background-position: right center; background-repeat: no-repeat;
+    opacity: 0.85; z-index: 0;
+}
+
+/* הבלוק החדש שמכיל את השם והכותרת משנה */
+.bracket-team .team-info { flex-grow: 1; margin-left: 10px; z-index: 2; position: relative; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; }
+.bracket-team .team-name { font-size: 1.6rem; font-weight: 900; color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.8); margin: 0; }
+.bracket-team .team-subtitle { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.85); text-shadow: 1px 1px 3px rgba(0,0,0,0.9); margin-top: 2px;}
+
+.bracket-team .score { font-weight: 900; color: #fff; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 2;}
+.bracket-team.winner { border-right: 4px solid var(--color-exact); }
+
+.empty-match { background: rgba(0,0,0,0.3); border: 1px dashed var(--border-color); }
+.empty-match .bracket-team { cursor: default; }
+.empty-match .bracket-team:hover { transform: none; box-shadow: none; }
+.empty-match .team-name { color: var(--text-muted); font-size: 1.2rem; text-shadow: none; }
+.empty-match .team-subtitle { color: #555; text-shadow: none;}
+
 /* --- תמיכה במובייל --- */
 .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-main); font-size: 1.8rem; cursor: pointer; padding: 0; }
 .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 95; backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.3s ease; }
 .sidebar-overlay.active { display: block; opacity: 1; }
-
 @media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 900px) {
     .mobile-menu-btn { display: block; }
     .topbar { flex-direction: column; align-items: flex-start; gap: 15px; padding: 15px 20px; }
     .topbar-stats { width: 100%; overflow-x: auto; padding-bottom: 5px; justify-content: flex-start; }
-    
     .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; }
     .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
-    
     .main-content { margin-right: 0; }
     .content-wrapper { padding: 15px 15px; }
     .matches-grid { grid-template-columns: 1fr; }
     .filters-row { flex-direction: column; border-radius: 20px; padding: 15px; }
 }
-
-/* --- עץ הנוקאאוט (Dark Theme) - חדש --- */
-#bracket-view { width: 100%; overflow-x: auto; padding-bottom: 20px; }
-.knockout-container { background-color: transparent; border-radius: 12px; padding: 10px; }
-
-.tournament-bracket { display: flex; flex-direction: row; align-items: center; gap: 4rem; direction: rtl; min-width: 800px; }
-.bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
-.round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
-
-.bracket-match { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 240px; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; }
-.bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); }
-.round-of-16 .bracket-match::after { display: none; }
-
-.bracket-team { display: flex; align-items: center; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; color: var(--text-main); }
-.bracket-team:last-child { border-bottom: none; }
-.bracket-team.winner { font-weight: 800; background-color: rgba(0, 230, 118, 0.1); border-left: 4px solid var(--color-exact); }
-
-.bracket-team .flag { margin-left: 10px; font-size: 1.2rem; }
-.bracket-team .team-name { flex-grow: 1; }
-.bracket-team .score { font-weight: 900; color: var(--accent-cyan); }
-
-.empty-match { background: rgba(0,0,0,0.3); border: 1px dashed var(--border-color); }
-.empty-match .team-name { color: var(--text-muted); }

@@ -78,29 +78,59 @@
             <div id="standings-view"></div>
             <div id="scorers-view"></div>
 
+            <!-- תצוגת עץ הנוקאאוט -->
             <div id="bracket-view" style="display:none; animation: tabFadeIn 0.4s ease;">
                 <div class="knockout-container">
                     <div class="tournament-bracket">
+                        <!-- עמודה: 32 האחרונות -->
                         <div class="bracket-column round-of-32">
                             <h3 class="round-title">32 האחרונות</h3>
                             
-                            <div class="bracket-match empty-match">
-                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מנצחת בית א'</span> <span class="score"></span></div>
-                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">סגנית בית ב'</span> <span class="score"></span></div>
+                            <div class="bracket-match">
+                                <div class="bracket-team winner" onclick="openTeamJourney('ברזיל', 'br')">
+                                    <div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/br.png');"></div>
+                                    <div class="team-info">
+                                        <div class="team-name">ברזיל</div>
+                                        <div class="team-subtitle">מנצחת בית ג'</div>
+                                    </div>
+                                    <span class="score"></span>
+                                </div>
+                                <div class="bracket-team" onclick="openTeamJourney('קנדה', 'ca')">
+                                    <div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/ca.png');"></div>
+                                    <div class="team-info">
+                                        <div class="team-name">קנדה</div>
+                                        <div class="team-subtitle">סגנית בית ב'</div>
+                                    </div>
+                                    <span class="score"></span>
+                                </div>
                             </div>
 
                             <div class="bracket-match empty-match">
-                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מנצחת בית ג'</span> <span class="score"></span></div>
-                                <div class="bracket-team"><span class="flag">❓</span> <span class="team-name">מקום 3 ד'/ה'/ו'</span> <span class="score"></span></div>
+                                <div class="bracket-team">
+                                    <div class="team-info">
+                                        <div class="team-name">מנצחת בית ח'</div>
+                                        <div class="team-subtitle">תקבע במחזור 3</div>
+                                    </div>
+                                </div>
+                                <div class="bracket-team">
+                                    <div class="team-info">
+                                        <div class="team-name">מקום 3 ד'/ה'/ו'</div>
+                                        <div class="team-subtitle">יקבע בסיום הבתים</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <!-- עמודה: שמינית גמר -->
                         <div class="bracket-column round-of-16">
                             <h3 class="round-title">שמינית גמר</h3>
-                            
                             <div class="bracket-match empty-match">
-                                <div class="bracket-team"><span class="team-name">מנצחת משחק 1</span></div>
-                                <div class="bracket-team"><span class="team-name">מנצחת משחק 2</span></div>
+                                <div class="bracket-team">
+                                    <div class="team-info"><div class="team-name" style="font-size:1.1rem;">מנצחת משחק 1</div></div>
+                                </div>
+                                <div class="bracket-team">
+                                    <div class="team-info"><div class="team-name" style="font-size:1.1rem;">מנצחת משחק 2</div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,11 +140,29 @@
         </div>
     </main>
 
+    <!-- מודאל רגיל לפרטי משחק -->
     <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event)">×</button>
             <div class="modal-title" id="modalTitle"></div>
             <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- מודאל מסע הנבחרת המשודרג -->
+    <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal(event)">
+        <div class="modal-content journey-modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close modal-close-light" onclick="closeJourneyModal(event)">×</button>
+            <div class="journey-header" id="journey-header">
+                <h2 id="journey-title">שם הנבחרת</h2>
+            </div>
+            
+            <div class="journey-body">
+                <div class="geek-stats-grid" id="journey-stats"></div>
+                
+                <h3 class="timeline-title">הדרך לנוקאאוט</h3>
+                <div class="match-timeline" id="journey-timeline"></div>
+            </div>
         </div>
     </div>
 

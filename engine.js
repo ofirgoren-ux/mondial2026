@@ -98,7 +98,6 @@ function calculateAndRenderStandings() {
 
     for (const key in matchDatabase) {
         const match = matchDatabase[key];
-        // הוספנו בדיקה קפדנית כדי לא להקריס את המערכת על משחקים ללא תוצאה
         if (match.timeStatus === 'past' && match.score && match.score.actual && match.score.actual.includes('-')) {
             const group = match.stage;
             const tH = match.teamHome.name, tA = match.teamAway.name;
@@ -107,7 +106,7 @@ function calculateAndRenderStandings() {
                 const gH = parseInt(scores[0].trim());
                 const gA = parseInt(scores[1].trim());
 
-                if (!isNaN(gH) && !isNaN(gA)) { // הגנה נוספת
+                if (!isNaN(gH) && !isNaN(gA)) { 
                     standings[group][tH].p++; standings[group][tH].gf += gH; standings[group][tH].ga += gA;
                     standings[group][tA].p++; standings[group][tA].gf += gA; standings[group][tA].ga += gH;
 
@@ -163,7 +162,6 @@ function calculateAndRenderTopScorers() {
         const match = matchDatabase[key];
         teamInfo[match.teamHome.name] = match.teamHome.flagCode;
         teamInfo[match.teamAway.name] = match.teamAway.flagCode;
-        // נוודא שיש goals ושהמשחק אכן בעבר
         if (match.timeStatus === 'past' && match.goals && Array.isArray(match.goals)) {
             match.goals.forEach(goal => {
                 if (goal.player.includes("עצמי")) return; 
@@ -204,7 +202,6 @@ function renderMatches() {
         const awayCardsHTML = (tAway.cards?.yellow || []).map(() => `<div class="card-icon yellow-card" onclick="openCardModal('${matchId}', 'teamAway', 'yellow')"></div>`).join('') + (tAway.cards?.red || []).map(() => `<div class="card-icon red-card" onclick="openCardModal('${matchId}', 'teamAway', 'red')"></div>`).join('');
 
         const isPast = data.timeStatus === 'past';
-        // הגנה: אם המשחק לא בעבר, או שאין עדיין score, הצג תחזית (או ריק)
         const currentScoreDisplay = isPast && data.score && data.score.actual ? data.score.actual : (data.score && data.score.prediction ? data.score.prediction : '-');
         const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית מוקדמת';
         
@@ -219,7 +216,6 @@ function renderMatches() {
         else if (risk === 'Draw Booster') riskHTML = '<span class="risk-badge risk-draw">⚠️ התראת בונקר/תיקו</span>';
         else if (risk === 'Upset Alert') riskHTML = '<span class="risk-badge risk-upset">🚨 פוטנציאל להפתעה!</span>';
 
-        // בנייה דינמית של הטאבים תלוית מצב המשחק (עבר או עתיד)
         let tabsHTML = '';
         let contentHTML = '';
 
@@ -317,6 +313,80 @@ window.openModal = function(title, contentHTML) {
 }
 window.closeModal = function(e) { if(e) e.preventDefault(); const modal = document.getElementById('infoModal'); if(modal) modal.style.display = 'none'; }
 
+// חלון "מסע הנבחרת" (Team Journey) - המעודכן עם תמונת הרקע הגדולה
+window.openTeamJourney = function(teamName, flagCode) {
+    const modal = document.getElementById('teamJourneyModal');
+    if (!modal) return;
+    
+    document.getElementById('journey-title').innerText = teamName;
+    
+    // משיכת דגל ברזולוציה גבוהה כרקע להאדר
+    const headerElement = document.getElementById('journey-header');
+    headerElement.style.backgroundImage = `url('https://flagcdn.com/w640/${flagCode}.png')`;
+    
+    let timelineHTML = '';
+    let matchesPlayed = 0, goalsScored = 0, totalXg = 0;
+
+    for (const key in matchDatabase) {
+        const m = matchDatabase[key];
+        if ((m.teamHome.name === teamName || m.teamAway.name === teamName) && m.timeStatus === 'past') {
+            matchesPlayed++;
+            const isHome = m.teamHome.name === teamName;
+            const opponentName = isHome ? m.teamAway.name : m.teamHome.name;
+            const opponentFlag = isHome ? m.teamAway.flagCode : m.teamHome.flagCode;
+            
+            let gUs = 0, gThem = 0;
+            if (m.score && m.score.actual.includes('-')) {
+                const scores = m.score.actual.split('-');
+                gUs = isHome ? parseInt(scores[0]) : parseInt(scores[1]);
+                gThem = isHome ? parseInt(scores[1]) : parseInt(scores[0]);
+                if (!isNaN(gUs)) goalsScored += gUs;
+            }
+            
+            if (m.advancedStats) {
+                const xgVal = parseFloat(isHome ? m.advancedStats.home.xG : m.advancedStats.away.xG);
+                if (!isNaN(xgVal)) totalXg += xgVal;
+            }
+
+            let resClass = 'res-draw';
+            let resText = 'תיקו';
+            if (gUs > gThem) { resClass = 'res-win'; resText = 'ניצחון'; }
+            else if (gUs < gThem) { resClass = 'res-loss'; resText = 'הפסד'; }
+
+            timelineHTML += `
+            <div class="timeline-item">
+                <div class="timeline-date">${m.dateText} | מחזור ${m.matchday}</div>
+                <div class="timeline-matchup">
+                    <img src="https://flagcdn.com/w40/${opponentFlag}.png" alt="vs"> 
+                    <span>נגד ${opponentName}</span>
+                </div>
+                <div class="timeline-res ${resClass}">${resText} (${gUs} - ${gThem})</div>
+            </div>`;
+        }
+    }
+
+    if (matchesPlayed === 0) timelineHTML = '<div class="timeline-item">אין נתונים ממשחקי עבר.</div>';
+
+    document.getElementById('journey-stats').innerHTML = `
+        <div class="geek-stat-box"><div class="geek-stat-val">${goalsScored}</div><div class="geek-stat-lbl">שערי זכות</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val">${totalXg.toFixed(2)}</div><div class="geek-stat-lbl">xG מיוצר</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">% החזקת כדור</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">בעיטות למסגרת</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">עבירות שבוצעו</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">חילופי מסירות</div></div>
+    `;
+
+    document.getElementById('journey-timeline').innerHTML = timelineHTML;
+    modal.style.display = 'flex';
+}
+
+window.closeJourneyModal = function(e) { 
+    if(e) e.preventDefault(); 
+    const modal = document.getElementById('teamJourneyModal'); 
+    if(modal) modal.style.display = 'none'; 
+}
+
+// ... פונקציות המודאל האחרות
 window.openGoalsModal = function(matchId) { 
     const scoreEl = document.getElementById(`${matchId}-score`); 
     if(!scoreEl || !scoreEl.classList.contains('is-actual')) return; 
@@ -383,7 +453,6 @@ window.applyFilters = function() {
         const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === card.getAttribute('data-time')); 
         const sMatch = (currentStageFilter === 'all' || currentStageFilter === card.getAttribute('data-stage')); 
         const mMatch = (currentMdFilter === 'all' || currentMdFilter === card.getAttribute('data-md')); 
-        // שינוי לוגי לנוקאאוט
         const isKnockout = currentMdFilter === 'ko';
 
         if (tMatch && sMatch && mMatch && !isKnockout) { 
