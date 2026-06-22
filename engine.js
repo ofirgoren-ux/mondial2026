@@ -46,7 +46,7 @@ window.switchView = function(viewName) {
     } else if (viewName === 'bracket') {
         document.getElementById('bracket-view').style.display = 'block';
         titleEl.innerText = "עץ הטורניר - שלב הנוקאאוט";
-        renderBracket(); // מרנדר את העץ הדינמי בלחיצה
+        renderBracket(); 
     }
 }
 
@@ -305,7 +305,6 @@ function renderMatches() {
     }
 }
 
-// פונקציית רינדור העץ הדינמי החדשה!
 window.renderBracket = function() {
     const container = document.getElementById('dynamic-bracket');
     if (!container || typeof knockoutBracket === 'undefined') return;
@@ -496,9 +495,39 @@ window.applyFilters = function() {
 }
 
 window.addEventListener('DOMContentLoaded', () => { 
-    renderStats(); renderMatches(); applyFilters(); 
+    renderStats(); renderMatches(); 
+    
+    // --- קריאת פרמטרים מה-URL (Deep Linking) ---
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const mdParam = urlParams.get('md');
+    if (mdParam) {
+        currentMdFilter = mdParam;
+        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`);
+        if (btn) btn.classList.add('active');
+    }
+    
+    const timeParam = urlParams.get('time');
+    if (timeParam) {
+        currentTimeFilter = timeParam;
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.time-btn[data-time="${timeParam}"]`);
+        if (btn) btn.classList.add('active');
+    }
+    
+    const stageParam = urlParams.get('stage');
+    if (stageParam) {
+        currentStageFilter = stageParam;
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`);
+        if (btn) btn.classList.add('active');
+    }
+    
+    applyFilters(); 
     if(document.getElementById('bracket-view').style.display === 'block') renderBracket();
     
+    // --- מאזינים ללחיצות רגילות ---
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
