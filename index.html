@@ -16,37 +16,53 @@
             MUNDIAL 2026
             <span>AI Dashboard</span>
         </div>
+
+        <div class="sidebar-section-title">ניווט ראשי</div>
         <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">🏠 שלב הבתים</a>
         
         <div class="sidebar-submenu" id="submenu-matchdays">
             <button class="submenu-btn active" data-md="all">כל המשחקים</button>
             <button class="submenu-btn" data-md="1">מחזור 1</button>
             <button class="submenu-btn" data-md="2">מחזור 2</button>
-            <button class="submenu-btn" data-md="3">מחזור 3</button>
+            <button class="submenu-btn" data-md="3" style="opacity: 0.5;">מחזור 3</button>
             <button class="submenu-btn" data-md="ko">נוקאאוט</button>
         </div>
 
         <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלת בתים</a>
         <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">⚽ מלך השערים</a>
         <a id="nav-bracket" class="nav-link" onclick="switchView('bracket')">🏆 עץ הנוקאאוט</a>
+
+        <div class="sidebar-guide">
+            <h4>מודל הניבוי</h4>
+            <ol>
+                <li>איסוף נתוני קבוצות ו-xG</li>
+                <li>שקלול מדדי כושר (רדאר)</li>
+                <li>הפקת הסתברות ותחזית</li>
+            </ol>
+        </div>
     </nav>
 
     <main class="main-content">
         <header class="topbar">
             <div class="topbar-header-row">
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-                <div class="topbar-title" id="main-title">שלב הבתים - מודל הסתברותי</div>
+                <div class="topbar-title" id="main-title">שלב הבתים – מודל הסתברותי</div>
             </div>
             <div class="topbar-stats">
-                <div class="mini-stat">משחקים: <span id="stat-total" style="color:var(--accent-cyan)">0</span></div>
-                <div class="mini-stat">פגיעה בול: <span id="stat-exact" style="color:var(--color-exact)">0%</span></div>
-                <div class="mini-stat">מגמה: <span id="stat-trend" style="color:var(--color-trend)">0%</span></div>
-                <div class="mini-stat" style="border-bottom: 2px solid var(--accent-cyan);">הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
+                <div class="mini-stat">סה"כ משחקים: <span id="stat-total" style="color:var(--accent-cyan)">0</span></div>
+                <div class="mini-stat">פגיעה מדויקת: <span id="stat-exact" style="color:var(--color-exact)">0%</span></div>
+                <div class="mini-stat">כיוון נכון: <span id="stat-trend" style="color:var(--color-trend)">0%</span></div>
+                <div class="mini-stat" style="border-right: 1px solid var(--border-color); padding-right: 10px;">אחוזי הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
             </div>
         </header>
 
         <div class="content-wrapper">
             <div id="matches-view">
+                
+                <div class="hero-intro">
+                    סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI) המחשב הסתברויות, יחסי כוחות ומדדי עומק.
+                </div>
+
                 <div class="filters-row">
                     <div class="filter-group">
                         <span class="filter-label">זמן:</span>
@@ -66,10 +82,6 @@
                         <button class="filter-btn stage-btn" data-stage="F">ו'</button>
                         <button class="filter-btn stage-btn" data-stage="G">ז'</button>
                         <button class="filter-btn stage-btn" data-stage="H">ח'</button>
-                        <button class="filter-btn stage-btn" data-stage="I">ט'</button>
-                        <button class="filter-btn stage-btn" data-stage="J">י'</button>
-                        <button class="filter-btn stage-btn" data-stage="K">כ'</button>
-                        <button class="filter-btn stage-btn" data-stage="L">ל'</button>
                     </div>
                 </div>
                 <div id="matches-container" class="matches-grid"></div>
@@ -78,69 +90,16 @@
             <div id="standings-view"></div>
             <div id="scorers-view"></div>
 
-            <!-- תצוגת עץ הנוקאאוט -->
             <div id="bracket-view" style="display:none; animation: tabFadeIn 0.4s ease;">
                 <div class="knockout-container">
-                    <div class="tournament-bracket">
-                        <!-- עמודה: 32 האחרונות -->
-                        <div class="bracket-column round-of-32">
-                            <h3 class="round-title">32 האחרונות</h3>
-                            
-                            <div class="bracket-match">
-                                <div class="bracket-team winner" onclick="openTeamJourney('ברזיל', 'br')">
-                                    <div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/br.png');"></div>
-                                    <div class="team-info">
-                                        <div class="team-name">ברזיל</div>
-                                        <div class="team-subtitle">מנצחת בית ג'</div>
-                                    </div>
-                                    <span class="score"></span>
-                                </div>
-                                <div class="bracket-team" onclick="openTeamJourney('קנדה', 'ca')">
-                                    <div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/ca.png');"></div>
-                                    <div class="team-info">
-                                        <div class="team-name">קנדה</div>
-                                        <div class="team-subtitle">סגנית בית ב'</div>
-                                    </div>
-                                    <span class="score"></span>
-                                </div>
-                            </div>
-
-                            <div class="bracket-match empty-match">
-                                <div class="bracket-team">
-                                    <div class="team-info">
-                                        <div class="team-name">מנצחת בית ח'</div>
-                                        <div class="team-subtitle">תקבע במחזור 3</div>
-                                    </div>
-                                </div>
-                                <div class="bracket-team">
-                                    <div class="team-info">
-                                        <div class="team-name">מקום 3 ד'/ה'/ו'</div>
-                                        <div class="team-subtitle">יקבע בסיום הבתים</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div id="dynamic-bracket" class="tournament-bracket">
                         </div>
-
-                        <!-- עמודה: שמינית גמר -->
-                        <div class="bracket-column round-of-16">
-                            <h3 class="round-title">שמינית גמר</h3>
-                            <div class="bracket-match empty-match">
-                                <div class="bracket-team">
-                                    <div class="team-info"><div class="team-name" style="font-size:1.1rem;">מנצחת משחק 1</div></div>
-                                </div>
-                                <div class="bracket-team">
-                                    <div class="team-info"><div class="team-name" style="font-size:1.1rem;">מנצחת משחק 2</div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- מודאל רגיל לפרטי משחק -->
     <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal(event)">×</button>
@@ -149,7 +108,6 @@
         </div>
     </div>
 
-    <!-- מודאל מסע הנבחרת המשודרג -->
     <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal(event)">
         <div class="modal-content journey-modal-content" onclick="event.stopPropagation()">
             <button class="modal-close modal-close-light" onclick="closeJourneyModal(event)">×</button>
@@ -159,7 +117,6 @@
             
             <div class="journey-body">
                 <div class="geek-stats-grid" id="journey-stats"></div>
-                
                 <h3 class="timeline-title">הדרך לנוקאאוט</h3>
                 <div class="match-timeline" id="journey-timeline"></div>
             </div>
@@ -168,6 +125,7 @@
 
     <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
+    <script src="data/knockoutData.js"></script>
     <script src="engine.js"></script>
 </body>
 </html>

@@ -1,8 +1,7 @@
 // ==========================================
-// engine.js - המנוע הראשי של הדשבורד
+// engine.js - המנוע הראשי של הדשבורד 
 // ==========================================
 
-// פתיחה וסגירת תפריט במובייל
 window.toggleMobileMenu = function() {
     document.getElementById('main-sidebar').classList.toggle('open');
     const overlay = document.getElementById('sidebar-overlay');
@@ -21,7 +20,6 @@ function closeMobileMenuIfOpen() {
     }
 }
 
-// ניווט בין המסכים (SPA)
 window.switchView = function(viewName) {
     closeMobileMenuIfOpen();
     
@@ -36,7 +34,7 @@ window.switchView = function(viewName) {
     const titleEl = document.getElementById('main-title');
     if (viewName === 'matches') {
         document.getElementById('matches-view').style.display = 'block';
-        titleEl.innerText = "שלב הבתים - מודל הסתברותי";
+        titleEl.innerText = "שלב הבתים – מודל הסתברותי";
     } else if (viewName === 'standings') {
         document.getElementById('standings-view').style.display = 'flex';
         titleEl.innerText = "טבלאות הבתים - עדכני";
@@ -48,6 +46,7 @@ window.switchView = function(viewName) {
     } else if (viewName === 'bracket') {
         document.getElementById('bracket-view').style.display = 'block';
         titleEl.innerText = "עץ הטורניר - שלב הנוקאאוט";
+        renderBracket(); // מרנדר את העץ הדינמי בלחיצה
     }
 }
 
@@ -218,7 +217,7 @@ function renderMatches() {
 
         let tabsHTML = '';
         let contentHTML = '';
-
+        
         if (isPast) {
             tabsHTML = `
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
@@ -226,8 +225,8 @@ function renderMatches() {
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${data.score ? data.score.accuracyClass : ''}')">עומק</button>
             `;
             contentHTML = `
-                <div id="${matchId}-pred" class="tab-content"><div class="insight-header"><div class="insight-title">🔑 אקס-פקטור מקדימה</div>${riskHTML}</div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
-                <div id="${matchId}-sum" class="tab-content active"><div class="insight-title">🎯 פוסט-משחק</div><div class="insight-text">${data.insight ? data.insight.actual : ''}</div>${statusBarHTML}</div>
+                <div id="${matchId}-pred" class="tab-content"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div>${riskHTML}</div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
+                <div id="${matchId}-sum" class="tab-content active"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${data.insight ? data.insight.actual : ''}</div>${statusBarHTML}</div>
                 <div id="${matchId}-adv" class="tab-content">
                     <div class="insight-title">🔬 מדדי עומק (Advanced)</div>
                     <table class="adv-stats-table">
@@ -243,7 +242,7 @@ function renderMatches() {
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">עומק</button>
             `;
             contentHTML = `
-                <div id="${matchId}-pred" class="tab-content active"><div class="insight-header"><div class="insight-title">🔑 אקס-פקטור מקדימה</div>${riskHTML}</div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div>${statusBarHTML}</div>
+                <div id="${matchId}-pred" class="tab-content active"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div>${riskHTML}</div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
                 <div id="${matchId}-adv" class="tab-content">
                     <div class="insight-title">🔬 מדדי עומק (Advanced)</div>
                     <table class="adv-stats-table">
@@ -267,20 +266,20 @@ function renderMatches() {
             </div>
             
             <div class="match-probabilities">
-                <div class="prob-labels" style="direction: rtl; unicode-bidi: embed;">
+                <div class="prob-labels">
                     <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
                     <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
                     <span style="color: #ff4d4d">2: ${prob.away}%</span>
                 </div>
-                <div class="prob-bar-container" style="direction: rtl;">
+                <div class="prob-bar-container">
                     <div class="prob-home" style="width: ${prob.home}%"></div>
                     <div class="prob-draw" style="width: ${prob.draw}%"></div>
                     <div class="prob-away" style="width: ${prob.away}%"></div>
                 </div>
             </div>
-
-            <div class="chart-container"><canvas id="chart-${matchId}"></canvas></div>
             
+            <div class="chart-container"><canvas id="chart-${matchId}"></canvas></div>
+
             <div class="inner-tabs">${tabsHTML}</div>
             ${contentHTML}
         </div>`;
@@ -306,21 +305,55 @@ function renderMatches() {
     }
 }
 
-// --- מודאלים ---
+// פונקציית רינדור העץ הדינמי החדשה!
+window.renderBracket = function() {
+    const container = document.getElementById('dynamic-bracket');
+    if (!container || typeof knockoutBracket === 'undefined') return;
+
+    let html = '<div class="bracket-column round-of-32"><h3 class="round-title">32 האחרונות</h3>';
+    
+    knockoutBracket.roundOf32.forEach(match => {
+        const t1 = match.team1;
+        const t2 = match.team2;
+        
+        const team1HTML = t1.flag === 'un' 
+            ? `<div class="bracket-team"><div class="team-info"><div class="team-name" style="font-size:1.1rem; color: var(--text-muted); text-shadow:none;">${t1.name}</div><div class="team-subtitle" style="text-shadow:none; color: #555;">${t1.status}</div></div></div>`
+            : `<div class="bracket-team" onclick="openTeamJourney('${t1.name}', '${t1.flag}')"><div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/${t1.flag}.png');"></div><div class="team-info"><div class="team-name">${t1.name}</div><div class="team-subtitle">${t1.status}</div></div><span class="score"></span></div>`;
+            
+        const team2HTML = t2.flag === 'un' 
+            ? `<div class="bracket-team"><div class="team-info"><div class="team-name" style="font-size:1.1rem; color: var(--text-muted); text-shadow:none;">${t2.name}</div><div class="team-subtitle" style="text-shadow:none; color: #555;">${t2.status}</div></div></div>`
+            : `<div class="bracket-team" onclick="openTeamJourney('${t2.name}', '${t2.flag}')"><div class="flag-bg" style="background-image: url('https://flagcdn.com/w320/${t2.flag}.png');"></div><div class="team-info"><div class="team-name">${t2.name}</div><div class="team-subtitle">${t2.status}</div></div><span class="score"></span></div>`;
+
+        html += `<div class="bracket-match ${t1.flag === 'un' && t2.flag === 'un' ? 'empty-match' : ''}">
+            ${team1HTML}
+            ${team2HTML}
+        </div>`;
+    });
+    
+    html += '</div>';
+    
+    html += '<div class="bracket-column round-of-16"><h3 class="round-title">שמינית גמר</h3>';
+    for(let i=1; i<=6; i++) {
+        html += `<div class="bracket-match empty-match">
+                    <div class="bracket-team"><div class="team-info"><div class="team-name" style="font-size:1.1rem; text-shadow:none; color: var(--text-muted);">מנצחת משחק ${i*2-1}</div></div></div>
+                    <div class="bracket-team"><div class="team-info"><div class="team-name" style="font-size:1.1rem; text-shadow:none; color: var(--text-muted);">מנצחת משחק ${i*2}</div></div></div>
+                </div>`;
+    }
+    html += '</div>';
+
+    container.innerHTML = html;
+}
+
 window.openModal = function(title, contentHTML) { 
     const modal = document.getElementById('infoModal');
     if(modal) { document.getElementById('modalTitle').innerHTML = title; document.getElementById('modalBody').innerHTML = contentHTML; modal.style.display = 'flex'; }
 }
 window.closeModal = function(e) { if(e) e.preventDefault(); const modal = document.getElementById('infoModal'); if(modal) modal.style.display = 'none'; }
 
-// חלון "מסע הנבחרת" (Team Journey) - המעודכן עם תמונת הרקע הגדולה
 window.openTeamJourney = function(teamName, flagCode) {
     const modal = document.getElementById('teamJourneyModal');
     if (!modal) return;
-    
     document.getElementById('journey-title').innerText = teamName;
-    
-    // משיכת דגל ברזולוציה גבוהה כרקע להאדר
     const headerElement = document.getElementById('journey-header');
     headerElement.style.backgroundImage = `url('https://flagcdn.com/w640/${flagCode}.png')`;
     
@@ -342,7 +375,6 @@ window.openTeamJourney = function(teamName, flagCode) {
                 gThem = isHome ? parseInt(scores[1]) : parseInt(scores[0]);
                 if (!isNaN(gUs)) goalsScored += gUs;
             }
-            
             if (m.advancedStats) {
                 const xgVal = parseFloat(isHome ? m.advancedStats.home.xG : m.advancedStats.away.xG);
                 if (!isNaN(xgVal)) totalXg += xgVal;
@@ -375,7 +407,6 @@ window.openTeamJourney = function(teamName, flagCode) {
         <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">עבירות שבוצעו</div></div>
         <div class="geek-stat-box"><div class="geek-stat-val geek-stat-na">N/A</div><div class="geek-stat-lbl">חילופי מסירות</div></div>
     `;
-
     document.getElementById('journey-timeline').innerHTML = timelineHTML;
     modal.style.display = 'flex';
 }
@@ -386,7 +417,6 @@ window.closeJourneyModal = function(e) {
     if(modal) modal.style.display = 'none'; 
 }
 
-// ... פונקציות המודאל האחרות
 window.openGoalsModal = function(matchId) { 
     const scoreEl = document.getElementById(`${matchId}-score`); 
     if(!scoreEl || !scoreEl.classList.contains('is-actual')) return; 
@@ -411,7 +441,6 @@ window.openCardModal = function(matchId, side, type) {
     openModal(`פירוט כרטיסים - ${data[side].name}`, html); 
 }
 
-// --- ניווט טאבים בכרטיסיות ---
 window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accuracyLevel) { 
     const card = btn.closest('.match-card');
     const tabs = card.querySelectorAll('.tab-content');
@@ -443,7 +472,6 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } 
 }
 
-// --- מערכת הפילטרים ---
 let currentTimeFilter = 'all'; 
 let currentStageFilter = 'all';
 let currentMdFilter = 'all'; 
@@ -469,6 +497,7 @@ window.applyFilters = function() {
 
 window.addEventListener('DOMContentLoaded', () => { 
     renderStats(); renderMatches(); applyFilters(); 
+    if(document.getElementById('bracket-view').style.display === 'block') renderBracket();
     
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
