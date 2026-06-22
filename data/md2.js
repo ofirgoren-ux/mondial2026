@@ -1,7 +1,6 @@
 // data/md2.js - מחזור 2 המלא והמעודכן (בתים א' עד ח')
 
 const matchday2Database = {
-    // --- משחקי עבר (הסתיימו) ---
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
         teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (44')"], red: [] } },
@@ -143,58 +142,58 @@ const matchday2Database = {
         radarStats: { home: [70, 65, 70, 85, 80, 65], away: [75, 75, 80, 70, 75, 75] },
         advancedStats: { home: { xG: 0.90, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 1.10, restDays: 8, altitudeImpact: 'רגיל' } },
         insight: { prediction: "בוסטר תיקו. שתי נבחרות טקטיות וממושמעות שיעדיפו לא לעשות טעויות. צפוי משחק שקול מאוד.", actual: "קונצרט יפני! הסמוראים הכחולים פירקו לחלוטין את משחק ההגנה התוניסאי והוכיחו שהם כוח התקפי קטלני." },
-        goals: [],
+        goals: [{ team: 'יפן', player: "אואדה", minute: "מחצית 1" }, { team: 'יפן', player: "אואדה", minute: "מחצית 2" }, { team: 'יפן', player: "קמאדה", minute: "מחצית 2" }, { team: 'יפן', player: "איטו", minute: "מחצית 2" }],
         squads: { home: { predicted: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"], actual: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"] }, away: { predicted: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"], actual: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"] } }
     },
 
-    // --- משחקי עתיד (הערב והלילה) ---
+    // --- תוצאות משחקי הלילה (מעודכן ל-past) ---
     'match37': {
-        timeStatus: 'future', matchday: 2, stage: 'H', dateText: "בית ח' | 21 ביוני, 19:00",
+        timeStatus: 'past', matchday: 2, stage: 'H', dateText: "בית ח' | 21 ביוני",
         teamHome: { name: 'ספרד', flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } },
         teamAway: { name: 'ערב הסעודית', flagCode: 'sa', color: '#006C35', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '3 - 0', actual: '4 - 0', accuracyClass: 'trend' },
         probabilities: { home: 85, draw: 10, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [95, 90, 80, 85, 75, 90], away: [65, 55, 60, 70, 65, 60] },
-        advancedStats: { home: { xG: '2.60 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.45 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ספרד תשטוף את המגרש עם טיקי-טאקה מודרני והחזקת כדור אבסולוטית. הסעודים ינסו להסתגר ולצמצם נזקים.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["סימון", "רודרי", "פדרי", "מוראטה"], actual: [] }, away: { predicted: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"], actual: [] } }
+        advancedStats: { home: { xG: 2.80, restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: 0.35, restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "ספרד תשטוף את המגרש עם טיקי-טאקה מודרני והחזקת כדור אבסולוטית. הסעודים ינסו להסתגר ולצמצם נזקים.", actual: "התפוצצות של לה רוחה! ימאל ואויארסבאל סגרו סיפור ב-24 דקות ראשונות מוחצות שלא השאירו לסעודים סיכוי." },
+        goals: [{ team: 'ספרד', player: "ימאל", minute: "מוקדם" }, { team: 'ספרד', player: "אויארסבאל", minute: "מחצית 1" }, { team: 'ספרד', player: "אויארסבאל", minute: "מחצית 1" }, { team: 'ספרד', player: "שער עצמי", minute: "מחצית 2" }],
+        squads: { home: { predicted: ["סימון", "רודרי", "פדרי", "מוראטה"], actual: ["סימון", "רודרי", "פדרי", "מוראטה", "ימאל", "אויארסבאל"] }, away: { predicted: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"], actual: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"] } }
     },
     'match38': {
-        timeStatus: 'future', matchday: 2, stage: 'G', dateText: "בית ז' | 21 ביוני, 22:00",
-        teamHome: { name: 'בלגיה', flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } },
+        timeStatus: 'past', matchday: 2, stage: 'G', dateText: "בית ז' | 21 ביוני",
+        teamHome: { name: 'בלגיה', flagCode: 'be', color: '#E30613', cards: { yellow: [], red: ["אנגוי (67')"] } },
         teamAway: { name: 'איראן', flagCode: 'ir', color: '#1BA15F', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '2 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 78, draw: 15, away: 7 }, matchRisk: 'Safe',
         radarStats: { home: [85, 80, 75, 75, 80, 85], away: [65, 50, 70, 80, 80, 60] },
-        advancedStats: { home: { xG: '2.10 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.60 (צפי)', restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
-        insight: { prediction: "איראן תעמיד אוטובוס ברחבה ותנסה לשבש את הקצב, אבל העומק והאיכות של דה בריינה והבלגים יפרצו את הסכר בסופו של דבר.", actual: "" },
+        advancedStats: { home: { xG: 1.20, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 0.40, restDays: 8, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "איראן תעמיד אוטובוס ברחבה ותנסה לשבש את הקצב, אבל העומק והאיכות של הבלגים יפרצו את הסכר בסופו של דבר.", actual: "האוטובוס האיראני עבד בצורה מושלמת! בלגיה תוסכלה ואף איבדה את אנגוי באדום במחצית השנייה בדרך לתיקו מפתיע." },
         goals: [],
-        squads: { home: { predicted: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו"], actual: [] }, away: { predicted: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"], actual: [] } }
+        squads: { home: { predicted: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו"], actual: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו", "אנגוי"] }, away: { predicted: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"], actual: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"] } }
     },
     'match39': {
-        timeStatus: 'future', matchday: 2, stage: 'H', dateText: "בית ח' | 22 ביוני, 01:00",
+        timeStatus: 'past', matchday: 2, stage: 'H', dateText: "בית ח' | 22 ביוני",
         teamHome: { name: 'אורוגוואי', flagCode: 'uy', color: '#0038A8', cards: { yellow: [], red: [] } },
         teamAway: { name: 'קף ורדה', flagCode: 'cv', color: '#003893', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '2 - 0', actual: '2 - 2', accuracyClass: 'wrong' },
         probabilities: { home: 72, draw: 20, away: 8 }, matchRisk: 'Safe',
         radarStats: { home: [80, 70, 80, 95, 90, 80], away: [65, 60, 65, 75, 80, 55] },
-        advancedStats: { home: { xG: '1.85 (צפי)', restDays: 8, altitudeImpact: 'אופטימלי' }, away: { xG: '0.70 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "הפיזיות של אורוגוואי והניסיון במרכז השדה יכריעו מול ההתלהבות של הקריביים. 'גראנדה גארה' מול מהירות אפריקאית.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"], actual: [] }, away: { predicted: ["ווזיניה", "פיקו", "מנדש", "בבה"], actual: [] } }
+        advancedStats: { home: { xG: 1.55, restDays: 8, altitudeImpact: 'אופטימלי' }, away: { xG: 1.10, restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "הפיזיות של אורוגוואי והניסיון במרכז השדה יכריעו מול ההתלהבות של הקריביים. 'גראנדה גארה' מול מהירות אפריקאית.", actual: "סנסציה היסטורית! כף ורדה חזרה מפיגור כפול עם נחישות מדהימה ושומרת על חלום ההעפלה בחיים." },
+        goals: [{ team: 'אורוגוואי', player: "שחקן אורוגוואי", minute: "מחצית 1" }, { team: 'אורוגוואי', player: "שחקן אורוגוואי", minute: "מחצית 1" }, { team: 'קף ורדה', player: "פינה", minute: "מחצית 2" }, { team: 'קף ורדה', player: "בארלה", minute: "מחצית 2" }],
+        squads: { home: { predicted: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"], actual: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"] }, away: { predicted: ["ווזיניה", "פיקו", "מנדש", "בבה"], actual: ["ווזיניה", "פיקו", "מנדש", "בבה", "פינה", "בארלה"] } }
     },
     'match40': {
-        timeStatus: 'future', matchday: 2, stage: 'G', dateText: "בית ז' | 22 ביוני, 04:00",
+        timeStatus: 'past', matchday: 2, stage: 'G', dateText: "בית ז' | 22 ביוני",
         teamHome: { name: 'ניו זלנד', flagCode: 'nz', color: '#000000', cards: { yellow: [], red: [] } },
         teamAway: { name: 'מצרים', flagCode: 'eg', color: '#CE1126', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '0 - 2', actual: '1 - 3', accuracyClass: 'trend' },
         probabilities: { home: 15, draw: 25, away: 60 }, matchRisk: 'Safe',
         radarStats: { home: [60, 50, 70, 75, 80, 50], away: [75, 65, 70, 80, 75, 75] },
-        advancedStats: { home: { xG: '0.55 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '1.75 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "מצרים טובה ומהירה יותר, ותנצל את השטחים שיתפנו. ניו זלנד הכבדה תתקשה להוות איום התקפי ממשי ותחפש מצבים נייחים.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["סייל", "ריד", "בל", "ווד"], actual: [] }, away: { predicted: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"], actual: [] } }
+        advancedStats: { home: { xG: 0.85, restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: 2.15, restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "מצרים טובה ומהירה יותר, ותנצל את השטחים שיתפנו. ניו זלנד הכבדה תתקשה להוות איום התקפי ממשי ותחפש מצבים נייחים.", actual: "קאמבק מצרי פנטסטי! ניו זלנד עקצה מוקדם, אבל סלאח התעורר והוביל את מצרים לניצחון היסטורי." },
+        goals: [{ team: 'ניו זלנד', player: "שחקן ניו זלנד", minute: "מוקדם" }, { team: 'מצרים', player: "סלאח (מעורב)", minute: "מחצית 2" }, { team: 'מצרים', player: "שחקן מצרים", minute: "מחצית 2" }, { team: 'מצרים', player: "שחקן מצרים", minute: "מחצית 2" }],
+        squads: { home: { predicted: ["סייל", "ריד", "בל", "ווד"], actual: ["סייל", "ריד", "בל", "ווד"] }, away: { predicted: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"], actual: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"] } }
     }
 };
 
