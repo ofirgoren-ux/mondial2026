@@ -1,7 +1,7 @@
-// data/md2.js - מחזור 2 המלא (כולל משחקי העבר וסיום כל הבתים עד ל')
+// data/md2.js - מחזור 2 המלא (כולל משחקי העבר, משחק השיא של מסי, והדרמות של ה-23 ביוני)
 
 const matchday2Database = {
-    // --- משחקי עבר (18 עד 22 ביוני) ---
+    // --- משחקי עבר (18 עד 21 ביוני) ---
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
         teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (44')"], red: [] } },
@@ -194,59 +194,69 @@ const matchday2Database = {
         goals: [{ team: 'ניו זלנד', player: "שחקן ניו זלנד", minute: "מוקדם" }, { team: 'מצרים', player: "סלאח (מעורב)", minute: "מחצית 2" }, { team: 'מצרים', player: "שחקן מצרים", minute: "מחצית 2" }, { team: 'מצרים', player: "שחקן מצרים", minute: "מחצית 2" }],
         squads: { home: { predicted: ["סייל", "ריד", "בל", "ווד"], actual: ["סייל", "ריד", "בל", "ווד"] }, away: { predicted: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"], actual: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"] } }
     },
-
-    // --- משחקי עתיד (22-23 ביוני: בתים ט', י', כ', ל') ---
     'match41': {
-        timeStatus: 'future', matchday: 2, stage: 'J', dateText: "בית י' | 22 ביוני, 20:00",
-        teamHome: { name: 'ארגנטינה', flagCode: 'ar', color: '#75AADB', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'אוסטריה', flagCode: 'at', color: '#EF3340', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 22 ביוני",
+        teamHome: { name: 'ארגנטינה', flagCode: 'ar', color: '#75AADB', cards: { yellow: ["מדינה (76')", "פארדס (90')"], red: [] } },
+        teamAway: { name: 'אוסטריה', flagCode: 'at', color: '#EF3340', cards: { yellow: ["פוש (40')", "ליימר (76')"], red: [] } },
+        score: { prediction: '2 - 0', actual: '2 - 0', accuracyClass: 'exact' },
         probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
         radarStats: { home: [95, 85, 80, 95, 80, 95], away: [70, 65, 75, 80, 85, 70] },
-        advancedStats: { home: { xG: '2.15 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.80 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "האוסטרים יבואו לשחק חזק וטקטי (רנגניק סטייל), אבל האיכות של אלופת העולם במרכז השדה בלתי ניתנת לעצירה. לאוטרו ומסי ימצאו את הפרצה.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["מרטינז", "רומרו", "דה פול", "מסי"], actual: [] }, away: { predicted: ["שלנברג", "אלאבה", "זביצר", "ארנאוטוביץ'"], actual: [] } }
+        advancedStats: { home: { xG: 2.15, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 0.80, restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "האוסטרים יבואו לשחק חזק וטקטי (רנגניק סטייל), אבל האיכות של אלופת העולם במרכז השדה בלתי ניתנת לעצירה. לאוטרו ומסי ימצאו את הפרצה.", actual: "פגיעה בול (2-0)! ערב היסטורי שבו מסי כיפר על פנדל מוחמץ, כבש צמד אדיר ושבר את שיא הכיבושים של כל הזמנים במונדיאלים (18 שערים). קסם טהור." },
+        goals: [{ team: 'ארגנטינה', player: "מסי", minute: "38'" }, { team: 'ארגנטינה', player: "מסי", minute: "90+4'" }],
+        squads: { 
+            home: { 
+                predicted: ["מרטינז", "רומרו", "דה פול", "מסי"], 
+                actual: ["מרטינז", "רומרו", "אוטמנדי", "דה פול", "פארדס", "מדינה", "טאגליאפיקו", "אלמדה", "גונסאלס", "לאוטרו", "אלברס", "מסי"] 
+            }, 
+            away: { 
+                predicted: ["שלנברג", "אלאבה", "זביצר", "ארנאוטוביץ'"], 
+                actual: ["שלאגר", "פוש", "אלאבה", "ואנר", "ליימר", "שמיד", "גרגוריץ'", "פרידל", "ארנאוטוביץ'", "פראס", "וימר", "צ'וקוואמקה"] 
+            } 
+        }
     },
+
+    // --- עדכון משחקי הלילה (22-23 ביוני) שעברו לסטטוס "past" ---
     'match42': {
-        timeStatus: 'future', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני, 00:00",
+        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני",
         teamHome: { name: 'צרפת', flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } },
         teamAway: { name: 'עיראק', flagCode: 'iq', color: '#007A3D', cards: { yellow: [], red: [] } },
-        score: { prediction: '4 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '4 - 0', actual: '3 - 0', accuracyClass: 'trend' },
         probabilities: { home: 88, draw: 9, away: 3 }, matchRisk: 'Safe',
         radarStats: { home: [95, 90, 85, 90, 95, 95], away: [50, 45, 55, 60, 65, 40] },
-        advancedStats: { home: { xG: '3.60 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.25 (צפי)', restDays: 7, altitudeImpact: 'לחץ מנטלי' } },
-        insight: { prediction: "פער איכויות עצום. עיראק תצופף את הרחבה, אבל המהירות של אמבפה והעוצמה הצרפתית יפרקו את הבונקר מוקדם מאוד.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["מניאן", "הרננדז", "טשואמני", "אמבפה"], actual: [] }, away: { predicted: ["חסן", "איברהים", "עלי", "חוסיין"], actual: [] } }
+        advancedStats: { home: { xG: 3.60, restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: 0.25, restDays: 7, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "פער איכויות עצום. עיראק תצופף את הרחבה, אבל המהירות של אמבפה והעוצמה הצרפתית יפרקו את הבונקר מוקדם מאוד.", actual: "אמבפה חגג הופעה 100 עם צמד במשחק סוער שהופסק ליותר משעתיים בגלל ברקים! דמבלה חתם את התוצאה וצרפת מטיילת לשלב הבא." },
+        goals: [{ team: 'צרפת', player: "אמבפה", minute: "-" }, { team: 'צרפת', player: "אמבפה", minute: "-" }, { team: 'צרפת', player: "דמבלה", minute: "-" }],
+        squads: { home: { predicted: ["מניאן", "הרננדז", "טשואמני", "אמבפה"], actual: ["מניאן", "הרננדז", "טשואמני", "אמבפה", "דמבלה"] }, away: { predicted: ["חסן", "איברהים", "עלי", "חוסיין"], actual: ["חסן", "איברהים", "עלי", "חוסיין"] } }
     },
     'match43': {
-        timeStatus: 'future', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני, 03:00",
+        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני",
         teamHome: { name: 'נורווגיה', flagCode: 'no', color: '#BA0C2F', cards: { yellow: [], red: [] } },
         teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 2', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '2 - 2', actual: '3 - 2', accuracyClass: 'wrong' },
         probabilities: { home: 35, draw: 35, away: 30 }, matchRisk: 'Draw Booster',
         radarStats: { home: [75, 70, 85, 75, 85, 80], away: [70, 65, 80, 80, 90, 75] },
-        advancedStats: { home: { xG: '1.45 (צפי)', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '1.40 (צפי)', restDays: 8, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "המשחק המסקרן של הלילה! העוצמה של הולאנד ואודגארד מול האתלטיות והניסיון של סנגל. צפוי קרב פיזי אדיר עם שערים לשני הצדדים.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["ניילנד", "אייר", "אודגארד", "הולאנד"], actual: [] }, away: { predicted: ["מנדי", "קוליבאלי", "גיי", "מאנה"], actual: [] } }
+        advancedStats: { home: { xG: 1.45, restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: 1.40, restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "המשחק המסקרן של הלילה! העוצמה של הולאנד ואודגארד מול האתלטיות והניסיון של סנגל. צפוי קרב פיזי אדיר עם שערים לשני הצדדים.", actual: "משחק דרמטי שהכריע את ההתמודדות! הולאנד שוב הוכיח שהוא מפלצת ברחבה עם צמד שהבטיח את המקום בשלב הבא, בניגוד לתחזית התיקו." },
+        goals: [{ team: 'נורווגיה', player: "הולאנד", minute: "-" }, { team: 'נורווגיה', player: "הולאנד", minute: "-" }, { team: 'נורווגיה', player: "שחקן נורווגיה", minute: "-" }, { team: 'סנגל', player: "שחקן סנגל", minute: "-" }, { team: 'סנגל', player: "שחקן סנגל", minute: "-" }],
+        squads: { home: { predicted: ["ניילנד", "אייר", "אודגארד", "הולאנד"], actual: ["ניילנד", "אייר", "אודגארד", "הולאנד"] }, away: { predicted: ["מנדי", "קוליבאלי", "גיי", "מאנה"], actual: ["מנדי", "קוליבאלי", "גיי", "מאנה"] } }
     },
     'match44': {
-        timeStatus: 'future', matchday: 2, stage: 'J', dateText: "בית י' | 23 ביוני, 06:00",
+        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 23 ביוני",
         teamHome: { name: 'ירדן', flagCode: 'jo', color: '#CE1126', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אלג\'יריה', flagCode: 'dz', color: '#006233', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '0 - 2', actual: '1 - 2', accuracyClass: 'trend' },
         probabilities: { home: 15, draw: 25, away: 60 }, matchRisk: 'Safe',
         radarStats: { home: [55, 45, 60, 70, 65, 50], away: [80, 75, 70, 80, 80, 75] },
-        advancedStats: { home: { xG: '0.60 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '1.95 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ירדן תסתמך על הגנה נמוכה ומתפרצות, אבל שועלי המדבר עדיפים טכנית בכל עמדה ויתרגמו את השליטה בכדור לניצחון.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["אבו לאילה", "נסיב", "עלי", "אל-תעמרי"], actual: [] }, away: { predicted: ["מנדריאה", "בנסבאיני", "בנאצר", "מאחרז"], actual: [] } }
+        advancedStats: { home: { xG: 0.60, restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: 1.95, restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "ירדן תסתמך על הגנה נמוכה ומתפרצות, אבל שועלי המדבר עדיפים טכנית בכל עמדה ויתרגמו את השליטה בכדור לניצחון.", actual: "ירדן הפתיעה עם שער מוקדם של אל-רשדאן, אבל אלג'יריה הוכיחה אופי ועשתה מהפך במחצית השנייה משערים של בנבועלי וגוירי." },
+        goals: [{ team: 'ירדן', player: "אל-רשדאן", minute: "מוקדם" }, { team: 'אלג\'יריה', player: "בנבועלי", minute: "מחצית 2" }, { team: 'אלג\'יריה', player: "גוירי", minute: "מחצית 2" }],
+        squads: { home: { predicted: ["אבו לאילה", "נסיב", "עלי", "אל-תעמרי"], actual: ["אבו לאילה", "נסיב", "עלי", "אל-תעמרי", "אל-רשדאן"] }, away: { predicted: ["מנדריאה", "בנסבאיני", "בנאצר", "מאחרז"], actual: ["מנדריאה", "בנסבאיני", "בנאצר", "מאחרז", "בנבועלי", "גוירי"] } }
     },
-    // סגירת המחזור השני (המשחקים הנותרים שישוחקו בהמשך)
+
+    // --- משחקי עתיד שממתינים לשריקה (עדכון השעות לפי שעון ישראל) ---
     'match45': {
-        timeStatus: 'future', matchday: 2, stage: 'K', dateText: "בית כ' | 23 ביוני",
+        timeStatus: 'future', matchday: 2, stage: 'K', dateText: "בית כ' | 23 ביוני, 20:00",
         teamHome: { name: 'פורטוגל', flagCode: 'pt', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
         score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
@@ -258,19 +268,7 @@ const matchday2Database = {
         squads: { home: { predicted: ["קוסטה", "דיאס", "פרננדס", "לאאו"], actual: [] }, away: { predicted: ["יוסופוב", "אשורמטוב", "שוקורוב", "שורומורודוב"], actual: [] } }
     },
     'match46': {
-        timeStatus: 'future', matchday: 2, stage: 'K', dateText: "בית כ' | 23 ביוני",
-        teamHome: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'קונגו', flagCode: 'cg', color: '#009543', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
-        radarStats: { home: [80, 75, 70, 80, 85, 75], away: [60, 55, 65, 70, 80, 50] },
-        advancedStats: { home: { xG: '1.80 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.70 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "קולומביה מסוכנת בחלק הקדמי ותנצל את הפערים הטכניים מול הפיזיות של קונגו כדי להשיג את שלוש הנקודות.", actual: "" },
-        goals: [],
-        squads: { home: { predicted: ["ורגאס", "מינה", "קואדראדו", "דיאס"], actual: [] }, away: { predicted: ["נדזלה", "באסומבה", "מאקוטה", "אמבומבו"], actual: [] } }
-    },
-    'match47': {
-        timeStatus: 'future', matchday: 2, stage: 'L', dateText: "בית ל' | 24 ביוני",
+        timeStatus: 'future', matchday: 2, stage: 'L', dateText: "בית ל' | 23 ביוני, 23:00",
         teamHome: { name: 'אנגליה', flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
         teamAway: { name: 'גאנה', flagCode: 'gh', color: '#006B3F', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
@@ -281,8 +279,8 @@ const matchday2Database = {
         goals: [],
         squads: { home: { predicted: ["פיקפורד", "סטונס", "רייס", "קיין"], actual: [] }, away: { predicted: ["אטי-זיגי", "אמרטי", "פארטי", "קודוס"], actual: [] } }
     },
-    'match48': {
-        timeStatus: 'future', matchday: 2, stage: 'L', dateText: "בית ל' | 24 ביוני",
+    'match47': {
+        timeStatus: 'future', matchday: 2, stage: 'L', dateText: "בית ל' | 24 ביוני, 02:00",
         teamHome: { name: 'קרואטיה', flagCode: 'hr', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: 'פנמה', flagCode: 'pa', color: '#DA291C', cards: { yellow: [], red: [] } },
         score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' },
@@ -292,6 +290,18 @@ const matchday2Database = {
         insight: { prediction: "קרואטיה המנוסה תשלוט לחלוטין במרכז המגרש ולא תשיר שום סיכוי לפנמה, שצפויה להתגונן ברוב שלבי המשחק.", actual: "" },
         goals: [],
         squads: { home: { predicted: ["ליבאקוביץ'", "גברדיול", "מודריץ'", "קרמאריץ'"], actual: [] }, away: { predicted: ["מחיה", "אסקובר", "גודוי", "ברסנאס"], actual: [] } }
+    },
+    'match48': {
+        timeStatus: 'future', matchday: 2, stage: 'K', dateText: "בית כ' | 24 ביוני, 05:00",
+        teamHome: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'קונגו', flagCode: 'cg', color: '#009543', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
+        probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
+        radarStats: { home: [80, 75, 70, 80, 85, 75], away: [60, 55, 65, 70, 80, 50] },
+        advancedStats: { home: { xG: '1.80 (צפי)', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.70 (צפי)', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "קולומביה מסוכנת בחלק הקדמי ותנצל את הפערים הטכניים מול הפיזיות של קונגו כדי להשיג את שלוש הנקודות.", actual: "" },
+        goals: [],
+        squads: { home: { predicted: ["ורגאס", "מינה", "קואדראדו", "דיאס"], actual: [] }, away: { predicted: ["נדזלה", "באסומבה", "מאקוטה", "אמבומבו"], actual: [] } }
     }
 };
 
