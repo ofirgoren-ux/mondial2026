@@ -43,27 +43,40 @@
     </nav>
 
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-header-row">
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-                <div class="topbar-title" id="main-title">שלב הבתים – מודל הסתברותי</div>
-            </div>
-            <div class="topbar-stats">
-                <div class="mini-stat">סה"כ משחקים: <span id="stat-total" style="color:var(--accent-cyan)">0</span></div>
-                <div class="mini-stat">פגיעה מדויקת: <span id="stat-exact" style="color:var(--color-exact)">0%</span></div>
-                <div class="mini-stat">כיוון נכון: <span id="stat-trend" style="color:var(--color-trend)">0%</span></div>
-                <div class="mini-stat" style="border-right: 1px solid var(--border-color); padding-right: 10px;">אחוזי הצלחה: <span id="stat-overall" style="color:#fff">0%</span></div>
-            </div>
-        </header>
-
-        <div class="content-wrapper">
-            <div id="matches-view">
-                
-                <div class="hero-intro">
-                    סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI) המחשב הסתברויות, יחסי כוחות ומדדי עומק.
+        <header class="topbar sticky-header">
+            <div class="topbar-row-1">
+                <div class="topbar-titles">
+                    <div class="title-wrapper">
+                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                        <h1 class="topbar-title" id="main-title">שלב הבתים – מודל הסתברותי</h1>
+                    </div>
+                    <div class="hero-intro">
+                        סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI) המחשב הסתברויות, יחסי כוחות ומדדי עומק.
+                    </div>
                 </div>
+                
+                <div class="topbar-stats">
+                    <div class="stat-card">
+                        <div class="stat-num" id="stat-total" style="color:var(--text-main)">0</div>
+                        <div class="stat-lbl">סה"כ משחקים</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="stat-exact" style="color:var(--color-exact)">0%</div>
+                        <div class="stat-lbl">פגיעה מדויקת</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="stat-trend" style="color:var(--color-trend)">0%</div>
+                        <div class="stat-lbl">כיוון נכון</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(102, 252, 241, 0.1); border-color: rgba(102, 252, 241, 0.3);">
+                        <div class="stat-num" id="stat-overall" style="color:var(--accent-cyan)">0%</div>
+                        <div class="stat-lbl">אחוזי הצלחה</div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="filters-row">
+            <div class="topbar-row-2">
+                <div class="filters-row" id="main-filters">
                     <div class="filter-group">
                         <span class="filter-label">זמן:</span>
                         <button class="filter-btn time-btn active" data-time="all">הכל</button>
@@ -82,8 +95,17 @@
                         <button class="filter-btn stage-btn" data-stage="F">ו'</button>
                         <button class="filter-btn stage-btn" data-stage="G">ז'</button>
                         <button class="filter-btn stage-btn" data-stage="H">ח'</button>
+                        <button class="filter-btn stage-btn" data-stage="I">ט'</button>
+                        <button class="filter-btn stage-btn" data-stage="J">י'</button>
+                        <button class="filter-btn stage-btn" data-stage="K">י"א</button>
+                        <button class="filter-btn stage-btn" data-stage="L">י"ב</button>
                     </div>
                 </div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <div id="matches-view">
                 <div id="matches-container" class="matches-grid"></div>
             </div>
 
@@ -92,11 +114,9 @@
 
             <div id="bracket-view" style="display:none; animation: tabFadeIn 0.4s ease;">
                 <div class="knockout-container">
-                    <div id="dynamic-bracket" class="tournament-bracket">
-                        </div>
+                    <div id="dynamic-bracket" class="tournament-bracket"></div>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -114,7 +134,6 @@
             <div class="journey-header" id="journey-header">
                 <h2 id="journey-title">שם הנבחרת</h2>
             </div>
-            
             <div class="journey-body">
                 <div class="geek-stats-grid" id="journey-stats"></div>
                 <h3 class="timeline-title">הדרך לנוקאאוט</h3>
@@ -125,6 +144,7 @@
 
     <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
+    <script src="data/md3.js"></script>
     <script src="data/knockoutData.js"></script>
     <script src="engine.js"></script>
 </body>

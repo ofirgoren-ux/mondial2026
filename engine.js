@@ -1,5 +1,5 @@
 // ==========================================
-// engine.js - המנוע הראשי של הדשבורד (UX מוקפד)
+// engine.js - המנוע הראשי (קוד מלא וסופי עם יישור וסטטוס מעודכן)
 // ==========================================
 
 window.toggleMobileMenu = function() {
@@ -28,6 +28,9 @@ window.switchView = function(viewName) {
     document.getElementById('scorers-view').style.display = 'none';
     if (document.getElementById('bracket-view')) document.getElementById('bracket-view').style.display = 'none';
     
+    const mainFilters = document.getElementById('main-filters');
+    if(mainFilters) mainFilters.style.display = (viewName === 'matches') ? 'flex' : 'none';
+
     document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
     document.getElementById('nav-' + viewName).classList.add('active');
 
@@ -204,15 +207,6 @@ function renderMatches() {
         const currentScoreDisplay = isPast && data.score && data.score.actual ? data.score.actual : (data.score && data.score.prediction ? data.score.prediction : '-');
         const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית מוקדמת';
         
-        let statusBarHTML = '';
-        if (!isPast) {
-            statusBarHTML = `<div class="status-bar status-pending-ui">⏳ ממתין לשריקה</div>`;
-        } else {
-            if (data.score && data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
-            else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
-            else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
-        }
-
         let riskHTML = '';
         if (risk === 'Safe') riskHTML = '<span class="risk-badge risk-safe">🛡️ סבירות גבוהה</span>';
         else if (risk === 'Draw Booster') riskHTML = '<span class="risk-badge risk-draw">⚠️ התראת בונקר/תיקו</span>';
@@ -232,12 +226,16 @@ function renderMatches() {
 
         const homeTilt = prob.home + Math.floor(prob.draw / 2);
         const awayTilt = 100 - homeTilt;
+        
+        const accuracyClassForActual = isPast && data.score && data.score.accuracyClass ? 'is-actual ' + data.score.accuracyClass : '';
 
         let tabsHTML = '';
         let visHTML = '';
         let txtHTML = '';
         
         if (isPast) {
+            const initialRiskOpacity = '0';
+
             tabsHTML = `
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${data.score ? data.score.accuracyClass : ''}')">עומק</button>
@@ -256,7 +254,7 @@ function renderMatches() {
                     </div>
                     <div class="field-tilt-wrapper">
                         <div class="field-tilt-title">Field Tilt (הטיית מגרש)</div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:800;"><span>${homeTilt}%</span><span>${awayTilt}%</span></div>
+                        <div class="field-tilt-numbers"><span style="color:var(--text-main);">${homeTilt}%</span><span style="color:var(--text-main);">${awayTilt}%</span></div>
                         <div class="field-tilt-bar"><div class="tilt-home" style="width:${homeTilt}%; background:${tHome.color}"></div><div class="tilt-away" style="width:${awayTilt}%; background:${tAway.color}"></div></div>
                     </div>
                 </div>
@@ -275,7 +273,7 @@ function renderMatches() {
                 <div id="txt-${matchId}-adv" class="txt-content">
                     <div class="insight-text-wrapper">
                         <div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div>
-                        <div class="insight-text">מדדי העומק למעלה מציגים את הפער האמיתי בין הנבחרות לאחר ניטרול רעשים ואקראיות.</div>
+                        <div class="insight-text">מדדי העומק מציגים את הפער האמיתי בין הנבחרות לאחר ניטרול רעשים ואקראיות.</div>
                     </div>
                 </div>
                 <div id="txt-${matchId}-sum" class="txt-content active">
@@ -283,10 +281,19 @@ function renderMatches() {
                         <div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div>
                         <div class="insight-text">${data.insight ? data.insight.actual : ''}</div>
                     </div>
-                    <div class="status-bar-wrapper">${statusBarHTML}</div>
                 </div>
             `;
+            
+            let statusBarHTML = '';
+            if (data.score && data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
+            else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
+            else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
+
+            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, homeCardsHTML, awayCardsHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML));
+
         } else {
+            const initialRiskOpacity = '1';
+
             tabsHTML = `
                 <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">עומק</button>
@@ -303,7 +310,7 @@ function renderMatches() {
                     </div>
                     <div class="field-tilt-wrapper">
                         <div class="field-tilt-title">Field Tilt (הטיית מגרש צפויה)</div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:800;"><span>${homeTilt}%</span><span>${awayTilt}%</span></div>
+                        <div class="field-tilt-numbers"><span style="color:var(--text-main);">${homeTilt}%</span><span style="color:var(--text-main);">${awayTilt}%</span></div>
                         <div class="field-tilt-bar"><div class="tilt-home" style="width:${homeTilt}%; background:${tHome.color}"></div><div class="tilt-away" style="width:${awayTilt}%; background:${tAway.color}"></div></div>
                     </div>
                 </div>
@@ -315,57 +322,25 @@ function renderMatches() {
                         <div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div>
                         <div class="insight-text">${data.insight ? data.insight.prediction : ''}</div>
                     </div>
-                    <div class="status-bar-wrapper">${statusBarHTML}</div>
                 </div>
                 <div id="txt-${matchId}-adv" class="txt-content">
                     <div class="insight-text-wrapper">
                         <div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div>
                         <div class="insight-text">המודל מבסס את התחזית על פערי ה-xGD והשליטה הצפויה במרכז המגרש (Field Tilt).</div>
                     </div>
-                    <div class="status-bar-wrapper">${statusBarHTML}</div>
                 </div>
             `;
+
+            let statusBarHTML = `<div class="status-bar status-pending-ui">⏳ ממתין לשריקה</div>`;
+
+            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, homeCardsHTML, awayCardsHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML));
         }
-
-        const accuracyClassForActual = isPast && data.score ? 'is-actual ' + data.score.accuracyClass : '';
-
-        const chunk = `
-        <div class="match-card" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
-            <div class="match-header">${data.dateText || '-'}</div>
-            
-            <div class="match-hero">
-                <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamHome')"><div class="team-name">${tHome.name}</div><div class="cards-container">${homeCardsHTML}</div></div>
-                <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" onclick="openGoalsModal('${matchId}')">${currentScoreDisplay}</div></div>
-                <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamAway')"><div class="team-name">${tAway.name}</div><div class="cards-container">${awayCardsHTML}</div></div>
-            </div>
-            
-            <div class="match-probabilities">
-                <div class="prob-labels">
-                    <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
-                    <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
-                    <span style="color: #ff4d4d">2: ${prob.away}%</span>
-                </div>
-                <div class="prob-bar-container">
-                    <div class="prob-home" style="width: ${prob.home}%"></div>
-                    <div class="prob-draw" style="width: ${prob.draw}%"></div>
-                    <div class="prob-away" style="width: ${prob.away}%"></div>
-                </div>
-            </div>
-            
-            <div class="risk-container">${riskHTML}</div>
-            
-            <div class="vis-area">${visHTML}</div>
-            <div class="inner-tabs">${tabsHTML}</div>
-            <div class="text-area-wrapper">${txtHTML}</div>
-
-        </div>`;
-        htmlChunks.push(chunk);
     }
 
     container.innerHTML = htmlChunks.join('');
 
     Chart.defaults.color = '#cbd5e1'; Chart.defaults.font.family = 'Heebo';
-    const opts = { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, pointLabels: { font: { size: 10, weight: '800' }, color: '#e2e8f0' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } };
+    const opts = { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, pointLabels: { font: { size: 11, weight: '800' }, color: '#e2e8f0' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } };
     const lbls = ['טכניקה', 'החזקה', 'נייחים', 'מנטלי', 'פיזיות', 'איכות סגל'];
 
     setTimeout(() => {
@@ -385,6 +360,40 @@ function renderMatches() {
     }, 100);
 }
 
+function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, homeCardsHTML, awayCardsHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML) {
+    return `
+    <div class="match-card" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
+        <div class="match-header">${data.dateText || '-'}</div>
+        
+        <div class="match-hero">
+            <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamHome')"><div class="team-name">${tHome.name}</div><div class="cards-container">${homeCardsHTML}</div></div>
+            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" onclick="openGoalsModal('${matchId}')">${currentScoreDisplay}</div></div>
+            <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag" onclick="openSquadModal('${matchId}', 'teamAway')"><div class="team-name">${tAway.name}</div><div class="cards-container">${awayCardsHTML}</div></div>
+        </div>
+        
+        <div class="match-probabilities">
+            <div class="prob-labels">
+                <span style="color: var(--accent-cyan)">1: ${prob.home}%</span>
+                <span style="color: var(--text-muted)">X: ${prob.draw}%</span>
+                <span style="color: #ff4d4d">2: ${prob.away}%</span>
+            </div>
+            <div class="prob-bar-container">
+                <div class="prob-home" style="width: ${prob.home}%"></div>
+                <div class="prob-draw" style="width: ${prob.draw}%"></div>
+                <div class="prob-away" style="width: ${prob.away}%"></div>
+            </div>
+        </div>
+        
+        <div class="risk-container" id="risk-${matchId}" style="opacity: ${initialRiskOpacity};">${riskHTML}</div>
+        
+        <div class="vis-area">${visHTML}</div>
+        <div class="inner-tabs">${tabsHTML}</div>
+        <div class="text-area-wrapper">${txtHTML}</div>
+        
+        <div class="status-bar-wrapper">${statusBarHTML}</div>
+    </div>`;
+}
+
 window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accuracyLevel) { 
     const card = btn.closest('.match-card');
     
@@ -399,6 +408,11 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     const activeTxt = card.querySelector(`#txt-${cardId}-${tabType}`);
     if(activeTxt) activeTxt.classList.add('active');
     
+    const riskContainer = card.querySelector(`#risk-${cardId}`);
+    if (riskContainer) {
+        riskContainer.style.opacity = (tabType === 'sum') ? '0' : '1';
+    }
+
     const labelEl = card.querySelector(`.score-label`);
     const scoreEl = card.querySelector(`.score-number`); 
     labelEl.innerText = labelText; 
