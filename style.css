@@ -263,3 +263,65 @@ canvas { max-height: 210px !important; width: 100% !important; margin: auto; }
     .matches-grid { grid-template-columns: 1fr; }
     .filters-row { flex-direction: column; border-radius: 20px; padding: 15px; width: 100%;}
 }
+/* --- MOBILE SPECIFIC FIXES (SWIPE & SPACE OPTIMIZATION) --- */
+@media (max-width: 1300px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+    /* 1. Hamburger Menu Optimization */
+    .mobile-menu-btn { 
+        display: block; 
+        font-size: 2rem; /* הוגדל משמעותית */
+        padding: 5px 15px; 
+        background: rgba(255,255,255,0.1); 
+        border-radius: 8px; 
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    /* 2. Header Area Optimization */
+    .topbar-row-1 { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .hero-intro { display: none; } /* הסתרת טקסט ארוך במובייל */
+    
+    /* Horizontally scrollable stats */
+    .topbar-stats { 
+        width: 100%; 
+        overflow-x: auto; 
+        padding-bottom: 10px; 
+        justify-content: flex-start; 
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+    .stat-card { flex: 0 0 130px; scroll-snap-align: start; }
+    
+    /* Horizontally scrollable filters (חיסכון עצום במקום) */
+    .filters-row { 
+        flex-direction: row; 
+        overflow-x: auto; 
+        width: 100%; 
+        padding: 10px; 
+        border-radius: 8px;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    .filter-group { flex-wrap: nowrap; }
+
+    .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; }
+    .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
+    .main-content { margin-right: 0; }
+    .content-wrapper { padding: 15px 5px; }
+
+    /* 3. MOBILE SWIPE (CAROUSEL) FOR CARDS */
+    .matches-grid { 
+        display: flex; /* ביטול הגריד והפיכה לשורה */
+        flex-wrap: nowrap; 
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory; /* נעילת גלילה על הכרטיס */
+        -webkit-overflow-scrolling: touch; 
+        gap: 15px; 
+        padding: 10px 15px 25px 15px; 
+    }
+    .match-card { 
+        flex: 0 0 90%; /* כל כרטיס תופס 90% מרוחב המסך */
+        scroll-snap-align: center; /* ממורכז תמיד בסוף ההחלקה */
+        max-width: 400px; 
+    }
+}
