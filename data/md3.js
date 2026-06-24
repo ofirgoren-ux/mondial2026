@@ -72,6 +72,6 @@ const matchday3Database = {
     }
 };
 
-if (typeof matchDatabase !== 'undefined') {
-    Object.assign(matchDatabase, matchday3Database);
-}
+// יצירה בטוחה של המאגר במידה והוא לא קיים
+window.matchDatabase = window.matchDatabase || {};
+Object.assign(window.matchDatabase, matchday3Database);
