@@ -24,22 +24,13 @@
             <button class="submenu-btn active" data-md="all">כל המשחקים</button>
             <button class="submenu-btn" data-md="1">מחזור 1</button>
             <button class="submenu-btn" data-md="2">מחזור 2</button>
-            <button class="submenu-btn" data-md="3" style="opacity: 0.5;">מחזור 3</button>
+            <button class="submenu-btn" data-md="3">מחזור 3</button>
             <button class="submenu-btn" data-md="ko">נוקאאוט</button>
         </div>
 
         <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלת בתים</a>
         <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">⚽ מלך השערים</a>
         <a id="nav-bracket" class="nav-link" onclick="switchView('bracket')">🏆 עץ הנוקאאוט</a>
-
-        <div class="sidebar-guide">
-            <h4>מודל הניבוי</h4>
-            <ol>
-                <li>איסוף נתוני קבוצות ו-xG</li>
-                <li>שקלול מדדי כושר (רדאר)</li>
-                <li>הפקת הסתברות ותחזית</li>
-            </ol>
-        </div>
     </nav>
 
     <main class="main-content">
@@ -51,7 +42,7 @@
                         <h1 class="topbar-title" id="main-title">שלב הבתים – מודל הסתברותי</h1>
                     </div>
                     <div class="hero-intro">
-                        סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI) המחשב הסתברויות, יחסי כוחות ומדדי עומק.
+                        סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI).
                     </div>
                 </div>
                 
@@ -119,28 +110,6 @@
             </div>
         </div>
     </main>
-
-    <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal(event)">×</button>
-            <div class="modal-title" id="modalTitle"></div>
-            <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-
-    <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal(event)">
-        <div class="modal-content journey-modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close modal-close-light" onclick="closeJourneyModal(event)">×</button>
-            <div class="journey-header" id="journey-header">
-                <h2 id="journey-title">שם הנבחרת</h2>
-            </div>
-            <div class="journey-body">
-                <div class="geek-stats-grid" id="journey-stats"></div>
-                <h3 class="timeline-title">הדרך לנוקאאוט</h3>
-                <div class="match-timeline" id="journey-timeline"></div>
-            </div>
-        </div>
-    </div>
 
     <script src="data/md1.js"></script>
     <script src="data/md2.js"></script>
