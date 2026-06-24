@@ -2,13 +2,13 @@ window.matchDatabase = window.matchDatabase || {};
 const matchday1Database = {
     'match1': {
         timeStatus: 'past', matchday: 1, stage: 'A', dateText: "בית א' | 11 ביוני",
-        teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: [], red: ['אדסון אלברז (33\')'] } },
-        teamAway: { name: 'דרום אפריקה', flagCode: 'za', color: '#FFC425', cards: { yellow: [], red: ['מוקואנה (22\')', 'טאו (78\')'] } },
+        teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אדסון אלברז (33')"], red: [] } },
+        teamAway: { name: 'דרום אפריקה', flagCode: 'za', color: '#FFC425', cards: { yellow: ["מוקואנה (22')"], red: ["טאו (78')"] } },
         score: { prediction: '2 - 0', actual: '2 - 0', accuracyClass: 'exact' },
         probabilities: { home: 65, draw: 22, away: 13 }, matchRisk: 'Draw Booster',
         radarStats: { home: [80, 75, 60, 70, 65, 70], away: [65, 45, 60, 85, 80, 20] },
         advancedStats: { home: { xG: '1.84', restDays: 4, altitudeImpact: 'מארחת / רגיל' }, away: { xG: '0.92', restDays: 3, altitudeImpact: 'השפעה בינונית' } },
-        insight: { prediction: "מקסיקו עדיפה טכנית. דרום אפריקה תתקשה לעמוד בלחץ.", actual: "דרום אפריקה הפתיעה עם לחץ גבוה במחצית הראשונה, אך מקסיקו הצליחה לנצל את ההזדמנויות ולהכריע את המשחק." },
+        insight: { prediction: "מקסיקו עדיפה טכנית. דרום אפריקה תתקשה לעמוד בלחץ.", actual: "מקסיקו שולטת. דרום אפריקה נענשת באדום מאוחר." },
         goals: [{ team: 'מקסיקו', player: "חימנז", minute: "41'" }, { team: 'מקסיקו', player: "לוזאנו", minute: "89'" }], 
         squads: { home: { predicted: ["אוצ'ואה", "אלברז", "לוזאנו"], actual: ["אוצ'ואה", "אלברז", "לוזאנו"] }, away: { predicted: ["וויליאמס", "מוקואנה", "טאו"], actual: ["וויליאמס", "מוקואנה", "טאו"] } }
     },
@@ -254,8 +254,8 @@ const matchday1Database = {
     },
     'match22': {
         timeStatus: 'past', matchday: 1, stage: 'K', dateText: "בית כ' | 18 ביוני",
-        teamHome: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
+        teamHome: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: ["אשורמטוב (40')"], red: [] } },
+        teamAway: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: ["אריאס (75')"], red: [] } },
         score: { prediction: '0 - 2', actual: '1 - 3', accuracyClass: 'trend' },
         probabilities: { home: 15, draw: 20, away: 65 }, matchRisk: 'Safe',
         radarStats: { home: [60, 50, 65, 70, 70, 55], away: [80, 75, 70, 80, 85, 75] },
@@ -286,7 +286,7 @@ const matchday1Database = {
         advancedStats: { home: { xG: '1.80', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.60', restDays: 4, altitudeImpact: 'רגיל' } },
         insight: { prediction: "המהירות והכוח של גאנה יכריעו מול פנמה החלשה.", actual: "ניצחון חשוב לגאנה משער במחצית השנייה." },
         goals: [{ team: 'גאנה', player: "קודוס", minute: "60'" }], 
-        squads: { home: { predicted: ["קודוס", "וויליאמס"], actual: ["קודוס", "וויליאמס"] }, away: { predicted: ["גודוי"], actual: ["גודוי"] } }
+        squads: { home: { predicted: ["קודוס", "וויליאמס"], actual: ["קודוס", "וויליאמס"] }, away: { predicted: ["מוסקרה", "קראסקייה", "דיאז"], actual: ["מוסקרה", "קראסקייה", "דיאז"] } }
     }
 };
 Object.assign(window.matchDatabase, matchday1Database);

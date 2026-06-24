@@ -2,7 +2,7 @@ window.matchDatabase = window.matchDatabase || {};
 const matchday2Database = {
     'match25': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 18 ביוני",
-        teamHome: { name: 'צ\'כיה', flagCode: 'cz', color: '#11457E', cards: { yellow: [], red: [] } },
+        teamHome: { name: 'צ\'כיה', flagCode: 'cz', color: '#11457E', cards: { yellow: ["סוצ'ק (88')"], red: [] } },
         teamAway: { name: 'דרום אפריקה', flagCode: 'za', color: '#FFC425', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 0', actual: '1 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 60, draw: 25, away: 15 }, matchRisk: 'Safe',
@@ -10,43 +10,43 @@ const matchday2Database = {
         advancedStats: { home: { xG: '1.85', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.50', restDays: 7, altitudeImpact: 'רגיל' } },
         insight: { prediction: "צ'כיה אמורה לנצח בקלות.", actual: "הפתעה! דרום אפריקה הצליחה לסחוט תיקו." },
         goals: [{ team: 'צ\'כיה', player: "סוצ'ק", minute: "30'" }, { team: 'דרום אפריקה', player: "טאו", minute: "80'" }], 
-        squads: { home: { predicted: ["סוצ'ק", "שיק"], actual: ["סוצ'ק", "שיק"] }, away: { predicted: ["טאו"], actual: ["טאו"] } }
+        squads: { home: { predicted: ["סטאנק", "סוצ'ק", "שיק"], actual: ["סטאנק", "סוצ'ק", "שיק"] }, away: { predicted: ["וויליאמס", "מוקואנה", "טאו"], actual: ["וויליאמס", "מוקואנה", "טאו"] } }
     },
     'match26': {
         timeStatus: 'past', matchday: 2, stage: 'A', dateText: "בית א' | 19 ביוני",
-        teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'קוריאה הדרומית', flagCode: 'kr', color: '#C60C30', cards: { yellow: [], red: [] } },
+        teamHome: { name: 'מקסיקו', flagCode: 'mx', color: '#006341', cards: { yellow: ["אלברז (44')"], red: [] } },
+        teamAway: { name: 'קוריאה הדרומית', flagCode: 'kr', color: '#C60C30', cards: { yellow: ["קים (12')"], red: [] } },
         score: { prediction: '1 - 1', actual: '1 - 0', accuracyClass: 'trend' },
         probabilities: { home: 40, draw: 35, away: 25 }, matchRisk: 'Draw Booster',
         radarStats: { home: [80, 75, 60, 70, 65, 70], away: [70, 65, 60, 85, 80, 75] },
         advancedStats: { home: { xG: '1.20', restDays: 8, altitudeImpact: 'מארחת / רגיל' }, away: { xG: '1.00', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "משחק צמוד מאוד.", actual: "מקסיקו הצליחה לגנוב שער יקר." },
+        insight: { prediction: "משחק צמוד מאוד. בוסטר תיקו קלאסי.", actual: "מקסיקו הצליחה לגנוב שער יקר." },
         goals: [{ team: 'מקסיקו', player: "אלברז", minute: "60'" }], 
-        squads: { home: { predicted: ["אלברז"], actual: ["אלברז"] }, away: { predicted: ["סון"], actual: ["סון"] } }
+        squads: { home: { predicted: ["אוצ'ואה", "אלברז", "לוזאנו"], actual: ["אוצ'ואה", "אלברז", "לוזאנו"] }, away: { predicted: ["קים", "סון", "הוואנג"], actual: ["קים", "סון", "הוואנג"] } }
     },
     'match27': {
         timeStatus: 'past', matchday: 2, stage: 'B', dateText: "בית ב' | 18 ביוני",
         teamHome: { name: 'שווייץ', flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'בוסניה והרצגובינה', flagCode: 'ba', color: '#002F6C', cards: { yellow: [], red: ['player (80)'] } },
+        teamAway: { name: 'בוסניה והרצגובינה', flagCode: 'ba', color: '#002F6C', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 0', actual: '4 - 1', accuracyClass: 'trend' },
         probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
         radarStats: { home: [82, 75, 70, 80, 75, 80], away: [70, 60, 75, 75, 80, 65] },
         advancedStats: { home: { xG: '2.10', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.80', restDays: 6, altitudeImpact: 'רגיל' } },
         insight: { prediction: "שווייץ עדיפה ותנצח.", actual: "התפוצצות של שווייץ על המגרש." },
         goals: [{ team: 'שווייץ', player: "ג'אקה", minute: "10'" }, { team: 'שווייץ', player: "אמבולו", minute: "30'" }, { team: 'בוסניה והרצגובינה', player: "פיאניץ'", minute: "45'" }, { team: 'שווייץ', player: "שאקירי", minute: "60'" }, { team: 'שווייץ', player: "אמבולו", minute: "85'" }], 
-        squads: { home: { predicted: ["ג'אקה", "אמבולו", "שאקירי"], actual: ["ג'אקה", "אמבולו", "שאקירי"] }, away: { predicted: ["פיאניץ'"], actual: ["פיאניץ'"] } }
+        squads: { home: { predicted: ["זומר", "ג'אקה", "שאקירי", "אמבולו"], actual: ["זומר", "ג'אקה", "שאקירי", "אמבולו"] }, away: { predicted: ["שחיץ'", "פיאניץ'", "דז'קו"], actual: ["שחיץ'", "פיאניץ'", "דז'קו"] } }
     },
     'match28': {
         timeStatus: 'past', matchday: 2, stage: 'B', dateText: "בית ב' | 19 ביוני",
         teamHome: { name: 'קנדה', flagCode: 'ca', color: '#FF0000', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'קטאר', flagCode: 'qa', color: '#8A1538', cards: { yellow: [], red: ['player (40)'] } },
+        teamAway: { name: 'קטאר', flagCode: 'qa', color: '#8A1538', cards: { yellow: [], red: [] } },
         score: { prediction: '3 - 0', actual: '6 - 0', accuracyClass: 'trend' },
         probabilities: { home: 80, draw: 15, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [80, 75, 65, 80, 85, 75], away: [55, 45, 50, 75, 65, 10] },
         advancedStats: { home: { xG: '2.80', restDays: 7, altitudeImpact: 'מארחת משותפת' }, away: { xG: '0.20', restDays: 6, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ניצחון קל לקנדה.", actual: "קנדה פירקה את קטאר ללא רחמים." },
+        insight: { prediction: "ניצחון קל לקנדה.", actual: "קנדה פירקה את קטאר ללא רחמים במופע ענק של דייוויס ודייוויד." },
         goals: [{ team: 'קנדה', player: "דייוויד", minute: "10'" }, { team: 'קנדה', player: "דייוויס", minute: "20'" }, { team: 'קנדה', player: "דייוויד", minute: "40'" }, { team: 'קנדה', player: "ביוקנן", minute: "55'" }, { team: 'קנדה', player: "לארין", minute: "70'" }, { team: 'קנדה', player: "הויילט", minute: "85'" }], 
-        squads: { home: { predicted: ["דייוויד", "דייוויס"], actual: ["דייוויד", "דייוויס", "ביוקנן", "לארין", "הויילט"] }, away: { predicted: [], actual: [] } }
+        squads: { home: { predicted: ["בוריאן", "דייוויס", "דייוויד"], actual: ["בוריאן", "דייוויס", "דייוויד", "ביוקנן", "לארין", "הויילט"] }, away: { predicted: ["ברשאם", "ח'וח'י", "עלי"], actual: ["ברשאם", "ח'וח'י", "עלי"] } }
     },
     'match29': {
         timeStatus: 'past', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני",
@@ -56,9 +56,9 @@ const matchday2Database = {
         probabilities: { home: 40, draw: 30, away: 30 }, matchRisk: 'Draw Booster',
         radarStats: { home: [80, 65, 85, 75, 75, 70], away: [78, 55, 80, 90, 90, 75] },
         advancedStats: { home: { xG: '1.00', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '1.20', restDays: 6, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "משחק צמוד. מרוקו עם קצת יותר איכות.", actual: "מרוקו ניצחה במשחק צמוד." },
+        insight: { prediction: "משחק צמוד. מרוקו עם קצת יותר איכות.", actual: "מרוקו ניצחה במשחק קשוח וצמוד משער יחיד של אן-נסירי." },
         goals: [{ team: 'מרוקו', player: "אן-נסירי", minute: "60'" }], 
-        squads: { home: { predicted: ["מקטומיניי"], actual: ["מקטומיניי"] }, away: { predicted: ["אן-נסירי"], actual: ["אן-נסירי"] } }
+        squads: { home: { predicted: ["גאן", "מקטומיניי", "מקגין"], actual: ["גאן", "מקטומיניי", "מקגין"] }, away: { predicted: ["בונו", "חכימי", "זיאש", "אן-נסירי"], actual: ["בונו", "חכימי", "זיאש", "אן-נסירי"] } }
     },
     'match30': {
         timeStatus: 'past', matchday: 2, stage: 'C', dateText: "בית ג' | 20 ביוני",
@@ -70,19 +70,19 @@ const matchday2Database = {
         advancedStats: { home: { xG: '3.50', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.10', restDays: 6, altitudeImpact: 'רגיל' } },
         insight: { prediction: "ברזיל תטייל לניצחון.", actual: "ניצחון ברזילאי חלק כצפוי." },
         goals: [{ team: 'ברזיל', player: "רישארליסון", minute: "20'" }, { team: 'ברזיל', player: "ויניסיוס", minute: "45'" }, { team: 'ברזיל', player: "רודריגו", minute: "70'" }], 
-        squads: { home: { predicted: ["רישארליסון", "ויניסיוס", "רודריגו"], actual: ["רישארליסון", "ויניסיוס", "רודריגו"] }, away: { predicted: [], actual: [] } }
+        squads: { home: { predicted: ["אליסון", "קאסמירו", "ויניסיוס", "רודריגו", "מרטינלי"], actual: ["אליסון", "קאסמירו", "ויניסיוס", "רודריגו", "רישארליסון"] }, away: { predicted: ["פלאסיד", "ז'רום", "פיירו"], actual: ["פלאסיד", "ז'רום", "פיירו"] } }
     },
     'match31': {
         timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 20 ביוני",
         teamHome: { name: 'טורקיה', flagCode: 'tr', color: '#FF4444', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'פרגוואי', flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: ['player (85)'] } },
+        teamAway: { name: 'פרגוואי', flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 1', actual: '0 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 45, draw: 30, away: 25 }, matchRisk: 'Draw Booster',
         radarStats: { home: [88, 75, 65, 75, 70, 75], away: [70, 50, 75, 80, 90, 40] },
         advancedStats: { home: { xG: '1.20', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.90', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "משחק טקטי וקשוח.", actual: "פרגוואי ניצחה בשיניים." },
-        goals: [{ team: 'פרגוואי', player: "אלמירון", minute: "75'" }], 
-        squads: { home: { predicted: ["צ'להאנולו"], actual: ["צ'להאנולו"] }, away: { predicted: ["אלמירון"], actual: ["אלמירון"] } }
+        insight: { prediction: "משחק טקטי וקשוח.", actual: "הלם! פרגוואי עקצה עם גלארזה בדקה ה-2, הסתגרה בהגנת ברזל והשאירה את טורקיה מתוסכלת." },
+        goals: [{ team: 'פרגוואי', player: "גלארזה", minute: "2'" }], 
+        squads: { home: { predicted: ["גיונוק", "צ'להאנולו", "גולר"], actual: ["גיונוק", "צ'להאנולו", "גולר"] }, away: { predicted: ["קורונל", "אלמירון", "גומז", "גלארזה"], actual: ["קורונל", "אלמירון", "גומז", "גלארזה"] } }
     },
     'match32': {
         timeStatus: 'past', matchday: 2, stage: 'D', dateText: "בית ד' | 19 ביוני",
@@ -92,9 +92,9 @@ const matchday2Database = {
         probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe',
         radarStats: { home: [80, 65, 80, 85, 85, 75], away: [65, 45, 85, 90, 95, 30] },
         advancedStats: { home: { xG: '1.80', restDays: 6, altitudeImpact: 'מארחת משותפת' }, away: { xG: '0.60', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ארה"ב עדיפה.", actual: "ניצחון חלק של המארחת." },
-        goals: [{ team: 'ארצות הברית', player: "פוליסיק", minute: "30'" }, { team: 'ארצות הברית', player: "מקיני", minute: "60'" }], 
-        squads: { home: { predicted: ["פוליסיק", "מקיני"], actual: ["פוליסיק", "מקיני"] }, away: { predicted: [], actual: [] } }
+        insight: { prediction: "ארה"ב עדיפה.", actual: "ניצחון חלק של המארחת. שער עצמי פתח את הסכר." },
+        goals: [{ team: 'ארצות הברית', player: "בורגס (עצמי)", minute: "11'" }, { team: 'ארצות הברית', player: "פרימן", minute: "43'" }], 
+        squads: { home: { predicted: ["טרנר", "אדמס", "פוליסיק", "וואה", "ריינה", "פרימן"], actual: ["טרנר", "אדמס", "פוליסיק", "וואה", "ריינה", "פרימן"] }, away: { predicted: ["ריאן", "סוטאר", "בורגס", "דיוק"], actual: ["ריאן", "סוטאר", "בורגס", "דיוק"] } }
     },
     'match33': {
         timeStatus: 'past', matchday: 2, stage: 'E', dateText: "בית ה' | 20 ביוני",
@@ -104,9 +104,9 @@ const matchday2Database = {
         probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
         radarStats: { home: [90, 85, 90, 80, 85, 90], away: [75, 70, 80, 75, 85, 65] },
         advancedStats: { home: { xG: '2.10', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.80', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "גרמניה תמשיך במומנטום.", actual: "גרמניה ניצחה במשחק מעניין." },
-        goals: [{ team: 'גרמניה', player: "גנאברי", minute: "20'" }, { team: 'גרמניה', player: "האברץ", minute: "50'" }, { team: 'חוף השנהב', player: "זאהה", minute: "75'" }], 
-        squads: { home: { predicted: ["גנאברי", "האברץ"], actual: ["גנאברי", "האברץ"] }, away: { predicted: ["זאהה"], actual: ["זאהה"] } }
+        insight: { prediction: "גרמניה תמשיך במומנטום.", actual: "גרמניה ניצחה במשחק מעניין למרות פייט אדיר של האפריקאים." },
+        goals: [{ team: 'גרמניה', player: "מוסיאלה", minute: "20'" }, { team: 'גרמניה', player: "האברץ", minute: "50'" }, { team: 'חוף השנהב', player: "זאהה", minute: "75'" }], 
+        squads: { home: { predicted: ["טר שטגן", "רודיגר", "קימיך", "מוסיאלה"], actual: ["טר שטגן", "רודיגר", "קימיך", "מוסיאלה"] }, away: { predicted: ["פופאנה", "נדיקה", "קסי", "האלר"], actual: ["פופאנה", "נדיקה", "קסי", "האלר", "זאהה"] } }
     },
     'match34': {
         timeStatus: 'past', matchday: 2, stage: 'E', dateText: "בית ה' | 21 ביוני",
@@ -115,9 +115,9 @@ const matchday2Database = {
         score: { prediction: '3 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 80, draw: 15, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [80, 75, 80, 85, 85, 75], away: [50, 40, 60, 55, 60, 45] },
-        advancedStats: { home: { xG: '2.50', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.30', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ניצחון קל לאקוודור.", actual: "קוראסאו הפתיעה וחילצה תיקו מאופס." },
-        goals: [], squads: { home: { predicted: ["ולנסיה"], actual: ["ולנסיה"] }, away: { predicted: [], actual: [] } }
+        advancedStats: { home: { xG: '2.50', restDays: 6, altitudeImpact: 'אופטימלי' }, away: { xG: '0.30', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "ניצחון קל לאקוודור.", actual: "סנסציה! קוראסאו הציגה הגנת ברזל וחילצה תיקו מאופס היסטורי." },
+        goals: [], squads: { home: { predicted: ["דומינגס", "הינקאפיה", "קאיסדו", "ולנסיה"], actual: ["דומינגס", "הינקאפיה", "קאיסדו", "ולנסיה"] }, away: { predicted: ["רום", "מרטינה", "באקונה", "יאנגה"], actual: ["רום", "מרטינה", "באקונה", "יאנגה"] } }
     },
     'match35': {
         timeStatus: 'past', matchday: 2, stage: 'F', dateText: "בית ו' | 20 ביוני",
@@ -127,9 +127,9 @@ const matchday2Database = {
         probabilities: { home: 45, draw: 35, away: 20 }, matchRisk: 'Draw Booster',
         radarStats: { home: [85, 80, 85, 75, 80, 85], away: [70, 75, 65, 85, 85, 70] },
         advancedStats: { home: { xG: '1.40', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '1.10', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "משחק שקול.", actual: "הולנד הביסה את שוודיה בתצוגה נפלאה." },
+        insight: { prediction: "משחק שקול.", actual: "התפוצצות כתומה! הולנד דרסה את שוודיה ללא רחמים עם חמישייה מהדהדת." },
         goals: [{ team: 'הולנד', player: "גאקפו", minute: "15'" }, { team: 'שוודיה', player: "איסק", minute: "25'" }, { team: 'הולנד', player: "ממפיס", minute: "40'" }, { team: 'הולנד', player: "דה יונג", minute: "60'" }, { team: 'הולנד', player: "חאקפו", minute: "75'" }, { team: 'הולנד', player: "חאקפו", minute: "85'" }], 
-        squads: { home: { predicted: ["גאקפו", "ממפיס", "דה יונג"], actual: ["גאקפו", "ממפיס", "דה יונג"] }, away: { predicted: ["איסק"], actual: ["איסק"] } }
+        squads: { home: { predicted: ["ורברוחן", "ואן דייק", "דה יונג", "חאקפו"], actual: ["ורברוחן", "ואן דייק", "דה יונג", "חאקפו", "ממפיס"] }, away: { predicted: ["אולסן", "לינדלף", "קולוסבסקי", "איסק"], actual: ["אולסן", "לינדלף", "קולוסבסקי", "איסק"] } }
     },
     'match36': {
         timeStatus: 'past', matchday: 2, stage: 'F', dateText: "בית ו' | 21 ביוני",
@@ -139,20 +139,20 @@ const matchday2Database = {
         probabilities: { home: 20, draw: 30, away: 50 }, matchRisk: 'Safe',
         radarStats: { home: [70, 65, 70, 85, 80, 65], away: [75, 75, 80, 70, 75, 75] },
         advancedStats: { home: { xG: '0.80', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '1.70', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "יפן פייבוריטית.", actual: "יפן הביסה את תוניסיה ללא קושי." },
+        insight: { prediction: "יפן פייבוריטית.", actual: "קונצרט יפני! הסמוראים פירקו לחלוטין את משחק ההגנה התוניסאי." },
         goals: [{ team: 'יפן', player: "מיטומה", minute: "20'" }, { team: 'יפן', player: "קמדה", minute: "45'" }, { team: 'יפן', player: "אואדה", minute: "60'" }, { team: 'יפן', player: "אואדה", minute: "80'" }], 
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: ["מיטומה", "קמדה", "אואדה"], actual: ["מיטומה", "קמדה", "אואדה"] } }
+        squads: { home: { predicted: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"], actual: ["דחמאן", "טאלבי", "סח'ירי", "מסאכני"] }, away: { predicted: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה"], actual: ["סוזוקי", "טומיאסו", "אנדו", "מיטומה", "קמדה", "אואדה"] } }
     },
     'match37': {
         timeStatus: 'past', matchday: 2, stage: 'G', dateText: "בית ז' | 21 ביוני",
-        teamHome: { name: 'בלגיה', flagCode: 'be', color: '#E30613', cards: { yellow: [], red: ['player (80)'] } },
+        teamHome: { name: 'בלגיה', flagCode: 'be', color: '#E30613', cards: { yellow: [], red: ["אנגוי (67')"] } },
         teamAway: { name: 'איראן', flagCode: 'ir', color: '#1BA15F', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 75, draw: 20, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [85, 80, 75, 75, 80, 85], away: [65, 50, 70, 80, 80, 60] },
         advancedStats: { home: { xG: '2.20', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.40', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ניצחון קל לבלגיה.", actual: "איראן הפתיעה עם בונקר מוצלח." },
-        goals: [], squads: { home: { predicted: ["דה בריינה", "לוקאקו"], actual: ["דה בריינה", "לוקאקו"] }, away: { predicted: [], actual: [] } }
+        insight: { prediction: "ניצחון קל לבלגיה.", actual: "האוטובוס האיראני עבד בצורה מושלמת! בלגיה תוסכלה ואף איבדה את אנגוי באדום." },
+        goals: [], squads: { home: { predicted: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו"], actual: ["קסטילס", "ורטונגן", "דה בריינה", "לוקאקו", "אנגוי"] }, away: { predicted: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"], actual: ["ביירנבאנד", "חאג'ספי", "אזמון", "טארמי"] } }
     },
     'match38': {
         timeStatus: 'past', matchday: 2, stage: 'G', dateText: "בית ז' | 22 ביוני",
@@ -162,9 +162,9 @@ const matchday2Database = {
         probabilities: { home: 20, draw: 30, away: 50 }, matchRisk: 'Safe',
         radarStats: { home: [60, 50, 70, 75, 80, 50], away: [75, 65, 70, 80, 75, 75] },
         advancedStats: { home: { xG: '0.90', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '1.60', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "מצרים עדיפה.", actual: "מצרים ניצחה בצדק." },
-        goals: [{ team: 'מצרים', player: "סלאח", minute: "15'" }, { team: 'ניו זילנד', player: "ווד", minute: "30'" }, { team: 'מצרים', player: "טרזגה", minute: "60'" }, { team: 'מצרים', player: "סלאח", minute: "85'" }], 
-        squads: { home: { predicted: ["ווד"], actual: ["ווד"] }, away: { predicted: ["סלאח", "טרזגה"], actual: ["סלאח", "טרזגה"] } }
+        insight: { prediction: "מצרים עדיפה.", actual: "קאמבק מצרי פנטסטי! סלאח התעורר והוביל את מצרים לניצחון." },
+        goals: [{ team: 'ניו זילנד', player: "ווד", minute: "15'" }, { team: 'מצרים', player: "סלאח (מעורב)", minute: "45'" }, { team: 'מצרים', player: "טרזגה", minute: "60'" }, { team: 'מצרים', player: "סלאח", minute: "85'" }], 
+        squads: { home: { predicted: ["סייל", "ריד", "בל", "ווד"], actual: ["סייל", "ריד", "בל", "ווד"] }, away: { predicted: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח"], actual: ["אל-שנאווי", "חגאזי", "אלנני", "סלאח", "טרזגה"] } }
     },
     'match39': {
         timeStatus: 'past', matchday: 2, stage: 'H', dateText: "בית ח' | 21 ביוני",
@@ -174,9 +174,9 @@ const matchday2Database = {
         probabilities: { home: 85, draw: 10, away: 5 }, matchRisk: 'Safe',
         radarStats: { home: [95, 90, 80, 85, 75, 90], away: [65, 55, 60, 70, 65, 60] },
         advancedStats: { home: { xG: '2.80', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.40', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ניצחון חלק לספרד.", actual: "ספרד דרסה את הסעודים." },
-        goals: [{ team: 'ספרד', player: "מוראטה", minute: "10'" }, { team: 'ספרד', player: "פדרי", minute: "25'" }, { team: 'ספרד', player: "אולמו", minute: "50'" }, { team: 'ספרד', player: "טורס", minute: "75'" }], 
-        squads: { home: { predicted: ["מוראטה", "פדרי", "אולמו", "טורס"], actual: ["מוראטה", "פדרי", "אולמו", "טורס"] }, away: { predicted: [], actual: [] } }
+        insight: { prediction: "ניצחון חלק לספרד.", actual: "התפוצצות של לה רוחה! ימאל ואויארסבאל סגרו סיפור ב-24 דקות." },
+        goals: [{ team: 'ספרד', player: "ימאל", minute: "מוקדם" }, { team: 'ספרד', player: "אויארסבאל", minute: "מחצית 1" }, { team: 'ספרד', player: "אויארסבאל", minute: "מחצית 1" }, { team: 'ספרד', player: "שער עצמי", minute: "מחצית 2" }], 
+        squads: { home: { predicted: ["סימון", "רודרי", "פדרי", "מוראטה"], actual: ["סימון", "רודרי", "פדרי", "מוראטה", "ימאל", "אויארסבאל"] }, away: { predicted: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"], actual: ["אל-אוואיס", "אל-בולייהי", "קאנו", "אל-דאווסרי"] } }
     },
     'match40': {
         timeStatus: 'past', matchday: 2, stage: 'H', dateText: "בית ח' | 22 ביוני",
@@ -186,81 +186,76 @@ const matchday2Database = {
         probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
         radarStats: { home: [80, 70, 80, 95, 90, 80], away: [65, 60, 65, 75, 80, 55] },
         advancedStats: { home: { xG: '2.00', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.80', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "אורוגוואי פייבוריטית.", actual: "כף ורדה עשתה סנסציה וסחטה תיקו." },
-        goals: [{ team: 'אורוגוואי', player: "נונייז", minute: "15'" }, { team: 'כף ורדה', player: "מנדס", minute: "35'" }, { team: 'אורוגוואי', player: "ואלוורדה", minute: "60'" }, { team: 'כף ורדה', player: "בבה", minute: "88'" }], 
-        squads: { home: { predicted: ["נונייז", "ואלוורדה"], actual: ["נונייז", "ואלוורדה"] }, away: { predicted: ["מנדס", "בבה"], actual: ["מנדס", "בבה"] } }
+        insight: { prediction: "אורוגוואי פייבוריטית.", actual: "סנסציה היסטורית! כף ורדה חזרה מפיגור כפול עם נחישות מדהימה." },
+        goals: [{ team: 'אורוגוואי', player: "שחקן אורוגוואי", minute: "מחצית 1" }, { team: 'אורוגוואי', player: "שחקן אורוגוואי", minute: "מחצית 1" }, { team: 'כף ורדה', player: "פינה", minute: "מחצית 2" }, { team: 'כף ורדה', player: "בארלה", minute: "מחצית 2" }], 
+        squads: { home: { predicted: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"], actual: ["רוצ'ט", "חימנז", "ואלוורדה", "נונייז"] }, away: { predicted: ["ווזיניה", "פיקו", "מנדש", "בבה"], actual: ["ווזיניה", "פיקו", "מנדש", "בבה", "פינה", "בארלה"] } }
     },
     'match41': {
-        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 22 ביוני",
-        teamHome: { name: 'צרפת', flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'עיראק', flagCode: 'iq', color: '#007A3D', cards: { yellow: [], red: [] } },
-        score: { prediction: '3 - 0', actual: '3 - 0', accuracyClass: 'exact' },
-        probabilities: { home: 88, draw: 10, away: 2 }, matchRisk: 'Safe',
-        radarStats: { home: [95, 90, 85, 90, 95, 95], away: [50, 45, 55, 60, 65, 40] },
-        advancedStats: { home: { xG: '3.00', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.20', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "צרפת תטייל לניצחון.", actual: "צרפת ניצחה בצורה משכנעת." },
-        goals: [{ team: 'צרפת', player: "אמבפה", minute: "20'" }, { team: 'צרפת', player: "ג'ירו", minute: "40'" }, { team: 'צרפת', player: "אמבפה", minute: "65'" }], 
-        squads: { home: { predicted: ["אמבפה", "ג'ירו"], actual: ["אמבפה", "ג'ירו"] }, away: { predicted: [], actual: [] } }
+        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 22 ביוני",
+        teamHome: { name: 'ארגנטינה', flagCode: 'ar', color: '#75AADB', cards: { yellow: ["מדינה (76')", "פארדס (90')"], red: [] } },
+        teamAway: { name: 'אוסטריה', flagCode: 'at', color: '#EF3340', cards: { yellow: ["פוש (40')", "ליימר (76')"], red: [] } },
+        score: { prediction: '2 - 0', actual: '2 - 0', accuracyClass: 'exact' },
+        probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
+        radarStats: { home: [95, 85, 80, 95, 80, 95], away: [70, 65, 75, 80, 85, 70] },
+        advancedStats: { home: { xG: '2.15', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.80', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "האיכות של אלופת העולם במרכז השדה בלתי ניתנת לעצירה.", actual: "פגיעה בול (2-0)! מסי כיפר על פנדל מוחמץ, כבש צמד ושבר את שיא הכיבושים ההיסטורי במונדיאל." },
+        goals: [{ team: 'ארגנטינה', player: "מסי", minute: "38'" }, { team: 'ארגנטינה', player: "מסי", minute: "90+4'" }], 
+        squads: { home: { predicted: ["מרטינז", "רומרו", "דה פול", "מסי"], actual: ["מרטינז", "רומרו", "דה פול", "מסי", "מדינה", "פארדס"] }, away: { predicted: ["שלאגר", "אלאבה", "זביצר", "ארנאוטוביץ'"], actual: ["שלאגר", "אלאבה", "זביצר", "ארנאוטוביץ'", "פוש", "ליימר"] } }
     },
     'match42': {
-        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 22 ביוני",
-        teamHome: { name: 'נורבגיה', flagCode: 'no', color: '#BA0C2F', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '3 - 2', accuracyClass: 'wrong' },
-        probabilities: { home: 40, draw: 30, away: 30 }, matchRisk: 'Draw Booster',
-        radarStats: { home: [75, 70, 85, 75, 85, 80], away: [70, 65, 80, 80, 90, 75] },
-        advancedStats: { home: { xG: '1.40', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '1.30', restDays: 6, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "משחק שקול.", actual: "נורבגיה ניצחה במשחק נהדר." },
-        goals: [{ team: 'נורבגיה', player: "הולאנד", minute: "15'" }, { team: 'סנגל', player: "מאנה", minute: "30'" }, { team: 'נורבגיה', player: "אודגור", minute: "55'" }, { team: 'סנגל', player: "סאר", minute: "70'" }, { team: 'נורבגיה', player: "הולאנד", minute: "88'" }], 
-        squads: { home: { predicted: ["הולאנד", "אודגור"], actual: ["הולאנד", "אודגור"] }, away: { predicted: ["מאנה", "סאר"], actual: ["מאנה", "סאר"] } }
+        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני",
+        teamHome: { name: 'צרפת', flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'עיראק', flagCode: 'iq', color: '#007A3D', cards: { yellow: [], red: [] } },
+        score: { prediction: '4 - 0', actual: '3 - 0', accuracyClass: 'trend' },
+        probabilities: { home: 88, draw: 9, away: 3 }, matchRisk: 'Safe',
+        radarStats: { home: [95, 90, 85, 90, 95, 95], away: [50, 45, 55, 60, 65, 40] },
+        advancedStats: { home: { xG: '3.60', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.25', restDays: 7, altitudeImpact: 'לחץ מנטלי' } },
+        insight: { prediction: "פער איכויות עצום. עיראק תצופף את הרחבה, צרפת תפרק את הבונקר.", actual: "ניצחון צרפתי חלק 3-0, שליטה מוחלטת בדרך לשלב הבא." },
+        goals: [], squads: { home: { predicted: ["מניאן", "אמבפה"], actual: ["מניאן", "אמבפה"] }, away: { predicted: ["חסן", "חוסיין"], actual: ["חסן", "חוסיין"] } }
     },
     'match43': {
-        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 22 ביוני",
-        teamHome: { name: 'ארגנטינה', flagCode: 'ar', color: '#75AADB', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'אוסטריה', flagCode: 'at', color: '#EF3340', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 1', actual: '2 - 0', accuracyClass: 'trend' },
-        probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe',
-        radarStats: { home: [95, 85, 80, 95, 80, 95], away: [70, 65, 75, 80, 85, 70] },
-        advancedStats: { home: { xG: '2.00', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.90', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "ארגנטינה פייבוריטית.", actual: "ארגנטינה שלטה וניצחה." },
-        goals: [{ team: 'ארגנטינה', player: "מסי", minute: "35'" }, { team: 'ארגנטינה', player: "מסי", minute: "80'" }], 
-        squads: { home: { predicted: ["מסי"], actual: ["מסי"] }, away: { predicted: [], actual: [] } }
+        timeStatus: 'past', matchday: 2, stage: 'I', dateText: "בית ט' | 23 ביוני",
+        teamHome: { name: 'נורבגיה', flagCode: 'no', color: '#BA0C2F', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'סנגל', flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 2', actual: '3 - 2', accuracyClass: 'wrong' },
+        probabilities: { home: 35, draw: 35, away: 30 }, matchRisk: 'Draw Booster',
+        radarStats: { home: [75, 70, 85, 75, 85, 80], away: [70, 65, 80, 80, 90, 75] },
+        advancedStats: { home: { xG: '1.45', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '1.40', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "קרב פיזי אדיר עם שערים לשני הצדדים.", actual: "משחק הפכפך ודרמטי שהסתיים בניצחון נורווגי מרשים של 3-2." },
+        goals: [], squads: { home: { predicted: ["ניילנד", "הולאנד"], actual: ["ניילנד", "הולאנד"] }, away: { predicted: ["מנדי", "מאנה"], actual: ["מנדי", "מאנה"] } }
     },
     'match44': {
-        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 22 ביוני",
+        timeStatus: 'past', matchday: 2, stage: 'J', dateText: "בית י' | 23 ביוני",
         teamHome: { name: 'ירדן', flagCode: 'jo', color: '#CE1126', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אלג\'יריה', flagCode: 'dz', color: '#006233', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '1 - 2', accuracyClass: 'trend' },
         probabilities: { home: 15, draw: 25, away: 60 }, matchRisk: 'Safe',
         radarStats: { home: [55, 45, 60, 70, 65, 50], away: [80, 75, 70, 80, 80, 75] },
-        advancedStats: { home: { xG: '0.60', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '1.90', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "אלג'יריה עדיפה.", actual: "אלג'יריה ניצחה אך לא בקלות." },
-        goals: [{ team: 'ירדן', player: "אל-נעימאת", minute: "20'" }, { team: 'אלג\'יריה', player: "מחרז", minute: "45'" }, { team: 'אלג\'יריה', player: "בלילי", minute: "75'" }], 
-        squads: { home: { predicted: ["אל-נעימאת"], actual: ["אל-נעימאת"] }, away: { predicted: ["מחרז", "בלילי"], actual: ["מחרז", "בלילי"] } }
+        advancedStats: { home: { xG: '0.60', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '1.95', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "שועלי המדבר עדיפים טכנית ויתרגמו את השליטה בכדור לניצחון.", actual: "ירדן כבשה, אך אלג'יריה הפכה את התוצאה ל-2:1 חשוב." },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match45': {
         timeStatus: 'past', matchday: 2, stage: 'K', dateText: "בית כ' | 23 ביוני",
         teamHome: { name: 'פורטוגל', flagCode: 'pt', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: 'אוזבקיסטן', flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
         score: { prediction: '3 - 0', actual: '5 - 0', accuracyClass: 'trend' },
-        probabilities: { home: 85, draw: 10, away: 5 }, matchRisk: 'Safe',
+        probabilities: { home: 82, draw: 12, away: 6 }, matchRisk: 'Safe',
         radarStats: { home: [90, 85, 80, 85, 80, 90], away: [60, 50, 65, 70, 70, 55] },
-        advancedStats: { home: { xG: '2.80', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.30', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "פורטוגל תביס את האוזבקים.", actual: "פורטוגל חגגה עם חמישייה." },
-        goals: [{ team: 'פורטוגל', player: "רונאלדו", minute: "10'" }, { team: 'פורטוגל', player: "ברונו פרננדס", minute: "25'" }, { team: 'פורטוגל', player: "ז'ואאו פליקס", minute: "45'" }, { team: 'פורטוגל', player: "רונאלדו", minute: "60'" }, { team: 'פורטוגל', player: "לאאו", minute: "80'" }], 
-        squads: { home: { predicted: ["רונאלדו", "ברונו פרננדס", "ז'ואאו פליקס", "לאאו"], actual: ["רונאלדו", "ברונו פרננדס", "ז'ואאו פליקס", "לאאו"] }, away: { predicted: [], actual: [] } }
+        advancedStats: { home: { xG: '2.50', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.40', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "הפורטוגלים עדיפים משמעותית וישלטו במשחק.", actual: "התפוצצות פורטוגלית! 5-0 מוחץ שהרס לחלוטין את ההגנה האסייתית." },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match46': {
-        timeStatus: 'past', matchday: 2, stage: 'K', dateText: "בית כ' | 23 ביוני",
-        teamHome: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'קונגו', flagCode: 'cg', color: '#009543', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '1 - 0', accuracyClass: 'trend' },
-        probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
-        radarStats: { home: [80, 75, 70, 80, 85, 75], away: [60, 55, 65, 70, 80, 50] },
-        advancedStats: { home: { xG: '1.90', restDays: 5, altitudeImpact: 'רגיל' }, away: { xG: '0.60', restDays: 6, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "קולומביה עדיפה.", actual: "קולומביה הסתפקה בשער אחד כדי לנצח." },
-        goals: [{ team: 'קולומביה', player: "לואיס דיאס", minute: "35'" }], 
-        squads: { home: { predicted: ["לואיס דיאס"], actual: ["לואיס דיאס"] }, away: { predicted: [], actual: [] } }
+        timeStatus: 'past', matchday: 2, stage: 'L', dateText: "בית ל' | 23 ביוני",
+        teamHome: { name: 'אנגליה', flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'גאנה', flagCode: 'gh', color: '#006B3F', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 1', actual: '0 - 0', accuracyClass: 'wrong' },
+        probabilities: { home: 65, draw: 20, away: 15 }, matchRisk: 'Safe',
+        radarStats: { home: [85, 80, 85, 80, 85, 90], away: [70, 60, 70, 75, 85, 70] },
+        advancedStats: { home: { xG: '1.95', restDays: 8, altitudeImpact: 'רגיל' }, away: { xG: '0.90', restDays: 8, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "אנגליה תכתיב את הקצב, אך המהירות של גאנה במתפרצות מסוכנת.", actual: "אכזבה לאנגלית. הגנה גנאית חזקה עצרה את קיין וחבריו על 0-0." },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match47': {
         timeStatus: 'past', matchday: 2, stage: 'L', dateText: "בית ל' | 24 ביוני",
@@ -269,22 +264,20 @@ const matchday2Database = {
         score: { prediction: '0 - 3', actual: '0 - 1', accuracyClass: 'trend' },
         probabilities: { home: 7, draw: 15, away: 78 }, matchRisk: 'Safe',
         radarStats: { home: [60, 50, 65, 70, 70, 55], away: [85, 80, 75, 90, 75, 80] },
-        advancedStats: { home: { xG: '0.50', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '2.20', restDays: 7, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "קרואטיה המנוסה תשלוט לחלוטין במרכז המגרש.", actual: "ניצחון קטן אבל חשוב לקרואטיה (1-0), שלקחה 3 נקודות במשחק לא פשוט." },
-        goals: [{ team: 'קרואטיה', player: "קרמאריץ'", minute: "55'" }], 
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: ["קרמאריץ'"], actual: ["קרמאריץ'"] } }
+        advancedStats: { home: { xG: '0.50', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '2.20', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "קרואטיה המנוסה תשלוט לחלוטין במרכז המגרש ולא תשיר שום סיכוי לפנמה, שצפויה להתגונן ברוב שלבי המשחק.", actual: "ניצחון קטן אבל חשוב לקרואטיה (1-0), שלקחה 3 נקודות במשחק לא פשוט." },
+        goals: [], squads: { home: { predicted: ["מחיה", "אסקובר", "גודוי", "ברסנאס"], actual: [] }, away: { predicted: ["ליבאקוביץ'", "גברדיול", "מודריץ'", "קרמאריץ'"], actual: ["ליבאקוביץ'", "גברדיול", "מודריץ'", "קרמאריץ'"] } }
     },
     'match48': {
-        timeStatus: 'past', matchday: 2, stage: 'L', dateText: "בית ל' | 23 ביוני",
-        teamHome: { name: 'אנגליה', flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
-        teamAway: { name: 'גאנה', flagCode: 'gh', color: '#006B3F', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '0 - 0', accuracyClass: 'wrong' },
-        probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe',
-        radarStats: { home: [85, 80, 85, 80, 85, 90], away: [70, 60, 70, 75, 85, 70] },
-        advancedStats: { home: { xG: '1.90', restDays: 6, altitudeImpact: 'רגיל' }, away: { xG: '0.70', restDays: 5, altitudeImpact: 'רגיל' } },
-        insight: { prediction: "אנגליה צפויה לנצח.", actual: "גאנה הפתיעה והוציאה תיקו מאנגליה." },
-        goals: [], 
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        timeStatus: 'past', matchday: 2, stage: 'K', dateText: "בית כ' | 24 ביוני",
+        teamHome: { name: 'קולומביה', flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
+        teamAway: { name: 'קונגו', flagCode: 'cg', color: '#009543', cards: { yellow: [], red: [] } },
+        score: { prediction: '2 - 0', actual: '1 - 0', accuracyClass: 'trend' },
+        probabilities: { home: 70, draw: 20, away: 10 }, matchRisk: 'Safe',
+        radarStats: { home: [80, 75, 70, 80, 85, 75], away: [60, 55, 65, 70, 80, 50] },
+        advancedStats: { home: { xG: '1.80', restDays: 7, altitudeImpact: 'רגיל' }, away: { xG: '0.70', restDays: 7, altitudeImpact: 'רגיל' } },
+        insight: { prediction: "קולומביה מסוכנת בחלק הקדמי ותנצל פערים טכניים.", actual: "ניצחון 1-0 קשה לקולומביה, שעמדה בלחץ הפיזי של קונגו." },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     }
 };
 Object.assign(window.matchDatabase, matchday2Database);
