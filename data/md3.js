@@ -1,77 +1,82 @@
 window.matchDatabase = window.matchDatabase || {};
 const matchday3Database = {
+    // ---- 6 המשחקים שכבר שוחקו (24-25 ביוני) ----
+
     'match49': {
-        timeStatus: 'future', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: `קנדה`, flagCode: 'ca', color: '#000000', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 0', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 0', actual: '1 - 2', accuracyClass: 'wrong' },
         probabilities: { home: 45, draw: 27, away: 28 }, matchRisk: 'Safe',
         radarStats: { home: [71, 40, 57, 71, 75, 35], away: [62, 73, 54, 62, 88, 35] },
-        advancedStats: { home: { xG: '1.36', corners: 0, altitudeImpact: '' }, away: { xG: '1.00', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `שווייץ מגיעה עם יתרון איכותי במרכז השדה והיא צפויה להחזיק בכדור ולנסות להכתיב קצב סבלני. קנדה, לעומתה, חיה על משחק המעברים - עם המהירות הפסיכית שיש לה באגפים היא רק תחכה לאיבוד כדור שווייצרי כדי לצאת למתפרצות קטלניות. אם שווייץ לא תהיה מרוכזת בהגנה, היא תעקץ.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Yann Sommer', 'Silvan Widmer', 'Manuel Akanji', 'Fabian Schär', 'Ricardo Rodriguez', 'Remo Freuler', 'Granit Xhaka', 'Xherdan Shaqiri', 'Djibril Sow', 'Breel Embolo', 'Rubén Vargas'], actual: [] }, away: { predicted: ['Dayne St. Clair', 'Alistair Johnston', 'Alfie Jones', 'Luc de Fougerolles', 'Joel Waterman', 'Mathieu Choinière', 'Stephen Eustáquio', 'Ismaël Koné', 'Cyle Larin', 'Jonathan David', 'Liam Millar'], actual: [] } }
+        advancedStats: { home: { xG: '1.36', corners: 4, altitudeImpact: '' }, away: { xG: '1.00', corners: 5, altitudeImpact: '' } },
+        insight: { prediction: `שווייץ מגיעה עם יתרון איכותי במרכז השדה והיא צפויה להחזיק בכדור ולנסות להכתיב קצב סבלני. קנדה, לעומתה, תנסה לעקוץ במתפרצות.`, actual: `איזו עקיצה של הקנדים! שווייץ החזיקה בכדור וניסתה להכתיב קצב, אבל קנדה יצאה למתפרצות קטלניות, הוכיחה יעילות עילאית מול השער (שערים של לארין) ורשמה ניצחון ענק שמלמד כמה אופי יש לנבחרת הזו.` },
+        goals: [{ team: `שווייץ`, player: `Granit Xhaka`, minute: `32'` }, { team: `קנדה`, player: `Cyle Larin`, minute: `32'` }, { team: `קנדה`, player: `Cyle Larin`, minute: `58'` }],
+        squads: { home: { predicted: ['Yann Sommer', 'Silvan Widmer', 'Manuel Akanji', 'Fabian Schär', 'Ricardo Rodriguez', 'Remo Freuler', 'Granit Xhaka', 'Xherdan Shaqiri', 'Djibril Sow', 'Breel Embolo', 'Rubén Vargas'], actual: ['Yann Sommer', 'Silvan Widmer', 'Manuel Akanji', 'Fabian Schär', 'Ricardo Rodriguez', 'Remo Freuler', 'Granit Xhaka', 'Xherdan Shaqiri', 'Djibril Sow', 'Breel Embolo', 'Rubén Vargas'] }, away: { predicted: ['Dayne St. Clair', 'Alistair Johnston', 'Alfie Jones', 'Luc de Fougerolles', 'Joel Waterman', 'Mathieu Choinière', 'Stephen Eustáquio', 'Ismaël Koné', 'Cyle Larin', 'Jonathan David', 'Liam Millar'], actual: ['Dayne St. Clair', 'Alistair Johnston', 'Alfie Jones', 'Luc de Fougerolles', 'Joel Waterman', 'Mathieu Choinière', 'Stephen Eustáquio', 'Ismaël Koné', 'Cyle Larin', 'Jonathan David', 'Liam Millar'] } }
     },
     'match50': {
-        timeStatus: 'future', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `בוסניה והרצגובינה`, flagCode: 'ba', color: '#002F6C', cards: { yellow: [], red: [] } },
         teamAway: { name: `קטאר`, flagCode: 'qa', color: '#8A1538', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 1', actual: '1 - 3', accuracyClass: 'wrong' },
         probabilities: { home: 38, draw: 27, away: 35 }, matchRisk: 'Draw Booster',
         radarStats: { home: [49, 20, 48, 49, 76, 30], away: [17, 13, 48, 17, 76, 20] },
-        advancedStats: { home: { xG: '1.30', corners: 0, altitudeImpact: '' }, away: { xG: '1.22', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `זה מריח כמו קרב חפירות קשוח. בוסניה תנסה להשתמש ביתרון הפיזי המשמעותי שלה ולחפש כדורי גובה לרחבה, בזמן שקטאר תנסה לשחק על הקרקע ולעקוץ דרך המרכז. במשחקים כל כך צמודים, שימו לב למצבים הנייחים – קרן אחת טובה יכולה להכריע כאן הכל.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Nikola Vasilj', 'Nihad Mujakić', 'Dennis Hadžikadunić', 'Tarik Muharemović', 'Sead Kolašinac', 'Benjamin Tahirović', 'Amar Dedić', 'Armin Gigović', 'Samed Baždar', 'Ermedin Demirović', 'Edin Džeko'], actual: [] }, away: { predicted: ['Mahmud Abunada', 'Pedro Miguel', 'Lucas Mendes', 'Issa Laye', 'Jassem Gaber', 'Abdulaziz Hatem', 'Ahmed Alaaeldin', 'Edmilson Junior', 'Mohammed Muntari', 'Hassan Al-Haydos', 'Akram Afif'], actual: [] } }
+        advancedStats: { home: { xG: '1.30', corners: 6, altitudeImpact: '' }, away: { xG: '1.22', corners: 4, altitudeImpact: '' } },
+        insight: { prediction: `זה מריח כמו קרב חפירות קשוח. בוסניה תנסה להשתמש ביתרון הפיזי המשמעותי שלה ולחפש כדורי גובה לרחבה, בזמן שקטאר תנסה לעקוץ.`, actual: `קונצרט של קטאר! האורחת פשוט שטפה את הדשא, התפוצצה על המגרש עם התקפות מעבר קטלניות והשאירה את הבוסנים חסרי אונים לחלוטין מול הקהל ההמום.` },
+        goals: [{ team: `בוסניה והרצגובינה`, player: `Karim Alai-Begovic`, minute: `29'` }, { team: `קטאר`, player: `Hassan Al-Haydos`, minute: `42'` }, { team: `קטאר`, player: `Jassem Abulsallam`, minute: `46'` }, { team: `קטאר`, player: `Abdulaziz Abdullah`, minute: `46'` }],
+        squads: { home: { predicted: ['Nikola Vasilj', 'Nihad Mujakić', 'Dennis Hadžikadunić', 'Tarik Muharemović', 'Sead Kolašinac', 'Benjamin Tahirović', 'Amar Dedić', 'Armin Gigović', 'Samed Baždar', 'Ermedin Demirović', 'Edin Džeko'], actual: ['Nikola Vasilj', 'Nihad Mujakić', 'Dennis Hadžikadunić', 'Tarik Muharemović', 'Sead Kolašinac', 'Benjamin Tahirović', 'Amar Dedić', 'Armin Gigović', 'Samed Baždar', 'Ermedin Demirović', 'Edin Džeko'] }, away: { predicted: ['Mahmud Abunada', 'Pedro Miguel', 'Lucas Mendes', 'Issa Laye', 'Jassem Gaber', 'Abdulaziz Hatem', 'Ahmed Alaaeldin', 'Edmilson Junior', 'Mohammed Muntari', 'Hassan Al-Haydos', 'Akram Afif'], actual: ['Mahmud Abunada', 'Pedro Miguel', 'Lucas Mendes', 'Issa Laye', 'Jassem Gaber', 'Abdulaziz Hatem', 'Ahmed Alaaeldin', 'Edmilson Junior', 'Mohammed Muntari', 'Hassan Al-Haydos', 'Akram Afif'] } }
     },
     'match51': {
-        timeStatus: 'future', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
-        teamHome: { name: `סקוטלנד`, flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
-        teamAway: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 8, draw: 16, away: 76 }, matchRisk: 'Upset Alert',
-        radarStats: { home: [55, 33, 49, 55, 79, 32], away: [60, 40, 61, 60, 64, 37] },
-        advancedStats: { home: { xG: '0.62', corners: 0, altitudeImpact: '' }, away: { xG: '2.40', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `בואו נגיד את האמת, אין כאן באמת כוחות. ברזיל עולה למגרש כפייבוריטית מפלצתית. הסלסאו הולכים לשטוף את הדשא, ללחוץ מהשנייה הראשונה ולייצר המון מצבים. סקוטלנד מצידה, תיאלץ לבנות בונקר הרמטי, לצופף את רחבת ה-16 ולקוות לנס משמיים. אם ברזיל מבקיעה מוקדם, זה יכול להיגמר בתבוסה כואבת.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Angus Gunn', 'Aaron Hickey', 'Andy Robertson', 'Scott McTominay', 'Grant Hanley', 'Kieran Tierney', 'John McGinn', 'Tyler Fletcher', 'Lyndon Dykes', 'Ché Adams', 'Ryan Christie'], actual: [] }, away: { predicted: ['Alisson', 'Danilo', 'Marquinhos', 'Éder Militão', 'Wendell', 'Casemiro', 'Bruno Guimarães', 'Lucas Paquetá', 'Raphinha', 'Vinícius Júnior', 'Rodrygo'], actual: [] } }
-    },
-    'match52': {
-        timeStatus: 'future', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
-        teamHome: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } },
-        teamAway: { name: `האיטי`, flagCode: 'ht', color: '#00209F', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 0', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 64, draw: 22, away: 14 }, matchRisk: 'Safe',
-        radarStats: { home: [71, 53, 56, 71, 68, 25], away: [35, 33, 44, 35, 77, 5] },
-        advancedStats: { home: { xG: '1.83', corners: 0, altitudeImpact: '' }, away: { xG: '0.71', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `מרוקו פייבוריטית מובהקת כאן. אריות האטלס מציגים קישור יצירתי והתקפה קטלנית, והם יכתיבו את הקצב מול האיטי שתרד להגנה נמוכה מאוד. האיטי תילחם בשיניים ותנסה להפריע לשטף המשחק, אבל למרוקאים יש מספיק כישרון וטכניקה כדי לפצח את הצפיפות הזו.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Yassine Bounou', 'Achraf Hakimi', 'Noussair Mazraoui', 'Sofyan Amrabat', 'Nayef Aguerd', 'Ayyoub Bouaddi', 'Chemsdine Talbi', 'Azzedine Ounahi', 'Soufiane Rahimi', 'Brahim Díaz', 'Ismael Saibari'], actual: [] }, away: { predicted: ['Johny Placide', 'Carlens Arcus', 'Keeto Thermoncy', 'Ricardo Adé', 'Hannes Delcroix', 'Carl Sainté', 'Derrick Etienne Jr.', 'Martin Expérience', 'Duckens Nazon', 'Jean-Ricner Bellegarde', 'Louicius Deedson'], actual: [] } }
-    },
-    'match53': {
-        timeStatus: 'future', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
         teamHome: { name: `צ'כיה`, flagCode: 'cz', color: '#ED1B24', cards: { yellow: [], red: [] } },
         teamAway: { name: `מקסיקו`, flagCode: 'mx', color: '#006341', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '0 - 1', actual: '3 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 22, draw: 32, away: 46 }, matchRisk: 'Safe',
         radarStats: { home: [57, 40, 48, 57, 78, 27], away: [64, 60, 57, 64, 56, 30] },
-        advancedStats: { home: { xG: '0.84', corners: 0, altitudeImpact: '' }, away: { xG: '1.77', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `מקסיקו מגיעה עם הלהט הלטיני ויתרון משמעותי באיכות ההתקפית. אני צופה שהמקסיקנים ישחקו מהר ויחפשו הכרעה מהירה. צ'כיה, קבוצה מאוד טקטית וממושמעת, תנסה להאט את הקצב ולהעביר את ההכרעה למאבקים פיזיים ולמצבים נייחים. אם מקסיקו תיכנס לקצב שלה, לצ'כים יהיה קשה מאוד לעצור אותם.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Matěj Kovář', 'David Zima', 'Tomáš Holeš', 'Robin Hranáč', 'Ladislav Krejčí', 'Tomáš Souček', 'Alex Král', 'Antonín Barák', 'Pavel Šulc', 'Patrik Schick', 'Jan Kuchta'], actual: [] }, away: { predicted: ['Raúl Rangel', 'Jorge Sánchez', 'César Montes', 'Edson Álvarez', 'Johan Vásquez', 'Érik Lira', 'Luis Romo', 'Álvaro Fidalgo', 'Raúl Jiménez', 'Alexis Vega', 'Santiago Giménez'], actual: [] } }
+        advancedStats: { home: { xG: '0.84', corners: 4, altitudeImpact: '' }, away: { xG: '1.77', corners: 6, altitudeImpact: '' } },
+        insight: { prediction: `מקסיקו מגיעה עם הלהט הלטיני ויתרון משמעותי באיכות ההתקפית (xG 1.77). צ'כיה תנסה להאט את הקצב ולהעביר את ההכרעה למאבקים פיזיים.`, actual: `סנסציה מוחלטת של צ'כיה! למרות שמקסיקו הגיעה כפייבוריטית ברורה בפרמטרים הסטטיסטיים, הצ'כים שטפו את הדשא, ניצלו כל טעות בהגנה המקסיקנית וסיפקו תצוגת תכלית מוחצת שהשאירה את אל טרי בהלם מוחלט.` },
+        goals: [{ team: `צ'כיה`, player: `Denis Višinský`, minute: `56'` }, { team: `צ'כיה`, player: `Lukáš Provod`, minute: `56'` }, { team: `צ'כיה`, player: `Matej Chaluš`, minute: `85'` }],
+        squads: { home: { predicted: ['Matěj Kovář', 'David Zima', 'Tomáš Holeš', 'Robin Hranáč', 'Ladislav Krejčí', 'Tomáš Souček', 'Alex Král', 'Antonín Barák', 'Pavel Šulc', 'Patrik Schick', 'Jan Kuchta'], actual: ['Matěj Kovář', 'David Zima', 'Tomáš Holeš', 'Robin Hranáč', 'Ladislav Krejčí', 'Tomáš Souček', 'Alex Král', 'Antonín Barák', 'Pavel Šulc', 'Patrik Schick', 'Jan Kuchta'] }, away: { predicted: ['Raúl Rangel', 'Jorge Sánchez', 'César Montes', 'Edson Álvarez', 'Johan Vásquez', 'Érik Lira', 'Luis Romo', 'Álvaro Fidalgo', 'Raúl Jiménez', 'Alexis Vega', 'Santiago Giménez'], actual: ['Raúl Rangel', 'Jorge Sánchez', 'César Montes', 'Edson Álvarez', 'Johan Vásquez', 'Érik Lira', 'Luis Romo', 'Álvaro Fidalgo', 'Raúl Jiménez', 'Alexis Vega', 'Santiago Giménez'] } }
     },
-    'match54': {
-        timeStatus: 'future', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
+    'match52': {
+        timeStatus: 'past', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
         teamHome: { name: `דרום אפריקה`, flagCode: 'za', color: '#007749', cards: { yellow: [], red: [] } },
         teamAway: { name: `קוריאה הדרומית`, flagCode: 'kr', color: '#C60C30', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 1', actual: '0 - 1', accuracyClass: 'trend' },
         probabilities: { home: 27, draw: 32, away: 41 }, matchRisk: 'Draw Booster',
         radarStats: { home: [46, 27, 49, 46, 66, 27], away: [62, 53, 56, 62, 66, 47] },
-        advancedStats: { home: { xG: '0.96', corners: 0, altitudeImpact: '' }, away: { xG: '1.48', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הקוריאנים פייבוריטים בזכות שילוב קטלני של משמעת טקטית וכושר גופני אדיר. דרום אפריקה תעלה עם המון אגרסיביות ותנסה להשתמש בפיזיות שלה כדי להוציא את הקוריאנים משיווי משקל. המפתח של קוריאה יהיה לא להיגרר לפרובוקציות ולמשחק פיזי, אלא להניע את הכדור מהר על הארץ. אם הם יעשו את זה, הם ייקחו את הנקודות.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Ronwen Williams', 'Siyanda Xulu', 'Rushine De Reuck', 'Thabang Monare', 'Aubrey Modiba', 'Teboho Mokoena', 'Percy Tau', 'Zakhele Lepasa', 'Themba Zwane', 'Lyle Foster', 'Mihlali Mayambela'], actual: [] }, away: { predicted: ['Kim Seung-gyu', 'Lee Han-beom', 'Lee Gi-hyuk', 'Kim Min-jae', 'Kim Tae-hyeon', 'Hwang In-beom', 'Son Heung-min', 'Paik Seung-ho', 'Cho Gue-sung', 'Lee Jae-sung', 'Hwang Hee-chan'], actual: [] } }
+        advancedStats: { home: { xG: '0.96', corners: 2, altitudeImpact: '' }, away: { xG: '1.48', corners: 5, altitudeImpact: '' } },
+        insight: { prediction: `הקוריאנים פייבוריטים בזכות שילוב קטלני של משמעת טקטית וכושר גופני אדיר. המפתח שלהם יהיה הנעת כדור מהירה על הארץ.`, actual: `ניצחון סולידי וטקטי של קוריאה הדרומית. בדיוק כפי שהמודל צפה, היא הכתיבה את הקצב, שיחקה משמעת הגנתית מופתית וניצלה את היתרון האיכותי המינימלי שלה כדי לגנוב שער יקר ולהכריע את המשחק.` },
+        goals: [{ team: `קוריאה הדרומית`, player: `Son Heung-min`, minute: `46'` }],
+        squads: { home: { predicted: ['Ronwen Williams', 'Siyanda Xulu', 'Rushine De Reuck', 'Thabang Monare', 'Aubrey Modiba', 'Teboho Mokoena', 'Percy Tau', 'Zakhele Lepasa', 'Themba Zwane', 'Lyle Foster', 'Mihlali Mayambela'], actual: ['Ronwen Williams', 'Siyanda Xulu', 'Rushine De Reuck', 'Thabang Monare', 'Aubrey Modiba', 'Teboho Mokoena', 'Percy Tau', 'Zakhele Lepasa', 'Themba Zwane', 'Lyle Foster', 'Mihlali Mayambela'] }, away: { predicted: ['Kim Seung-gyu', 'Lee Han-beom', 'Lee Gi-hyuk', 'Kim Min-jae', 'Kim Tae-hyeon', 'Hwang In-beom', 'Son Heung-min', 'Paik Seung-ho', 'Cho Gue-sung', 'Lee Jae-sung', 'Hwang Hee-chan'], actual: ['Kim Seung-gyu', 'Lee Han-beom', 'Lee Gi-hyuk', 'Kim Min-jae', 'Kim Tae-hyeon', 'Hwang In-beom', 'Son Heung-min', 'Paik Seung-ho', 'Cho Gue-sung', 'Lee Jae-sung', 'Hwang Hee-chan'] } }
     },
+    'match53': {
+        timeStatus: 'past', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
+        teamHome: { name: `סקוטלנד`, flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: [], red: [] } },
+        teamAway: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } },
+        score: { prediction: '0 - 2', actual: '3 - 0', accuracyClass: 'wrong' },
+        probabilities: { home: 8, draw: 16, away: 76 }, matchRisk: 'Upset Alert',
+        radarStats: { home: [55, 33, 49, 55, 79, 32], away: [60, 40, 61, 60, 64, 37] },
+        advancedStats: { home: { xG: '0.62', corners: 4, altitudeImpact: '' }, away: { xG: '2.40', corners: 7, altitudeImpact: '' } },
+        insight: { prediction: `אין כאן באמת כוחות. ברזיל עולה למגרש כפייבוריטית מפלצתית. הסלסאו הולכים לשטוף את הדשא ולייצר המון מצבים.`, actual: `אחת הסנסציות הגדולות והמטורפות בתולדות הטורניר! סקוטלנד הקטנה פירקה את נבחרת ברזיל הגדולה 3-0. בונקר סקוטי קשוח, לב עצום ויציאות קטלניות קדימה ריסקו את המודלים הסטטיסטיים והשאירו את הסלסאו בהלם מוחלט.` },
+        goals: [{ team: `סקוטלנד`, player: `Andrew Robertson`, minute: `46'` }, { team: `סקוטלנד`, player: `Kieran Tierney`, minute: `46'` }, { team: `סקוטלנד`, player: `John McGinn`, minute: `82'` }],
+        squads: { home: { predicted: ['Angus Gunn', 'Aaron Hickey', 'Andy Robertson', 'Scott McTominay', 'Grant Hanley', 'Kieran Tierney', 'John McGinn', 'Tyler Fletcher', 'Lyndon Dykes', 'Ché Adams', 'Ryan Christie'], actual: ['Angus Gunn', 'Aaron Hickey', 'Andy Robertson', 'Scott McTominay', 'Grant Hanley', 'Kieran Tierney', 'John McGinn', 'Tyler Fletcher', 'Lyndon Dykes', 'Ché Adams', 'Ryan Christie'] }, away: { predicted: ['Alisson', 'Danilo', 'Marquinhos', 'Éder Militão', 'Wendell', 'Casemiro', 'Bruno Guimarães', 'Lucas Paquetá', 'Raphinha', 'Vinícius Júnior', 'Rodrygo'], actual: ['Alisson', 'Danilo', 'Marquinhos', 'Éder Militão', 'Wendell', 'Casemiro', 'Bruno Guimarães', 'Lucas Paquetá', 'Raphinha', 'Vinícius Júnior', 'Rodrygo'] } }
+    },
+    'match54': {
+        timeStatus: 'past', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
+        teamHome: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } },
+        teamAway: { name: `האיטי`, flagCode: 'ht', color: '#00209F', cards: { yellow: [], red: [] } },
+        score: { prediction: '1 - 0', actual: '2 - 4', accuracyClass: 'wrong' },
+        probabilities: { home: 64, draw: 22, away: 14 }, matchRisk: 'Safe',
+        radarStats: { home: [71, 53, 56, 71, 68, 25], away: [35, 33, 44, 35, 77, 5] },
+        advancedStats: { home: { xG: '1.83', corners: 5, altitudeImpact: '' }, away: { xG: '0.71', corners: 2, altitudeImpact: '' } },
+        insight: { prediction: `מרוקו פייבוריטית מובהקת כאן. אריות האטלס מציגים קישור יצירתי ויכתיבו את הקצב מול האיטי שתרד להגנה נמוכה.`, actual: `מי היה מאמין למשחק המשוגע הזה?! מרוקו הגיעה פייבוריטית ושלטה סטטיסטית, אבל האיטי הציגה התקפת נגד חסרת פשרות, ניצלה חורים עצומים ועייפות בהגנה המרוקאית, וכבשה רביעייה היסטורית מהדהדת.` },
+        goals: [{ team: `מרוקו`, player: `Achraf Hakimi`, minute: `39'` }, { team: `מרוקו`, player: `Ismael Saibari`, minute: `45'` }, { team: `האיטי`, player: `Wilson Isidor`, minute: `43'` }, { team: `האיטי`, player: `Wilson Isidor`, minute: `67'` }, { team: `האיטי`, player: `Ruben Providence`, minute: `67'` }, { team: `האיטי`, player: `Duckens Nazon`, minute: `67'` }],
+        squads: { home: { predicted: ['Yassine Bounou', 'Achraf Hakimi', 'Noussair Mazraoui', 'Sofyan Amrabat', 'Nayef Aguerd', 'Ayyoub Bouaddi', 'Chemsdine Talbi', 'Azzedine Ounahi', 'Soufiane Rahimi', 'Brahim Díaz', 'Ismael Saibari'], actual: ['Yassine Bounou', 'Achraf Hakimi', 'Noussair Mazraoui', 'Sofyan Amrabat', 'Nayef Aguerd', 'Ayyoub Bouaddi', 'Chemsdine Talbi', 'Azzedine Ounahi', 'Soufiane Rahimi', 'Brahim Díaz', 'Ismael Saibari'] }, away: { predicted: ['Johny Placide', 'Carlens Arcus', 'Keeto Thermoncy', 'Ricardo Adé', 'Hannes Delcroix', 'Carl Sainté', 'Derrick Etienne Jr.', 'Martin Expérience', 'Duckens Nazon', 'Jean-Ricner Bellegarde', 'Louicius Deedson'], actual: ['Johny Placide', 'Carlens Arcus', 'Keeto Thermoncy', 'Ricardo Adé', 'Hannes Delcroix', 'Carl Sainté', 'Derrick Etienne Jr.', 'Martin Expérience', 'Duckens Nazon', 'Jean-Ricner Bellegarde', 'Louicius Deedson'] } }
+    },
+
+    // ---- שאר משחקי מחזור 3 (טרם שוחקו) ----
+
     'match55': {
         timeStatus: 'future', matchday: 3, stage: "ה'", dateText: `25/06/2026 | 23:00 (שעון ישראל)`,
         teamHome: { name: `קוראסאו`, flagCode: 'cw', color: '#002B7F', cards: { yellow: [], red: [] } },
@@ -80,7 +85,7 @@ const matchday3Database = {
         probabilities: { home: 31, draw: 27, away: 42 }, matchRisk: 'Safe',
         radarStats: { home: [40, 47, 45, 40, 65, 10], away: [71, 60, 55, 71, 80, 30] },
         advancedStats: { home: { xG: '1.16', corners: 0, altitudeImpact: '' }, away: { xG: '1.39', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `חוף השנהב מגיעה עם יתרון פיזי ואתלטי במרכז המגרש. אני מצפה שקוראסאו תשחק כדורגל ריאקטיבי, תצופף את רחבת ה-16, ותנסה לנצל איבודי כדור כדי לצאת להתקפות מתפרצות מסוכנות.`, actual: `` },
+        insight: { prediction: `חוף השנהב מגיעה עם יתרון פיזי ואתלטי במרכז המגרש. אני מצפה שקוראסאו תשחק כדורגל ריאקטיבי, תצופף את רחבת ה-16, ותנסה לנצל איבודי כדור כדי לצאת להתקפות מתפרצות מסוכנות דרך האגפים.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Eloy Room', 'Shurandy Sambo', 'Juriën Gaari', 'Roshon van Eijma', 'Sherel Floranus', 'Godfried Roemeratoe', 'Juninho Bacuna', 'Livano Comenencia', 'Jürgen Locadia', 'Leandro Bacuna', 'Jeremy Antonisse'], actual: [] }, away: { predicted: ['Yahia Fofana', 'Ousmane Diomande', 'Ghislain Konan', 'Jean Michaël Seri', 'Wilfried Singo', 'Seko Fofana', 'Odilon Kossounou', 'Franck Kessié', 'Ange-Yoan Bonny', 'Simon Adingra', 'Yan Diomande'], actual: [] } }
     },
@@ -92,7 +97,7 @@ const matchday3Database = {
         probabilities: { home: 21, draw: 26, away: 53 }, matchRisk: 'Upset Alert',
         radarStats: { home: [49, 60, 53, 49, 61, 23], away: [75, 33, 66, 75, 86, 50] },
         advancedStats: { home: { xG: '0.83', corners: 0, altitudeImpact: '' }, away: { xG: '1.52', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `המכונה הגרמנית עולה לכאן כפייבוריטית מובהקת והיא צפויה לשלוט בכדור ביד רמה. אקוודור תיאלץ להתמודד מול לחץ כבד ולחפש חמצן דרך מתפרצות וכדורים ארוכים. המפתח של הגרמנים יהיה לפצח את ההגנה הדרום אמריקאית הצפופה בשלב מוקדם של המשחק.`, actual: `` },
+        insight: { prediction: `המכונה הגרמנית עולה לכאן כפייבוריטית מובהקת והיא צפויה לשלוט בכדור ביד רמה. אקוודור הפיזית תיאלץ להתמודד מול לחץ כבד ולחפש חמצן דרך כדורים ארוכים למויסס קאייסדו וההתקפה. המפתח של הגרמנים יהיה לפצח את ההגנה הדרום אמריקאית הצפופה בשלב מוקדם של המשחק.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Hernán Galíndez', 'Félix Torres', 'Piero Hincapié', 'Joel Ordóñez', 'Jordy Alcívar', 'Willian Pacho', 'Pervis Estupiñán', 'Anthony Valencia', 'John Yeboah', 'Kendry Páez', 'Kevin Rodríguez'], actual: [] }, away: { predicted: ['Manuel Neuer', 'Antonio Rüdiger', 'Waldemar Anton', 'Jonathan Tah', 'Aleksandar Pavlović', 'Joshua Kimmich', 'Kai Havertz', 'Leon Goretzka', 'Jamie Leweling', 'Jamal Musiala', 'Nick Woltemade'], actual: [] } }
     },
@@ -104,7 +109,7 @@ const matchday3Database = {
         probabilities: { home: 52, draw: 26, away: 21 }, matchRisk: 'Safe',
         radarStats: { home: [80, 67, 55, 80, 68, 50], away: [46, 7, 52, 46, 75, 45] },
         advancedStats: { home: { xG: '1.49', corners: 0, altitudeImpact: '' }, away: { xG: '0.84', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הטכניקה והזריזות של יפן נותנים לה את היתרון כאן. השוודים ינסו להשתמש בפיזיות שלהם כדי לעצור את שטף המסירות היפני. אם יפן תצליח לשמור על קצב משחק גבוה ולהתיש את השוודים, היא תאסוף כאן 3 נקודות יקרות.`, actual: `` },
+        insight: { prediction: `הטכניקה, המסירות הקצרות והזריזות של יפן נותנים לה את היתרון כאן. השוודים ינסו להשתמש בפיזיות האירופאית המוכרת שלהם כדי לעצור את שטף המשחק היפני. אם יפן תצליח לשמור על קצב גבוה ולהתיש את השוודים, היא תאסוף כאן 3 נקודות יקרות.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Zion Suzuki', 'Yukinari Sugawara', 'Shōgo Taniguchi', 'Kō Itakura', 'Yūto Nagatomo', 'Wataru Endo', 'Ao Tanaka', 'Takefusa Kubo', 'Keisuke Gotō', 'Ritsu Dōan', 'Daizen Maeda'], actual: [] }, away: { predicted: ['Jacob Widell Zetterström', 'Gustaf Lagerbielke', 'Victor Lindelöf', 'Isak Hien', 'Gabriel Gudmundsson', 'Herman Johansson', 'Lucas Bergvall', 'Daniel Svensson', 'Alexander Isak', 'Benjamin Nygren', 'Anthony Elanga'], actual: [] } }
     },
@@ -113,10 +118,10 @@ const matchday3Database = {
         teamHome: { name: `תוניסיה`, flagCode: 'tn', color: '#E70013', cards: { yellow: [], red: [] } },
         teamAway: { name: `הולנד`, flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 12, draw: 21, away: 67 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 12, draw: 20, away: 67 }, matchRisk: 'Upset Alert',
         radarStats: { home: [37, 20, 47, 37, 78, 23], away: [71, 33, 59, 71, 70, 47] },
         advancedStats: { home: { xG: '0.70', corners: 0, altitudeImpact: '' }, away: { xG: '1.98', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `פערי האיכות פה מאוד גדולים. הולנד היא פייבוריטית מובהקת והיא הולכת להכתיב את הקצב לאורך כל המשחק. תוניסיה תנסה להגן בחירוף נפש ולגנוב שער במצב נייח, אבל האורנג' אמורים לחגוג כאן.`, actual: `` },
+        insight: { prediction: `פערי האיכות פה גדולים מאוד. הולנד היא פייבוריטית מובהקת והיא הולכת להכתיב את הקצב לאורך כל 90 הדקות ולשבת על השער. תוניסיה תנסה להגן בחירוף נפש ולגנוב שער במצב נייח או כדור קרן, אבל נבחרת האורנג' אמורה לחגוג כאן ולסגור את הסיפור מוקדם.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Aymen Dahmen', 'Yassine Meriah', 'Montassar Talbi', 'Ellyes Skhiri', 'Aïssa Laïdouni', 'Hannibal Mejbri', 'Anis Ben Slimane', 'Naïm Sliti', 'Youssef Msakni', 'Wahbi Khazri', 'Seifeddine Jaziri'], actual: [] }, away: { predicted: ['Bart Verbruggen', 'Lutsharel Geertruida', 'Marten de Roon', 'Virgil van Dijk', 'Nathan Aké', 'Jan Paul van Hecke', 'Justin Kluivert', 'Ryan Gravenberch', 'Wout Weghorst', 'Memphis Depay', 'Cody Gakpo'], actual: [] } }
     },
@@ -125,10 +130,10 @@ const matchday3Database = {
         teamHome: { name: `טורקיה`, flagCode: 'tr', color: '#E30A17', cards: { yellow: [], red: [] } },
         teamAway: { name: `ארצות הברית`, flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 21, draw: 26, away: 53 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 21, draw: 25, away: 54 }, matchRisk: 'Upset Alert',
         radarStats: { home: [69, 33, 54, 69, 91, 20], away: [57, 13, 55, 57, 83, 40] },
         advancedStats: { home: { xG: '0.88', corners: 0, altitudeImpact: '' }, away: { xG: '1.57', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `האמריקאים מציגים נבחרת מהירה, מאומנת ומסוכנת מאוד ביציאות קדימה. טורקיה תלויה מאוד באנרגיה ובלחימה שלה, אבל היא עלולה להתקשות מול העוצמות הפיזיות של שחקני ארצות הברית. משחק מפתח שבו המהירות באגפים תכריע.`, actual: `` },
+        insight: { prediction: `האמריקאים מציגים נבחרת מהירה, מאומנת טקטית ומסוכנת מאוד ביציאות קדימה עם פוליסיק וריינה. טורקיה תלויה מאוד באנרגיה והטירוף שלה, אבל היא עלולה להתקשות מול העוצמות הפיזיות של ארה"ב. זה משחק מפתח שבו המהירות באגפים כנראה תכריע.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Mert Günok', 'Zeki Çelik', 'Merih Demiral', 'Çağlar Söyüncü', 'Ferdi Kadıoğlu', 'Salih Özcan', 'Hakan Çalhanoğlu', 'Orkun Kökçü', 'Arda Güler', 'Kerem Aktürkoğlu', 'Cenk Tosun'], actual: [] }, away: { predicted: ['Matt Turner', 'Sergiño Dest', 'Chris Richards', 'Tyler Adams', 'Antonee Robinson', 'Auston Trusty', 'Giovanni Reyna', 'Weston McKennie', 'Ricardo Pepi', 'Christian Pulisic', 'Brenden Aaronson'], actual: [] } }
     },
@@ -137,10 +142,10 @@ const matchday3Database = {
         teamHome: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
         teamAway: { name: `אוסטרליה`, flagCode: 'au', color: '#FFCD00', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 28, draw: 27, away: 44 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 28, draw: 27, away: 45 }, matchRisk: 'Upset Alert',
         radarStats: { home: [53, 47, 46, 53, 75, 10], away: [62, 40, 53, 62, 63, 37] },
         advancedStats: { home: { xG: '1.03', corners: 0, altitudeImpact: '' }, away: { xG: '1.37', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `קרב שקול, צמוד וסופר-פיזי בין שתי נבחרות קשוחות שלא מוותרות על אף כדור. פרגוואי מביאה את האגרסיביות הדרום-אמריקאית, בעוד שאוסטרליה תנסה לנצל כדורים חופשיים ולהכות דרך האוויר. מי שתמצמץ ראשונה פה, תפסיד.`, actual: `` },
+        insight: { prediction: `קרב שקול, צמוד וסופר-פיזי בין שתי נבחרות קשוחות שלא מוותרות על אף כדור עבוד. פרגוואי מביאה את האגרסיביות הדרום-אמריקאית המוכרת, בעוד שאוסטרליה תנסה לנצל כדורים חופשיים, הגבהות, ולהכות דרך האוויר. מי שתמצמץ ראשונה או תאבד ריכוז בהגנה, תשלם ביוקר.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Gatito Fernández', 'Gustavo Velázquez', 'Omar Alderete', 'Juan José Cáceres', 'Fabián Balbuena', 'Júnior Alonso', 'Ramón Sosa', 'Diego Gómez', 'Antonio Sanabria', 'Miguel Almirón', 'Maurício'], actual: [] }, away: { predicted: ['Mathew Ryan', 'Miloš Degenek', 'Alessandro Circati', 'Jacob Italiano', 'Jordan Bos', 'Jason Geria', 'Mathew Leckie', 'Connor Metcalfe', 'Mohamed Touré', 'Ajdin Hrustic', 'Awer Mabil'], actual: [] } }
     },
@@ -149,10 +154,10 @@ const matchday3Database = {
         teamHome: { name: `נורבגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } },
         teamAway: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 21, draw: 25, away: 53 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 21, draw: 25, away: 54 }, matchRisk: 'Upset Alert',
         radarStats: { home: [80, 33, 58, 80, 66, 30], away: [82, 40, 62, 82, 78, 37] },
         advancedStats: { home: { xG: '0.90', corners: 0, altitudeImpact: '' }, away: { xG: '1.59', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `צרפת היא נבחרת עמוקה ומנוסה יותר, והיא צפויה לשלוט בכדור. המפתח של המשחק הוא הולאנד: אם נורבגיה תצליח לבודד אותו מול הבלמים הצרפתים במתפרצות, היא תייצר כאב ראש עצום. אבל אם הקישור הצרפתי יחנוק את קווי המסירה אליו, המשחק יהיה בשליטה טריקולורית.`, actual: `` },
+        insight: { prediction: `צרפת היא נבחרת עמוקה ומנוסה יותר, והיא צפויה להחזיק בכדור רוב הזמן. המפתח של המשחק הוא הולאנד: אם נורבגיה תצליח לבודד אותו מול הבלמים הצרפתים במתפרצות ארוכות, היא תייצר כאב ראש עצום. אבל אם הקישור הצרפתי יחנוק את קווי המסירה אליו - המשחק יהיה בשליטה טריקולורית מוחלטת.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Ørjan Nyland', 'Morten Thorsby', 'Kristoffer Ajer', 'Leo Østigård', 'David Møller Wolfe', 'Patrick Berg', 'Alexander Sørloth', 'Sander Berge', 'Erling Haaland', 'Martin Ødegaard', 'Jørgen Strand Larsen'], actual: [] }, away: { predicted: ['Brice Samba', 'Malo Gusto', 'Lucas Digne', 'Dayot Upamecano', 'Jules Koundé', 'Manu Koné', 'Ousmane Dembélé', 'Aurélien Tchouaméni', 'Marcus Thuram', 'Kylian Mbappé', 'Michael Olise'], actual: [] } }
     },
@@ -164,7 +169,7 @@ const matchday3Database = {
         probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Safe',
         radarStats: { home: [64, 53, 52, 64, 85, 27], away: [53, 33, 45, 53, 67, 22] },
         advancedStats: { home: { xG: '1.61', corners: 0, altitudeImpact: '' }, away: { xG: '0.87', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `סנגל חזקה יותר משמעותית ובעלת יתרון פיזי ברור. עיראק תנסה לצופף את ההגנה ולקלקל את תוכניות המשחק, אך המהירות והפיזיות של הסנגלים במרכז השדה אמורים להכריע כאן את ההתמודדות.`, actual: `` },
+        insight: { prediction: `סנגל חזקה יותר משמעותית ובעלת יתרון פיזי ברור מאוד. עיראק תנסה לצופף את קו ההגנה, לצאת קדימה בזהירות ולקלקל את תוכניות המשחק, אך המהירות האדירה והפיזיות של הסנגלים במרכז השדה אמורים להכריע כאן את ההתמודדות.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Yehvann Diouf', 'Mamadou Sarr', 'Kalidou Koulibaly', 'Abdoulaye Seck', 'Idrissa Gueye', 'Pathé Ciss', 'Assane Diao', 'Lamine Camara', 'Bamba Dieng', 'Sadio Mané', 'Nicolas Jackson'], actual: [] }, away: { predicted: ['Fahad Talib', 'Rebin Sulaka', 'Hussein Ali', 'Zaid Tahseen', 'Akam Hashim', 'Manaf Younis', 'Youssef Amyn', 'Ibrahim Bayesh', 'Ali Al-Hamadi', 'Mohanad Ali', 'Ahmed Qasem'], actual: [] } }
     },
@@ -176,7 +181,7 @@ const matchday3Database = {
         probabilities: { home: 36, draw: 27, away: 37 }, matchRisk: 'Safe',
         radarStats: { home: [57, 53, 47, 57, 77, 20], away: [40, 27, 48, 40, 64, 15] },
         advancedStats: { home: { xG: '1.24', corners: 0, altitudeImpact: '' }, away: { xG: '1.26', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שבאות לחפש ניצחון. כף ורדה מביאה טכניקה ומהירות, בעוד ערב הסעודית מציגה משמעת טקטית והגנה מאורגנת. משחק חפירות שעשוי בהחלט להסתיים בחלוקת נקודות.`, actual: `` },
+        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שבאות לחפש ניצחון וכרטיס לשלב הבא. כף ורדה מביאה טכניקה, התלהבות ומהירות מהאגפים, בעוד ערב הסעודית מציגה משמעת טקטית והגנה מאוד מאורגנת. זהו משחק חפירות שעשוי בהחלט להסתיים בחלוקת נקודות כואבת לשני הצדדים.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Vozinha', 'Stopira', 'Diney', 'Roberto Lopes', 'Logan Costa', 'Kevin Pina', 'Jovane Cabral', 'João Paulo', 'Gilson Benchimol', 'Jamiro Monteiro', 'Garry Rodrigues'], actual: [] }, away: { predicted: ['Nawaf Al-Aqidi', 'Ali Majrashi', 'Ali Lajami', 'Abdulelah Al-Amri', 'Hassan Al-Tambakti', 'Nasser Al-Dawsari', 'Musab Al-Juwayr', 'Ayman Yahya', 'Firas Al-Buraikan', 'Salem Al-Dawsari', 'Saleh Al-Shehri'], actual: [] } }
     },
@@ -185,10 +190,10 @@ const matchday3Database = {
         teamHome: { name: `אורוגוואי`, flagCode: 'uy', color: '#75AADB', cards: { yellow: [], red: [] } },
         teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 16, draw: 23, away: 60 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 16, draw: 23, away: 61 }, matchRisk: 'Upset Alert',
         radarStats: { home: [44, 47, 54, 44, 88, 20], away: [73, 60, 70, 73, 75, 55] },
         advancedStats: { home: { xG: '0.77', corners: 0, altitudeImpact: '' }, away: { xG: '1.75', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק מרתק של סגנונות! ספרד תעלה למגרש כדי לשלוט בכדור (ה"טיקי-טאקה" המוכר) ולבטל את היריבה באמצעות פוזשן כבד. מנגד, אורוגוואי הקשוחה והאגרסיבית תחכה בדיוק לזה - היא תצופף קווים בנחישות ותחפש את הרגע הנכון לחטוף כדור ולטוס קדימה. הכל תלוי ביכולת של הספרדים לפרוץ את החומה הדרום אמריקאית.`, actual: `` },
+        insight: { prediction: `משחק מרתק של התנגשות סגנונות! ספרד תעלה למגרש כדי לשלוט בכדור (ה"טיקי-טאקה" המוכר) ולעייף את היריבה. מנגד, אורוגוואי הקשוחה והאגרסיבית תחכה בדיוק לזה - היא תצופף קווים בנחישות ותחפש את הרגע הנכון לחטוף כדור ולטוס קדימה. הכל תלוי ביכולת של הספרדים לפרוץ את החומה הדרום אמריקאית.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Sergio Rochet', 'Nahitan Nández', 'José Giménez', 'Ronald Araújo', 'Matías Viña', 'Manuel Ugarte', 'Federico Valverde', 'Rodrigo Bentancur', 'Nicolás de la Cruz', 'Darwin Núñez', 'Facundo Pellistri'], actual: [] }, away: { predicted: ['David Raya', 'Marc Pubill', 'Álex Grimaldo', 'Eric García', 'Marcos Llorente', 'Mikel Merino', 'Ferran Torres', 'Fabián Ruiz', 'Gavi', 'Dani Olmo', 'Yéremy Pino'], actual: [] } }
     },
@@ -197,10 +202,10 @@ const matchday3Database = {
         teamHome: { name: `מצרים`, flagCode: 'eg', color: '#CE1126', cards: { yellow: [], red: [] } },
         teamAway: { name: `איראן`, flagCode: 'ir', color: '#239F40', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 29, draw: 28, away: 44 }, matchRisk: 'Safe',
+        probabilities: { home: 29, draw: 28, away: 43 }, matchRisk: 'Safe',
         radarStats: { home: [62, 40, 51, 62, 71, 30], away: [57, 53, 50, 57, 66, 35] },
         advancedStats: { home: { xG: '1.02', corners: 0, altitudeImpact: '' }, away: { xG: '1.34', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `איראן היא קבוצה טקטית וחזקה שנוטה לתסכל את היריבות שלה. מצרים מצידה צריכה למצוא פתרונות יצירתיים כדי לחדור את קו ההגנה הכפול. קרב פיזי אדיר במרכז השדה שיכול להיות מוכרע מפעולה אישית בודדת או כדור קרן פתאומי.`, actual: `` },
+        insight: { prediction: `איראן היא קבוצה טקטית וחזקה שנוטה לתסכל את היריבות שלה ולגרום להן לבצע שגיאות. מצרים מצידה חייבת למצוא פתרונות יצירתיים בהתקפה כדי לחדור את קו ההגנה האיראני. זהו קרב פיזי אדיר במרכז השדה שיכול להיות מוכרע מפעולה אישית בודדת או כדור קרן פתאומי.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Mohamed El Shenawy', 'Yasser Ibrahim', 'Mohamed Hany', 'Hossam Abdelmaguid', 'Ramy Rabia', 'Mohamed Abdelmonem', 'Trézéguet', 'Emam Ashour', 'Hamza Abdelkarim', 'Mohamed Salah', 'Mostafa Ziko'], actual: [] }, away: { predicted: ['Alireza Beiranvand', 'Saleh Hardani', 'Ehsan Hajsafi', 'Shojae Khalilzadeh', 'Milad Mohammadi', 'Saeid Ezatolahi', 'Alireza Jahanbakhsh', 'Mohammad Mohebi', 'Mehdi Taremi', 'Mehdi Ghayedi', 'Ali Alipour'], actual: [] } }
     },
@@ -209,10 +214,10 @@ const matchday3Database = {
         teamHome: { name: `ניו זילנד`, flagCode: 'nz', color: '#000000', cards: { yellow: [], red: [] } },
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 13, draw: 21, away: 65 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 13, draw: 21, away: 66 }, matchRisk: 'Upset Alert',
         radarStats: { home: [20, 7, 45, 20, 75, 25], away: [73, 53, 61, 73, 92, 47] },
         advancedStats: { home: { xG: '0.73', corners: 0, altitudeImpact: '' }, away: { xG: '1.94', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הבדלי האיכות פה בלתי ניתנים להכחשה. הבלגים, עם כוח אש אימתני בהתקפה, יעלו לתקוף גלים-גלים. ניו זילנד תשחק במערך נסוג וצפוף כדי למזער נזקים ולהימנע מתבוסה קשה.`, actual: `` },
+        insight: { prediction: `הבדלי האיכות פה בלתי ניתנים להכחשה. הבלגים, עם כוח אש אימתני בהתקפה ויצירתיות בלתי נגמרת, יעלו לתקוף גלים-גלים. ניו זילנד תשחק במערך נסוג וצפוף (כנראה עם 5 בהגנה) כדי למזער נזקים ולהימנע מתבוסה קשה.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Max Crocombe', 'Tim Payne', 'Francis de Vries', 'Tyler Bindon', 'Michael Boxall', 'Joe Bell', 'Matthew Garbett', 'Marko Stamenić', 'Chris Wood', 'Sarpreet Singh', 'Elijah Just'], actual: [] }, away: { predicted: ['Koen Casteels', 'Timothy Castagne', 'Jan Vertonghen', 'Wout Faes', 'Arthur Theate', 'Amadou Onana', 'Youri Tielemans', 'Kevin De Bruyne', 'Leandro Trossard', 'Jérémy Doku', 'Romelu Lukaku'], actual: [] } }
     },
@@ -221,10 +226,10 @@ const matchday3Database = {
         teamHome: { name: `פנמה`, flagCode: 'pa', color: '#DA291C', cards: { yellow: [], red: [] } },
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 7, draw: 14, away: 80 }, matchRisk: 'Upset Alert',
+        probabilities: { home: 6, draw: 13, away: 81 }, matchRisk: 'Upset Alert',
         radarStats: { home: [46, 20, 47, 46, 68, 17], away: [77, 73, 63, 77, 83, 37] },
         advancedStats: { home: { xG: '0.59', corners: 0, altitudeImpact: '' }, away: { xG: '2.61', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק חד צדדי. נבחרת שלושת האריות מגיעה עם סוללת כוכבים והיא הולכת להחזיק בכדור למעלה מ-65% מהזמן. פנמה פשוט תנסה להעביר את הזמן, להתגונן עם 10 שחקנים מאחורי הכדור, ולקוות שהאנגלים יתפסו יום רע מול השער.`, actual: `` },
+        insight: { prediction: `משחק חד צדדי. נבחרת שלושת האריות מגיעה עם סוללת כוכבים והיא הולכת להחזיק בכדור למעלה מ-65% מהזמן וללחוץ את פנמה לאחור. פנמה מצידה תנסה פשוט להעביר את הזמן, להתגונן עם 10 שחקנים מאחורי הכדור, ולקוות שהאנגלים יתפסו יום נוראי מול השער.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Luis Mejía', 'César Blackman', 'José Córdoba', 'Fidel Escobar', 'Edgardo Fariña', 'Cristian Martínez', 'José Luis Rodríguez', 'Adalberto Carrasquilla', 'Tomás Rodríguez', 'Ismael Díaz', 'Yoel Bárcenas'], actual: [] }, away: { predicted: ['Jordan Pickford', 'Ezri Konsa', "Nico O'Reilly", 'Declan Rice', 'John Stones', 'Marc Guéhi', 'Bukayo Saka', 'Elliot Anderson', 'Harry Kane', 'Jude Bellingham', 'Marcus Rashford'], actual: [] } }
     },
@@ -236,7 +241,7 @@ const matchday3Database = {
         probabilities: { home: 59, draw: 24, away: 17 }, matchRisk: 'Safe',
         radarStats: { home: [69, 40, 58, 69, 87, 40], away: [53, 53, 51, 53, 65, 25] },
         advancedStats: { home: { xG: '1.69', corners: 0, altitudeImpact: '' }, away: { xG: '0.79', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה במרכז המגרש. הם ינסו להרדים את המשחק ולהתיש את השחקנים מגאנה בעזרת הנעת כדור חכמה. גאנה אתלטית ומהירה, ותהיה חייבת ללחוץ גבוה כדי למנוע מהקרואטים לנהל את העניינים בנחת.`, actual: `` },
+        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה במרכז המגרש. הם ינסו להרדים את המשחק ולהתיש את השחקנים מגאנה בעזרת הנעת כדור חכמה והמון סבלנות. גאנה אתלטית ומהירה, ותהיה חייבת ללחוץ גבוה כדי למנוע מהקרואטים לנהל את העניינים בנחת.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Dominik Livaković', 'Josip Stanišić', 'Marin Pongračić', 'Joško Gvardiol', 'Duje Ćaleta-Car', 'Josip Šutalo', 'Nikola Moro', 'Mateo Kovačić', 'Andrej Kramarić', 'Luka Modrić', 'Ante Budimir'], actual: [] }, away: { predicted: ['Lawrence Ati-Zigi', 'Alidu Seidu', 'Caleb Yirenkyi', 'Jonas Adjetey', 'Thomas Partey', 'Abdul Mumin', 'Abdul Fatawu', 'Kwasi Sibo', 'Jordan Ayew', 'Brandon Thomas-Asante', 'Antoine Semenyo'], actual: [] } }
     },
@@ -248,7 +253,7 @@ const matchday3Database = {
         probabilities: { home: 23, draw: 26, away: 51 }, matchRisk: 'Upset Alert',
         radarStats: { home: [69, 47, 55, 69, 63, 17], away: [75, 33, 64, 75, 72, 45] },
         advancedStats: { home: { xG: '0.89', corners: 0, altitudeImpact: '' }, away: { xG: '1.49', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק סופר-מעניין. הפורטוגלים מגיעים כדי ליזום ולשלוט, אבל קולומביה היא קבוצה אגרסיבית, פיזית ולטינית קשוחה. אני מצפה לראות כאן הרבה כרטיסים ועבירות. אם קולומביה תצליח להרוס את שטף המשחק הפורטוגלי, יש לה כלים לעקוץ ביציאות מהירות.`, actual: `` },
+        insight: { prediction: `משחק סופר-מעניין. הפורטוגלים מגיעים כדי ליזום ולשלוט, אבל קולומביה היא קבוצה אגרסיבית, פיזית ולטינית קשוחה. אני מצפה לראות כאן המון כרטיסים ועבירות. אם קולומביה תצליח להרוס את שטף המשחק הפורטוגלי, יש לה כלים לעקוץ ביציאות מהירות.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['David Ospina', 'Daniel Muñoz', 'Jhon Lucumí', 'Santiago Arias', 'Kevin Castaño', 'Richard Ríos', 'Luis Díaz', 'Jorge Carrascal', 'Jhon Córdoba', 'James Rodríguez', 'Jhon Arias'], actual: [] }, away: { predicted: ['Diogo Costa', 'Nélson Semedo', 'Rúben Dias', 'Tomás Araújo', 'Diogo Dalot', 'Matheus Nunes', 'Cristiano Ronaldo', 'Bruno Fernandes', 'Gonçalo Ramos', 'Bernardo Silva', 'João Félix'], actual: [] } }
     },
@@ -260,7 +265,7 @@ const matchday3Database = {
         probabilities: { home: 38, draw: 27, away: 35 }, matchRisk: 'Safe',
         radarStats: { home: [62, 60, 49, 62, 69, 22], away: [53, 47, 48, 53, 64, 15] },
         advancedStats: { home: { xG: '1.29', corners: 0, altitudeImpact: '' }, away: { xG: '1.24', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שרוצות להוכיח את עצמן. קונגו חזקה פיזית ומהירה, בעוד האוזבקים ישחקו כדורגל מסודר ומאורגן. הרבה גישושים צפויים במרכז השדה, וקבוצה שתבצע טעות קריטית תשלם ביוקר. פוטנציאל גבוה לתיקו.`, actual: `` },
+        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שרוצות להוכיח את עצמן. קונגו חזקה פיזית ומהירה, בעוד האוזבקים ישחקו כדורגל מסודר ומאורגן. הרבה גישושים צפויים במרכז השדה, וקבוצה שתבצע טעות קריטית תשלם ביוקר. פוטנציאל גבוה מאוד לתיקו שישאיר אותן בתמונה.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Lionel Mpasi', 'Aaron Wan-Bissaka', 'Steve Kapuadi', 'Axel Tuanzebe', 'Dylan Batubinsika', "Ngal'ayel Mukau", 'Nathanaël Mbuku', 'Samuel Moutoussamy', 'Brian Cipenga', 'Théo Bongonda', 'Gaël Kakuta'], actual: [] }, away: { predicted: ['Utkir Yusupov', 'Abdukodir Khusanov', 'Khojiakbar Alijonov', 'Farrukh Sayfiev', 'Rustam Ashurmatov', 'Akmal Mozgovoy', 'Otabek Shukurov', 'Jamshid Iskanderov', 'Odiljon Hamrobekov', 'Jaloliddin Masharipov', 'Oston Urunov'], actual: [] } }
     },
@@ -272,7 +277,7 @@ const matchday3Database = {
         probabilities: { home: 28, draw: 28, away: 44 }, matchRisk: 'Upset Alert',
         radarStats: { home: [73, 60, 54, 73, 73, 13], away: [71, 40, 53, 71, 59, 37] },
         advancedStats: { home: { xG: '0.98', corners: 0, altitudeImpact: '' }, away: { xG: '1.31', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת להפליא שעושה לחץ גבוה מצוין. אלג'יריה מסוכנת מאוד עם שחקני כנף מהירים. אם אוסטריה לא תצליח לתרגם את השליטה במרכז השדה לשערים, הלחץ עליה ילך ויגבר, ואלג'יריה יכולה להפוך את הקערה במתפרצת בודדת.`, actual: `` },
+        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת להפליא שעושה לחץ גבוה מצוין על כל חלקי המגרש. אלג'יריה מסוכנת מאוד עם שחקני כנף מהירים. אם אוסטריה לא תצליח לתרגם את השליטה במרכז השדה לשערים, הלחץ עליה ילך ויגבר, ואלג'יריה יכולה להפוך את הקערה במתפרצת בודדת.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Anthony Mandrea', 'Youcef Atal', 'Ramy Bensebaini', 'Aïssa Mandi', 'Rayan Aït-Nouri', 'Nabil Bentaleb', 'Ismaël Bennacer', 'Ramiz Zerrouki', 'Riyad Mahrez', 'Mohamed Amoura', 'Youcef Belaïli'], actual: [] }, away: { predicted: ['Alexander Schlager', 'David Affengruber', 'Kevin Danso', 'Xaver Schlager', 'Stefan Posch', 'Nicolas Seiwald', 'Marko Arnautović', 'David Alaba', 'Marcel Sabitzer', 'Florian Grillitsch', 'Michael Gregoritsch'], actual: [] } }
     },
@@ -284,9 +289,9 @@ const matchday3Database = {
         probabilities: { home: 7, draw: 14, away: 79 }, matchRisk: 'Upset Alert',
         radarStats: { home: [40, 27, 46, 40, 80, 12], away: [89, 73, 65, 89, 55, 25] },
         advancedStats: { home: { xG: '0.59', corners: 0, altitudeImpact: '' }, away: { xG: '2.57', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הבדלי איכות אדירים לטובת אלופת העולם. ירדן תעמיד כאן את האוטובוס ותנסה להתגונן בכל מחיר ולבזבז זמן כדי להרדים את המשחק. ארגנטינה מצידה, רק צריכה שער אחד מהיר שיפתח את הסכר ויביא אחייו את החגיגה.`, actual: `` },
+        insight: { prediction: `הבדלי איכות אדירים לטובת אלופת העולם. ירדן תעמיד כאן את האוטובוס, תנסה להתגונן בכל מחיר, ולבזבז זמן כדי להרדים את המשחק. ארגנטינה מצידה, רק צריכה שער אחד מהיר שיפתח את הסכר ויביא אחריו חגיגת שערים.`, actual: `` },
         goals: [],
         squads: { home: { predicted: ['Yazeed Abulaila', 'Mohammad Abu Hashish', 'Abdallah Nasib', 'Husam Abu Dahab', 'Yazan Al-Arab', 'Amer Jamous', 'Mohammad Abu Zrayq', 'Noor Al-Rawabdeh', 'Ali Olwan', 'Musa Al-Taamari', 'Odeh Al-Fakhouri'], actual: [] }, away: { predicted: ['Juan Musso', 'Marcos Nicolás Senesi Baron', 'Nicolás Tagliafico', 'Gonzalo Montiel', 'Leandro Paredes', 'Lisandro Martínez', 'Rodrigo De Paul', 'Valentín Barco', 'Julián Alvarez', 'Lionel Messi', 'Giovani Lo Celso'], actual: [] } }
-    },
+    }
 };
 Object.assign(window.matchDatabase, matchday3Database);
