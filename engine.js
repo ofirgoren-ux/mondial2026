@@ -19,18 +19,38 @@ function closeMobileMenuIfOpen() {
 window.switchView = function(viewName) {
     closeMobileMenuIfOpen();
     
-    document.getElementById('matches-view').style.display = 'none';
+    // הסתרת כל המסכים
+    ['matches-view', 'standings-view', 'bracket-view', 'scorers-view'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
     
+    // ניהול תצוגת הפילטרים למעלה
     const mainFilters = document.getElementById('main-filters');
     if(mainFilters) mainFilters.style.display = (viewName === 'matches') ? 'flex' : 'none';
 
+    // סימון בתפריט הצד
     document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
-    document.getElementById('nav-' + viewName).classList.add('active');
+    const activeNav = document.getElementById('nav-' + viewName);
+    if(activeNav) activeNav.classList.add('active');
 
+    // החלפת כותרת והצגת המסך הרלוונטי
     const titleEl = document.getElementById('main-title');
     if (viewName === 'matches') {
         document.getElementById('matches-view').style.display = 'block';
         titleEl.innerText = "שלב הבתים – מודל הסתברותי";
+        renderMatches();
+    } else if (viewName === 'standings') {
+        document.getElementById('standings-view').style.display = 'flex'; // שימוש ב-flex לעיצוב שלך
+        titleEl.innerText = "טבלת הבתים (חישוב חי)";
+        renderStandings();
+    } else if (viewName === 'bracket') {
+        document.getElementById('bracket-view').style.display = 'block';
+        titleEl.innerText = "עץ הנוקאאוט - 32 הגדולות";
+        renderKnockout();
+    } else if (viewName === 'scorers') {
+        document.getElementById('scorers-view').style.display = 'block';
+        titleEl.innerText = "מלך השערים";
     }
 }
 
@@ -84,7 +104,6 @@ function renderMatches() {
         let awayCardsHTML = '';
         const isPast = data.timeStatus === 'past';
 
-        // הוספת כרטיסים כייצוג ויזואלי (ללא לחיצה) למשחקי עבר בלבד
         if (isPast) {
             let hCards = '';
             if (tHome.cards) {
@@ -102,7 +121,6 @@ function renderMatches() {
         }
 
         const risk = data.matchRisk || 'Safe';
-        
         const currentScoreDisplay = isPast && data.score && data.score.actual ? data.score.actual : (data.score && data.score.prediction ? data.score.prediction : '-');
         const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית מוקדמת';
         
@@ -237,7 +255,7 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
             <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag"><div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
-            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score">${currentScoreDisplay}</div></div>
+            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" style="direction:ltr;">${currentScoreDisplay}</div></div>
             <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag"><div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
@@ -260,7 +278,6 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     card.querySelectorAll('.txt-content').forEach(t => t.classList.remove('active'));
     const activeTxt = card.querySelector(`#txt-${cardId}-${tabType}`); if(activeTxt) activeTxt.classList.add('active');
     
-    // מציג את הכרטיסים אך ורק אם הלשונית היא "סיכום"
     if (tabType === 'sum') {
         card.classList.add('show-cards-tab');
     } else {
@@ -315,7 +332,215 @@ window.addEventListener('DOMContentLoaded', () => {
     }));
 });
 
-// הזרקת סגנונות CSS דינמיים להצגה/הסתרה של הכרטיסים לפי הלשונית
+// פונקציות הבתים המקוריות שמשתמשות בעיצוב ה-CSS שלך
+window.renderStandings = function() {
+    const db = getSafeDatabase();
+    const groups = {};
+    
+    Object.values(db).forEach(match => {
+        if(!match.stage || !match.teamHome || !match.teamAway) return;
+        const st = match.stage;
+        if (!groups[st]) groups[st] = {};
+        
+        const tH = match.teamHome; const tA = match.teamAway;
+        if (!groups[st][tH.name]) groups[st][tH.name] = { name: tH.name, flag: tH.flagCode, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
+        if (!groups[st][tA.name]) groups[st][tA.name] = { name: tA.name, flag: tA.flagCode, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
+        
+        if (match.timeStatus === 'past' && match.score && match.score.actual && match.score.actual.includes('-')) {
+            const parts = match.score.actual.split('-');
+            const sH = parseInt(parts[0].trim());
+            const sA = parseInt(parts[1].trim());
+            if(isNaN(sH) || isNaN(sA)) return;
+
+            groups[st][tH.name].p++; groups[st][tA.name].p++;
+            groups[st][tH.name].gf += sH; groups[st][tH.name].ga += sA;
+            groups[st][tA.name].gf += sA; groups[st][tA.name].ga += sH;
+
+            if (sH > sA) { groups[st][tH.name].w++; groups[st][tH.name].pts += 3; groups[st][tA.name].l++; }
+            else if (sH < sA) { groups[st][tA.name].w++; groups[st][tA.name].pts += 3; groups[st][tH.name].l++; }
+            else { groups[st][tH.name].d++; groups[st][tA.name].d++; groups[st][tH.name].pts++; groups[st][tA.name].pts++; }
+        }
+    });
+
+    const container = document.getElementById('standings-view');
+    if(!container) return;
+    
+    let html = '';
+    Object.keys(groups).sort().forEach(st => {
+        let teams = Object.values(groups[st]);
+        teams.sort((a,b) => {
+            if(b.pts !== a.pts) return b.pts - a.pts;
+            const gdA = a.gf - a.ga; const gdB = b.gf - b.ga;
+            if(gdB !== gdA) return gdB - gdA;
+            return b.gf - a.gf;
+        });
+        
+        let rows = teams.map((t, idx) => `
+            <tr style="${idx < 2 ? 'background: linear-gradient(90deg, rgba(0,255,136,0.05) 0%, transparent 100%); border-right: 3px solid var(--color-exact);' : ''}">
+                <td>${idx+1}</td>
+                <td class="team-cell">
+                    <img src="https://flagcdn.com/w20/${t.flag}.png"> 
+                    ${t.name}
+                </td>
+                <td>${t.p}</td>
+                <td>${t.w}</td>
+                <td>${t.d}</td>
+                <td>${t.l}</td>
+                <td dir="ltr">${t.gf} - ${t.ga}</td>
+                <td dir="ltr">${t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga)}</td>
+                <td style="font-weight:bold; color:var(--accent-cyan);">${t.pts}</td>
+            </tr>
+        `).join('');
+
+        html += `
+        <div class="group-table-card animate-in">
+            <h3 class="group-table-title">בית ${st}</h3>
+            <table class="standings-table">
+                <thead><tr><th>#</th><th style="text-align:right;">נבחרת</th><th>מש'</th><th>נ'</th><th>ת'</th><th>ה'</th><th style="text-align:center;">שערים</th><th style="text-align:center;">הפרש</th><th>נק'</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>`;
+    });
+    
+    container.innerHTML = html || '<div style="padding:20px; color:var(--text-muted);">אין נתונים להצגה</div>';
+}
+
+// שחזור עץ הנוקאאוט והרקעים המקוריים
+window.renderKnockout = function() {
+    const container = document.getElementById('dynamic-bracket');
+    if (!container || !window.knockoutBracket) return;
+    
+    let html = '<div class="bracket-column round-of-32">';
+    html += '<div class="round-title">32 הגדולות</div>';
+    
+    window.knockoutBracket.roundOf32.forEach(match => {
+        html += '<div class="bracket-match animate-in">';
+        
+        // קבוצה עליונה
+        let flag1 = match.team1.flag !== 'un' ? `https://flagcdn.com/w320/${match.team1.flag}.png` : '';
+        let bg1 = flag1 ? `background-image: url('${flag1}');` : '';
+        let click1 = match.team1.flag !== 'un' ? `onclick="openJourneyModal('${match.team1.name}', '${match.team1.flag}')"` : '';
+        let statusStyle1 = match.team1.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
+        
+        html += `
+            <div class="bracket-team" ${click1}>
+                <div class="flag-bg" style="${bg1}"></div>
+                <div class="team-info">
+                    <h3 class="team-name">${match.team1.name}</h3>
+                    <div class="team-subtitle" style="${statusStyle1}">${match.team1.status}</div>
+                </div>
+            </div>
+        `;
+        
+        // קבוצה תחתונה
+        let flag2 = match.team2.flag !== 'un' ? `https://flagcdn.com/w320/${match.team2.flag}.png` : '';
+        let bg2 = flag2 ? `background-image: url('${flag2}');` : '';
+        let click2 = match.team2.flag !== 'un' ? `onclick="openJourneyModal('${match.team2.name}', '${match.team2.flag}')"` : '';
+        let statusStyle2 = match.team2.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
+
+        html += `
+            <div class="bracket-team" ${click2}>
+                <div class="flag-bg" style="${bg2}"></div>
+                <div class="team-info">
+                    <h3 class="team-name">${match.team2.name}</h3>
+                    <div class="team-subtitle" style="${statusStyle2}">${match.team2.status}</div>
+                </div>
+            </div>
+        `;
+        
+        html += '</div>';
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+window.openJourneyModal = function(teamName, flagCode) {
+    const db = getSafeDatabase();
+    let matchesPlayed = [];
+    let gf = 0, ga = 0, pts = 0;
+
+    Object.values(db).forEach(match => {
+        if (match.teamHome?.name === teamName || match.teamAway?.name === teamName) {
+            if (match.timeStatus === 'past' && match.score && match.score.actual && match.score.actual.includes('-')) {
+                const isHome = match.teamHome.name === teamName;
+                const parts = match.score.actual.split('-');
+                const sH = parseInt(parts[0].trim());
+                const sA = parseInt(parts[1].trim());
+                
+                if (!isNaN(sH) && !isNaN(sA)) {
+                    let teamScore = isHome ? sH : sA;
+                    let oppScore = isHome ? sA : sH;
+                    gf += teamScore;
+                    ga += oppScore;
+                    
+                    let resClass = '';
+                    let resTxt = '';
+                    if (teamScore > oppScore) { pts += 3; resClass = 'res-win'; resTxt = 'ניצחון'; }
+                    else if (teamScore < oppScore) { resClass = 'res-loss'; resTxt = 'הפסד'; }
+                    else { pts += 1; resClass = 'res-draw'; resTxt = 'תיקו'; }
+
+                    const oppName = isHome ? match.teamAway.name : match.teamHome.name;
+                    const oppFlag = isHome ? match.teamAway.flagCode : match.teamHome.flagCode;
+                    
+                    let displayDate = match.dateText ? match.dateText.split('|')[0].trim() : '';
+
+                    matchesPlayed.push(`
+                        <div class="timeline-item">
+                            <div class="timeline-date">${displayDate} • בית ${match.stage}</div>
+                            <div class="timeline-matchup">
+                                <img src="https://flagcdn.com/w40/${flagCode}.png" style="width:24px; border-radius:3px;">
+                                <span dir="ltr" style="font-weight: 900; margin: 0 8px;">${isHome ? sH : sA} - ${isHome ? sA : sH}</span>
+                                <img src="https://flagcdn.com/w40/${oppFlag}.png" style="width:24px; border-radius:3px;">
+                                <span>${oppName}</span>
+                            </div>
+                            <div class="timeline-res ${resClass}">${resTxt}</div>
+                        </div>
+                    `);
+                }
+            }
+        }
+    });
+
+    const header = document.getElementById('journey-header');
+    if (header) header.style.backgroundImage = `url('https://flagcdn.com/w320/${flagCode}.png')`;
+    const titleEl = document.getElementById('journey-title');
+    if (titleEl) titleEl.innerText = teamName;
+
+    const gd = gf - ga;
+    const statsHtml = `
+        <div class="geek-stat-box"><div class="geek-stat-val">${pts}</div><div class="geek-stat-lbl">נקודות בבתים</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val">${gf}</div><div class="geek-stat-lbl">שערי זכות</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
+    `;
+    const statsEl = document.getElementById('journey-stats');
+    if (statsEl) statsEl.innerHTML = statsHtml;
+
+    const timelineContainer = document.getElementById('journey-timeline');
+    if (timelineContainer) {
+        if (matchesPlayed.length > 0) {
+            timelineContainer.innerHTML = matchesPlayed.join('');
+        } else {
+            timelineContainer.innerHTML = '<div style="color:var(--text-muted);text-align:center;">אין נתונים ממשחקי עבר עבור נבחרת זו.</div>';
+        }
+    }
+
+    const modal = document.getElementById('teamJourneyModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.style.opacity = '1', 10);
+    }
+}
+
+window.closeJourneyModal = function(e) {
+    if (e) e.stopPropagation();
+    const modal = document.getElementById('teamJourneyModal');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+}
+
 const style = document.createElement('style');
 style.innerHTML = `
 .match-card .cards-container { display: none; }
