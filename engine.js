@@ -41,7 +41,7 @@ window.switchView = function(viewName) {
         titleEl.innerText = "שלב הבתים – מודל הסתברותי";
         renderMatches();
     } else if (viewName === 'standings') {
-        document.getElementById('standings-view').style.display = 'flex'; // שימוש ב-flex לעיצוב שלך
+        document.getElementById('standings-view').style.display = 'flex';
         titleEl.innerText = "טבלת הבתים (חישוב חי)";
         renderStandings();
     } else if (viewName === 'bracket') {
@@ -250,12 +250,20 @@ function renderMatches() {
 }
 
 function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
+    // פירוק התוצאה והנעילה הקשיחה בתוך Flexbox כדי למנוע היפוכים בין LTR ל-RTL
+    let formattedScore = currentScoreDisplay;
+    if (formattedScore.includes('-')) {
+        let p = formattedScore.split('-');
+        // LTR + Flex: קבוצת חוץ (שמאל) ואז קבוצת בית (ימין)
+        formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
+    }
+
     return `
     <div class="match-card animate-in ${data.timeStatus === 'past' ? 'show-cards-tab' : ''}" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
             <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag"><div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
-            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" style="direction:ltr;">${currentScoreDisplay}</div></div>
+            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score">${formattedScore}</div></div>
             <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag"><div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
@@ -289,7 +297,15 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
 
     const labelEl = card.querySelector(`.score-label`);
     const scoreEl = card.querySelector(`.score-number`); 
-    labelEl.innerText = labelText; scoreEl.innerText = scoreText; 
+    labelEl.innerText = labelText; 
+    
+    let formattedScore = scoreText;
+    if (formattedScore.includes('-')) {
+        let p = formattedScore.split('-');
+        formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
+    }
+    scoreEl.innerHTML = formattedScore; 
+    
     scoreEl.classList.remove('is-actual', 'exact', 'trend', 'wrong'); 
     
     if(tabType === 'sum' || (tabType === 'adv' && accuracyLevel)) { 
@@ -332,7 +348,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }));
 });
 
-// פונקציות הבתים המקוריות שמשתמשות בעיצוב ה-CSS שלך
 window.renderStandings = function() {
     const db = getSafeDatabase();
     const groups = {};
@@ -375,7 +390,12 @@ window.renderStandings = function() {
             return b.gf - a.gf;
         });
         
-        let rows = teams.map((t, idx) => `
+        let rows = teams.map((t, idx) => {
+            // הפרדת מספרים בטבלה כדי למנוע היפוכים
+            let goalsHtml = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>${t.ga}</span><span>-</span><span>${t.gf}</span></span>`;
+            let diffHtml = t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga);
+
+            return `
             <tr style="${idx < 2 ? 'background: linear-gradient(90deg, rgba(0,255,136,0.05) 0%, transparent 100%); border-right: 3px solid var(--color-exact);' : ''}">
                 <td>${idx+1}</td>
                 <td class="team-cell">
@@ -386,11 +406,11 @@ window.renderStandings = function() {
                 <td>${t.w}</td>
                 <td>${t.d}</td>
                 <td>${t.l}</td>
-                <td dir="ltr">${t.gf} - ${t.ga}</td>
-                <td dir="ltr">${t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga)}</td>
+                <td style="text-align:center;">${goalsHtml}</td>
+                <td dir="ltr" style="text-align:center;">${diffHtml}</td>
                 <td style="font-weight:bold; color:var(--accent-cyan);">${t.pts}</td>
-            </tr>
-        `).join('');
+            </tr>`;
+        }).join('');
 
         html += `
         <div class="group-table-card animate-in">
@@ -405,7 +425,6 @@ window.renderStandings = function() {
     container.innerHTML = html || '<div style="padding:20px; color:var(--text-muted);">אין נתונים להצגה</div>';
 }
 
-// שחזור עץ הנוקאאוט והרקעים המקוריים
 window.renderKnockout = function() {
     const container = document.getElementById('dynamic-bracket');
     if (!container || !window.knockoutBracket) return;
@@ -416,7 +435,6 @@ window.renderKnockout = function() {
     window.knockoutBracket.roundOf32.forEach(match => {
         html += '<div class="bracket-match animate-in">';
         
-        // קבוצה עליונה
         let flag1 = match.team1.flag !== 'un' ? `https://flagcdn.com/w320/${match.team1.flag}.png` : '';
         let bg1 = flag1 ? `background-image: url('${flag1}');` : '';
         let click1 = match.team1.flag !== 'un' ? `onclick="openJourneyModal('${match.team1.name}', '${match.team1.flag}')"` : '';
@@ -432,7 +450,6 @@ window.renderKnockout = function() {
             </div>
         `;
         
-        // קבוצה תחתונה
         let flag2 = match.team2.flag !== 'un' ? `https://flagcdn.com/w320/${match.team2.flag}.png` : '';
         let bg2 = flag2 ? `background-image: url('${flag2}');` : '';
         let click2 = match.team2.flag !== 'un' ? `onclick="openJourneyModal('${match.team2.name}', '${match.team2.flag}')"` : '';
@@ -485,12 +502,17 @@ window.openJourneyModal = function(teamName, flagCode) {
                     
                     let displayDate = match.dateText ? match.dateText.split('|')[0].trim() : '';
 
+                    // נעילת המספרים בחלון ציר הזמן גם כן
+                    let scoreLeft = isHome ? sA : sH; 
+                    let scoreRight = isHome ? sH : sA; 
+                    let scoreHTML = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:5px; font-weight:900; margin:0 8px;"><span>${scoreLeft}</span><span>-</span><span>${scoreRight}</span></span>`;
+
                     matchesPlayed.push(`
                         <div class="timeline-item">
                             <div class="timeline-date">${displayDate} • בית ${match.stage}</div>
                             <div class="timeline-matchup">
                                 <img src="https://flagcdn.com/w40/${flagCode}.png" style="width:24px; border-radius:3px;">
-                                <span dir="ltr" style="font-weight: 900; margin: 0 8px;">${isHome ? sH : sA} - ${isHome ? sA : sH}</span>
+                                ${scoreHTML}
                                 <img src="https://flagcdn.com/w40/${oppFlag}.png" style="width:24px; border-radius:3px;">
                                 <span>${oppName}</span>
                             </div>
@@ -511,7 +533,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     const statsHtml = `
         <div class="geek-stat-box"><div class="geek-stat-val">${pts}</div><div class="geek-stat-lbl">נקודות בבתים</div></div>
         <div class="geek-stat-box"><div class="geek-stat-val">${gf}</div><div class="geek-stat-lbl">שערי זכות</div></div>
-        <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr" style="display: inline-block;">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
     `;
     const statsEl = document.getElementById('journey-stats');
     if (statsEl) statsEl.innerHTML = statsHtml;
