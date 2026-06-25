@@ -6,7 +6,7 @@ const matchday3Database = {
         timeStatus: 'past', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: `קנדה`, flagCode: 'ca', color: '#000000', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 0', actual: '1 - 2', accuracyClass: 'wrong' },
+        score: { prediction: '1 - 0', actual: '2 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 45, draw: 27, away: 28 }, matchRisk: 'Safe',
         radarStats: { home: [71, 40, 57, 71, 75, 35], away: [62, 73, 54, 62, 88, 35] },
         advancedStats: { home: { xG: '1.36', corners: 5, altitudeImpact: '' }, away: { xG: '1.00', corners: 4, altitudeImpact: '' } },
