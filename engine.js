@@ -79,9 +79,30 @@ function renderMatches() {
         const prob = data.probabilities || { home: 33, draw: 34, away: 33 };
         const tHome = data.teamHome || { name: 'Unknown', flagCode: 'un', color: '#000', cards: { yellow: [], red: [] } };
         const tAway = data.teamAway || { name: 'Unknown', flagCode: 'un', color: '#000', cards: { yellow: [], red: [] } };
+        
+        let homeCardsHTML = '';
+        let awayCardsHTML = '';
+        const isPast = data.timeStatus === 'past';
+
+        // הוספת כרטיסים כייצוג ויזואלי (ללא לחיצה) למשחקי עבר בלבד
+        if (isPast) {
+            let hCards = '';
+            if (tHome.cards) {
+                if (tHome.cards.yellow) tHome.cards.yellow.forEach(() => { hCards += `<div class="card-icon yellow-card"></div>`; });
+                if (tHome.cards.red) tHome.cards.red.forEach(() => { hCards += `<div class="card-icon red-card"></div>`; });
+            }
+            if (hCards) homeCardsHTML = `<div class="cards-container">${hCards}</div>`;
+        
+            let aCards = '';
+            if (tAway.cards) {
+                if (tAway.cards.yellow) tAway.cards.yellow.forEach(() => { aCards += `<div class="card-icon yellow-card"></div>`; });
+                if (tAway.cards.red) tAway.cards.red.forEach(() => { aCards += `<div class="card-icon red-card"></div>`; });
+            }
+            if (aCards) awayCardsHTML = `<div class="cards-container">${aCards}</div>`;
+        }
+
         const risk = data.matchRisk || 'Safe';
         
-        const isPast = data.timeStatus === 'past';
         const currentScoreDisplay = isPast && data.score && data.score.actual ? data.score.actual : (data.score && data.score.prediction ? data.score.prediction : '-');
         const currentScoreLabel = isPast ? 'תוצאת סיום' : 'תחזית מוקדמת';
         
@@ -149,7 +170,7 @@ function renderMatches() {
             else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
             else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
 
-            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '0', visHTML, tabsHTML, txtHTML, statusBarHTML));
+            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '0', visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML));
         } else {
             tabsHTML = `
                 <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
@@ -181,7 +202,7 @@ function renderMatches() {
             `;
             statusBarHTML = `<div class="status-bar status-pending-ui">⏳ ממתין לשריקה</div>`;
 
-            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '1', visHTML, tabsHTML, txtHTML, statusBarHTML));
+            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '1', visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML));
         }
     }
 
@@ -210,14 +231,14 @@ function renderMatches() {
     }
 }
 
-function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML) {
+function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
     return `
-    <div class="match-card animate-in" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
+    <div class="match-card animate-in ${data.timeStatus === 'past' ? 'show-cards-tab' : ''}" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
-            <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag"><div class="team-name">${tHome.name}</div></div>
+            <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag"><div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
             <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score">${currentScoreDisplay}</div></div>
-            <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag"><div class="team-name">${tAway.name}</div></div>
+            <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag"><div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
             <div class="prob-labels"><span style="color: var(--accent-cyan)">1: ${prob.home}%</span><span style="color: var(--text-muted)">X: ${prob.draw}%</span><span style="color: #ff4d4d">2: ${prob.away}%</span></div>
@@ -239,6 +260,13 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     card.querySelectorAll('.txt-content').forEach(t => t.classList.remove('active'));
     const activeTxt = card.querySelector(`#txt-${cardId}-${tabType}`); if(activeTxt) activeTxt.classList.add('active');
     
+    // מציג את הכרטיסים אך ורק אם הלשונית היא "סיכום"
+    if (tabType === 'sum') {
+        card.classList.add('show-cards-tab');
+    } else {
+        card.classList.remove('show-cards-tab');
+    }
+
     const riskContainer = card.querySelector(`#risk-${cardId}`);
     if (riskContainer) riskContainer.style.opacity = (tabType === 'sum') ? '0' : '1';
 
@@ -286,3 +314,14 @@ window.addEventListener('DOMContentLoaded', () => {
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
 });
+
+// הזרקת סגנונות CSS דינמיים להצגה/הסתרה של הכרטיסים לפי הלשונית
+const style = document.createElement('style');
+style.innerHTML = `
+.match-card .cards-container { display: none; }
+.match-card.show-cards-tab .cards-container { display: flex; gap: 6px; justify-content: center; animation: tabFadeIn 0.3s ease; margin-top: -2px; }
+.card-icon { width: 10px; height: 14px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.3); }
+.yellow-card { background-color: #f1c40f; } 
+.red-card { background-color: #e74c3c; }
+`;
+document.head.appendChild(style);
