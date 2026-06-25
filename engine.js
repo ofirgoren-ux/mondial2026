@@ -324,16 +324,40 @@ let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilt
 window.applyFilters = function() { renderMatches(); }
 
 window.addEventListener('DOMContentLoaded', () => { 
-    renderStats(); renderMatches(); 
-    
     const urlParams = new URLSearchParams(window.location.search);
+    
+    // 1. קריאת פרמטר מחזור (md) מהקישור
     const mdParam = urlParams.get('md');
     if (mdParam) {
         currentMdFilter = mdParam;
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`); if (btn) btn.classList.add('active');
+        const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`); 
+        if (btn) btn.classList.add('active');
+    }
+
+    // 2. קריאת פרמטר זמן (time) מהקישור
+    const timeParam = urlParams.get('time');
+    if (timeParam) {
+        currentTimeFilter = timeParam;
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
+        if (btn) btn.classList.add('active');
+    }
+
+    // 3. קריאת פרמטר בית (stage) מהקישור - מוכן לעתיד!
+    const stageParam = urlParams.get('stage');
+    if (stageParam) {
+        currentStageFilter = stageParam;
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
+        if (btn) btn.classList.add('active');
     }
     
+    // 4. רינדור ראשוני רק אחרי שהפילטרים מהקישור הוגדרו
+    renderStats(); 
+    renderMatches(); 
+    
+    // 5. האזנה ללחיצות משתמש
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
@@ -347,7 +371,6 @@ window.addEventListener('DOMContentLoaded', () => {
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
 });
-
 window.renderStandings = function() {
     const db = getSafeDatabase();
     const groups = {};
