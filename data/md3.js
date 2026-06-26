@@ -76,8 +76,7 @@ const matchday3Database = {
     },
 
 
-
-    '    'match55': {
+'match55': {
         timeStatus: 'past', matchday: 3, stage: "ד'", dateText: `26/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `טורקיה`, flagCode: 'tr', color: '#E30A17', cards: { yellow: [], red: [] } },
         teamAway: { name: `ארצות הברית`, flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
