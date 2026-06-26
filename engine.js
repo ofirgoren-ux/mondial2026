@@ -51,7 +51,7 @@ window.switchView = function(viewName) {
     } else if (viewName === 'scorers') {
         document.getElementById('scorers-view').style.display = 'block';
         if(titleEl) titleEl.innerText = "מלך השערים - המרוץ לנעליים מזהב";
-        if (typeof renderScorers === 'function') renderScorers(); // הפעלת העיצוב החדש!
+        renderScorers();
     }
 }
 
@@ -251,11 +251,9 @@ function renderMatches() {
 }
 
 function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
-    // פירוק התוצאה והנעילה הקשיחה בתוך Flexbox כדי למנוע היפוכים בין LTR ל-RTL
     let formattedScore = currentScoreDisplay;
     if (formattedScore.includes('-')) {
         let p = formattedScore.split('-');
-        // LTR + Flex: קבוצת חוץ (שמאל) ואז קבוצת בית (ימין)
         formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
 
@@ -264,7 +262,7 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
             <div class="team"><img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag"><div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
-            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score">${formattedScore}</div></div>
+            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;">${formattedScore}</div></div>
             <div class="team"><img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag"><div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
@@ -326,8 +324,6 @@ window.applyFilters = function() { renderMatches(); }
 
 window.addEventListener('DOMContentLoaded', () => { 
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // 1. קריאת פרמטר מחזור (md) מהקישור
     const mdParam = urlParams.get('md');
     if (mdParam) {
         currentMdFilter = mdParam;
@@ -336,7 +332,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (btn) btn.classList.add('active');
     }
 
-    // 2. קריאת פרמטר זמן (time) מהקישור
     const timeParam = urlParams.get('time');
     if (timeParam) {
         currentTimeFilter = timeParam;
@@ -345,7 +340,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (btn) btn.classList.add('active');
     }
 
-    // 3. קריאת פרמטר בית (stage) מהקישור - מוכן לעתיד!
     const stageParam = urlParams.get('stage');
     if (stageParam) {
         currentStageFilter = stageParam;
@@ -354,11 +348,9 @@ window.addEventListener('DOMContentLoaded', () => {
         if (btn) btn.classList.add('active');
     }
     
-    // 4. רינדור ראשוני רק אחרי שהפילטרים מהקישור הוגדרו
     renderStats(); 
     renderMatches(); 
     
-    // 5. האזנה ללחיצות משתמש
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
@@ -372,6 +364,7 @@ window.addEventListener('DOMContentLoaded', () => {
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
 });
+
 window.renderStandings = function() {
     const db = getSafeDatabase();
     const groups = {};
@@ -415,7 +408,6 @@ window.renderStandings = function() {
         });
         
         let rows = teams.map((t, idx) => {
-            // הפרדת מספרים בטבלה כדי למנוע היפוכים
             let goalsHtml = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>${t.ga}</span><span>-</span><span>${t.gf}</span></span>`;
             let diffHtml = t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga);
 
@@ -526,7 +518,6 @@ window.openJourneyModal = function(teamName, flagCode) {
                     
                     let displayDate = match.dateText ? match.dateText.split('|')[0].trim() : '';
 
-                    // נעילת המספרים בחלון ציר הזמן גם כן
                     let scoreLeft = isHome ? sA : sH; 
                     let scoreRight = isHome ? sH : sA; 
                     let scoreHTML = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:5px; font-weight:900; margin:0 8px;"><span>${scoreLeft}</span><span>-</span><span>${scoreRight}</span></span>`;
@@ -557,7 +548,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     const statsHtml = `
         <div class="geek-stat-box"><div class="geek-stat-val">${pts}</div><div class="geek-stat-lbl">נקודות בבתים</div></div>
         <div class="geek-stat-box"><div class="geek-stat-val">${gf}</div><div class="geek-stat-lbl">שערי זכות</div></div>
-        <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr" style="display: inline-block;">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr" style="unicode-bidi: isolate; direction: ltr; display: inline-block;">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
     `;
     const statsEl = document.getElementById('journey-stats');
     if (statsEl) statsEl.innerHTML = statsHtml;
@@ -587,20 +578,10 @@ window.closeJourneyModal = function(e) {
     }
 }
 
-const style = document.createElement('style');
-style.innerHTML = `
-.match-card .cards-container { display: none; }
-.match-card.show-cards-tab .cards-container { display: flex; gap: 6px; justify-content: center; animation: tabFadeIn 0.3s ease; margin-top: -2px; }
-.card-icon { width: 10px; height: 14px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.3); }
-.yellow-card { background-color: #f1c40f; } 
-.red-card { background-color: #e74c3c; }
-`;
-document.head.appendChild(style);
 window.renderScorers = function() {
     const container = document.getElementById('scorers-view');
     if (!container) return;
 
-    // הנתונים מעודכנים עם קישורים לתיקיית images המקומית שלך
     const scorersData = [
         { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 5, xg: 2.30, shots: 12, playerImg: "images/lionel-messi.jpeg" },
         { rank: 2, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10, playerImg: "images/erlin-haaland.jpeg" },
@@ -616,7 +597,6 @@ window.renderScorers = function() {
 
     const topGoalCount = scorersData[0].goals;
 
-    // בניית הפודיום
     const podiumOrder = [scorersData[1], scorersData[0], scorersData[2]];
     let podiumHTML = '<div class="podium-container">';
     
@@ -630,7 +610,7 @@ window.renderScorers = function() {
                 <div class="podium-flag-bg" style="${flagBg}"></div>
                 <div class="podium-content">
                     <div class="podium-badge" style="background-color: ${medalColor}">${player.rank}</div>
-                    <img src="${player.playerImg}" class="podium-player-img" style="border-color: ${medalColor}">
+                    <img src="${player.playerImg}" class="podium-player-img" style="border-color: ${medalColor}" onerror="this.src='https://ui-avatars.com/api/?name=${player.name}&background=111&color=fff&size=150'">
                     <div class="podium-name">${player.name}</div>
                     <div class="podium-team">
                         <img src="https://flagcdn.com/w20/${player.flag}.png" style="width:16px; border-radius:2px; vertical-align:middle; margin-left:4px;">
@@ -646,7 +626,6 @@ window.renderScorers = function() {
     });
     podiumHTML += '</div>';
 
-    // בניית רשימת המעקב (מקומות 4 עד 10)
     let listHTML = '<div class="lb-container">';
     for (let i = 3; i < scorersData.length; i++) {
         let player = scorersData[i];
@@ -668,3 +647,61 @@ window.renderScorers = function() {
 
     container.innerHTML = `<div class="scorers-dashboard">${podiumHTML}${listHTML}</div>`;
 }
+
+// הזרקת כל סגנונות ה-CSS הדינמיים (כולל מלך השערים)
+const globalStyle = document.createElement('style');
+globalStyle.innerHTML = `
+.match-card .cards-container { display: none; }
+.match-card.show-cards-tab .cards-container { display: flex; gap: 6px; justify-content: center; animation: tabFadeIn 0.3s ease; margin-top: -2px; }
+.card-icon { width: 10px; height: 14px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.3); }
+.yellow-card { background-color: #f1c40f; } 
+.red-card { background-color: #e74c3c; }
+
+/* עיצוב מלך השערים */
+.scorers-dashboard { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 0 auto; width: 100%; padding-bottom: 30px;}
+.podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 30px; }
+.podium-card { background: var(--card-bg); border-radius: 16px; position: relative; width: 30%; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; overflow: hidden; }
+.podium-card:hover { transform: translateY(-10px); }
+.podium-flag-bg { position: absolute; top: 0; left: 0; right: 0; height: 130px; background-size: cover; background-position: center; opacity: 0.3; z-index: 0; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); }
+.podium-content { position: relative; z-index: 1; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; height: 100%; }
+.podium-rank-1 { border-top: 4px solid #FFD700; box-shadow: 0 -10px 30px rgba(255, 215, 0, 0.15), var(--shadow); height: 280px; z-index: 3; }
+.podium-rank-2 { border-top: 4px solid #C0C0C0; box-shadow: 0 -10px 30px rgba(192, 192, 192, 0.1), var(--shadow); height: 250px; z-index: 2; }
+.podium-rank-3 { border-top: 4px solid #CD7F32; box-shadow: 0 -10px 30px rgba(205, 127, 50, 0.1), var(--shadow); height: 230px; z-index: 1; }
+.podium-badge { position: absolute; top: -18px; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 1.2rem; color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid var(--card-bg); z-index: 5;}
+.podium-rank-1 .podium-badge { width: 44px; height: 44px; top: -22px; font-size: 1.5rem; }
+.podium-player-img { width: 65px; height: 65px; object-fit: cover; border-radius: 50%; border: 3px solid; box-shadow: 0 4px 15px rgba(0,0,0,0.6); margin-bottom: 12px; background-color: #111;}
+.podium-rank-1 .podium-player-img { width: 85px; height: 85px; margin-bottom: 15px; border-width: 4px; }
+.podium-name { font-size: 1.1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; margin-bottom: 4px; }
+.podium-team { font-size: 0.8rem; color: var(--text-muted); margin-bottom: auto; display: flex; align-items: center; justify-content: center; }
+.podium-goals { font-size: 2.2rem; font-weight: 900; line-height: 1; margin: 15px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:2px;}
+.podium-goals span { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+.podium-stats { background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
+.lb-container { display: flex; flex-direction: column; gap: 8px; }
+.lb-row { display: flex; align-items: center; padding: 12px 20px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.2s ease; gap: 15px;}
+.lb-row:hover { transform: translateX(-5px); background: rgba(102, 252, 241, 0.05); border-color: rgba(102, 252, 241, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.lb-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 25px; text-align: center; opacity: 0.5; }
+.lb-flag { width: 35px; height: 25px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.lb-info { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
+.lb-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; line-height: 1; }
+.lb-team { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+.lb-bar-bg { width: 100%; max-width: 250px; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; }
+.lb-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 3px; transition: width 1s ease-out; }
+.lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
+
+@media (max-width: 768px) {
+    .podium-container { gap: 10px; align-items: flex-end; }
+    .podium-card { width: 32%; }
+    .podium-content { padding: 15px 5px; }
+    .podium-name { font-size: 0.9rem; }
+    .podium-goals { font-size: 1.8rem; }
+    .podium-stats { display: none; }
+    .lb-row { padding: 10px; gap: 10px; }
+    .lb-bar-bg, .lb-team { display: none; }
+}
+`;
+
+// מחיקת סטייל קודם כדי למנוע כפילויות, ואז הזרקה
+const oldStyle = document.getElementById('global-dynamic-style');
+if(oldStyle) oldStyle.remove();
+globalStyle.id = 'global-dynamic-style';
+document.head.appendChild(globalStyle);
