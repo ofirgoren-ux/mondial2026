@@ -38,19 +38,20 @@ window.switchView = function(viewName) {
     const titleEl = document.getElementById('main-title');
     if (viewName === 'matches') {
         document.getElementById('matches-view').style.display = 'block';
-        titleEl.innerText = "שלב הבתים – מודל הסתברותי";
+        if(titleEl) titleEl.innerText = "שלב הבתים – מודל הסתברותי";
         renderMatches();
     } else if (viewName === 'standings') {
         document.getElementById('standings-view').style.display = 'flex';
-        titleEl.innerText = "טבלת הבתים (חישוב חי)";
+        if(titleEl) titleEl.innerText = "טבלת הבתים (חישוב חי)";
         renderStandings();
     } else if (viewName === 'bracket') {
         document.getElementById('bracket-view').style.display = 'block';
-        titleEl.innerText = "עץ הנוקאאוט - 32 הגדולות";
+        if(titleEl) titleEl.innerText = "עץ הנוקאאוט - 32 הגדולות";
         renderKnockout();
     } else if (viewName === 'scorers') {
         document.getElementById('scorers-view').style.display = 'block';
-        titleEl.innerText = "מלך השערים";
+        if(titleEl) titleEl.innerText = "מלך השערים - המרוץ לנעליים מזהב";
+        if (typeof renderScorers === 'function') renderScorers(); // הפעלת העיצוב החדש!
     }
 }
 
