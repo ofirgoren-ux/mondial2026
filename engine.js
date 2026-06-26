@@ -596,3 +596,127 @@ style.innerHTML = `
 .red-card { background-color: #e74c3c; }
 `;
 document.head.appendChild(style);
+window.renderScorers = function() {
+    const container = document.getElementById('scorers-view');
+    if (!container) return;
+
+    // הנתונים כפי שחולצו מקובץ FOX Sports שלך
+    const scorersData = [
+        { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 5, xg: 2.30, shots: 12 },
+        { rank: 2, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10 },
+        { rank: 3, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 4, xg: 1.88, shots: 12 },
+        { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.33, shots: 13 },
+        { rank: 5, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.09, shots: 7 },
+        { rank: 6, name: "ז'והאן מנזמבי", team: "שווייץ", flag: "ch", goals: 3, xg: 0.81, shots: 6 },
+        { rank: 7, name: "ג'ונתן דייוויד", team: "קנדה", flag: "ca", goals: 3, xg: 1.83, shots: 12 },
+        { rank: 8, name: "איסמעיל סאיברי", team: "מרוקו", flag: "ma", goals: 3, xg: 1.44, shots: 10 },
+        { rank: 9, name: "בריאן ברובי", team: "הולנד", flag: "nl", goals: 2, xg: 1.41, shots: 4 },
+        { rank: 10, name: "דניז אונדב", team: "גרמניה", flag: "de", goals: 2, xg: 1.41, shots: 5 }
+    ];
+
+    const topGoalCount = scorersData[0].goals;
+
+    // בניית הפודיום (סדר ויזואלי של ימין-אמצע-שמאל לעברית RTL: מקום 2, מקום 1, מקום 3)
+    const podiumOrder = [scorersData[1], scorersData[0], scorersData[2]];
+    let podiumHTML = '<div class="podium-container">';
+    
+    podiumOrder.forEach(player => {
+        let medalColor = player.rank === 1 ? '#FFD700' : (player.rank === 2 ? '#C0C0C0' : '#CD7F32');
+        let glowClass = `podium-rank-${player.rank}`;
+        
+        podiumHTML += `
+            <div class="podium-card ${glowClass} animate-in">
+                <div class="podium-badge" style="background-color: ${medalColor}">${player.rank}</div>
+                <img src="https://flagcdn.com/w80/${player.flag}.png" class="podium-flag">
+                <div class="podium-name">${player.name}</div>
+                <div class="podium-team">${player.team}</div>
+                <div class="podium-goals" style="color: ${medalColor}">${player.goals} <span>שערים</span></div>
+                <div class="podium-stats">
+                    <span dir="ltr">xG: ${player.xg}</span> | <span>בעיטות: ${player.shots}</span>
+                </div>
+            </div>
+        `;
+    });
+    podiumHTML += '</div>';
+
+    // בניית רשימת המעקב (מקומות 4 עד 10)
+    let listHTML = '<div class="lb-container">';
+    for (let i = 3; i < scorersData.length; i++) {
+        let player = scorersData[i];
+        let progressWidth = (player.goals / topGoalCount) * 100;
+        
+        listHTML += `
+            <div class="lb-row animate-in" style="animation-delay: ${i * 0.05}s">
+                <div class="lb-rank">${player.rank}</div>
+                <img src="https://flagcdn.com/w40/${player.flag}.png" class="lb-flag">
+                <div class="lb-info">
+                    <div class="lb-name">${player.name} <span class="lb-team">• ${player.team}</span></div>
+                    <div class="lb-bar-bg"><div class="lb-bar-fill" style="width: ${progressWidth}%;"></div></div>
+                </div>
+                <div class="lb-goals">${player.goals}</div>
+            </div>
+        `;
+    }
+    listHTML += '</div>';
+
+    container.innerHTML = `<div class="scorers-dashboard">${podiumHTML}${listHTML}</div>`;
+}
+
+// הזרקת סגנונות ה-CSS עבור מסך מלך השערים (מונע פגיעה בקבצים האחרים שלך)
+const scorersStyle = document.createElement('style');
+scorersStyle.innerHTML = `
+.scorers-dashboard { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 0 auto; width: 100%; padding-bottom: 30px;}
+
+/* עיצוב הפודיום */
+.podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 30px; }
+.podium-card { background: var(--card-bg); border-radius: 16px; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; position: relative; width: 30%; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; }
+.podium-card:hover { transform: translateY(-10px); }
+
+.podium-rank-1 { border-top: 4px solid #FFD700; box-shadow: 0 -10px 30px rgba(255, 215, 0, 0.15), var(--shadow); height: 260px; z-index: 3; }
+.podium-rank-2 { border-top: 4px solid #C0C0C0; box-shadow: 0 -10px 30px rgba(192, 192, 192, 0.1), var(--shadow); height: 230px; z-index: 2; }
+.podium-rank-3 { border-top: 4px solid #CD7F32; box-shadow: 0 -10px 30px rgba(205, 127, 50, 0.1), var(--shadow); height: 210px; z-index: 1; }
+
+.podium-badge { position: absolute; top: -18px; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 1.2rem; color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid var(--card-bg); }
+.podium-rank-1 .podium-badge { width: 44px; height: 44px; top: -22px; font-size: 1.5rem; }
+
+.podium-flag { width: 50px; height: 35px; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 12px; }
+.podium-rank-1 .podium-flag { width: 60px; height: 42px; margin-bottom: 15px;}
+
+.podium-name { font-size: 1.1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; margin-bottom: 2px; }
+.podium-team { font-size: 0.8rem; color: var(--text-muted); margin-bottom: auto; }
+
+.podium-goals { font-size: 2.2rem; font-weight: 900; line-height: 1; margin: 15px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:2px;}
+.podium-goals span { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+
+.podium-stats { background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
+
+/* עיצוב רשימת המעקב (Leaderboard) */
+.lb-container { display: flex; flex-direction: column; gap: 8px; }
+.lb-row { display: flex; align-items: center; padding: 12px 20px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.2s ease; gap: 15px;}
+.lb-row:hover { transform: translateX(-5px); background: rgba(102, 252, 241, 0.05); border-color: rgba(102, 252, 241, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+
+.lb-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 25px; text-align: center; opacity: 0.5; }
+.lb-flag { width: 35px; height: 25px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+
+.lb-info { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
+.lb-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; line-height: 1; }
+.lb-team { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+
+.lb-bar-bg { width: 100%; max-width: 250px; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; }
+.lb-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 3px; transition: width 1s ease-out; }
+
+.lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
+
+@media (max-width: 768px) {
+    .podium-container { gap: 10px; align-items: flex-end; }
+    .podium-card { width: 32%; padding: 15px 5px; }
+    .podium-name { font-size: 0.9rem; }
+    .podium-goals { font-size: 1.8rem; }
+    .podium-stats { display: none; }
+    
+    .lb-row { padding: 10px; gap: 10px; }
+    .lb-bar-bg { display: none; }
+    .lb-team { display: none; }
+}
+`;
+document.head.appendChild(scorersStyle);
