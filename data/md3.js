@@ -201,8 +201,8 @@ const matchday3Database = {
     },
     
       // ---- שאר משחקי מחזור 3 (טרם שוחקו) ----
-    'match67': {
-        timeStatus: 'future', matchday: 3, stage: "ל'", dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
+'match67': {
+        timeStatus: 'future', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
         teamHome: { name: `פנמה`, flagCode: 'pa', color: '#DA291C', cards: { yellow: [], red: [] } },
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
@@ -214,7 +214,7 @@ const matchday3Database = {
         squads: { home: { predicted: ['Luis Mejía', 'César Blackman', 'José Córdoba', 'Fidel Escobar', 'Edgardo Fariña', 'Cristian Martínez', 'José Luis Rodríguez', 'Adalberto Carrasquilla', 'Tomás Rodríguez', 'Ismael Díaz', 'Yoel Bárcenas'], actual: [] }, away: { predicted: ['Jordan Pickford', 'Ezri Konsa', "Nico O'Reilly", 'Declan Rice', 'John Stones', 'Marc Guéhi', 'Bukayo Saka', 'Elliot Anderson', 'Harry Kane', 'Jude Bellingham', 'Marcus Rashford'], actual: [] } }
     },
     'match68': {
-        timeStatus: 'future', matchday: 3, stage: "ל'", dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
+        timeStatus: 'future', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
         teamHome: { name: `קרואטיה`, flagCode: 'hr', color: '#FF0000', cards: { yellow: [], red: [] } },
         teamAway: { name: `גאנה`, flagCode: 'gh', color: '#006B3F', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 0', actual: '', accuracyClass: 'pending' },
@@ -226,7 +226,7 @@ const matchday3Database = {
         squads: { home: { predicted: ['Dominik Livaković', 'Josip Stanišić', 'Marin Pongračić', 'Joško Gvardiol', 'Duje Ćaleta-Car', 'Josip Šutalo', 'Nikola Moro', 'Mateo Kovačić', 'Andrej Kramarić', 'Luka Modrić', 'Ante Budimir'], actual: [] }, away: { predicted: ['Lawrence Ati-Zigi', 'Alidu Seidu', 'Caleb Yirenkyi', 'Jonas Adjetey', 'Thomas Partey', 'Abdul Mumin', 'Abdul Fatawu', 'Kwasi Sibo', 'Jordan Ayew', 'Brandon Thomas-Asante', 'Antoine Semenyo'], actual: [] } }
     },
     'match69': {
-        timeStatus: 'future', matchday: 3, stage: "כ'", dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
+        timeStatus: 'future', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
         teamHome: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
         teamAway: { name: `פורטוגל`, flagCode: 'pt', color: '#E42518', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
@@ -238,7 +238,7 @@ const matchday3Database = {
         squads: { home: { predicted: ['David Ospina', 'Daniel Muñoz', 'Jhon Lucumí', 'Santiago Arias', 'Kevin Castaño', 'Richard Ríos', 'Luis Díaz', 'Jorge Carrascal', 'Jhon Córdoba', 'James Rodríguez', 'Jhon Arias'], actual: [] }, away: { predicted: ['Diogo Costa', 'Nélson Semedo', 'Rúben Dias', 'Tomás Araújo', 'Diogo Dalot', 'Matheus Nunes', 'Cristiano Ronaldo', 'Bruno Fernandes', 'Gonçalo Ramos', 'Bernardo Silva', 'João Félix'], actual: [] } }
     },
     'match70': {
-        timeStatus: 'future', matchday: 3, stage: "כ'", dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
+        timeStatus: 'future', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
         teamHome: { name: `קונגו`, flagCode: 'cg', color: '#007A5E', cards: { yellow: [], red: [] } },
         teamAway: { name: `אוזבקיסטן`, flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
@@ -250,7 +250,7 @@ const matchday3Database = {
         squads: { home: { predicted: ['Lionel Mpasi', 'Aaron Wan-Bissaka', 'Steve Kapuadi', 'Axel Tuanzebe', 'Dylan Batubinsika', "Ngal'ayel Mukau", 'Nathanaël Mbuku', 'Samuel Moutoussamy', 'Brian Cipenga', 'Théo Bongonda', 'Gaël Kakuta'], actual: [] }, away: { predicted: ['Utkir Yusupov', 'Abdukodir Khusanov', 'Khojiakbar Alijonov', 'Farrukh Sayfiev', 'Rustam Ashurmatov', 'Akmal Mozgovoy', 'Otabek Shukurov', 'Jamshid Iskanderov', 'Odiljon Hamrobekov', 'Jaloliddin Masharipov', 'Oston Urunov'], actual: [] } }
     },
     'match71': {
-        timeStatus: 'future', matchday: 3, stage: "י'", dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
+        timeStatus: 'future', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `אלג'יריה`, flagCode: 'dz', color: '#006233', cards: { yellow: [], red: [] } },
         teamAway: { name: `אוסטריה`, flagCode: 'at', color: '#EF3340', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
@@ -262,7 +262,7 @@ const matchday3Database = {
         squads: { home: { predicted: ['Anthony Mandrea', 'Youcef Atal', 'Ramy Bensebaini', 'Aïssa Mandi', 'Rayan Aït-Nouri', 'Nabil Bentaleb', 'Ismaël Bennacer', 'Ramiz Zerrouki', 'Riyad Mahrez', 'Mohamed Amoura', 'Youcef Belaïli'], actual: [] }, away: { predicted: ['Alexander Schlager', 'David Affengruber', 'Kevin Danso', 'Xaver Schlager', 'Stefan Posch', 'Nicolas Seiwald', 'Marko Arnautović', 'David Alaba', 'Marcel Sabitzer', 'Florian Grillitsch', 'Michael Gregoritsch'], actual: [] } }
     },
     'match72': {
-        timeStatus: 'future', matchday: 3, stage: "י'", dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
+        timeStatus: 'future', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `ירדן`, flagCode: 'jo', color: '#000000', cards: { yellow: [], red: [] } },
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
