@@ -398,7 +398,7 @@ window.renderStandings = function() {
     if(!container) return;
     
     let html = '';
-    Object.keys(groups).sort().forEach(st => {
+Object.keys(groups).sort().forEach(st => {
         let teams = Object.values(groups[st]);
         teams.sort((a,b) => {
             if(b.pts !== a.pts) return b.pts - a.pts;
@@ -406,6 +406,10 @@ window.renderStandings = function() {
             if(gdB !== gdA) return gdB - gdA;
             return b.gf - a.gf;
         });
+        
+        // כאן הקסם שמתרגם את האות האנגלית לכותרת בעברית!
+        const hebrewGroups = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': 'י"א', 'L': 'י"ב'};
+        const groupName = hebrewGroups[st] || st;
         
         let rows = teams.map((t, idx) => {
             let goalsHtml = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>${t.ga}</span><span>-</span><span>${t.gf}</span></span>`;
@@ -430,7 +434,7 @@ window.renderStandings = function() {
 
         html += `
         <div class="group-table-card animate-in">
-            <h3 class="group-table-title">בית ${st}</h3>
+            <h3 class="group-table-title">בית ${groupName}</h3>
             <table class="standings-table">
                 <thead><tr><th>#</th><th style="text-align:right;">נבחרת</th><th>מש'</th><th>נ'</th><th>ת'</th><th>ה'</th><th style="text-align:center;">שערים</th><th style="text-align:center;">הפרש</th><th>נק'</th></tr></thead>
                 <tbody>${rows}</tbody>
