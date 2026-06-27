@@ -1,21 +1,19 @@
 window.matchDatabase = window.matchDatabase || {};
 const matchday3Database = {
     // ---- 6 המשחקים שכבר שוחקו (24-25 ביוני) ----
-
 'match49': {
-        timeStatus: 'past', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'B', dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `קנדה`, flagCode: 'ca', color: '#000000', cards: { yellow: ['card', 'card'], red: [] } },
-        score: { prediction: '1 - 0', actual: '2 - 0', accuracyClass: 'trend' },
+        score: { prediction: '1 - 0', actual: '2 - 1', accuracyClass: 'trend' },
         probabilities: { home: 45, draw: 27, away: 28 }, matchRisk: 'Safe',
         radarStats: { home: [71, 40, 57, 71, 75, 35], away: [62, 73, 54, 62, 88, 35] },
         advancedStats: { home: { xG: '1.36', corners: 5, altitudeImpact: '' }, away: { xG: '1.00', corners: 4, altitudeImpact: '' } },
         insight: { prediction: `שווייץ מגיעה עם יתרון איכותי במרכז השדה והיא צפויה להחזיק בכדור ולנסות להכתיב קצב סבלני.`, actual: `ניצחון סולידי, בוגר ומרשים של שווייץ. היא הכתיבה את הקצב, שיחקה בחכמה, וניצלה היטב את היתרון האיכותי שלה במרכז השדה בדרך ל-2-0 חלק.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match50': {
-        timeStatus: 'past', matchday: 3, stage: "ב'", dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'B', dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `בוסניה והרצגובינה`, flagCode: 'ba', color: '#002F6C', cards: { yellow: [], red: [] } },
         teamAway: { name: `קטאר`, flagCode: 'qa', color: '#8A1538', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '1 - 1', actual: '3 - 0', accuracyClass: 'wrong' },
@@ -23,11 +21,10 @@ const matchday3Database = {
         radarStats: { home: [49, 20, 48, 49, 76, 30], away: [17, 13, 48, 17, 76, 20] },
         advancedStats: { home: { xG: '1.30', corners: 6, altitudeImpact: '' }, away: { xG: '1.22', corners: 2, altitudeImpact: '' } },
         insight: { prediction: `זה מריח כמו קרב חפירות קשוח. בוסניה תנסה להשתמש ביתרון הפיזי המשמעותי שלה ולחפש כדורי גובה.`, actual: `הפיזיות של בוסניה עשתה כאן את ההבדל העצום! הבוסנים שלטו באוויר, ניצלו כל טעות בהגנת קטאר, ורמסו את האורחת בדרך ל-3-0 מוחץ.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match51': {
-        timeStatus: 'past', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'C', dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
         teamHome: { name: `סקוטלנד`, flagCode: 'gb-sct', color: '#005EB8', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: ['card', 'card'], red: [] } },
         score: { prediction: '0 - 2', actual: '0 - 3', accuracyClass: 'trend' },
@@ -35,11 +32,10 @@ const matchday3Database = {
         radarStats: { home: [55, 33, 49, 55, 79, 32], away: [60, 40, 61, 60, 64, 37] },
         advancedStats: { home: { xG: '0.62', corners: 2, altitudeImpact: '' }, away: { xG: '2.40', corners: 8, altitudeImpact: '' } },
         insight: { prediction: `אין כאן באמת כוחות. ברזיל עולה למגרש כפייבוריטית מפלצתית והולכת לשטוף את הדשא.`, actual: `קונצרט של הסלסאו! בדיוק כמו שציפינו, ברזיל שטפה את הדשא מהשנייה הראשונה, לא השאירה לסקוטים אוויר לנשימה, ורקדה כל הדרך ל-3-0 קליל ומרשים.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match52': {
-        timeStatus: 'past', matchday: 3, stage: "ג'", dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'C', dateText: `25/06/2026 | 01:00 (שעון ישראל)`,
         teamHome: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } },
         teamAway: { name: `האיטי`, flagCode: 'ht', color: '#00209F', cards: { yellow: ['card', 'card', 'card'], red: [] } },
         score: { prediction: '1 - 0', actual: '2 - 4', accuracyClass: 'wrong' },
@@ -47,11 +43,10 @@ const matchday3Database = {
         radarStats: { home: [71, 53, 56, 71, 68, 25], away: [35, 33, 44, 35, 77, 5] },
         advancedStats: { home: { xG: '1.83', corners: 6, altitudeImpact: '' }, away: { xG: '0.71', corners: 3, altitudeImpact: '' } },
         insight: { prediction: `מרוקו פייבוריטית מובהקת כאן ותכתיב את הקצב מול האיטי שתרד להגנה נמוכה.`, actual: `אחת ההפתעות הגדולות של שלב הבתים! האיטי הציגה התקפת נגד חסרת פשרות, ניצלה חורים בהגנה המרוקאית הנדהמת, וכבשה רביעייה היסטורית מהדהדת.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match53': {
-        timeStatus: 'past', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'A', dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
         teamHome: { name: `צ'כיה`, flagCode: 'cz', color: '#ED1B24', cards: { yellow: [], red: [] } },
         teamAway: { name: `מקסיקו`, flagCode: 'mx', color: '#006341', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '0 - 1', actual: '0 - 3', accuracyClass: 'trend' },
@@ -59,11 +54,10 @@ const matchday3Database = {
         radarStats: { home: [57, 40, 48, 57, 78, 27], away: [64, 60, 57, 64, 56, 30] },
         advancedStats: { home: { xG: '0.84', corners: 3, altitudeImpact: '' }, away: { xG: '1.77', corners: 7, altitudeImpact: '' } },
         insight: { prediction: `מקסיקו מגיעה עם הלהט הלטיני ויתרון משמעותי באיכות ההתקפית.`, actual: `תצוגת תכלית של הלהט הלטיני! מקסיקו עלתה בטירוף, פירקה את המערך הטקטי של צ'כיה לחתיכות ושלטה לחלוטין בקצב המשחק עם 3-0 מוחץ.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match54': {
-        timeStatus: 'past', matchday: 3, stage: "א'", dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'A', dateText: `25/06/2026 | 04:00 (שעון ישראל)`,
         teamHome: { name: `דרום אפריקה`, flagCode: 'za', color: '#007749', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `קוריאה הדרומית`, flagCode: 'kr', color: '#C60C30', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '0 - 1', actual: '1 - 0', accuracyClass: 'wrong' },
@@ -71,13 +65,10 @@ const matchday3Database = {
         radarStats: { home: [46, 27, 49, 46, 66, 27], away: [62, 53, 56, 62, 66, 47] },
         advancedStats: { home: { xG: '0.96', corners: 4, altitudeImpact: '' }, away: { xG: '1.48', corners: 6, altitudeImpact: '' } },
         insight: { prediction: `הקוריאנים פייבוריטים בזכות שילוב קטלני של משמעת טקטית וכושר גופני אדיר.`, actual: `סנסציה ועקיצה מושלמת של דרום אפריקה! הקוריאנים החזיקו בכדור, אבל האגרסיביות והלחימה האפריקאית השתלמו עם שער ניצחון יקר שמטריף את כל הבית.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
-
-
-'match55': {
-        timeStatus: 'past', matchday: 3, stage: "ד'", dateText: `26/06/2026 | 05:00 (שעון ישראל)`,
+    'match55': {
+        timeStatus: 'past', matchday: 3, stage: 'D', dateText: `26/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `טורקיה`, flagCode: 'tr', color: '#E30A17', cards: { yellow: [], red: [] } },
         teamAway: { name: `ארצות הברית`, flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 1', actual: '3 - 2', accuracyClass: 'wrong' },
@@ -85,11 +76,10 @@ const matchday3Database = {
         radarStats: { home: [77, 43, 87, 65, 44, 54], away: [45, 77, 72, 41, 72, 86] },
         advancedStats: { home: { xG: '2.17', corners: 8, altitudeImpact: '' }, away: { xG: '2.05', corners: 6, altitudeImpact: '' } },
         insight: { prediction: `על הנייר, ארצות הברית מגיעה עם יתרון איכותי ומשמעת טקטית שיקשו על הטורקים, אבל במגרש טעון הכל יכול לקרות.`, actual: `טירוף מערכות מוחלט! משחק אמוציונלי וקצבי שבו טורקיה הצליחה לגבור על האמריקאים במשחק של 5 שערים. הלהט הטורקי ניצח הפעם את המשמעת של ארה״ב.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match56': {
-        timeStatus: 'past', matchday: 3, stage: "ד'", dateText: `26/06/2026 | 05:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'D', dateText: `26/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
         teamAway: { name: `אוסטרליה`, flagCode: 'au', color: '#FFCD00', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 1', actual: '0 - 0', accuracyClass: 'trend' },
@@ -97,11 +87,10 @@ const matchday3Database = {
         radarStats: { home: [65, 62, 56, 82, 83, 48], away: [57, 72, 50, 47, 88, 58] },
         advancedStats: { home: { xG: '1.00', corners: 7, altitudeImpact: '' }, away: { xG: '1.10', corners: 3, altitudeImpact: '' } },
         insight: { prediction: `אוסטרליה צפויה לנסות לשלוט באוויר, בזמן שפרגוואי תציג את הקשיחות הדרום אמריקאית. יהיה מאבק עיקש במרכז.`, actual: `קרב החפירות המצופה הסתיים ללא שערים. שתי הקבוצות הגיעו במטרה קודם כל לא לספוג, המשחק היה קשוח ואגרסיבי במרכז השדה, והתוצאה משקפת את מה שקרה על הדשא.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match57': {
-        timeStatus: 'past', matchday: 3, stage: "ה'", dateText: `25/06/2026 | 23:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'E', dateText: `25/06/2026 | 23:00 (שעון ישראל)`,
         teamHome: { name: `קוראסאו`, flagCode: 'cw', color: '#002B7F', cards: { yellow: [], red: [] } },
         teamAway: { name: `חוף השנהב`, flagCode: 'ci', color: '#FF8200', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '0 - 2', accuracyClass: 'exact' },
@@ -109,11 +98,10 @@ const matchday3Database = {
         radarStats: { home: [59, 86, 75, 86, 81, 65], away: [68, 63, 45, 42, 89, 89] },
         advancedStats: { home: { xG: '0.50', corners: 3, altitudeImpact: '' }, away: { xG: '2.10', corners: 6, altitudeImpact: '' } },
         insight: { prediction: `חוף השנהב אמורה להשתלט על העניינים מהר בזכות העוצמה במרכז המגרש ולשתק את שאיפותיה של קוראסאו.`, actual: `ניצחון סולידי ומרשים של הפילים. חוף השנהב השתמשה בעליונות הפיזית והטקטית שלה כדי לסגור את קוראסאו ולא נתנה לחלום הקריבי להתרומם.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match58': {
-        timeStatus: 'past', matchday: 3, stage: "ה'", dateText: `25/06/2026 | 23:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'E', dateText: `25/06/2026 | 23:00 (שעון ישראל)`,
         teamHome: { name: `אקוודור`, flagCode: 'ec', color: '#FFD100', cards: { yellow: [], red: [] } },
         teamAway: { name: `גרמניה`, flagCode: 'de', color: '#FFFFFF', cards: { yellow: [], red: [] } },
         score: { prediction: '1 - 2', actual: '2 - 1', accuracyClass: 'wrong' },
@@ -121,11 +109,10 @@ const matchday3Database = {
         radarStats: { home: [86, 62, 83, 75, 77, 80], away: [53, 85, 87, 89, 55, 42] },
         advancedStats: { home: { xG: '1.10', corners: 5, altitudeImpact: '' }, away: { xG: '1.90', corners: 4, altitudeImpact: '' } },
         insight: { prediction: `גרמניה פייבוריטית מובהקת, אך אקוודור מביאה קשיחות ויכולת מתפרצות שיכולה להפתיע.`, actual: `איזו סנסציה! אקוודור הגיעה ללא רגשי נחיתות, השתמשה באתלטיות האדירה שלה כדי לשתק את הקישור הגרמני, וגנבה ניצחון מדהים 2-1 שטורף את הקלפים בבית.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match59': {
-        timeStatus: 'past', matchday: 3, stage: "ו'", dateText: `26/06/2026 | 02:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'F', dateText: `26/06/2026 | 02:00 (שעון ישראל)`,
         teamHome: { name: `תוניסיה`, flagCode: 'tn', color: '#E70013', cards: { yellow: [], red: [] } },
         teamAway: { name: `הולנד`, flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 2', actual: '1 - 3', accuracyClass: 'trend' },
@@ -133,11 +120,10 @@ const matchday3Database = {
         radarStats: { home: [49, 86, 58, 48, 68, 43], away: [70, 85, 77, 71, 42, 44] },
         advancedStats: { home: { xG: '0.60', corners: 2, altitudeImpact: '' }, away: { xG: '2.40', corners: 2, altitudeImpact: '' } },
         insight: { prediction: `הולנד אמורה להכתיב את הקצב, בעוד תוניסיה תחפש להגן היטב ולעקוץ במצבים נייחים.`, actual: `האורנג' עשו את העבודה. תוניסיה ניסתה לבנות חומה ולהקשות, אבל הכישרון ההולנדי בחלק הקדמי הצליח לפרוץ את המנעול פעם אחר פעם בדרך ל-3-1 משכנע.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match60': {
-        timeStatus: 'past', matchday: 3, stage: "ו'", dateText: `26/06/2026 | 02:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'F', dateText: `26/06/2026 | 02:00 (שעון ישראל)`,
         teamHome: { name: `יפן`, flagCode: 'jp', color: '#000555', cards: { yellow: [], red: [] } },
         teamAway: { name: `שוודיה`, flagCode: 'se', color: '#FFF200', cards: { yellow: [], red: [] } },
         score: { prediction: '2 - 1', actual: '1 - 1', accuracyClass: 'wrong' },
@@ -145,12 +131,10 @@ const matchday3Database = {
         radarStats: { home: [40, 56, 49, 53, 56, 54], away: [85, 84, 81, 46, 60, 59] },
         advancedStats: { home: { xG: '1.50', corners: 8, altitudeImpact: '' }, away: { xG: '1.20', corners: 2, altitudeImpact: '' } },
         insight: { prediction: `הזריזות והטכניקה היפנית מול העוצמה והגובה השוודי יספקו משחק מרתק ומלא אקשן.`, actual: `התנגשות הסגנונות הקלאסית הסתיימה בחלוקת נקודות. הזריזות היפנית מול העוצמה השוודית סיפקו משחק מרתק, כשאף אחת מהנבחרות לא הצליחה להכריע.` },
-        goals: [],
-        squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
-  
-'match61': {
-        timeStatus: 'past', matchday: 3, stage: "ט'", dateText: `26/06/2026 | 16:00 (שעון ישראל)`,
+    'match61': {
+        timeStatus: 'past', matchday: 3, stage: 'I', dateText: `26/06/2026 | 16:00 (שעון ישראל)`,
         teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } },
         teamAway: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '1 - 2', actual: '1 - 4', accuracyClass: 'trend' },
@@ -161,7 +145,7 @@ const matchday3Database = {
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match62': {
-        timeStatus: 'past', matchday: 3, stage: "ט'", dateText: `26/06/2026 | 16:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'I', dateText: `26/06/2026 | 16:00 (שעון ישראל)`,
         teamHome: { name: `סנגל`, flagCode: 'sn', color: '#00853F', cards: { yellow: [], red: [] } },
         teamAway: { name: `עיראק`, flagCode: 'iq', color: '#007A3D', cards: { yellow: ['card'], red: ['card'] } },
         score: { prediction: '2 - 0', actual: '5 - 0', accuracyClass: 'trend' },
@@ -172,7 +156,7 @@ const matchday3Database = {
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match63': {
-        timeStatus: 'past', matchday: 3, stage: "ח'", dateText: `26/06/2026 | 21:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'H', dateText: `26/06/2026 | 21:00 (שעון ישראל)`,
         teamHome: { name: `אורוגוואי`, flagCode: 'uy', color: '#75AADB', cards: { yellow: ['card', 'card'], red: ['card'] } },
         teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '1 - 1', actual: '0 - 1', accuracyClass: 'wrong' },
@@ -183,7 +167,7 @@ const matchday3Database = {
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match64': {
-        timeStatus: 'past', matchday: 3, stage: "ח'", dateText: `26/06/2026 | 21:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'H', dateText: `26/06/2026 | 21:00 (שעון ישראל)`,
         teamHome: { name: `כף ורדה`, flagCode: 'cv', color: '#003893', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `ערב הסעודית`, flagCode: 'sa', color: '#006C35', cards: { yellow: ['card', 'card'], red: [] } },
         score: { prediction: '1 - 1', actual: '0 - 0', accuracyClass: 'trend' },
@@ -194,7 +178,7 @@ const matchday3Database = {
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match65': {
-        timeStatus: 'past', matchday: 3, stage: "ז'", dateText: `27/06/2026 | 00:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'G', dateText: `27/06/2026 | 00:00 (שעון ישראל)`,
         teamHome: { name: `ניו זילנד`, flagCode: 'nz', color: '#000000', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } },
         score: { prediction: '0 - 3', actual: '1 - 5', accuracyClass: 'trend' },
@@ -205,7 +189,7 @@ const matchday3Database = {
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match66': {
-        timeStatus: 'past', matchday: 3, stage: "ז'", dateText: `27/06/2026 | 00:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'G', dateText: `27/06/2026 | 00:00 (שעון ישראל)`,
         teamHome: { name: `מצרים`, flagCode: 'eg', color: '#CE1126', cards: { yellow: ['card', 'card'], red: [] } },
         teamAway: { name: `איראן`, flagCode: 'ir', color: '#239F40', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '1 - 0', actual: '1 - 1', accuracyClass: 'wrong' },
@@ -214,7 +198,7 @@ const matchday3Database = {
         advancedStats: { home: { xG: '1.45', corners: 5, altitudeImpact: '' }, away: { xG: '1.20', corners: 3, altitudeImpact: '' } },
         insight: { prediction: `קרב ישיר ועצבני על הכרטיס לשלב הבא. ההגנה האיראנית הממושמעת תנסה לתסכל את הפרעונים.`, actual: `דרמה מורטת עצבים עד השנייה האחרונה. איראן נתנה פייט אדיר וסחטה 1-1 קשוח, אבל התוצאה הזו שירתה את המצרים שחגגו עלייה לשלב הבא מהמקום השני בזכות הפרש שערים עדיף!` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    },
+    }
       // ---- שאר משחקי מחזור 3 (טרם שוחקו) ----
     'match67': {
         timeStatus: 'future', matchday: 3, stage: "ל'", dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
