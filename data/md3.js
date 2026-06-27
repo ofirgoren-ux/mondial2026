@@ -198,7 +198,7 @@ const matchday3Database = {
         advancedStats: { home: { xG: '1.45', corners: 5, altitudeImpact: '' }, away: { xG: '1.20', corners: 3, altitudeImpact: '' } },
         insight: { prediction: `קרב ישיר ועצבני על הכרטיס לשלב הבא. ההגנה האיראנית הממושמעת תנסה לתסכל את הפרעונים.`, actual: `דרמה מורטת עצבים עד השנייה האחרונה. איראן נתנה פייט אדיר וסחטה 1-1 קשוח, אבל התוצאה הזו שירתה את המצרים שחגגו עלייה לשלב הבא מהמקום השני בזכות הפרש שערים עדיף!` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    }
+    },
       // ---- שאר משחקי מחזור 3 (טרם שוחקו) ----
     'match67': {
         timeStatus: 'future', matchday: 3, stage: "ל'", dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
