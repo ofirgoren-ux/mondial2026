@@ -38,57 +38,127 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 /* --- Main Area & Sticky Header --- */
 .main-content { margin-right: 260px; flex: 1; min-height: 100vh; padding: 30px 40px; display: flex; flex-direction: column; width: calc(100% - 260px); }
 
+/* --- עיצוב עליון משודרג (Header, כותרות וקופסאות הסטטיסטיקה) --- */
 .top-header { 
     background: linear-gradient(135deg, rgba(30, 35, 46, 0.7) 0%, rgba(21, 26, 40, 0.95) 100%);
     border: 1px solid rgba(102, 252, 241, 0.15);
     border-radius: 16px;
-    padding: 30px 40px; 
+    padding: 25px 30px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    /* ביטלנו את ה-wrap כדי להכריח אותם להישאר בשורה אחת בדסקטופ */
     gap: 20px;
 }
 
+.header-titles {
+    flex: 1; /* נותן לטקסט לקחת את כל המקום הנותר */
+}
+
 .header-titles h1 { 
-    font-size: 2.6rem; 
+    font-size: 2.2rem; /* קצת קטן יותר כדי לפנות מקום */
     font-weight: 900; 
     color: var(--text-main); 
-    margin: 0 0 8px 0;
+    margin: 0 0 5px 0;
     text-shadow: 0 2px 6px rgba(0,0,0,0.8);
     letter-spacing: 0.5px;
 }
 
 .header-titles p { 
     color: var(--text-muted); 
-    font-size: 1.15rem; 
+    font-size: 1rem; 
     margin: 0;
     font-weight: 400;
 }
 
-.stats-row { display: flex; gap: 15px; margin-bottom: 0; }
+/* שורת קוביות הסטטיסטיקה */
+.stats-row { 
+    display: flex; 
+    gap: 10px; /* הקטנו את הרווח בין הקוביות */
+    margin-bottom: 0; 
+    flex-shrink: 0; /* מונע מהקוביות להתכווץ יותר מדי */
+}
+
 .stat-box { 
     background: rgba(0, 0, 0, 0.45); 
     border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: 18px 30px; 
-    border-radius: 14px; 
+    padding: 12px 15px; /* הקטנו את הריווח הפנימי משמעותית */
+    border-radius: 12px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: center;
-    min-width: 140px; 
+    min-width: 100px; /* הקטנו את הרוחב המינימלי */
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.2);
     transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
+
 .stat-box:hover {
     transform: translateY(-4px);
     border-color: rgba(102, 252, 241, 0.4);
     background: rgba(0, 0, 0, 0.6);
 }
-.stat-val { font-size: 2.2rem; font-weight: 900; line-height: 1; margin-bottom: 6px; text-shadow: 0 0 15px rgba(0,0,0,0.7);}
-.stat-lbl { font-size: 0.9rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+
+.stat-val { 
+    font-size: 1.6rem; /* הקטנו את המספרים */
+    font-weight: 900; 
+    line-height: 1; 
+    margin-bottom: 4px; 
+    text-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.stat-lbl { 
+    font-size: 0.75rem; /* הקטנו את הטקסט */
+    color: var(--text-muted); 
+    font-weight: 800; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- התאמות קריטיות למובייל עבור החלק העליון --- */
+@media (max-width: 900px) {
+    .top-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px; /* ריווח קטן מאוד למובייל */
+        gap: 20px;
+    }
+
+    .header-titles {
+        text-align: center;
+    }
+
+    .header-titles h1 { 
+        font-size: 1.8rem; 
+    }
+    
+    .header-titles p { 
+        font-size: 0.9rem; 
+    }
+
+    /* רשת 2x2 קומפקטית מאוד למובייל */
+    .stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 8px; /* מרווח מינימלי בין הקוביות */
+        width: 100%;
+    }
+
+    .stat-box {
+        min-width: 0; 
+        padding: 10px 5px; /* ריווח פנימי אפסי במובייל */
+    }
+
+    .stat-val {
+        font-size: 1.4rem; /* מספרים קטנים במובייל */
+    }
+    
+    .stat-lbl {
+        font-size: 0.7rem; /* טקסט זעיר במובייל */
+    }
+}
 
 /* Filters Container */
 .filters-row { display: flex; align-items: center; gap: 20px; background-color: rgba(0,0,0,0.2); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); width: fit-content; flex-wrap: wrap; margin-bottom: 25px; box-shadow: var(--shadow);}
