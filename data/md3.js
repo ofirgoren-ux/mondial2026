@@ -202,76 +202,70 @@ const matchday3Database = {
     
       // ---- שאר משחקי מחזור 3 (טרם שוחקו) ----
 'match67': {
-        timeStatus: 'future', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
         teamHome: { name: `פנמה`, flagCode: 'pa', color: '#DA291C', cards: { yellow: [], red: [] } },
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '0 - 2', actual: '0 - 2', accuracyClass: 'exact' },
         probabilities: { home: 6, draw: 13, away: 81 }, matchRisk: 'Upset Alert',
         radarStats: { home: [46, 20, 47, 46, 68, 17], away: [77, 73, 63, 77, 83, 37] },
-        advancedStats: { home: { xG: '0.59', corners: 0, altitudeImpact: '' }, away: { xG: '2.61', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק חד צדדי. נבחרת שלושת האריות מגיעה עם סוללת כוכבים והיא הולכת להחזיק בכדור למעלה מ-65% מהזמן וללחוץ את פנמה לאחור. פנמה מצידה תנסה פשוט להעביר את הזמן, להתגונן עם 10 שחקנים מאחורי הכדור, ולקוות שהאנגלים יתפסו יום נוראי מול השער.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Luis Mejía', 'César Blackman', 'José Córdoba', 'Fidel Escobar', 'Edgardo Fariña', 'Cristian Martínez', 'José Luis Rodríguez', 'Adalberto Carrasquilla', 'Tomás Rodríguez', 'Ismael Díaz', 'Yoel Bárcenas'], actual: [] }, away: { predicted: ['Jordan Pickford', 'Ezri Konsa', "Nico O'Reilly", 'Declan Rice', 'John Stones', 'Marc Guéhi', 'Bukayo Saka', 'Elliot Anderson', 'Harry Kane', 'Jude Bellingham', 'Marcus Rashford'], actual: [] } }
+        advancedStats: { home: { xG: '0.59', corners: 2, altitudeImpact: '' }, away: { xG: '2.61', corners: 6, altitudeImpact: '' } },
+        insight: { prediction: `משחק חד צדדי. נבחרת שלושת האריות מגיעה עם סוללת כוכבים והיא הולכת להחזיק בכדור למעלה מ-65% מהזמן וללחוץ את פנמה לאחור.`, actual: `אנגליה עשתה את העבודה ברוגע. ג'וד בלינגהאם והארי קיין כבשו והבטיחו לנבחרת שלושת האריות את המקום הראשון בבית בדרך לנוקאאוט.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match68': {
-        timeStatus: 'future', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
-        teamHome: { name: `קרואטיה`, flagCode: 'hr', color: '#FF0000', cards: { yellow: [], red: [] } },
-        teamAway: { name: `גאנה`, flagCode: 'gh', color: '#006B3F', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 0', actual: '', accuracyClass: 'pending' },
+        timeStatus: 'past', matchday: 3, stage: 'L', dateText: `28/06/2026 | 00:00 (שעון ישראל)`,
+        teamHome: { name: `קרואטיה`, flagCode: 'hr', color: '#FF0000', cards: { yellow: ['card'], red: [] } },
+        teamAway: { name: `גאנה`, flagCode: 'gh', color: '#006B3F', cards: { yellow: ['card'], red: [] } },
+        score: { prediction: '1 - 0', actual: '2 - 1', accuracyClass: 'trend' },
         probabilities: { home: 59, draw: 24, away: 17 }, matchRisk: 'Safe',
         radarStats: { home: [69, 40, 58, 69, 87, 40], away: [53, 53, 51, 53, 65, 25] },
-        advancedStats: { home: { xG: '1.69', corners: 0, altitudeImpact: '' }, away: { xG: '0.79', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה במרכז המגרש. הם ינסו להרדים את המשחק ולהתיש את השחקנים מגאנה בעזרת הנעת כדור חכמה והמון סבלנות. גאנה אתלטית ומהירה, ותהיה חייבת ללחוץ גבוה כדי למנוע מהקרואטים לנהל את העניינים בנחת.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Dominik Livaković', 'Josip Stanišić', 'Marin Pongračić', 'Joško Gvardiol', 'Duje Ćaleta-Car', 'Josip Šutalo', 'Nikola Moro', 'Mateo Kovačić', 'Andrej Kramarić', 'Luka Modrić', 'Ante Budimir'], actual: [] }, away: { predicted: ['Lawrence Ati-Zigi', 'Alidu Seidu', 'Caleb Yirenkyi', 'Jonas Adjetey', 'Thomas Partey', 'Abdul Mumin', 'Abdul Fatawu', 'Kwasi Sibo', 'Jordan Ayew', 'Brandon Thomas-Asante', 'Antoine Semenyo'], actual: [] } }
+        advancedStats: { home: { xG: '1.69', corners: 5, altitudeImpact: '' }, away: { xG: '0.79', corners: 3, altitudeImpact: '' } },
+        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה במרכז המגרש. הם ינסו להרדים את המשחק ולהתיש את השחקנים מגאנה בעזרת הנעת כדור חכמה.`, actual: `קרואטיה הבטיחה את המקום השני בבית עם ניצחון 2-1 חשוב על גאנה, במשחק שבו הניסיון האירופי גבר על האתלטיות האפריקאית.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match69': {
-        timeStatus: 'future', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
-        teamHome: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
-        teamAway: { name: `פורטוגל`, flagCode: 'pt', color: '#E42518', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
+        timeStatus: 'past', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
+        teamHome: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: ['card', 'card'], red: [] } },
+        teamAway: { name: `פורטוגל`, flagCode: 'pt', color: '#E42518', cards: { yellow: ['card'], red: [] } },
+        score: { prediction: '0 - 1', actual: '0 - 0', accuracyClass: 'wrong' },
         probabilities: { home: 23, draw: 26, away: 51 }, matchRisk: 'Upset Alert',
         radarStats: { home: [69, 47, 55, 69, 63, 17], away: [75, 33, 64, 75, 72, 45] },
-        advancedStats: { home: { xG: '0.89', corners: 0, altitudeImpact: '' }, away: { xG: '1.49', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק סופר-מעניין. הפורטוגלים מגיעים כדי ליזום ולשלוט, אבל קולומביה היא קבוצה אגרסיבית, פיזית ולטינית קשוחה. אני מצפה לראות כאן המון כרטיסים ועבירות. אם קולומביה תצליח להרוס את שטף המשחק הפורטוגלי, יש לה כלים לעקוץ ביציאות מהירות.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['David Ospina', 'Daniel Muñoz', 'Jhon Lucumí', 'Santiago Arias', 'Kevin Castaño', 'Richard Ríos', 'Luis Díaz', 'Jorge Carrascal', 'Jhon Córdoba', 'James Rodríguez', 'Jhon Arias'], actual: [] }, away: { predicted: ['Diogo Costa', 'Nélson Semedo', 'Rúben Dias', 'Tomás Araújo', 'Diogo Dalot', 'Matheus Nunes', 'Cristiano Ronaldo', 'Bruno Fernandes', 'Gonçalo Ramos', 'Bernardo Silva', 'João Félix'], actual: [] } }
+        advancedStats: { home: { xG: '0.89', corners: 4, altitudeImpact: '' }, away: { xG: '1.49', corners: 5, altitudeImpact: '' } },
+        insight: { prediction: `משחק סופר-מעניין. הפורטוגלים מגיעים כדי ליזום ולשלוט, אבל קולומביה היא קבוצה אגרסיבית, פיזית ולטינית קשוחה.`, actual: `שתי הנבחרות שכבר הבטיחו את העלייה שלהן סיפקו לנו תיקו מאופס, אבל איכותי ומהנה, ששירת את האינטרסים של שני הצדדים.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match70': {
-        timeStatus: 'future', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
-        teamHome: { name: `קונגו`, flagCode: 'cg', color: '#007A5E', cards: { yellow: [], red: [] } },
+        timeStatus: 'past', matchday: 3, stage: 'K', dateText: `28/06/2026 | 02:30 (שעון ישראל)`,
+        teamHome: { name: `קונגו`, flagCode: 'cg', color: '#007A5E', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `אוזבקיסטן`, flagCode: 'uz', color: '#0099B5', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '1 - 1', actual: '3 - 1', accuracyClass: 'wrong' },
         probabilities: { home: 38, draw: 27, away: 35 }, matchRisk: 'Safe',
         radarStats: { home: [62, 60, 49, 62, 69, 22], away: [53, 47, 48, 53, 64, 15] },
-        advancedStats: { home: { xG: '1.29', corners: 0, altitudeImpact: '' }, away: { xG: '1.24', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שרוצות להוכיח את עצמן. קונגו חזקה פיזית ומהירה, בעוד האוזבקים ישחקו כדורגל מסודר ומאורגן. הרבה גישושים צפויים במרכז השדה, וקבוצה שתבצע טעות קריטית תשלם ביוקר. פוטנציאל גבוה מאוד לתיקו שישאיר אותן בתמונה.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Lionel Mpasi', 'Aaron Wan-Bissaka', 'Steve Kapuadi', 'Axel Tuanzebe', 'Dylan Batubinsika', "Ngal'ayel Mukau", 'Nathanaël Mbuku', 'Samuel Moutoussamy', 'Brian Cipenga', 'Théo Bongonda', 'Gaël Kakuta'], actual: [] }, away: { predicted: ['Utkir Yusupov', 'Abdukodir Khusanov', 'Khojiakbar Alijonov', 'Farrukh Sayfiev', 'Rustam Ashurmatov', 'Akmal Mozgovoy', 'Otabek Shukurov', 'Jamshid Iskanderov', 'Odiljon Hamrobekov', 'Jaloliddin Masharipov', 'Oston Urunov'], actual: [] } }
+        advancedStats: { home: { xG: '1.29', corners: 5, altitudeImpact: '' }, away: { xG: '1.24', corners: 3, altitudeImpact: '' } },
+        insight: { prediction: `קרב שקול לחלוטין בין שתי קבוצות שרוצות להוכיח את עצמן. קונגו חזקה פיזית ומהירה, בעוד האוזבקים ישחקו כדורגל מסודר.`, actual: `איזה קאמבק של הרפובליקה הדמוקרטית של קונגו! הם חזרו מפיגור בדרך לניצחון 3-1 גדול שהעלה אותם לשלב הבא מהמקום השלישי.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match71': {
-        timeStatus: 'future', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
-        teamHome: { name: `אלג'יריה`, flagCode: 'dz', color: '#006233', cards: { yellow: [], red: [] } },
-        teamAway: { name: `אוסטריה`, flagCode: 'at', color: '#EF3340', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 1', actual: '', accuracyClass: 'pending' },
+        timeStatus: 'past', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
+        teamHome: { name: `אלג'יריה`, flagCode: 'dz', color: '#006233', cards: { yellow: ['card'], red: [] } },
+        teamAway: { name: `אוסטריה`, flagCode: 'at', color: '#EF3340', cards: { yellow: ['card', 'card'], red: [] } },
+        score: { prediction: '0 - 1', actual: '3 - 3', accuracyClass: 'wrong' },
         probabilities: { home: 28, draw: 28, away: 44 }, matchRisk: 'Upset Alert',
         radarStats: { home: [73, 60, 54, 73, 73, 13], away: [71, 40, 53, 71, 59, 37] },
-        advancedStats: { home: { xG: '0.98', corners: 0, altitudeImpact: '' }, away: { xG: '1.31', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת להפליא שעושה לחץ גבוה מצוין על כל חלקי המגרש. אלג'יריה מסוכנת מאוד עם שחקני כנף מהירים. אם אוסטריה לא תצליח לתרגם את השליטה במרכז השדה לשערים, הלחץ עליה ילך ויגבר, ואלג'יריה יכולה להפוך את הקערה במתפרצת בודדת.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Anthony Mandrea', 'Youcef Atal', 'Ramy Bensebaini', 'Aïssa Mandi', 'Rayan Aït-Nouri', 'Nabil Bentaleb', 'Ismaël Bennacer', 'Ramiz Zerrouki', 'Riyad Mahrez', 'Mohamed Amoura', 'Youcef Belaïli'], actual: [] }, away: { predicted: ['Alexander Schlager', 'David Affengruber', 'Kevin Danso', 'Xaver Schlager', 'Stefan Posch', 'Nicolas Seiwald', 'Marko Arnautović', 'David Alaba', 'Marcel Sabitzer', 'Florian Grillitsch', 'Michael Gregoritsch'], actual: [] } }
+        advancedStats: { home: { xG: '1.98', corners: 6, altitudeImpact: '' }, away: { xG: '1.81', corners: 5, altitudeImpact: '' } },
+        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת שעושה לחץ גבוה מצוין. אלג'יריה מסוכנת מאוד עם שחקני כנף מהירים.`, actual: `משחק פשוט משוגע! שתי הקבוצות כבשו בתוספת הזמן ונפרדו בתיקו 3-3 דרמטי ומטורף לחלוטין שהשאיר אותנו חסרי נשימה.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match72': {
-        timeStatus: 'future', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
+        timeStatus: 'past', matchday: 3, stage: 'J', dateText: `28/06/2026 | 05:00 (שעון ישראל)`,
         teamHome: { name: `ירדן`, flagCode: 'jo', color: '#000000', cards: { yellow: [], red: [] } },
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } },
-        score: { prediction: '0 - 2', actual: '', accuracyClass: 'pending' },
+        score: { prediction: '0 - 2', actual: '1 - 3', accuracyClass: 'trend' },
         probabilities: { home: 7, draw: 14, away: 79 }, matchRisk: 'Upset Alert',
         radarStats: { home: [40, 27, 46, 40, 80, 12], away: [89, 73, 65, 89, 55, 25] },
-        advancedStats: { home: { xG: '0.59', corners: 0, altitudeImpact: '' }, away: { xG: '2.57', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `הבדלי איכות אדירים לטובת אלופת העולם. ירדן תעמיד כאן את האוטובוס, תנסה להתגונן בכל מחיר, ולבזבז זמן כדי להרדים את המשחק. ארגנטינה מצידה, רק צריכה שער אחד מהיר שיפתח את הסכר ויביא אחריו חגיגת שערים.`, actual: `` },
-        goals: [],
-        squads: { home: { predicted: ['Yazeed Abulaila', 'Mohammad Abu Hashish', 'Abdallah Nasib', 'Husam Abu Dahab', 'Yazan Al-Arab', 'Amer Jamous', 'Mohammad Abu Zrayq', 'Noor Al-Rawabdeh', 'Ali Olwan', 'Musa Al-Taamari', 'Odeh Al-Fakhouri'], actual: [] }, away: { predicted: ['Juan Musso', 'Marcos Nicolás Senesi Baron', 'Nicolás Tagliafico', 'Gonzalo Montiel', 'Leandro Paredes', 'Lisandro Martínez', 'Rodrigo De Paul', 'Valentín Barco', 'Julián Alvarez', 'Lionel Messi', 'Giovani Lo Celso'], actual: [] } }
+        advancedStats: { home: { xG: '0.59', corners: 1, altitudeImpact: '' }, away: { xG: '3.10', corners: 8, altitudeImpact: '' } },
+        insight: { prediction: `הבדלי איכות אדירים לטובת אלופת העולם. ירדן תעמיד כאן את האוטובוס, ותנסה להתגונן בכל מחיר.`, actual: `ארגנטינה מטיילת לשלב הבא. האלביסלסטה ניצחו 3-1 במשחק שבו אפילו ליאונל מסי עלה מהספסל כדי להצטרף לחגיגת השערים ולהגדיל את מאזנו.` },
+        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     }
 };
 Object.assign(window.matchDatabase, matchday3Database);
