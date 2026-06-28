@@ -480,73 +480,119 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     line-height: 1.6;
 }
 
-/* --- שחזור העיצוב העליון (Header, כותרות וקופסאות הסטטיסטיקה) --- */
+/* --- עיצוב עליון משודרג (Header, כותרות וקופסאות הסטטיסטיקה) --- */
 .top-header { 
-    background: linear-gradient(135deg, rgba(30, 35, 46, 0.4) 0%, rgba(21, 26, 40, 0.8) 100%);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(30, 35, 46, 0.7) 0%, rgba(21, 26, 40, 0.95) 100%);
+    border: 1px solid rgba(102, 252, 241, 0.15);
     border-radius: 16px;
-    padding: 20px 30px;
-    box-shadow: var(--shadow);
-    margin-bottom: 25px;
-    /* התוספות הקריטיות לשורה אחת: */
+    padding: 30px 40px; /* הגדלנו את הריווח הפנימי למראה יוקרתי */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* חשוב למובייל */
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* ביטול המרווח התחתון המיותר כי הם כבר בשורה אחת */
-.stats-row { 
-    display: flex; 
-    gap: 15px; 
-    flex-wrap: wrap; 
-    margin-bottom: 0; 
-}
 .header-titles h1 { 
-    font-size: 2.2rem; 
+    font-size: 2.6rem; /* הגדלנו את הכותרת */
     font-weight: 900; 
     color: var(--text-main); 
-    margin: 0 0 5px 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    letter-spacing: 0.5px;
 }
+
 .header-titles p { 
     color: var(--text-muted); 
-    font-size: 1.05rem; 
+    font-size: 1.15rem; /* הגדלנו את תת הכותרת */
     margin: 0;
+    font-weight: 400;
 }
+
+/* שורת קוביות הסטטיסטיקה */
 .stats-row { 
     display: flex; 
     gap: 15px; 
-    flex-wrap: wrap; 
-    margin-bottom: 20px;
+    margin-bottom: 0; 
 }
+
 .stat-box { 
-    background: rgba(0, 0, 0, 0.3); 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    padding: 15px 25px; 
-    border-radius: 12px; 
+    background: rgba(0, 0, 0, 0.45); 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    padding: 18px 30px; /* קוביות גדולות יותר */
+    border-radius: 14px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    min-width: 120px; 
-    flex: 1;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    justify-content: center;
+    min-width: 140px; /* רוחב מינימלי מוגדל */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
+
 .stat-box:hover {
-    transform: translateY(-3px);
-    border-color: rgba(102, 252, 241, 0.3);
+    transform: translateY(-4px);
+    border-color: rgba(102, 252, 241, 0.4);
+    background: rgba(0, 0, 0, 0.6);
 }
+
 .stat-val { 
-    font-size: 1.8rem; 
+    font-size: 2.2rem; /* טקסט אחוזים גדול ובולט */
     font-weight: 900; 
     line-height: 1; 
-    margin-bottom: 5px; 
-    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin-bottom: 6px; 
+    text-shadow: 0 0 15px rgba(0,0,0,0.7);
 }
+
 .stat-lbl { 
-    font-size: 0.85rem; 
+    font-size: 0.9rem; /* טקסט תיאור מוגדל מעט */
     color: var(--text-muted); 
-    font-weight: 600; 
+    font-weight: 800; 
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- התאמות קריטיות למובייל עבור החלק העליון --- */
+@media (max-width: 900px) {
+    .top-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 15px; /* ריווח מותאם למסך קטן */
+        gap: 25px;
+    }
+
+    .header-titles {
+        text-align: center;
+    }
+
+    .header-titles h1 { 
+        font-size: 2rem; 
+    }
+    
+    .header-titles p { 
+        font-size: 1rem; 
+    }
+
+    /* הופך את שורת הסטטיסטיקה לרשת של 2x2 במובייל */
+    .stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* שתי עמודות שוות */
+        gap: 12px;
+        width: 100%;
+    }
+
+    .stat-box {
+        min-width: 0; /* מאפשר ל-Grid לכווץ את הקוביות במידת הצורך */
+        padding: 15px 10px;
+    }
+
+    .stat-val {
+        font-size: 1.8rem;
+    }
+    
+    .stat-lbl {
+        font-size: 0.8rem;
+    }
 }
