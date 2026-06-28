@@ -24,13 +24,6 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 15px; color: var(--text-muted); text-decoration: none; font-weight: 600; border-radius: 10px; transition: all 0.3s ease; margin-bottom: 5px; cursor: pointer;}
 .nav-link:hover { background-color: rgba(102, 252, 241, 0.05); color: var(--text-main); }
 .nav-link.active { background-color: var(--accent-blue); color: #fff; box-shadow: 0 4px 15px rgba(69, 162, 158, 0.4); }
-.sidebar-submenu { display: flex; flex-direction: column; gap: 4px; margin-right: 35px; margin-bottom: 15px; }
-.submenu-btn { background: none; border: none; color: var(--text-muted); text-align: right; padding: 6px 10px; font-size: 0.85rem; font-weight: 400; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
-.submenu-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
-.submenu-btn.active { color: var(--accent-cyan); background-color: rgba(102, 252, 241, 0.1); font-weight: 600;}
-.sidebar-guide { margin-top: auto; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; }
-.sidebar-guide h4 { margin: 0 0 10px 0; color: var(--accent-cyan); font-size: 0.9rem; font-weight: 800;}
-.sidebar-guide ol { padding-right: 20px; margin: 0; color: var(--text-muted); font-size: 0.85rem; font-weight: 400; line-height: 1.6;}
 
 /* --- Main Area & Sticky Header --- */
 .main-content { margin-right: 260px; flex: 1; min-height: 100vh; padding: 0; display: flex; flex-direction: column; width: calc(100% - 260px); }
@@ -43,24 +36,28 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 .hero-intro { color: var(--text-muted); font-size: 1rem; font-weight: 400; max-width: 700px; line-height: 1.4;}
 
 /* Stats Container */
-.topbar-stats { display: flex; gap: 10px; flex-shrink: 0;}
-.stat-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 15px; text-align: center; min-width: 100px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
-.stat-num { font-size: 1.6rem; font-weight: 900; line-height: 1; margin-bottom: 2px;}
+.stats-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; 
+}
+.stat-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+}
+.stat-val { font-size: 1.6rem; font-weight: 900; line-height: 1; margin-bottom: 2px;}
 .stat-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;}
-
-/* Filters Container */
-.topbar-row-2 { display: flex; justify-content: flex-start; width: 100%; }
-.filters-row { display: flex; align-items: center; gap: 15px; background-color: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); width: fit-content; flex-wrap: wrap;}
-.filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap;}
-.filter-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 800; margin-left: 5px; text-transform: uppercase;}
-.filter-divider { color: var(--border-color); margin: 0 5px; user-select: none; }
-.filter-btn { background-color: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 4px 10px; border-radius: 30px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
-.filter-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
-.filter-btn.active { background-color: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); border-color: rgba(102, 252, 241, 0.3); }
 
 .content-wrapper { padding: 30px 40px; max-width: 1600px; margin: 0 auto; width: 100%; overflow-x: hidden; }
 
-/* --- Match Cards - RESPONSIVE WIDTH & FIXED HEIGHT --- */
+/* --- Match Cards --- */
 #matches-view { display: block; animation: tabFadeIn 0.4s ease; width: 100%;}
 .matches-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 25px; width: 100%;}
 
@@ -198,27 +195,20 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .modal-close:hover { color: var(--color-wrong); }
 .modal-title { font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 20px; text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
 .modal-body { font-size: 1rem; line-height: 1.6; color: var(--text-main); font-weight: 400;}
-.squad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.squad-col h4 { margin: 0 0 10px 0; color: var(--text-muted); font-size: 0.9rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 5px;}
-.squad-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; font-weight: 400;}
-.diff-player { color: var(--color-trend); font-weight: 600; }
-.goal-item { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; }
-.card-detail { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
 
-.journey-modal-content { max-width: 600px; padding: 0; overflow: hidden; }
+/* --- עיצוב קו הזמן של מסע הנבחרת --- */
 .journey-header { position: relative; padding: 80px 25px 25px; text-align: right; border-bottom: 2px solid var(--accent-cyan); background-size: cover; background-position: center; border-radius: 16px 16px 0 0; }
 .journey-header::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(to top, var(--card-bg) 0%, rgba(30, 35, 46, 0.4) 100%); z-index: 1;}
 .journey-header h2 { position: relative; z-index: 2; margin: 0; font-size: 2.8rem; font-weight: 900; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.8); letter-spacing: 1px;}
 .modal-close-light { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); top: 15px; right: 20px; }
-.journey-body { padding: 25px; max-height: 60vh; overflow-y: auto; }
-.geek-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+.geek-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
 .geek-stat-box { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px 10px; text-align: center; }
 .geek-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--accent-cyan); margin-bottom: 5px; }
 .geek-stat-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
-.timeline-title { font-size: 1.1rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 15px; font-weight: 800;}
-.match-timeline { display: flex; flex-direction: column; gap: 15px; border-right: 2px solid var(--border-color); padding-right: 20px; margin-right: 10px; }
+
+.timeline { display: flex; flex-direction: column; gap: 15px; border-right: 2px solid var(--border-color); padding-right: 20px; margin-right: 10px; position: relative;}
 .timeline-item { position: relative; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; }
-.timeline-item::before { content: ''; position: absolute; right: -27px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-blue); border: 2px solid var(--card-bg); }
+.timeline-item::before { content: ''; position: absolute; right: -27px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-blue); border: 2px solid var(--card-bg); z-index: 2;}
 .timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; font-weight: 600;}
 .timeline-matchup { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
 .timeline-matchup img { width: 24px; border-radius: 3px; }
@@ -227,48 +217,37 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .res-draw { background: rgba(255, 179, 0, 0.15); color: var(--color-trend); border: 1px solid rgba(255, 179, 0, 0.3); }
 .res-loss { background: rgba(255, 51, 51, 0.15); color: var(--color-wrong); border: 1px solid rgba(255, 51, 51, 0.3); }
 
+/* --- עיצוב המסננים (Filters) --- */
+.filters-row { display: flex; align-items: center; gap: 15px; background-color: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); width: fit-content; flex-wrap: wrap; margin-bottom: 20px;}
+.filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap;}
+.filter-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 800; margin-left: 5px; text-transform: uppercase;}
+.time-btn, .stage-btn { background-color: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 4px 10px; border-radius: 30px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
+.time-btn:hover, .stage-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
+.time-btn.active, .stage-btn.active { background-color: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); border-color: rgba(102, 252, 241, 0.3); }
+
+/* --- עיצוב תתי-התפריטים --- */
+.submenu { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; padding-right: 35px;}
+.submenu-btn { display: block; width: 100%; text-align: right; box-sizing: border-box; padding: 8px 12px; border-radius: 8px; color: var(--text-muted); text-decoration: none; background: transparent; border: none; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
+.submenu-btn:hover, .submenu-btn.active { background: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); }
+
+
 /* --- MOBILE SPECIFIC FIXES --- */
 @media (max-width: 1400px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 900px) {
-    .mobile-menu-btn { 
-        display: block; 
-        font-size: 2rem; 
-        padding: 5px 15px; 
-        background: rgba(255,255,255,0.1); 
-        border-radius: 8px; 
-        border: 1px solid rgba(255,255,255,0.2);
-    }
-    
+    .mobile-menu-btn { display: block; font-size: 2rem; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
     .sticky-header { padding: 10px 15px; width: 100vw; max-width: 100vw;} 
     .topbar-row-1 { flex-direction: column; align-items: flex-start; gap: 10px; }
     .title-wrapper { margin-bottom: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-direction: row-reverse; } 
     .topbar-title { font-size: 1.4rem; white-space: normal; text-align: left; line-height: 1.2;} 
     .hero-intro { display: none; } 
     
-    .topbar-stats { 
-        width: 100%; 
-        overflow-x: auto; 
-        padding-bottom: 5px; 
-        justify-content: flex-start; 
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-    }
+    .topbar-stats { width: 100%; overflow-x: auto; padding-bottom: 5px; justify-content: flex-start; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
     .stat-card { flex: 0 0 110px; scroll-snap-align: start; padding: 6px 10px; }
     .stat-num { font-size: 1.4rem; }
     .stat-lbl { font-size: 0.7rem; }
     
     .topbar-row-2 { margin-top: 5px; }
-    .filters-row { 
-        flex-direction: row; 
-        overflow-x: auto; 
-        width: 100%; 
-        padding: 8px 5px; 
-        border-radius: 8px;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-        gap: 10px;
-    }
+    .filters-row { flex-direction: row; overflow-x: auto; width: 100%; padding: 8px 5px; border-radius: 8px; white-space: nowrap; -webkit-overflow-scrolling: touch; gap: 10px; }
     .filter-group { flex-wrap: nowrap; }
 
     .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; width: 280px; }
@@ -276,27 +255,298 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     .main-content { margin-right: 0; width: 100vw; max-width: 100vw; overflow-x: hidden;}
     .content-wrapper { padding: 15px 0px; } 
 
-    .matches-grid { 
-        display: flex !important; 
-        flex-wrap: nowrap !important; 
-        overflow-x: auto !important; 
-        scroll-snap-type: x mandatory; 
-        -webkit-overflow-scrolling: touch; 
-        gap: 15px; 
-        padding: 5px 10px 20px 10px; 
-        scroll-padding-left: 10px; 
-        scroll-padding-right: 10px;
-        width: 100vw;
-    }
-    .match-card { 
-        flex: 0 0 85% !important; 
-        scroll-snap-align: center; 
-        max-width: 380px; 
-        margin: 0; 
-    }
-    
+    .matches-grid { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 15px; padding: 5px 10px 20px 10px; scroll-padding-left: 10px; scroll-padding-right: 10px; width: 100vw; }
+    .match-card { flex: 0 0 85% !important; scroll-snap-align: center; max-width: 380px; margin: 0; }
     .match-hero { padding: 10px 5px 5px; }
     .team-flag { width: 45px !important; height: 30px !important; }
     .team-name { font-size: 0.95rem; }
     .score-number { font-size: 1.6rem; padding: 4px 14px; }
+}
+/* --- עיצוב המסננים (Filters) --- */
+.filters-row { display: flex; align-items: center; gap: 15px; background-color: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); width: fit-content; flex-wrap: wrap; margin-bottom: 20px;}
+.filter-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap;}
+.filter-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 800; margin-left: 5px; text-transform: uppercase;}
+.time-btn, .stage-btn { background-color: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 4px 10px; border-radius: 30px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
+.time-btn:hover, .stage-btn:hover { color: var(--text-main); background-color: rgba(255, 255, 255, 0.05); }
+.time-btn.active, .stage-btn.active { background-color: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); border-color: rgba(102, 252, 241, 0.3); }
+
+/* --- עיצוב תתי-התפריטים --- */
+.submenu { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; padding-right: 35px;}
+.submenu-btn { display: block; width: 100%; text-align: right; box-sizing: border-box; padding: 8px 12px; border-radius: 8px; color: var(--text-muted); text-decoration: none; background: transparent; border: none; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
+.submenu-btn:hover, .submenu-btn.active { background: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); }
+
+/* --- עיצוב מסע הנבחרת --- */
+.journey-header { position: relative; padding: 80px 25px 25px; text-align: right; border-bottom: 2px solid var(--accent-cyan); background-size: cover; background-position: center; border-radius: 16px 16px 0 0; }
+.journey-header::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(to top, var(--card-bg) 0%, rgba(30, 35, 46, 0.4) 100%); z-index: 1;}
+.journey-header h2 { position: relative; z-index: 2; margin: 0; font-size: 2.8rem; font-weight: 900; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.8); letter-spacing: 1px;}
+.modal-close-light { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); top: 15px; right: 20px; }
+.geek-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+.geek-stat-box { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px 10px; text-align: center; }
+.geek-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--accent-cyan); margin-bottom: 5px; }
+.geek-stat-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+
+.timeline { display: flex; flex-direction: column; gap: 15px; border-right: 2px solid var(--border-color); padding-right: 20px; margin-right: 10px; position: relative;}
+.timeline-item { position: relative; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; }
+.timeline-item::before { content: ''; position: absolute; right: -27px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-blue); border: 2px solid var(--card-bg); z-index: 2;}
+.timeline-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; font-weight: 600;}
+.timeline-matchup { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+.timeline-matchup img { width: 24px; border-radius: 3px; }
+.timeline-res { display: inline-block; padding: 3px 10px; border-radius: 6px; font-weight: 900; font-size: 0.9rem; margin-top: 10px; }
+.res-win { background: rgba(0, 230, 118, 0.15); color: var(--color-exact); border: 1px solid rgba(0, 230, 118, 0.3); }
+.res-draw { background: rgba(255, 179, 0, 0.15); color: var(--color-trend); border: 1px solid rgba(255, 179, 0, 0.3); }
+.res-loss { background: rgba(255, 51, 51, 0.15); color: var(--color-wrong); border: 1px solid rgba(255, 51, 51, 0.3); }
+
+/* --- מלך השערים --- */
+#scorers-view { display: none; width: 100%; animation: tabFadeIn 0.4s ease; }
+.scorers-dashboard { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 0 auto; width: 100%; padding-bottom: 30px;}
+.podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 30px; }
+.podium-card { background: var(--card-bg); border-radius: 16px; position: relative; width: 30%; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; }
+.podium-card:hover { transform: translateY(-10px); }
+.podium-flag-bg { position: absolute; top: 0; left: 0; right: 0; height: 130px; background-size: cover; background-position: center; opacity: 0.3; z-index: 0; border-top-left-radius: 12px; border-top-right-radius: 12px; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); }
+.podium-content { position: relative; z-index: 1; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; height: 100%; }
+.podium-rank-1 { border-top: 4px solid #FFD700; box-shadow: 0 -10px 30px rgba(255, 215, 0, 0.15), var(--shadow); height: 280px; z-index: 3; }
+.podium-rank-2 { border-top: 4px solid #C0C0C0; box-shadow: 0 -10px 30px rgba(192, 192, 192, 0.1), var(--shadow); height: 250px; z-index: 2; }
+.podium-rank-3 { border-top: 4px solid #CD7F32; box-shadow: 0 -10px 30px rgba(205, 127, 50, 0.1), var(--shadow); height: 230px; z-index: 1; }
+.podium-badge { position: absolute; top: -18px; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 1.2rem; color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid var(--card-bg); z-index: 5;}
+.podium-rank-1 .podium-badge { width: 44px; height: 44px; top: -22px; font-size: 1.5rem; }
+.podium-player-img { width: 65px; height: 65px; flex-shrink: 0; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 3px solid; box-shadow: 0 4px 15px rgba(0,0,0,0.6); margin-bottom: 12px; background-color: #111;}
+.podium-rank-1 .podium-player-img { width: 85px; height: 85px; margin-bottom: 15px; border-width: 4px; }
+.podium-name { font-size: 1.1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; margin-bottom: 4px; }
+.podium-team { font-size: 0.8rem; color: var(--text-muted); margin-bottom: auto; display: flex; align-items: center; justify-content: center; }
+.podium-goals { font-size: 2.2rem; font-weight: 900; line-height: 1; margin: 15px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:2px;}
+.podium-goals span { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+.podium-stats { background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
+.lb-container { display: flex; flex-direction: column; gap: 8px; }
+.lb-row { display: flex; align-items: center; padding: 12px 20px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.2s ease; gap: 15px;}
+.lb-row:hover { transform: translateX(-5px); background: rgba(102, 252, 241, 0.05); border-color: rgba(102, 252, 241, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.lb-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 25px; text-align: center; opacity: 0.5; }
+.lb-flag { width: 35px; height: 25px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.lb-info { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
+.lb-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; line-height: 1; }
+.lb-team { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+.lb-bar-bg { width: 100%; max-width: 250px; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; }
+.lb-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 3px; transition: width 1s ease-out; }
+.lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
+
+/* --- עיצוב חלון מסע הנבחרת (רקע דגל, כותרת והצללות) --- */
+
+/* הגדרת אזור הכותרת עם תמונת הדגל ברקע */
+#journey-header { 
+    position: relative; 
+    padding: 80px 25px 25px; 
+    text-align: right; 
+    border-bottom: 2px solid var(--accent-cyan); 
+    background-size: cover; 
+    background-position: center; 
+    border-radius: 16px 16px 0 0; 
+}
+
+/* שכבת השחרה הדרגתית מעל הדגל כדי שהטקסט יבלוט תמיד */
+#journey-header::before { 
+    content: ''; 
+    position: absolute; 
+    top: 0; right: 0; bottom: 0; left: 0; 
+    background: linear-gradient(to top, var(--card-bg) 0%, rgba(30, 35, 46, 0.4) 100%); 
+    z-index: 1;
+    border-radius: 16px 16px 0 0;
+}
+
+/* שם המדינה - גדול, לבן ועם הצללה חזקה לקריאות מקסימלית */
+#journey-title { 
+    position: relative; 
+    z-index: 2; 
+    margin: 0; 
+    font-size: 2.8rem; 
+    font-weight: 900; 
+    color: #ffffff; 
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9), 0 2px 5px rgba(0,0,0,0.9); 
+    letter-spacing: 1px;
+}
+
+/* כפתור הסגירה (X) - צבוע בלבן עם הצללה שייראה בבירור על הדגל */
+#journey-header .modal-close { 
+    color: #ffffff; 
+    text-shadow: 0 2px 5px rgba(0,0,0,0.9); 
+    top: 15px; 
+    right: 20px; 
+    z-index: 10;
+}
+
+/* סידור סטטיסטיקות הגיק מתחת לכותרת */
+.geek-stats-row { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin-bottom: 30px; 
+}
+.geek-stat-box { 
+    background: rgba(0,0,0,0.2); 
+    border: 1px solid var(--border-color); 
+    border-radius: 10px; 
+    padding: 15px 10px; 
+    text-align: center; 
+}
+.geek-stat-val { 
+    font-size: 1.4rem; 
+    font-weight: 900; 
+    color: var(--accent-cyan); 
+    margin-bottom: 5px; 
+}
+.geek-stat-lbl { 
+    font-size: 0.75rem; 
+    color: var(--text-muted); 
+    font-weight: 600; 
+}
+
+/* --- תיקון חלון מסע הנבחרת: גובה מקסימלי וגלילה פנימית --- */
+
+.modal-content { 
+    /* הגבלת גובה החלון ל-85% מהמסך וסידור התוכן בטור */
+    max-height: 85vh; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+#journey-header { 
+    /* נעילת הכותרת כדי שלא תתכווץ כשיש הרבה תוכן */
+    flex-shrink: 0; 
+}
+
+.modal-body { 
+    /* הוספת פס גלילה אנכי רק לאזור התוכן שמתחת לכותרת */
+    overflow-y: auto; 
+    flex-grow: 1;
+}
+
+/* עיצוב עדין לפס הגלילה הפנימי של החלון */
+.modal-body::-webkit-scrollbar { 
+    width: 6px; 
+}
+.modal-body::-webkit-scrollbar-track { 
+    background: rgba(0,0,0,0.1); 
+}
+.modal-body::-webkit-scrollbar-thumb { 
+    background: var(--border-color); 
+    border-radius: 10px; 
+}
+.modal-body::-webkit-scrollbar-thumb:hover { 
+    background: var(--accent-cyan); 
+}
+
+/* --- שחזור עיצוב תפריט הצד (לוגו, כותרת ניווט, וקופסת ההסבר) --- */
+.sidebar-brand { 
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    color: var(--text-main); 
+    margin-bottom: 20px; 
+    text-align: center; 
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.4); 
+    line-height: 1.1; 
+}
+.sidebar-brand span { 
+    color: var(--accent-cyan); 
+    display: block; 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    margin-top: 5px; 
+}
+.nav-title { 
+    color: var(--text-muted); 
+    font-size: 0.8rem; 
+    font-weight: 800; 
+    margin: 15px 10px 5px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+.model-info-box { 
+    margin-top: auto; 
+    background: rgba(0,0,0,0.2); 
+    border: 1px solid var(--border-color); 
+    padding: 15px; 
+    border-radius: 12px; 
+}
+.model-info-box h4 { 
+    margin: 0 0 10px 0; 
+    color: var(--accent-cyan); 
+    font-size: 0.9rem; 
+    font-weight: 800;
+}
+.model-info-box ol { 
+    padding-right: 20px; 
+    margin: 0; 
+    color: var(--text-muted); 
+    font-size: 0.85rem; 
+    font-weight: 400; 
+    line-height: 1.6;
+}
+
+/* --- שחזור העיצוב העליון (Header, כותרות וקופסאות הסטטיסטיקה) --- */
+.top-header { 
+    background: linear-gradient(135deg, rgba(30, 35, 46, 0.4) 0%, rgba(21, 26, 40, 0.8) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+    /* התוספות הקריטיות לשורה אחת: */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* חשוב למובייל */
+}
+
+/* ביטול המרווח התחתון המיותר כי הם כבר בשורה אחת */
+.stats-row { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+    margin-bottom: 0; 
+}
+.header-titles h1 { 
+    font-size: 2.2rem; 
+    font-weight: 900; 
+    color: var(--text-main); 
+    margin: 0 0 5px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.header-titles p { 
+    color: var(--text-muted); 
+    font-size: 1.05rem; 
+    margin: 0;
+}
+.stats-row { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+}
+.stat-box { 
+    background: rgba(0, 0, 0, 0.3); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    padding: 15px 25px; 
+    border-radius: 12px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    min-width: 120px; 
+    flex: 1;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.stat-box:hover {
+    transform: translateY(-3px);
+    border-color: rgba(102, 252, 241, 0.3);
+}
+.stat-val { 
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    line-height: 1; 
+    margin-bottom: 5px; 
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.stat-lbl { 
+    font-size: 0.85rem; 
+    color: var(--text-muted); 
+    font-weight: 600; 
+    text-transform: uppercase;
 }

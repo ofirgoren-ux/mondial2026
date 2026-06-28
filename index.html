@@ -3,36 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מונדיאל 2026 - דשבורד פרו</title>
-    <link rel="stylesheet" href="style.css">
+    <title>MUNDIAL 2026 AI Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
-    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
-    <nav class="sidebar" id="main-sidebar">
-        <div class="sidebar-logo">
-            MUNDIAL 2026
+    <aside class="sidebar" id="main-sidebar">
+        <div class="sidebar-brand">
+            MUNDIAL 2026<br>
             <span>AI Dashboard</span>
         </div>
-
-        <div class="sidebar-section-title">ניווט ראשי</div>
-        <a id="nav-matches" class="nav-link active" onclick="switchView('matches')">🏠 שלב הבתים</a>
         
-        <div class="sidebar-submenu" id="submenu-matchdays">
-            <button class="submenu-btn active" data-md="all">כל המשחקים</button>
-            <button class="submenu-btn" data-md="1">מחזור 1</button>
-            <button class="submenu-btn" data-md="2">מחזור 2</button>
-            <button class="submenu-btn" data-md="3">מחזור 3</button>
-            <button class="submenu-btn" data-md="ko">נוקאאוט</button>
+        <div class="nav-title">ניווט ראשי</div>
+        
+        <div class="nav-item">
+            <a href="#" class="nav-link active" id="nav-matches" onclick="currentMdFilter='all'; switchView('matches'); applyFilters();">
+                <span class="icon">🏟️</span> שלב הבתים
+            </a>
+            <div class="submenu" id="submenu-groups" style="display: flex;">
+                <a href="#" class="submenu-btn active" data-md="all" onclick="currentMdFilter='all'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">כל המשחקים</a>
+                <a href="#" class="submenu-btn" data-md="1" onclick="currentMdFilter='1'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 1</a>
+                <a href="#" class="submenu-btn" data-md="2" onclick="currentMdFilter='2'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 2</a>
+                <a href="#" class="submenu-btn" data-md="3" onclick="currentMdFilter='3'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 3</a>
+            </div>
         </div>
 
-        <a id="nav-standings" class="nav-link" onclick="switchView('standings')">📊 טבלת בתים</a>
-        <a id="nav-scorers" class="nav-link" onclick="switchView('scorers')">⚽ מלך השערים</a>
-        <a id="nav-bracket" class="nav-link" onclick="switchView('bracket')">🏆 עץ הנוקאאוט</a>
+        <div class="nav-item">
+            <a href="#" class="nav-link" id="nav-standings" onclick="switchView('standings')">
+                <span class="icon">📊</span> טבלת בתים
+            </a>
+        </div>
 
-        <div class="sidebar-guide">
+        <div class="nav-item">
+            <a href="#" class="nav-link" id="nav-scorers" onclick="switchView('scorers')">
+                <span class="icon">⚽</span> מלך השערים
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="#" class="nav-link" id="nav-bracket" onclick="switchView('bracket')">
+                <span class="icon">🏆</span> עץ הנוקאאוט
+            </a>
+            <div class="submenu bracket-submenu" id="submenu-knockout" style="display: none;">
+                <a href="#" class="submenu-btn" data-md="r32" onclick="currentMdFilter='r32'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">32 הגדולות</a>
+                <a href="#" class="submenu-btn" data-md="r16" onclick="currentMdFilter='r16'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">16 הגדולות</a>
+                <a href="#" class="submenu-btn" data-md="qf" onclick="currentMdFilter='qf'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">רבע גמר (8)</a>
+                <a href="#" class="submenu-btn" data-md="sf" onclick="currentMdFilter='sf'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">חצי גמר</a>
+                <a href="#" class="submenu-btn" data-md="final" onclick="currentMdFilter='final'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">הגמר</a>
+            </div>
+        </div>
+
+        <div class="model-info-box">
             <h4>מודל הניבוי</h4>
             <ol>
                 <li>איסוף נתוני קבוצות ו-xG</li>
@@ -40,112 +64,99 @@
                 <li>הפקת הסתברות ותחזית</li>
             </ol>
         </div>
-    </nav>
+    </aside>
 
     <main class="main-content">
-        <header class="topbar sticky-header">
-            <div class="topbar-row-1">
-                <div class="topbar-titles">
-                    <div class="title-wrapper">
-                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-                        <h1 class="topbar-title" id="main-title">שלב הבתים – מודל הסתברותי</h1>
-                    </div>
-                    <div class="hero-intro">
-                        סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI).
-                    </div>
-                </div>
-                
-                <div class="topbar-stats">
-                    <div class="stat-card">
-                        <div class="stat-num" id="stat-total" style="color:var(--text-main)">0</div>
-                        <div class="stat-lbl">סה"כ משחקים</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-num" id="stat-exact" style="color:var(--color-exact)">0%</div>
-                        <div class="stat-lbl">פגיעה מדויקת</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-num" id="stat-trend" style="color:var(--color-trend)">0%</div>
-                        <div class="stat-lbl">כיוון נכון</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(102, 252, 241, 0.1); border-color: rgba(102, 252, 241, 0.3);">
-                        <div class="stat-num" id="stat-overall" style="color:var(--accent-cyan)">0%</div>
-                        <div class="stat-lbl">אחוזי הצלחה</div>
-                    </div>
-                </div>
+        
+        <div class="mobile-nav-toggle" onclick="toggleMobileMenu()">
+            <span>☰</span> תפריט
+        </div>
+
+        <header class="top-header">
+            <div class="header-titles">
+                <h1 id="main-title">שלב הבתים – מודל הסתברותי</h1>
+                <p>סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI).</p>
             </div>
 
-            <div class="topbar-row-2">
-                <div class="filters-row" id="main-filters">
-                    <div class="filter-group">
-                        <span class="filter-label">זמן:</span>
-                        <button class="filter-btn time-btn active" data-time="all">הכל</button>
-                        <button class="filter-btn time-btn" data-time="past">שוחקו</button>
-                        <button class="filter-btn time-btn" data-time="future">עתיד</button>
-                    </div>
-                    <div class="filter-divider">|</div>
-                    <div class="filter-group">
-                        <span class="filter-label">בתים:</span>
-                        <button class="filter-btn stage-btn active" data-stage="all">הכל</button>
-                        <button class="filter-btn stage-btn" data-stage="A">א'</button>
-                        <button class="filter-btn stage-btn" data-stage="B">ב'</button>
-                        <button class="filter-btn stage-btn" data-stage="C">ג'</button>
-                        <button class="filter-btn stage-btn" data-stage="D">ד'</button>
-                        <button class="filter-btn stage-btn" data-stage="E">ה'</button>
-                        <button class="filter-btn stage-btn" data-stage="F">ו'</button>
-                        <button class="filter-btn stage-btn" data-stage="G">ז'</button>
-                        <button class="filter-btn stage-btn" data-stage="H">ח'</button>
-                        <button class="filter-btn stage-btn" data-stage="I">ט'</button>
-                        <button class="filter-btn stage-btn" data-stage="J">י'</button>
-                        <button class="filter-btn stage-btn" data-stage="K">י"א</button>
-                        <button class="filter-btn stage-btn" data-stage="L">י"ב</button>
-                    </div>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-val" style="color: #00ff88" id="stat-overall">0%</div>
+                    <div class="stat-lbl">אחוזי הצלחה</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" style="color: #ffd700" id="stat-trend">0%</div>
+                    <div class="stat-lbl">כיוון נכון</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" style="color: #00ff88" id="stat-exact">0%</div>
+                    <div class="stat-lbl">פגיעה מדויקת</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="stat-total">0</div>
+                    <div class="stat-lbl">סה"כ משחקים</div>
                 </div>
             </div>
         </header>
 
-        <div class="content-wrapper">
-            <div id="matches-view">
-                <div id="matches-container" class="matches-grid"></div>
+        <div class="filters-row" id="main-filters">
+            <div class="filter-group">
+                <span class="filter-label">זמן:</span>
+                <button class="time-btn active" data-time="all">הכל</button>
+                <button class="time-btn" data-time="past">שוחקו</button>
+                <button class="time-btn" data-time="future">עתיד</button>
             </div>
-
-            <div id="standings-view"></div>
-            <div id="scorers-view"></div>
-
-            <div id="bracket-view" style="display:none; animation: tabFadeIn 0.4s ease;">
-                <div class="knockout-container">
-                    <div id="dynamic-bracket" class="tournament-bracket"></div>
-                </div>
+            <div class="filter-group" id="filter-stages-container">
+                <span class="filter-label">בתים:</span>
+                <button class="stage-btn active" data-stage="all">הכל</button>
+                <button class="stage-btn" data-stage="A">א'</button>
+                <button class="stage-btn" data-stage="B">ב'</button>
+                <button class="stage-btn" data-stage="C">ג'</button>
+                <button class="stage-btn" data-stage="D">ד'</button>
+                <button class="stage-btn" data-stage="E">ה'</button>
+                <button class="stage-btn" data-stage="F">ו'</button>
+                <button class="stage-btn" data-stage="G">ז'</button>
+                <button class="stage-btn" data-stage="H">ח'</button>
+                <button class="stage-btn" data-stage="I">ט'</button>
+                <button class="stage-btn" data-stage="J">י'</button>
+                <button class="stage-btn" data-stage="K">י"א</button>
+                <button class="stage-btn" data-stage="L">י"ב</button>
             </div>
         </div>
+
+        <div id="matches-view">
+            <div class="matches-grid" id="matches-container"></div>
+        </div>
+        
+        <div id="standings-view" class="standings-grid" style="display:none;"></div>
+        
+        <div id="scorers-view" style="display:none;"></div>
+        
+        <div id="bracket-view" style="display:none;">
+            <div id="dynamic-bracket" class="bracket-container"></div>
+        </div>
+
     </main>
 
-    <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
+    <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal(event)">×</button>
-            <div class="modal-title" id="modalTitle"></div>
-            <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-
-    <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal(event)">
-        <div class="modal-content journey-modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close modal-close-light" onclick="closeJourneyModal(event)">×</button>
-            <div class="journey-header" id="journey-header">
-                <h2 id="journey-title">שם הנבחרת</h2>
+            <div class="modal-header" id="journey-header">
+                <div class="modal-close" onclick="closeJourneyModal()">×</div>
+                <h2 id="journey-title">שם נבחרת</h2>
             </div>
-            <div class="journey-body">
-                <div class="geek-stats-grid" id="journey-stats"></div>
-                <h3 class="timeline-title">הדרך לנוקאאוט</h3>
-                <div class="match-timeline" id="journey-timeline"></div>
+            <div class="modal-body">
+                <div class="geek-stats-row" id="journey-stats"></div>
+                <h3 style="margin: 20px 0 10px; font-size: 1.1rem; color: var(--text-main);">מסע הנבחרת:</h3>
+                <div class="timeline" id="journey-timeline"></div>
             </div>
         </div>
     </div>
 
-    <script src="data/md1.js"></script>
-    <script src="data/md2.js"></script>
-    <script src="data/md3.js"></script>
-    <script src="data/knockoutData.js"></script>
+    <!-- טעינת הנתונים (שנה את הנתיב אם הקבצים לא בתיקיית DATA) -->
+    <script src="DATA/md1.js"></script>
+    <script src="DATA/md2.js"></script>
+    <script src="DATA/md3.js"></script>
+    <script src="DATA/knockoutData.js"></script>
     <script src="engine.js"></script>
+
 </body>
 </html>

@@ -19,26 +19,51 @@ function closeMobileMenuIfOpen() {
 window.switchView = function(viewName) {
     closeMobileMenuIfOpen();
     
-    // הסתרת כל המסכים
     ['matches-view', 'standings-view', 'bracket-view', 'scorers-view'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
     });
     
-    // ניהול תצוגת הפילטרים למעלה
     const mainFilters = document.getElementById('main-filters');
     if(mainFilters) mainFilters.style.display = (viewName === 'matches') ? 'flex' : 'none';
 
-    // סימון בתפריט הצד
     document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
-    const activeNav = document.getElementById('nav-' + viewName);
-    if(activeNav) activeNav.classList.add('active');
+    
+    const groupSubmenu = document.getElementById('submenu-groups');
+    const knockoutSubmenu = document.getElementById('submenu-knockout');
+    const stagesFilterGroup = document.getElementById('filter-stages-container');
 
-    // החלפת כותרת והצגת המסך הרלוונטי
+    const isKnockoutMatch = ['r32', 'r16', 'qf', 'sf', 'final'].includes(currentMdFilter);
+
+    if (viewName === 'matches' && isKnockoutMatch) {
+        document.getElementById('nav-bracket').classList.add('active');
+        if(groupSubmenu) groupSubmenu.style.display = 'none';
+        if(knockoutSubmenu) knockoutSubmenu.style.display = 'flex';
+        if(stagesFilterGroup) stagesFilterGroup.style.display = 'none';
+    } else if (viewName === 'bracket') {
+        document.getElementById('nav-bracket').classList.add('active');
+        if(groupSubmenu) groupSubmenu.style.display = 'none';
+        if(knockoutSubmenu) knockoutSubmenu.style.display = 'flex';
+    } else {
+        const activeNav = document.getElementById('nav-' + viewName);
+        if(activeNav) activeNav.classList.add('active');
+        if(groupSubmenu) groupSubmenu.style.display = 'flex';
+        if(knockoutSubmenu) knockoutSubmenu.style.display = 'none';
+        if (viewName === 'matches' && stagesFilterGroup) stagesFilterGroup.style.display = 'flex';
+    }
+
     const titleEl = document.getElementById('main-title');
     if (viewName === 'matches') {
         document.getElementById('matches-view').style.display = 'block';
-        if(titleEl) titleEl.innerText = "שלב הבתים – מודל הסתברותי";
+        
+        let titleText = "שלב הבתים – מודל הסתברותי";
+        if (currentMdFilter === 'r32') titleText = "32 הגדולות – שלב הנוקאאוט";
+        if (currentMdFilter === 'r16') titleText = "שמינית גמר (16 הגדולות)";
+        if (currentMdFilter === 'qf') titleText = "רבע הגמר";
+        if (currentMdFilter === 'sf') titleText = "חצי הגמר";
+        if (currentMdFilter === 'final') titleText = "הגמר הגדול";
+        
+        if(titleEl) titleEl.innerText = titleText;
         renderMatches();
     } else if (viewName === 'standings') {
         document.getElementById('standings-view').style.display = 'flex';
@@ -90,7 +115,8 @@ function renderMatches() {
 
     let filteredMatches = Object.entries(db).filter(([matchId, data]) => {
         const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === data.timeStatus); 
-        const sMatch = (currentStageFilter === 'all' || currentStageFilter === data.stage); 
+        const isKnockoutMode = ['r32', 'r16', 'qf', 'sf', 'final'].includes(currentMdFilter);
+        const sMatch = isKnockoutMode ? true : (currentStageFilter === 'all' || currentStageFilter === data.stage); 
         const mMatch = (currentMdFilter === 'all' || currentMdFilter === String(data.matchday)); 
         return tMatch && sMatch && mMatch;
     });
@@ -330,6 +356,9 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
         const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`); 
         if (btn) btn.classList.add('active');
+        switchView('matches');
+    } else {
+        switchView('matches');
     }
 
     const timeParam = urlParams.get('time');
@@ -372,6 +401,8 @@ window.renderStandings = function() {
     Object.values(db).forEach(match => {
         if(!match.stage || !match.teamHome || !match.teamAway) return;
         const st = match.stage;
+        if (st === 'נוקאאוט' || st === 'knockout') return;
+
         if (!groups[st]) groups[st] = {};
         
         const tH = match.teamHome; const tA = match.teamAway;
@@ -398,7 +429,7 @@ window.renderStandings = function() {
     if(!container) return;
     
     let html = '';
-Object.keys(groups).sort().forEach(st => {
+    Object.keys(groups).sort().forEach(st => {
         let teams = Object.values(groups[st]);
         teams.sort((a,b) => {
             if(b.pts !== a.pts) return b.pts - a.pts;
@@ -407,10 +438,9 @@ Object.keys(groups).sort().forEach(st => {
             return b.gf - a.gf;
         });
         
-        // כאן הקסם שמתרגם את האות האנגלית לכותרת בעברית!
         const hebrewGroups = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': 'י"א', 'L': 'י"ב'};
         const groupName = hebrewGroups[st] || st;
-        
+
         let rows = teams.map((t, idx) => {
             let goalsHtml = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>${t.ga}</span><span>-</span><span>${t.gf}</span></span>`;
             let diffHtml = t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga);
@@ -452,41 +482,43 @@ window.renderKnockout = function() {
     let html = '<div class="bracket-column round-of-32">';
     html += '<div class="round-title">32 הגדולות</div>';
     
-    window.knockoutBracket.roundOf32.forEach(match => {
-        html += '<div class="bracket-match animate-in">';
-        
-        let flag1 = match.team1.flag !== 'un' ? `https://flagcdn.com/w320/${match.team1.flag}.png` : '';
-        let bg1 = flag1 ? `background-image: url('${flag1}');` : '';
-        let click1 = match.team1.flag !== 'un' ? `onclick="openJourneyModal('${match.team1.name}', '${match.team1.flag}')"` : '';
-        let statusStyle1 = match.team1.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
-        
-        html += `
-            <div class="bracket-team" ${click1}>
-                <div class="flag-bg" style="${bg1}"></div>
-                <div class="team-info">
-                    <h3 class="team-name">${match.team1.name}</h3>
-                    <div class="team-subtitle" style="${statusStyle1}">${match.team1.status}</div>
+    if (window.knockoutBracket.roundOf32) {
+        window.knockoutBracket.roundOf32.forEach(match => {
+            html += '<div class="bracket-match animate-in">';
+            
+            let flag1 = match.team1.flag !== 'un' ? `https://flagcdn.com/w320/${match.team1.flag}.png` : '';
+            let bg1 = flag1 ? `background-image: url('${flag1}');` : '';
+            let click1 = match.team1.flag !== 'un' ? `onclick="openJourneyModal('${match.team1.name}', '${match.team1.flag}')"` : '';
+            let statusStyle1 = match.team1.status && match.team1.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
+            
+            html += `
+                <div class="bracket-team" ${click1}>
+                    <div class="flag-bg" style="${bg1}"></div>
+                    <div class="team-info">
+                        <h3 class="team-name">${match.team1.name}</h3>
+                        <div class="team-subtitle" style="${statusStyle1}">${match.team1.status || ''}</div>
+                    </div>
                 </div>
-            </div>
-        `;
-        
-        let flag2 = match.team2.flag !== 'un' ? `https://flagcdn.com/w320/${match.team2.flag}.png` : '';
-        let bg2 = flag2 ? `background-image: url('${flag2}');` : '';
-        let click2 = match.team2.flag !== 'un' ? `onclick="openJourneyModal('${match.team2.name}', '${match.team2.flag}')"` : '';
-        let statusStyle2 = match.team2.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
+            `;
+            
+            let flag2 = match.team2.flag !== 'un' ? `https://flagcdn.com/w320/${match.team2.flag}.png` : '';
+            let bg2 = flag2 ? `background-image: url('${flag2}');` : '';
+            let click2 = match.team2.flag !== 'un' ? `onclick="openJourneyModal('${match.team2.name}', '${match.team2.flag}')"` : '';
+            let statusStyle2 = match.team2.status && match.team2.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
 
-        html += `
-            <div class="bracket-team" ${click2}>
-                <div class="flag-bg" style="${bg2}"></div>
-                <div class="team-info">
-                    <h3 class="team-name">${match.team2.name}</h3>
-                    <div class="team-subtitle" style="${statusStyle2}">${match.team2.status}</div>
+            html += `
+                <div class="bracket-team" ${click2}>
+                    <div class="flag-bg" style="${bg2}"></div>
+                    <div class="team-info">
+                        <h3 class="team-name">${match.team2.name}</h3>
+                        <div class="team-subtitle" style="${statusStyle2}">${match.team2.status || ''}</div>
+                    </div>
                 </div>
-            </div>
-        `;
-        
-        html += '</div>';
-    });
+            `;
+            
+            html += '</div>';
+        });
+    }
     
     html += '</div>';
     container.innerHTML = html;
@@ -528,7 +560,7 @@ window.openJourneyModal = function(teamName, flagCode) {
 
                     matchesPlayed.push(`
                         <div class="timeline-item">
-                            <div class="timeline-date">${displayDate} • בית ${match.stage}</div>
+                            <div class="timeline-date">${displayDate} • שלב: ${match.stage}</div>
                             <div class="timeline-matchup">
                                 <img src="https://flagcdn.com/w40/${flagCode}.png" style="width:24px; border-radius:3px;">
                                 ${scoreHTML}
@@ -550,7 +582,7 @@ window.openJourneyModal = function(teamName, flagCode) {
 
     const gd = gf - ga;
     const statsHtml = `
-        <div class="geek-stat-box"><div class="geek-stat-val">${pts}</div><div class="geek-stat-lbl">נקודות בבתים</div></div>
+        <div class="geek-stat-box"><div class="geek-stat-val">${pts}</div><div class="geek-stat-lbl">נקודות מדורגות</div></div>
         <div class="geek-stat-box"><div class="geek-stat-val">${gf}</div><div class="geek-stat-lbl">שערי זכות</div></div>
         <div class="geek-stat-box"><div class="geek-stat-val" dir="ltr" style="unicode-bidi: isolate; direction: ltr; display: inline-block;">${gd > 0 ? '+'+gd : gd}</div><div class="geek-stat-lbl">הפרש שערים</div></div>
     `;
@@ -651,70 +683,3 @@ window.renderScorers = function() {
 
     container.innerHTML = `<div class="scorers-dashboard">${podiumHTML}${listHTML}</div>`;
 }
-
-// הזרקת כל סגנונות ה-CSS הדינמיים
-const globalStyle = document.createElement('style');
-globalStyle.innerHTML = `
-.match-card .cards-container { display: none; }
-.match-card.show-cards-tab .cards-container { display: flex; gap: 6px; justify-content: center; animation: tabFadeIn 0.3s ease; margin-top: -2px; }
-.card-icon { width: 10px; height: 14px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.3); }
-.yellow-card { background-color: #f1c40f; } 
-.red-card { background-color: #e74c3c; }
-
-/* עיצוב מלך השערים */
-.scorers-dashboard { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 0 auto; width: 100%; padding-bottom: 30px;}
-.podium-container { display: flex; justify-content: center; align-items: flex-end; gap: 20px; margin-top: 30px; }
-
-/* הוסר כאן overflow: hidden כדי שהמספר למעלה לא ייחתך */
-.podium-card { background: var(--card-bg); border-radius: 16px; position: relative; width: 30%; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; }
-.podium-card:hover { transform: translateY(-10px); }
-
-/* הוסף כאן חיתוך עיגול פינות מותאם לתמונת הרקע */
-.podium-flag-bg { position: absolute; top: 0; left: 0; right: 0; height: 130px; background-size: cover; background-position: center; opacity: 0.3; z-index: 0; border-top-left-radius: 12px; border-top-right-radius: 12px; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); }
-
-.podium-content { position: relative; z-index: 1; padding: 25px 15px; display: flex; flex-direction: column; align-items: center; height: 100%; }
-.podium-rank-1 { border-top: 4px solid #FFD700; box-shadow: 0 -10px 30px rgba(255, 215, 0, 0.15), var(--shadow); height: 280px; z-index: 3; }
-.podium-rank-2 { border-top: 4px solid #C0C0C0; box-shadow: 0 -10px 30px rgba(192, 192, 192, 0.1), var(--shadow); height: 250px; z-index: 2; }
-.podium-rank-3 { border-top: 4px solid #CD7F32; box-shadow: 0 -10px 30px rgba(205, 127, 50, 0.1), var(--shadow); height: 230px; z-index: 1; }
-
-.podium-badge { position: absolute; top: -18px; width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 1.2rem; color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid var(--card-bg); z-index: 5;}
-.podium-rank-1 .podium-badge { width: 44px; height: 44px; top: -22px; font-size: 1.5rem; }
-
-/* הוסף flex-shrink ו- aspect-ratio לשמירה על עיגול מושלם */
-.podium-player-img { width: 65px; height: 65px; flex-shrink: 0; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 3px solid; box-shadow: 0 4px 15px rgba(0,0,0,0.6); margin-bottom: 12px; background-color: #111;}
-.podium-rank-1 .podium-player-img { width: 85px; height: 85px; margin-bottom: 15px; border-width: 4px; }
-
-.podium-name { font-size: 1.1rem; font-weight: 900; color: var(--text-main); line-height: 1.1; margin-bottom: 4px; }
-.podium-team { font-size: 0.8rem; color: var(--text-muted); margin-bottom: auto; display: flex; align-items: center; justify-content: center; }
-.podium-goals { font-size: 2.2rem; font-weight: 900; line-height: 1; margin: 15px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.5); display:flex; flex-direction:column; align-items:center; gap:2px;}
-.podium-goals span { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
-.podium-stats { background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
-
-.lb-container { display: flex; flex-direction: column; gap: 8px; }
-.lb-row { display: flex; align-items: center; padding: 12px 20px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.2s ease; gap: 15px;}
-.lb-row:hover { transform: translateX(-5px); background: rgba(102, 252, 241, 0.05); border-color: rgba(102, 252, 241, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-.lb-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 25px; text-align: center; opacity: 0.5; }
-.lb-flag { width: 35px; height: 25px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-.lb-info { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
-.lb-name { font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; line-height: 1; }
-.lb-team { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
-.lb-bar-bg { width: 100%; max-width: 250px; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; }
-.lb-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 3px; transition: width 1s ease-out; }
-.lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
-
-@media (max-width: 768px) {
-    .podium-container { gap: 10px; align-items: flex-end; }
-    .podium-card { width: 32%; }
-    .podium-content { padding: 15px 5px; }
-    .podium-name { font-size: 0.9rem; }
-    .podium-goals { font-size: 1.8rem; }
-    .podium-stats { display: none; }
-    .lb-row { padding: 10px; gap: 10px; }
-    .lb-bar-bg, .lb-team { display: none; }
-}
-`;
-
-const oldStyle = document.getElementById('global-dynamic-style');
-if(oldStyle) oldStyle.remove();
-globalStyle.id = 'global-dynamic-style';
-document.head.appendChild(globalStyle);
