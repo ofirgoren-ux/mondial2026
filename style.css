@@ -354,25 +354,108 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 /* --- MOBILE SPECIFIC FIXES --- */
 .mobile-nav-toggle { display: none; }
 @media (max-width: 1400px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
+/* --- התאמות קריטיות למובייל --- */
 @media (max-width: 900px) {
-    .mobile-nav-toggle { display: block; font-size: 1.5rem; padding: 10px 15px; background: var(--card-bg); color: var(--accent-cyan); border-bottom: 1px solid var(--border-color); cursor: pointer; text-align: center; font-weight: bold;}
-    .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; width: 280px; }
-    .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
-    .main-content { margin-right: 0; width: 100%; max-width: 100%; padding: 15px;}
-    
-    .top-header { flex-direction: column; align-items: stretch; padding: 20px 15px; gap: 25px; }
+    /* תפריט המבורגר צף צמוד לימין למעלה */
+    .mobile-nav-toggle { 
+        display: block; 
+        position: fixed; 
+        top: 15px; 
+        right: 15px; 
+        z-index: 999; 
+        font-size: 1.6rem; 
+        padding: 6px 12px; 
+        background: rgba(30, 35, 46, 0.85); 
+        backdrop-filter: blur(8px);
+        color: var(--accent-cyan); 
+        border: 1px solid rgba(102, 252, 241, 0.3); 
+        border-radius: 8px; 
+        cursor: pointer; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    /* מרווח להדר כדי שההמבורגר לא יסתיר אותו */
+    .top-header {
+        margin-top: 45px; 
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px; 
+        gap: 20px;
+    }
+
     .header-titles { text-align: center; }
-    .header-titles h1 { font-size: 2rem; }
-    .header-titles p { font-size: 1rem; }
-    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
-    .stat-box { min-width: 0; padding: 15px 10px; }
-    .stat-val { font-size: 1.8rem; }
-    .stat-lbl { font-size: 0.8rem; }
+    .header-titles h1 { font-size: 1.8rem; }
+    .header-titles p { font-size: 0.95rem; }
+
+    /* קוביות סטטיסטיקה בשורה אחת עם גלילה אופקית */
+    .stats-row {
+        display: flex;
+        flex-wrap: nowrap; 
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        padding-bottom: 10px; /* מקום לפס הגלילה */
+        gap: 12px;
+    }
     
-    .matches-grid { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 15px; padding-bottom: 20px; scroll-padding-left: 10px; scroll-padding-right: 10px; width: 100%; }
-    .match-card { flex: 0 0 85% !important; scroll-snap-align: center; max-width: 380px; margin: 0; height: auto; min-height: 600px;}
+    .stat-box {
+        flex: 0 0 110px; /* קוביה שומרת על הגודל שלה ונגללת */
+        scroll-snap-align: start;
+        padding: 12px 5px; 
+    }
+    
+    .stat-val { font-size: 1.5rem; }
+    .stat-lbl { font-size: 0.75rem; }
+
+    /* שורת מסננים בגלילה אופקית */
+    .filters-row { 
+        flex-direction: row; 
+        flex-wrap: nowrap; 
+        overflow-x: auto; 
+        width: 100%; 
+        padding: 10px; 
+        border-radius: 8px; 
+        -webkit-overflow-scrolling: touch; 
+        gap: 15px; 
+        justify-content: flex-start;
+    }
+    
+    .filter-group { 
+        flex-wrap: nowrap; 
+        flex-shrink: 0; /* מונע מעיכת הכפתורים */
+    }
+    
+    .time-btn, .stage-btn { white-space: nowrap; }
+
+    /* כרטיסיות משחקים - 85% רוחב כדי להשאיר רמז לכרטיס הבא */
+    .matches-grid { 
+        display: flex !important; 
+        flex-wrap: nowrap !important; 
+        overflow-x: auto !important; 
+        scroll-snap-type: x mandatory; 
+        -webkit-overflow-scrolling: touch; 
+        gap: 15px; 
+        padding-bottom: 20px; 
+        width: 100%; 
+        padding-right: 5px; 
+    }
+    
+    .match-card { 
+        flex: 0 0 85% !important; /* משאיר הצצה לכרטיס הבא */
+        scroll-snap-align: center; 
+        max-width: 380px; 
+        margin: 0; 
+        height: auto; 
+        min-height: 600px;
+    }
+
     .match-hero { padding: 10px 5px 5px; }
     .team-flag { width: 45px !important; height: 30px !important; }
     .score-number { font-size: 1.6rem; padding: 4px 14px; }
-    .filters-row { width: 100%; justify-content: center; }
+
+    /* תפריט צד במובייל */
+    .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; width: 280px; }
+    .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
+    .main-content { margin-right: 0; width: 100%; max-width: 100vw; padding: 15px; overflow-x: hidden; }
 }
