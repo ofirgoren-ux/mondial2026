@@ -1,19 +1,31 @@
 window.knockoutBracket = {
-roundOf32: [
-    { id: 'm73', team1: { name: 'מקסיקו', flag: 'mx', status: "הבטיחה עליה" }, team2: { name: "סגנית בית ט'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm74', team1: { name: 'גרמניה', flag: 'de', status: "תחזית: מנצחת בית ה'" }, team2: { name: "מקום 3 ד/ו/ז/י", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm75', team1: { name: 'ארגנטינה', flag: 'ar', status: "הבטיחה עליה" }, team2: { name: "מקום 3 ב/ה/ח/ט", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm76', team1: { name: 'ארצות הברית', flag: 'us', status: "תחזית: מנצחת בית ד'" }, team2: { name: 'מצרים', flag: 'eg', status: "תחזית: סגנית בית ז'" } },
-    { id: 'm77', team1: { name: 'ברזיל', flag: 'br', status: "הבטיחה עליה" }, team2: { name: 'קנדה', flag: 'ca', status: "תחזית: סגנית בית ב'" } },
-    { id: 'm78', team1: { name: 'ספרד', flag: 'es', status: "תחזית: מנצחת בית ח'" }, team2: { name: "מקום 3 א/ב/ג/ו", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm79', team1: { name: 'פורטוגל', flag: 'pt', status: "הבטיחה עליה" }, team2: { name: "סגנית בית ו'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm80', team1: { name: 'אנגליה', flag: 'gb-eng', status: "תחזית: מנצחת בית ל'" }, team2: { name: "מקום 3 ה/ח/ט/י", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm81', team1: { name: 'צרפת', flag: 'fr', status: "הבטיחה עליה" }, team2: { name: 'אוסטרליה', flag: 'au', status: "תחזית: סגנית בית ד'" } },
-    { id: 'm82', team1: { name: 'בלגיה', flag: 'be', status: "תחזית: מנצחת בית ז'" }, team2: { name: "מקום 3 א/ג/ד/י", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm83', team1: { name: 'אורוגוואי', flag: 'uy', status: "תחזית: סגנית בית ח'" }, team2: { name: "סגנית בית ה'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm84', team1: { name: 'הולנד', flag: 'nl', status: "תחזית: מנצחת בית ו'" }, team2: { name: "סגנית בית י'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm85', team1: { name: 'קולומביה', flag: 'co', status: "תחזית: מנצחת בית כ'" }, team2: { name: "סגנית בית ל'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm86', team1: { name: 'קרואטיה', flag: 'hr', status: "תחזית: סגנית בית ל'" }, team2: { name: 'שווייץ', flag: 'ch', status: "הבטיחה עליה" } },
-    { id: 'm87', team1: { name: 'מרוקו', flag: 'ma', status: "הבטיחה עליה" }, team2: { name: "סגנית בית א'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } },
-    { id: 'm88', team1: { name: 'אוסטריה', flag: 'at', status: "תחזית: סגנית בית י'" }, team2: { name: "סגנית בית כ'", flag: 'un', status: 'תחזית (מחכה להכרעה)' } }
-]};
+    roundOf32: [
+        // 28 ביוני
+        { team1: { name: 'דרום אפריקה', flag: 'za', status: '28 ביוני, 22:00' }, team2: { name: 'קנדה', flag: 'ca', status: '28 ביוני, 22:00' } },
+        
+        // 29 ביוני
+        { team1: { name: 'גרמניה', flag: 'de', status: '29 ביוני, 23:30' }, team2: { name: 'פרגוואי', flag: 'py', status: '29 ביוני, 23:30' } },
+        { team1: { name: 'הולנד', flag: 'nl', status: '30 ביוני, 04:00' }, team2: { name: 'מרוקו', flag: 'ma', status: '30 ביוני, 04:00' } },
+        { team1: { name: 'ברזיל', flag: 'br', status: '29 ביוני, 20:00' }, team2: { name: 'יפן', flag: 'jp', status: '29 ביוני, 20:00' } },
+        
+        // 30 ביוני
+        { team1: { name: 'צרפת', flag: 'fr', status: '1 ביולי, 00:00' }, team2: { name: 'שוודיה', flag: 'se', status: '1 ביולי, 00:00' } },
+        { team1: { name: 'חוף השנהב', flag: 'ci', status: '30 ביוני, 20:00' }, team2: { name: 'נורווגיה', flag: 'no', status: '30 ביוני, 20:00' } },
+        { team1: { name: 'מקסיקו', flag: 'mx', status: '1 ביולי, 04:00' }, team2: { name: 'אקוודור', flag: 'ec', status: '1 ביולי, 04:00' } },
+        
+        // 1 ביולי
+        { team1: { name: 'אנגליה', flag: 'gb-eng', status: '1 ביולי, 19:00' }, team2: { name: 'קונגו', flag: 'cd', status: '1 ביולי, 19:00' } },
+        { team1: { name: 'ארצות הברית', flag: 'us', status: '2 ביולי, 03:00' }, team2: { name: 'בוסניה', flag: 'ba', status: '2 ביולי, 03:00' } },
+        { team1: { name: 'בלגיה', flag: 'be', status: '1 ביולי, 23:00' }, team2: { name: 'סנגל', flag: 'sn', status: '1 ביולי, 23:00' } },
+        
+        // 2 ביולי
+        { team1: { name: 'פורטוגל', flag: 'pt', status: '3 ביולי, 02:00' }, team2: { name: 'קרואטיה', flag: 'hr', status: '3 ביולי, 02:00' } },
+        { team1: { name: 'ספרד', flag: 'es', status: '2 ביולי, 22:00' }, team2: { name: 'אוסטריה', flag: 'at', status: '2 ביולי, 22:00' } },
+        { team1: { name: 'שווייץ', flag: 'ch', status: '3 ביולי, 06:00' }, team2: { name: 'אלג\'יריה', flag: 'dz', status: '3 ביולי, 06:00' } },
+        
+        // 3 ביולי
+        { team1: { name: 'אוסטרליה', flag: 'au', status: '3 ביולי, 21:00' }, team2: { name: 'מצרים', flag: 'eg', status: '3 ביולי, 21:00' } },
+        { team1: { name: 'ארגנטינה', flag: 'ar', status: '4 ביולי, 01:00' }, team2: { name: 'כף ורדה', flag: 'cv', status: '4 ביולי, 01:00' } },
+        { team1: { name: 'קולומביה', flag: 'co', status: '4 ביולי, 04:30' }, team2: { name: 'גאנה', flag: 'gh', status: '4 ביולי, 04:30' } }
+    ]
+};
