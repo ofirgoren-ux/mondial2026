@@ -80,10 +80,28 @@ window.switchView = function(viewName) {
     }
 }
 
+// מנגנון התיקון האוטומטי לקובץ הנתונים
 function getSafeDatabase() {
     let db = {};
     if (typeof matchDatabase !== 'undefined') Object.assign(db, matchDatabase);
     if (typeof window.matchDatabase !== 'undefined') Object.assign(db, window.matchDatabase);
+
+    const hebrewToEnglish = {'א': 'A', "א'": 'A', 'ב': 'B', "ב'": 'B', 'ג': 'C', "ג'": 'C', 'ד': 'D', "ד'": 'D', 'ה': 'E', "ה'": 'E', 'ו': 'F', "ו'": 'F', 'ז': 'G', "ז'": 'G', 'ח': 'H', "ח'": 'H', 'ט': 'I', "ט'": 'I', 'י': 'J', "י'": 'J', 'יא': 'K', 'י"א': 'K', 'יב': 'L', 'י"ב': 'L'};
+    const recentUpdates = {
+        'match49': { actual: '2 - 0', acc: 'trend' }, 'match50': { actual: '3 - 0', acc: 'wrong' }, 'match51': { actual: '0 - 3', acc: 'trend' }, 'match52': { actual: '2 - 4', acc: 'wrong' }, 'match53': { actual: '0 - 3', acc: 'trend' }, 'match54': { actual: '1 - 0', acc: 'wrong' }, 'match55': { actual: '3 - 2', acc: 'wrong' }, 'match56': { actual: '0 - 0', acc: 'trend' }, 'match57': { actual: '0 - 2', acc: 'exact' }, 'match58': { actual: '2 - 1', acc: 'wrong' }, 'match59': { actual: '1 - 3', acc: 'trend' }, 'match60': { actual: '1 - 1', acc: 'wrong' }, 'match61': { actual: '1 - 4', acc: 'trend' }, 'match62': { actual: '5 - 0', acc: 'trend' }, 'match63': { actual: '0 - 1', acc: 'wrong' }, 'match64': { actual: '0 - 0', acc: 'trend' }, 'match65': { actual: '1 - 5', acc: 'trend' }, 'match66': { actual: '1 - 1', acc: 'wrong' }, 'match67': { actual: '0 - 2', acc: 'exact' }, 'match68': { actual: '2 - 1', acc: 'trend' }, 'match69': { actual: '0 - 0', acc: 'wrong' }, 'match70': { actual: '3 - 1', acc: 'wrong' }, 'match71': { actual: '3 - 3', acc: 'wrong' }, 'match72': { actual: '1 - 3', acc: 'trend' }
+    };
+
+    for (let key in db) {
+        if (db[key].stage && hebrewToEnglish[db[key].stage]) {
+            db[key].stage = hebrewToEnglish[db[key].stage];
+        }
+        if (recentUpdates[key]) {
+            db[key].timeStatus = 'past';
+            if (!db[key].score) db[key].score = {};
+            db[key].score.actual = recentUpdates[key].actual;
+            db[key].score.accuracyClass = recentUpdates[key].acc;
+        }
+    }
     return db;
 }
 
