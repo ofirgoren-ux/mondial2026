@@ -139,6 +139,26 @@ function renderMatches() {
         return tMatch && sMatch && mMatch;
     });
 
+    // --- הוספת מנגנון הסידור הכרונולוגי החכם ---
+    filteredMatches.sort((a, b) => {
+        function getSortValue(match) {
+            if (!match.dateText) return 0;
+            try {
+                let parts = match.dateText.split('|');
+                if(parts.length < 2) return 0;
+                let dateParts = parts[0].trim().split('/'); // [DD, MM, YYYY]
+                let timeString = parts[1].trim().substring(0, 5); // HH:MM
+                if (dateParts.length === 3) {
+                    // ממיר לפורמט זמן קריא לדפדפן כדי שיוכל למיין
+                    return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T${timeString}:00`).getTime();
+                }
+            } catch(e) {}
+            return 0;
+        }
+        return getSortValue(a[1]) - getSortValue(b[1]);
+    });
+    // ----------------------------------------
+
     for (const [matchId, data] of filteredMatches) {
         const adv = data.advancedStats || { home: { xG: '-', restDays: '-', altitudeImpact: '-' }, away: { xG: '-', restDays: '-', altitudeImpact: '-' } };
         const prob = data.probabilities || { home: 33, draw: 34, away: 33 };
@@ -293,7 +313,6 @@ function renderMatches() {
         }, 100);
     }
 }
-
 function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
     let formattedScore = currentScoreDisplay;
     if (formattedScore.includes('-')) {
