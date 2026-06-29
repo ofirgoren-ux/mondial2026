@@ -636,17 +636,17 @@ window.renderScorers = function() {
     const container = document.getElementById('scorers-view');
     if (!container) return;
 
-    const scorersData = [
-        { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 5, xg: 2.30, shots: 12, playerImg: "images/lionel-messi.jpeg" },
-        { rank: 2, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10, playerImg: "images/erlin-haaland.jpeg" },
-        { rank: 3, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 4, xg: 1.88, shots: 12, playerImg: "images/Kylian-Mbappe.jpeg" },
+const scorersData = [
+        { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 6, xg: 2.90, shots: 15, playerImg: "images/lionel-messi.jpeg" },
+        { rank: 2, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 4, xg: 2.10, shots: 14, playerImg: "images/Kylian-Mbappe.jpeg" },
+        { rank: 3, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 1.85, shots: 11 }, playerImg: "images/ousmane-dembele.jpeg" },
         { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.33, shots: 13 },
-        { rank: 5, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.09, shots: 7 },
-        { rank: 6, name: "ז'והאן מנזמבי", team: "שווייץ", flag: "ch", goals: 3, xg: 0.81, shots: 6 },
-        { rank: 7, name: "ג'ונתן דייוויד", team: "קנדה", flag: "ca", goals: 3, xg: 1.83, shots: 12 },
-        { rank: 8, name: "איסמעיל סאיברי", team: "מרוקו", flag: "ma", goals: 3, xg: 1.44, shots: 10 },
-        { rank: 9, name: "בריאן ברובי", team: "הולנד", flag: "nl", goals: 2, xg: 1.41, shots: 4 },
-        { rank: 10, name: "דניז אונדב", team: "גרמניה", flag: "de", goals: 2, xg: 1.41, shots: 5 }
+        { rank: 5, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10, playerImg: "images/erlin-haaland.jpeg" },
+        { rank: 6, name: "דניז אונדב", team: "גרמניה", flag: "de", goals: 3, xg: 1.65, shots: 8 },
+        { rank: 7, name: "ז'והאן מנזמבי", team: "שווייץ", flag: "ch", goals: 3, xg: 0.81, shots: 6 },
+        { rank: 8, name: "איסמעילה סאר", team: "סנגל", flag: "sn", goals: 3, xg: 1.50, shots: 9 },
+        { rank: 9, name: "בריאן ברובי", team: "הולנד", flag: "nl", goals: 3, xg: 1.80, shots: 7 },
+        { rank: 10, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.09, shots: 7 }
     ];
 
     const topGoalCount = scorersData[0].goals;
