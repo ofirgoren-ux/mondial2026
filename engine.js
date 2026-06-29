@@ -639,7 +639,7 @@ window.renderScorers = function() {
 const scorersData = [
         { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 6, xg: 2.90, shots: 15, playerImg: "images/lionel-messi.jpeg" },
         { rank: 2, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 4, xg: 2.10, shots: 14, playerImg: "images/Kylian-Mbappe.jpeg" },
-        { rank: 3, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 1.85, shots: 11 },
+        { rank: 3, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 1.85, shots: 11, playerImg: "ousmane-dembele.jpeg" },
         { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.33, shots: 13 },
         { rank: 5, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10, playerImg: "images/erlin-haaland.jpeg" },
         { rank: 6, name: "דניז אונדב", team: "גרמניה", flag: "de", goals: 3, xg: 1.65, shots: 8 },
