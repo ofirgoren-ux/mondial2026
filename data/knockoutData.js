@@ -1,7 +1,20 @@
 window.matchDatabase = window.matchDatabase || {};
 
 const knockoutMatches = {
-    'match73': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `28/06/2026 | 22:00 (שעון ישראל)`, teamHome: { name: `דרום אפריקה`, flagCode: 'za', color: '#007749', cards: { yellow: [], red: [] } }, teamAway: { name: `קנדה`, flagCode: 'ca', color: '#FF0000', cards: { yellow: [], red: [] } }, score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, probabilities: { home: 25, draw: 30, away: 45 }, matchRisk: 'Safe', radarStats: { home: [55, 45, 60, 65, 75, 50], away: [70, 60, 55, 70, 80, 68] }, advancedStats: { home: { xG: '0.85', corners: 0 }, away: { xG: '1.65', corners: 0 } }, insight: { prediction: `החזרה של אלפונסו דייוויס להרכב היא בוסט אדיר עבור קנדה. האתלטיות והמהירות באגפים צפויים להכריע את דרום אפריקה, למרות ההגנה הקשוחה שלה.`, actual: `` }, goals: [] },
+    'match73': { 
+        timeStatus: 'past', matchday: 'r32', stage: "נוקאאוט", dateText: `28/06/2026 | 22:00 (שעון ישראל)`, 
+        teamHome: { name: `דרום אפריקה`, flagCode: 'za', color: '#007749', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `קנדה`, flagCode: 'ca', color: '#FF0000', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '1 - 2', actual: '0 - 1', accuracyClass: 'trend' }, 
+        probabilities: { home: 25, draw: 30, away: 45 }, matchRisk: 'Safe', 
+        radarStats: { home: [55, 45, 60, 65, 75, 50], away: [70, 60, 55, 70, 80, 68] }, 
+        advancedStats: { home: { xG: '0.85', corners: 2 }, away: { xG: '1.65', corners: 7 } }, 
+        insight: { 
+            prediction: `החזרה של אלפונסו דייוויס להרכב היא בוסט אדיר עבור קנדה. האתלטיות והמהירות באגפים צפויים להכריע את דרום אפריקה, למרות ההגנה הקשוחה שלה.`, 
+            actual: `היסטוריה בקליפורניה! קנדה שלטה אך נתקלה ביום אדיר של השוער וויליאמס. כניסתו של אלפונסו דייויס בדקה ה-75 שינתה את המומנטום, וסטפן אוסטקיו הכריע בדרמה של הדקה ה-90+2. המודל חזה נכון את הניצחון הקנדי.` 
+        }, 
+        goals: [] 
+    },
     'match74': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 23:30 (שעון ישראל)`, teamHome: { name: `גרמניה`, flagCode: 'de', color: '#FFFFFF', cards: { yellow: [], red: [] } }, teamAway: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } }, score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, probabilities: { home: 68, draw: 20, away: 12 }, matchRisk: 'Safe', radarStats: { home: [88, 85, 80, 85, 78, 90], away: [65, 50, 60, 80, 85, 55] }, advancedStats: { home: { xG: '2.40', corners: 0 }, away: { xG: '0.60', corners: 0 } }, insight: { prediction: `גרמניה סיימה את שלב הבתים עם 10 שערים ומכונת ההתקפה שלה נראית משומנת. פרגוואי תנסה להסתגר, אך האיכות הגרמנית תמצא את הפרצה.`, actual: `` }, goals: [] },
     'match75': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `30/06/2026 | 04:00 (שעון ישראל)`, teamHome: { name: `הולנד`, flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } }, teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Safe', radarStats: { home: [75, 80, 70, 75, 70, 85], away: [65, 60, 55, 85, 65, 60] }, advancedStats: { home: { xG: '1.80', corners: 0 }, away: { xG: '1.05', corners: 0 } }, insight: { prediction: `הולנד חזקה ומסודרת, אבל מרוקו מגיעה עם המון לב ותמיכה מהיציעים. נבחרת האורנג' פייבוריטית.`, actual: `` }, goals: [] },
     'match76': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 20:00 (שעון ישראל)`, teamHome: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } }, teamAway: { name: `יפן`, flagCode: 'jp', color: '#000555', cards: { yellow: [], red: [] } }, score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' }, probabilities: { home: 70, draw: 18, away: 12 }, matchRisk: 'Safe', radarStats: { home: [95, 85, 80, 88, 85, 95], away: [70, 65, 60, 75, 65, 65] }, advancedStats: { home: { xG: '2.50', corners: 0 }, away: { xG: '0.80', corners: 0 } }, insight: { prediction: `הסלסאו בכושר שיא עם ויניסיוס שלא עוצר. יפן תרוץ ותילחם, אך פערי הכישרון גדולים מדי.`, actual: `` }, goals: [] },
