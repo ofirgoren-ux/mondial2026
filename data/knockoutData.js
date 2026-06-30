@@ -15,9 +15,48 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-'match74': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 20:00 (שעון ישראל)`, teamHome: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } }, teamAway: { name: `יפן`, flagCode: 'jp', color: '#000555', cards: { yellow: [], red: [] } }, score: { prediction: '3 - 1', actual: '', accuracyClass: 'pending' }, probabilities: { home: 70, draw: 18, away: 12 }, matchRisk: 'Safe', radarStats: { home: [95, 85, 80, 88, 85, 95], away: [70, 65, 60, 75, 65, 65] }, advancedStats: { home: { xG: '2.50', corners: 0 }, away: { xG: '0.80', corners: 0 } }, insight: { prediction: `הסלסאו בכושר שיא עם ויניסיוס שלא עוצר. יפן תרוץ ותילחם, אך פערי הכישרון גדולים מדי.`, actual: `` }, goals: [] },
-    'match75': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 23:30 (שעון ישראל)`, teamHome: { name: `גרמניה`, flagCode: 'de', color: '#FFFFFF', cards: { yellow: [], red: [] } }, teamAway: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } }, score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, probabilities: { home: 68, draw: 20, away: 12 }, matchRisk: 'Safe', radarStats: { home: [88, 85, 80, 85, 78, 90], away: [65, 50, 60, 80, 85, 55] }, advancedStats: { home: { xG: '2.40', corners: 0 }, away: { xG: '0.60', corners: 0 } }, insight: { prediction: `גרמניה סיימה את שלב הבתים עם 10 שערים ומכונת ההתקפה שלה נראית משומנת. פרגוואי תנסה להסתגר, אך האיכות הגרמנית תמצא את הפרצה.`, actual: `` }, goals: [] },
-    'match76': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `30/06/2026 | 04:00 (שעון ישראל)`, teamHome: { name: `הולנד`, flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } }, teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Safe', radarStats: { home: [75, 80, 70, 75, 70, 85], away: [65, 60, 55, 85, 65, 60] }, advancedStats: { home: { xG: '1.80', corners: 0 }, away: { xG: '1.05', corners: 0 } }, insight: { prediction: `הולנד חזקה ומסודרת, אבל מרוקו מגיעה עם המון לב ותמיכה מהיציעים. נבחרת האורנג' פייבוריטית.`, actual: `` }, goals: [] },
+'match74': { 
+        timeStatus: 'past', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 20:00 (שעון ישראל)`, 
+        teamHome: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `יפן`, flagCode: 'jp', color: '#000555', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '3 - 1', actual: '2 - 1', accuracyClass: 'trend' }, 
+        probabilities: { home: 70, draw: 18, away: 12 }, matchRisk: 'Safe', 
+        radarStats: { home: [95, 85, 80, 88, 85, 95], away: [70, 65, 60, 75, 65, 65] }, 
+        advancedStats: { home: { xG: '2.50', corners: 5 }, away: { xG: '0.80', corners: 2 } }, 
+        insight: { 
+            prediction: `הסלסאו בכושר שיא עם ויניסיוס שלא עוצר. יפן תרוץ ותילחם, אך פערי הכישרון גדולים מדי.`, 
+            actual: `איזה קרב! יפן הדהימה עם יתרון מוקדם והקשתה מאוד על הסלסאו, אך הברזילאים הוכיחו אופי, חזרו למשחק, והשיגו את הכרטיס לשמינית הגמר עם שער ניצחון דרמטי עמוק בתוספת הזמן (דקה 96).` 
+        }, 
+        goals: [] 
+    },
+    'match75': { 
+        timeStatus: 'past', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 23:30 (שעון ישראל)`, 
+        teamHome: { name: `גרמניה`, flagCode: 'de', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '2 - 0', actual: '1 - 1', accuracyClass: 'wrong' }, 
+        probabilities: { home: 68, draw: 20, away: 12 }, matchRisk: 'Safe', 
+        radarStats: { home: [88, 85, 80, 85, 78, 90], away: [65, 50, 60, 80, 85, 55] }, 
+        advancedStats: { home: { xG: '2.40', corners: 7 }, away: { xG: '0.60', corners: 3 } }, 
+        insight: { 
+            prediction: `גרמניה סיימה את שלב הבתים עם 10 שערים ומכונת ההתקפה שלה נראית משומנת. פרגוואי תנסה להסתגר, אך האיכות הגרמנית תמצא את הפרצה.`, 
+            actual: `רעידת אדמה היסטורית! חוליו אנקיסו כבש לפרגוואי, קאי האברץ השווה, ושער של טאה נפסל ב-VAR בהארכה. פרגוואי ניצחה 4-3 בפנדלים והנחילה לגרמניה הפסד ראשון אי פעם בדו-קרב פנדלים במונדיאל. סנסציה ענקית.` 
+        }, 
+        goals: [] 
+    },
+    'match76': { 
+        timeStatus: 'past', matchday: 'r32', stage: "נוקאאוט", dateText: `30/06/2026 | 04:00 (שעון ישראל)`, 
+        teamHome: { name: `הולנד`, flagCode: 'nl', color: '#F36C21', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '2 - 1', actual: '1 - 1', accuracyClass: 'wrong' }, 
+        probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Safe', 
+        radarStats: { home: [75, 80, 70, 75, 70, 85], away: [65, 60, 55, 85, 65, 60] }, 
+        advancedStats: { home: { xG: '1.80', corners: 5 }, away: { xG: '1.05', corners: 4 } }, 
+        insight: { 
+            prediction: `הולנד חזקה ומסודרת, אבל מרוקו מגיעה עם המון לב ותמיכה מהיציעים. נבחרת האורנג' פייבוריטית.`, 
+            actual: `הדרמה ממשיכה! קודי גאקפו נתן לאורנג' יתרון מאוחר, אך עיסא דיופ השווה שוב עבור אלופת אפריקה. מרוקו ניצחה 3-2 בדו-קרב מהנקודה הלבנה ושלחה את ההולנדים הביתה. המודל לא חזה את הלב המרוקאי.` 
+        }, 
+        goals: [] 
+    },
     'match77': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `30/06/2026 | 20:00 (שעון ישראל)`, teamHome: { name: `חוף השנהב`, flagCode: 'ci', color: '#FF8200', cards: { yellow: [], red: [] } }, teamAway: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Draw Booster', radarStats: { home: [70, 65, 60, 65, 85, 65], away: [65, 60, 75, 70, 80, 70] }, advancedStats: { home: { xG: '1.10', corners: 0 }, away: { xG: '1.40', corners: 0 } }, insight: { prediction: `משחק שקול. נורווגיה עם היתרון של ארלינג האלנד בחוד נראית מסוכנת יותר מול הפיזיות של הפילים.`, actual: `` }, goals: [] },
     'match78': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `01/07/2026 | 00:00 (שעון ישראל)`, teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, teamAway: { name: `שוודיה`, flagCode: 'se', color: '#FFF200', cards: { yellow: [], red: [] } }, score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, probabilities: { home: 75, draw: 15, away: 10 }, matchRisk: 'Safe', radarStats: { home: [92, 88, 85, 90, 88, 94], away: [60, 55, 65, 60, 80, 55] }, advancedStats: { home: { xG: '2.30', corners: 0 }, away: { xG: '0.50', corners: 0 } }, insight: { prediction: `אמבפה וחבריו דורסים עד כה. השוודים ינסו לצופף ולשחק פיזי, אבל צרפת איכותית משמעותית.`, actual: `` }, goals: [] },
     'match79': { timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `01/07/2026 | 04:00 (שעון ישראל)`, teamHome: { name: `מקסיקו`, flagCode: 'mx', color: '#006341', cards: { yellow: [], red: [] } }, teamAway: { name: `אקוודור`, flagCode: 'ec', color: '#FFD100', cards: { yellow: [], red: [] } }, score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' }, probabilities: { home: 40, draw: 30, away: 30 }, matchRisk: 'Upset Alert', radarStats: { home: [75, 70, 65, 80, 70, 70], away: [70, 65, 60, 75, 80, 65] }, advancedStats: { home: { xG: '1.30', corners: 0 }, away: { xG: '1.20', corners: 0 } }, insight: { prediction: `שתי נבחרות עם המון אמוציות וקהל אדיר. אקוודור הראתה נגד גרמניה שאין לה רגשי נחיתות. צפוי משחק סוער.`, actual: `` }, goals: [] },
@@ -37,10 +76,10 @@ Object.assign(window.matchDatabase, knockoutMatches);
 
 window.knockoutBracket = {
     roundOf32: [
-        { team1: { name: 'דרום אפריקה', flag: 'za', status: '28 ביוני, 22:00' }, team2: { name: 'קנדה', flag: 'ca', status: '28 ביוני, 22:00' } },
-        { team1: { name: 'גרמניה', flag: 'de', status: '29 ביוני, 23:30' }, team2: { name: 'פרגוואי', flag: 'py', status: '29 ביוני, 23:30' } },
-        { team1: { name: 'הולנד', flag: 'nl', status: '30 ביוני, 04:00' }, team2: { name: 'מרוקו', flag: 'ma', status: '30 ביוני, 04:00' } },
-        { team1: { name: 'ברזיל', flag: 'br', status: '29 ביוני, 20:00' }, team2: { name: 'יפן', flag: 'jp', status: '29 ביוני, 20:00' } },
+        { team1: { name: 'דרום אפריקה', flag: 'za', status: '0' }, team2: { name: 'קנדה', flag: 'ca', status: '1 (העפילה)' } },
+        { team1: { name: 'גרמניה', flag: 'de', status: '1 (3)' }, team2: { name: 'פרגוואי', flag: 'py', status: '1 (4) (העפילה)' } },
+        { team1: { name: 'הולנד', flag: 'nl', status: '1 (2)' }, team2: { name: 'מרוקו', flag: 'ma', status: '1 (3) (העפילה)' } },
+        { team1: { name: 'ברזיל', flag: 'br', status: '2 (העפילה)' }, team2: { name: 'יפן', flag: 'jp', status: '1' } },
         { team1: { name: 'צרפת', flag: 'fr', status: '1 ביולי, 00:00' }, team2: { name: 'שוודיה', flag: 'se', status: '1 ביולי, 00:00' } },
         { team1: { name: 'חוף השנהב', flag: 'ci', status: '30 ביוני, 20:00' }, team2: { name: 'נורווגיה', flag: 'no', status: '30 ביוני, 20:00' } },
         { team1: { name: 'מקסיקו', flag: 'mx', status: '1 ביולי, 04:00' }, team2: { name: 'אקוודור', flag: 'ec', status: '1 ביולי, 04:00' } },
