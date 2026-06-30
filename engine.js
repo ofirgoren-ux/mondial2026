@@ -516,51 +516,51 @@ window.renderKnockout = function() {
     const container = document.getElementById('dynamic-bracket');
     if (!container || !window.knockoutBracket) return;
     
-    let html = '<div class="bracket-column round-of-32">';
-    html += '<div class="round-title">32 הגדולות</div>';
+    let html = '';
+    const roundsConfig = [
+        { key: 'roundOf32', title: '32 הגדולות' },
+        { key: 'roundOf16', title: 'שמינית גמר (16)' }
+    ];
     
-    if (window.knockoutBracket.roundOf32) {
-        window.knockoutBracket.roundOf32.forEach(match => {
-            html += '<div class="bracket-match animate-in">';
+    roundsConfig.forEach(round => {
+        if (window.knockoutBracket[round.key]) {
+            html += `<div class="bracket-column ${round.key}"><div class="round-title">${round.title}</div>`;
             
-            let flag1 = match.team1.flag !== 'un' ? `https://flagcdn.com/w320/${match.team1.flag}.png` : '';
-            let bg1 = flag1 ? `background-image: url('${flag1}');` : '';
-            let click1 = match.team1.flag !== 'un' ? `onclick="openJourneyModal('${match.team1.name}', '${match.team1.flag}')"` : '';
-            let statusStyle1 = match.team1.status && match.team1.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
-            
-            html += `
-                <div class="bracket-team" ${click1}>
-                    <div class="flag-bg" style="${bg1}"></div>
-                    <div class="team-info">
-                        <h3 class="team-name">${match.team1.name}</h3>
-                        <div class="team-subtitle" style="${statusStyle1}">${match.team1.status || ''}</div>
-                    </div>
-                </div>
-            `;
-            
-            let flag2 = match.team2.flag !== 'un' ? `https://flagcdn.com/w320/${match.team2.flag}.png` : '';
-            let bg2 = flag2 ? `background-image: url('${flag2}');` : '';
-            let click2 = match.team2.flag !== 'un' ? `onclick="openJourneyModal('${match.team2.name}', '${match.team2.flag}')"` : '';
-            let statusStyle2 = match.team2.status && match.team2.status.includes('הבטיחה') ? 'color: var(--color-exact); font-weight: bold;' : '';
-
-            html += `
-                <div class="bracket-team" ${click2}>
-                    <div class="flag-bg" style="${bg2}"></div>
-                    <div class="team-info">
-                        <h3 class="team-name">${match.team2.name}</h3>
-                        <div class="team-subtitle" style="${statusStyle2}">${match.team2.status || ''}</div>
-                    </div>
-                </div>
-            `;
-            
+            window.knockoutBracket[round.key].forEach((match, index) => {
+                // זיהוי מי ניצחה + האם זה המשחק העליון או התחתון בצמד
+                let winClass = '';
+                if (match.team1 && match.team1.outcome === 'winner') winClass = ' win-team1';
+                else if (match.team2 && match.team2.outcome === 'winner') winClass = ' win-team2';
+                
+                let positionClass = (index % 2 === 0) ? ' pair-top' : ' pair-bottom';
+                
+                html += `<div class="bracket-match animate-in${winClass}${positionClass}">`;
+                
+                ['team1', 'team2'].forEach(t => {
+                    let team = match[t];
+                    if (!team) return;
+                    let flag = team.flag !== 'un' ? `https://flagcdn.com/w320/${team.flag}.png` : '';
+                    let bg = flag ? `background-image: url('${flag}');` : '';
+                    let statusClass = team.outcome === 'winner' ? 'winner' : (team.outcome === 'loser' ? 'loser' : '');
+                    let clickAttr = team.flag !== 'un' ? `onclick="openJourneyModal('${team.name}', '${team.flag}')"` : '';
+                    
+                    html += `
+                        <div class="bracket-team ${statusClass}" ${clickAttr}>
+                            <div class="flag-bg" style="${bg}"></div>
+                            <div class="team-info">
+                                <h3 class="team-name">${team.name}</h3>
+                                <div class="team-subtitle">${team.score || ''}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            });
             html += '</div>';
-        });
-    }
-    
-    html += '</div>';
+        }
+    });
     container.innerHTML = html;
 }
-
 window.openJourneyModal = function(teamName, flagCode) {
     const db = getSafeDatabase();
     let matchesPlayed = [];

@@ -493,3 +493,141 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     .podium-goals span { font-size: 0.6rem; }
     .podium-stats { font-size: 0.55rem; padding: 4px 2px; width: 100%; border-radius: 8px; letter-spacing: -0.2px; }
 }
+
+/* --- תיקון מרווח אופקי וזרימת עץ הנוקאאוט --- */
+#dynamic-bracket {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap !important; 
+    align-items: stretch; /* מותח את העמודות לאותו גובה כדי לייצר סימטריה */
+    gap: 50px; /* מרווח מדויק של 50 פיקסלים בין העמודות */
+    min-width: 800px; 
+    padding: 40px 0 20px 0; 
+}
+
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* הטריק ששומר על מרווחים מושלמים ללא תלות במספר המשחקים */
+    width: 250px; /* רוחב קבוע כדי שהכרטיסיות לא יתכווצו */
+    flex: none; 
+    position: relative;
+}
+
+.round-title {
+    position: absolute;
+    top: -35px; 
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 0;
+}
+
+/* --- ניקוי מוחלט של העץ ושרטוט קווי ניצחון בלבד --- */
+.bracket-match {
+    position: relative;
+    margin: 10px 0;
+    z-index: 2;
+    overflow: visible !important;
+}
+
+/* איפוס: אין קווים אלא אם יש מנצחת! זה מעלים את ה"קווים האמצעיים" המוזרים */
+.bracket-match::before,
+.bracket-match::after {
+    display: none;
+}
+
+/* 1. המשחק העליון בצמד (יורד למטה לשמינית הגמר) */
+.roundOf32 .bracket-match.pair-top.win-team1::after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: -175px; 
+    width: 175px;
+    top: 25%; /* יוצא מהקבוצה העליונה (כמו מרוקו עכשיו!) */
+    bottom: -35px; /* מגיע לדופן העליונה של שמינית הגמר */
+    border-top: 4px solid rgba(102, 252, 241, 0.9);
+    border-left: 4px solid rgba(102, 252, 241, 0.9);
+    border-radius: 12px 0 0 0;
+    z-index: -1;
+}
+.roundOf32 .bracket-match.pair-top.win-team2::after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: -175px; 
+    width: 175px;
+    top: 75%; /* יוצא מהקבוצה התחתונה */
+    bottom: -35px;
+    border-top: 4px solid rgba(102, 252, 241, 0.9);
+    border-left: 4px solid rgba(102, 252, 241, 0.9);
+    border-radius: 12px 0 0 0;
+    z-index: -1;
+}
+
+/* 2. המשחק התחתון בצמד (עולה למעלה לשמינית הגמר) */
+.roundOf32 .bracket-match.pair-bottom.win-team1::after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: -175px; 
+    width: 175px;
+    bottom: 75%; /* יוצא מהקבוצה העליונה */
+    top: -35px; /* מגיע לדופן התחתונה של שמינית הגמר */
+    border-bottom: 4px solid rgba(102, 252, 241, 0.9);
+    border-left: 4px solid rgba(102, 252, 241, 0.9);
+    border-radius: 0 0 0 12px;
+    z-index: -1;
+}
+.roundOf32 .bracket-match.pair-bottom.win-team2::after {
+    display: block;
+    content: '';
+    position: absolute;
+    left: -175px; 
+    width: 175px;
+    bottom: 25%; /* יוצא מהקבוצה התחתונה */
+    top: -35px; 
+    border-bottom: 4px solid rgba(102, 252, 241, 0.9);
+    border-left: 4px solid rgba(102, 252, 241, 0.9);
+    border-radius: 0 0 0 12px;
+    z-index: -1;
+}
+/* כשהקבוצה העליונה מנצחת (כמו גרמניה) - הקו יוצא מהגובה שלה */
+.roundOf32 .bracket-match.pair-bottom.win-team1::after {
+    bottom: 75%; 
+    border-color: rgba(102, 252, 241, 0.9);
+}
+/* כשהקבוצה התחתונה מנצחת (כמו פרגוואי) - הקו יוצא מהגובה שלה */
+.roundOf32 .bracket-match.pair-bottom.win-team2::after {
+    bottom: 25%; 
+    border-color: rgba(102, 252, 241, 0.9);
+}
+
+/* --- המנצחת: הגדרות בסיס (ללא הצללה עדיין) --- */
+.bracket-team.winner { 
+    background: linear-gradient(to left, rgba(0, 255, 136, 0.25) 0%, rgba(30, 35, 46, 1) 85%); 
+    border-right: 4px solid var(--color-exact); 
+    transform: scale(1.08); 
+    z-index: 10; 
+    border-radius: 8px;
+}
+.bracket-team.winner .team-name { 
+    color: #fff; 
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5), 2px 2px 4px rgba(0,0,0,0.9); 
+}
+
+/* --- הצללה חכמה לפי מיקום המנצחת --- */
+
+/* 1. מנצחת עליונה (כמו מרוקו): מטילה צל כבד *למטה* על המפסידה */
+.bracket-match.win-team1 .bracket-team.winner {
+    box-shadow: 0 15px 35px rgba(0,0,0,0.95), 0 0 15px rgba(0, 255, 136, 0.2); 
+}
+
+/* 2. מנצחת תחתונה (כמו פרגוואי): מטילה צל כבד *למעלה* על המפסידה! (מינוס 15px) */
+.bracket-match.win-team2 .bracket-team.winner {
+    box-shadow: 0 -15px 35px rgba(0,0,0,0.95), 0 0 15px rgba(0, 255, 136, 0.2); 
+}
+.bracket-team.loser .team-name { 
+    color: rgba(255, 255, 255, 0.65); /* 35% שקיפות (65% אטימות) */
+    text-shadow: none; 
+}
