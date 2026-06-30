@@ -75,22 +75,34 @@ const knockoutMatches = {
 Object.assign(window.matchDatabase, knockoutMatches);
 
 window.knockoutBracket = {
-    roundOf32: [
-        { team1: { name: 'דרום אפריקה', flag: 'za', status: '0' }, team2: { name: 'קנדה', flag: 'ca', status: '1 (העפילה)' } },
-        { team1: { name: 'גרמניה', flag: 'de', status: '1 (3)' }, team2: { name: 'פרגוואי', flag: 'py', status: '1 (4) (העפילה)' } },
-        { team1: { name: 'הולנד', flag: 'nl', status: '1 (2)' }, team2: { name: 'מרוקו', flag: 'ma', status: '1 (3) (העפילה)' } },
-        { team1: { name: 'ברזיל', flag: 'br', status: '2 (העפילה)' }, team2: { name: 'יפן', flag: 'jp', status: '1' } },
-        { team1: { name: 'צרפת', flag: 'fr', status: '1 ביולי, 00:00' }, team2: { name: 'שוודיה', flag: 'se', status: '1 ביולי, 00:00' } },
-        { team1: { name: 'חוף השנהב', flag: 'ci', status: '30 ביוני, 20:00' }, team2: { name: 'נורווגיה', flag: 'no', status: '30 ביוני, 20:00' } },
-        { team1: { name: 'מקסיקו', flag: 'mx', status: '1 ביולי, 04:00' }, team2: { name: 'אקוודור', flag: 'ec', status: '1 ביולי, 04:00' } },
-        { team1: { name: 'אנגליה', flag: 'gb-eng', status: '1 ביולי, 19:00' }, team2: { name: 'קונגו', flag: 'cd', status: '1 ביולי, 19:00' } },
-        { team1: { name: 'ארצות הברית', flag: 'us', status: '2 ביולי, 03:00' }, team2: { name: 'בוסניה', flag: 'ba', status: '2 ביולי, 03:00' } },
-        { team1: { name: 'בלגיה', flag: 'be', status: '1 ביולי, 23:00' }, team2: { name: 'סנגל', flag: 'sn', status: '1 ביולי, 23:00' } },
-        { team1: { name: 'פורטוגל', flag: 'pt', status: '3 ביולי, 02:00' }, team2: { name: 'קרואטיה', flag: 'hr', status: '3 ביולי, 02:00' } },
-        { team1: { name: 'ספרד', flag: 'es', status: '2 ביולי, 22:00' }, team2: { name: 'אוסטריה', flag: 'at', status: '2 ביולי, 22:00' } },
-        { team1: { name: 'שווייץ', flag: 'ch', status: '3 ביולי, 06:00' }, team2: { name: 'אלג\'יריה', flag: 'dz', status: '3 ביולי, 06:00' } },
-        { team1: { name: 'אוסטרליה', flag: 'au', status: '3 ביולי, 21:00' }, team2: { name: 'מצרים', flag: 'eg', status: '3 ביולי, 21:00' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', status: '4 ביולי, 01:00' }, team2: { name: 'כף ורדה', flag: 'cv', status: '4 ביולי, 01:00' } },
-        { team1: { name: 'קולומביה', flag: 'co', status: '4 ביולי, 04:30' }, team2: { name: 'גאנה', flag: 'gh', status: '4 ביולי, 04:30' } }
+roundOf32: [
+        { team1: { name: 'ברזיל', flag: 'br', score: '2', outcome: 'winner' }, team2: { name: 'יפן', flag: 'jp', score: '1', outcome: 'loser' } },
+        { team1: { name: 'גרמניה', flag: 'de', score: '1 (3)', outcome: 'loser' }, team2: { name: 'פרגוואי', flag: 'py', score: '1 (4)', outcome: 'winner' } },
+        // הנה ההיפוך: מרוקו עכשיו ראשונה!
+        { team1: { name: 'מרוקו', flag: 'ma', score: '1 (3)', outcome: 'winner' }, team2: { name: 'הולנד', flag: 'nl', score: '1 (2)', outcome: 'loser' } },
+        { team1: { name: 'דרום אפריקה', flag: 'za', score: '0', outcome: 'loser' }, team2: { name: 'קנדה', flag: 'ca', score: '1', outcome: 'winner' } },
+        
+        { team1: { name: 'חוף השנהב', flag: 'ci', score: '-', outcome: 'pending' }, team2: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' } },
+        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'שוודיה', flag: 'se', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מקסיקו', flag: 'mx', score: '-', outcome: 'pending' }, team2: { name: 'אקוודור', flag: 'ec', score: '-', outcome: 'pending' } },
+        { team1: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' }, team2: { name: 'קונגו', flag: 'cd', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ארצות הברית', flag: 'us', score: '-', outcome: 'pending' }, team2: { name: 'בוסניה', flag: 'ba', score: '-', outcome: 'pending' } },
+        { team1: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' }, team2: { name: 'סנגל', flag: 'sn', score: '-', outcome: 'pending' } },
+        { team1: { name: 'פורטוגל', flag: 'pt', score: '-', outcome: 'pending' }, team2: { name: 'קרואטיה', flag: 'hr', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'אוסטריה', flag: 'at', score: '-', outcome: 'pending' } },
+        { team1: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' }, team2: { name: 'אלג\'יריה', flag: 'dz', score: '-', outcome: 'pending' } },
+        { team1: { name: 'אוסטרליה', flag: 'au', score: '-', outcome: 'pending' }, team2: { name: 'מצרים', flag: 'eg', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'כף ורדה', flag: 'cv', score: '-', outcome: 'pending' } },
+        { team1: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' }, team2: { name: 'גאנה', flag: 'gh', score: '-', outcome: 'pending' } }
+    ],
+    roundOf16: [
+        { team1: { name: 'ברזיל', flag: 'br', score: '-', outcome: 'pending' }, team2: { name: 'פרגוואי', flag: 'py', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' }, team2: { name: 'קנדה', flag: 'ca', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 77', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 78', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 79', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 80', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 81', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 82', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 83', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 84', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 85', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 86', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת 87', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 88', flag: 'un', score: '-', outcome: 'pending' } }
     ]
 };
