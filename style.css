@@ -533,10 +533,15 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 
 /* איפוס: אין קווים אלא אם יש מנצחת! זה מעלים את ה"קווים האמצעיים" המוזרים */
 .bracket-match::before,
-.bracket-match::after {
-    display: none;
+.bracket-match::after { 
+    content: ''; 
+    position: absolute; 
+    left: -2rem; 
+    top: 50%; 
+    width: 2rem; 
+    border-bottom: 2px solid var(--border-color); 
+    display: none !important;  /* זה מה שמסיר את הקווים */
 }
-
 /* 1. המשחק העליון בצמד (יורד למטה לשמינית הגמר) */
 .roundOf32 .bracket-match.pair-top.win-team1::after {
     display: block;
@@ -630,4 +635,24 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .bracket-team.loser .team-name { 
     color: rgba(255, 255, 255, 0.65); /* 35% שקיפות (65% אטימות) */
     text-shadow: none; 
+}
+
+/* --- עיצוב הנבחרת המפסידה (שליטה מופרדת) --- */
+
+/* 1. איפוס השקיפות הכללית של התא (כדי שלא תנעל את הטקסט) */
+.bracket-team.loser {
+    opacity: 1 !important; 
+}
+
+/* 2. שקיפות 50% רק לשכבות הרקע של התא (גרדיאנט ודגל) */
+.bracket-team.loser::before {
+    opacity: 0.5;
+}
+.bracket-team.loser .flag-bg {
+    opacity: 0.42; /* חצי מה-0.85 שהוגדר לדגל במקור */
+}
+
+/* 3. שקיפות 30% ועצמאית לחלוטין לטקסט */
+.bracket-team.loser .team-info {
+    opacity: 0.7; 
 }

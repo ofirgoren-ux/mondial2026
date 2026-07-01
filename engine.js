@@ -516,51 +516,52 @@ window.renderKnockout = function() {
     const container = document.getElementById('dynamic-bracket');
     if (!container || !window.knockoutBracket) return;
     
-    let html = '';
-    const roundsConfig = [
-        { key: 'roundOf32', title: '32 הגדולות' },
-        { key: 'roundOf16', title: 'שמינית גמר (16)' }
-    ];
+    container.innerHTML = '';
+    container.className = "tournament-bracket";
     
-    roundsConfig.forEach(round => {
-        if (window.knockoutBracket[round.key]) {
-            html += `<div class="bracket-column ${round.key}"><div class="round-title">${round.title}</div>`;
+    Object.keys(window.knockoutBracket).forEach(key => {
+        const roundData = window.knockoutBracket[key];
+        const col = document.createElement('div');
+        col.className = 'bracket-column';
+        
+        let title = key === 'roundOf32' ? '32 הגדולות' : 'שמינית גמר';
+        col.innerHTML = `<div class="round-title">${title}</div>`;
+        
+        roundData.forEach((match, index) => {
+            let positionClass = (index % 2 === 0) ? ' pair-top' : ' pair-bottom';
+            let winClass = '';
+            if (match.team1?.outcome === 'winner') winClass = ' win-team1';
+            else if (match.team2?.outcome === 'winner') winClass = ' win-team2';
             
-            window.knockoutBracket[round.key].forEach((match, index) => {
-                // זיהוי מי ניצחה + האם זה המשחק העליון או התחתון בצמד
-                let winClass = '';
-                if (match.team1 && match.team1.outcome === 'winner') winClass = ' win-team1';
-                else if (match.team2 && match.team2.outcome === 'winner') winClass = ' win-team2';
+            const matchDiv = document.createElement('div');
+            matchDiv.className = `bracket-match${positionClass}${winClass}`;
+            
+            let html = '';
+            ['team1', 'team2'].forEach(t => {
+                let team = match[t] || { name: 'TBD', score: '-', outcome: 'pending', flag: 'un' };
+                let flagUrl = team.flag !== 'un' ? `https://flagcdn.com/w160/${team.flag}.png` : '';
+                let statusClass = team.outcome === 'winner' ? 'winner' : (team.outcome === 'loser' ? 'loser' : '');
                 
-                let positionClass = (index % 2 === 0) ? ' pair-top' : ' pair-bottom';
+                // הוספתי כאן את ה-onclick שפותח את יומן המסע:
+                let clickAttr = team.flag !== 'un' ? `onclick="openJourneyModal('${team.name}', '${team.flag}')"` : '';
                 
-                html += `<div class="bracket-match animate-in${winClass}${positionClass}">`;
-                
-                ['team1', 'team2'].forEach(t => {
-                    let team = match[t];
-                    if (!team) return;
-                    let flag = team.flag !== 'un' ? `https://flagcdn.com/w320/${team.flag}.png` : '';
-                    let bg = flag ? `background-image: url('${flag}');` : '';
-                    let statusClass = team.outcome === 'winner' ? 'winner' : (team.outcome === 'loser' ? 'loser' : '');
-                    let clickAttr = team.flag !== 'un' ? `onclick="openJourneyModal('${team.name}', '${team.flag}')"` : '';
-                    
-                    html += `
-                        <div class="bracket-team ${statusClass}" ${clickAttr}>
-                            <div class="flag-bg" style="${bg}"></div>
-                            <div class="team-info">
-                                <h3 class="team-name">${team.name}</h3>
-                                <div class="team-subtitle">${team.score || ''}</div>
-                            </div>
+                html += `
+                    <div class="bracket-team ${statusClass}" ${clickAttr}>
+                        <div class="flag-bg" style="background-image: url('${flagUrl}')"></div>
+                        <div class="team-info">
+                            <div class="team-name">${team.name}</div>
+                            <div class="team-subtitle">${team.score}</div>
                         </div>
-                    `;
-                });
-                html += '</div>';
+                    </div>
+                `;
             });
-            html += '</div>';
-        }
+            matchDiv.innerHTML = html;
+            col.appendChild(matchDiv);
+        });
+        container.appendChild(col);
     });
-    container.innerHTML = html;
 }
+
 window.openJourneyModal = function(teamName, flagCode) {
     const db = getSafeDatabase();
     let matchesPlayed = [];
@@ -655,44 +656,37 @@ window.renderScorers = function() {
     const container = document.getElementById('scorers-view');
     if (!container) return;
 
-const scorersData = [
-        { rank: 1, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 6, xg: 2.90, shots: 15, playerImg: "images/lionel-messi.jpeg" },
-        { rank: 2, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 4, xg: 2.10, shots: 14, playerImg: "images/Kylian-Mbappe.jpeg" },
-        { rank: 3, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 1.85, shots: 11, playerImg: "ousmane-dembele.jpeg" },
-        { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.33, shots: 13 },
-        { rank: 5, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 4, xg: 2.05, shots: 10, playerImg: "images/erlin-haaland.jpeg" },
-        { rank: 6, name: "דניז אונדב", team: "גרמניה", flag: "de", goals: 3, xg: 1.65, shots: 8 },
-        { rank: 7, name: "ז'והאן מנזמבי", team: "שווייץ", flag: "ch", goals: 3, xg: 0.81, shots: 6 },
-        { rank: 8, name: "איסמעילה סאר", team: "סנגל", flag: "sn", goals: 3, xg: 1.50, shots: 9 },
-        { rank: 9, name: "בריאן ברובי", team: "הולנד", flag: "nl", goals: 3, xg: 1.80, shots: 7 },
-        { rank: 10, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.09, shots: 7 }
+    const scorersData = [
+        { rank: 1, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 6, xg: 2.89, shots: 13, playerImg: "images/Kylian-Mbappe.jpeg" },
+        { rank: 2, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 6, xg: 2.41, shots: 7, playerImg: "images/lionel-messi.jpeg" },
+        { rank: 3, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 5, xg: 3.38, shots: 9, playerImg: "images/erlin-haaland.jpeg" },
+        { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.50, shots: 10 },
+        { rank: 5, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 0.95, shots: 5, playerImg: "images/ousmane-dembele.jpeg" },
+        { rank: 6, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.18, shots: 5 },
+        { rank: 7, name: "איסמעילה סאר", team: "סנגל", flag: "sn", goals: 3, xg: 1.94, shots: 6 },
+        { rank: 8, name: "קאי האברץ", team: "גרמניה", flag: "de", goals: 3, xg: 2.18, shots: 7 },
+        { rank: 9, name: "קודי גאקפו", team: "הולנד", flag: "nl", goals: 3, xg: 1.18, shots: 6 },
+        { rank: 10, name: "יואן ויסה", team: "קונגו", flag: "cd", goals: 3, xg: 1.47, shots: 3 }
     ];
 
     const topGoalCount = scorersData[0].goals;
-
     const podiumOrder = [scorersData[1], scorersData[0], scorersData[2]];
-    let podiumHTML = '<div class="podium-container">';
     
+    let podiumHTML = '<div class="podium-container">';
     podiumOrder.forEach(player => {
         let medalColor = player.rank === 1 ? '#FFD700' : (player.rank === 2 ? '#C0C0C0' : '#CD7F32');
-        let glowClass = `podium-rank-${player.rank}`;
         let flagBg = `background-image: url('https://flagcdn.com/w320/${player.flag}.png');`;
         
         podiumHTML += `
-            <div class="podium-card ${glowClass} animate-in">
+            <div class="podium-card podium-rank-${player.rank} animate-in">
                 <div class="podium-flag-bg" style="${flagBg}"></div>
                 <div class="podium-content">
                     <div class="podium-badge" style="background-color: ${medalColor}">${player.rank}</div>
                     <img src="${player.playerImg}" class="podium-player-img" style="border-color: ${medalColor}" onerror="this.src='https://ui-avatars.com/api/?name=${player.name}&background=111&color=fff&size=150'">
                     <div class="podium-name">${player.name}</div>
-                    <div class="podium-team">
-                        <img src="https://flagcdn.com/w20/${player.flag}.png" style="width:16px; border-radius:2px; vertical-align:middle; margin-left:4px;">
-                        ${player.team}
-                    </div>
+                    <div class="podium-team"><img src="https://flagcdn.com/w20/${player.flag}.png" style="width:16px; margin-left:4px;">${player.team}</div>
                     <div class="podium-goals" style="color: ${medalColor}">${player.goals} <span>שערים</span></div>
-                    <div class="podium-stats">
-                        <span dir="ltr" style="unicode-bidi: isolate; direction: ltr; display: inline-block;">xG: ${player.xg}</span> | <span>בעיטות: ${player.shots}</span>
-                    </div>
+                    <div class="podium-stats">xG: ${player.xg} | בעיטות: ${player.shots}</div>
                 </div>
             </div>
         `;
@@ -703,7 +697,6 @@ const scorersData = [
     for (let i = 3; i < scorersData.length; i++) {
         let player = scorersData[i];
         let progressWidth = (player.goals / topGoalCount) * 100;
-        
         listHTML += `
             <div class="lb-row animate-in" style="animation-delay: ${i * 0.05}s">
                 <div class="lb-rank">${player.rank}</div>
