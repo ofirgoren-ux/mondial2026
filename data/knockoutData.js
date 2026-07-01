@@ -82,9 +82,9 @@ roundOf32: [
         { team1: { name: 'מרוקו', flag: 'ma', score: '1 (3)', outcome: 'winner' }, team2: { name: 'הולנד', flag: 'nl', score: '1 (2)', outcome: 'loser' } },
         { team1: { name: 'דרום אפריקה', flag: 'za', score: '0', outcome: 'loser' }, team2: { name: 'קנדה', flag: 'ca', score: '1', outcome: 'winner' } },
         
-        { team1: { name: 'חוף השנהב', flag: 'ci', score: '-', outcome: 'pending' }, team2: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' } },
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'שוודיה', flag: 'se', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מקסיקו', flag: 'mx', score: '-', outcome: 'pending' }, team2: { name: 'אקוודור', flag: 'ec', score: '-', outcome: 'pending' } },
+        { team1: { name: 'חוף השנהב', flag: 'ci', score: '1', outcome: 'loser' }, team2: { name: 'נורווגיה', flag: 'no', score: '2', outcome: 'winner' } },
+        { team1: { name: 'צרפת', flag: 'fr', score: '3', outcome: 'winner' }, team2: { name: 'שוודיה', flag: 'se', score: '0', outcome: 'loser' } },
+        { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'winner' }, team2: { name: 'אקוודור', flag: 'ec', score: '0', outcome: 'loser' } },
         { team1: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' }, team2: { name: 'קונגו', flag: 'cd', score: '-', outcome: 'pending' } },
         { team1: { name: 'ארצות הברית', flag: 'us', score: '-', outcome: 'pending' }, team2: { name: 'בוסניה', flag: 'ba', score: '-', outcome: 'pending' } },
         { team1: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' }, team2: { name: 'סנגל', flag: 'sn', score: '-', outcome: 'pending' } },
@@ -95,14 +95,46 @@ roundOf32: [
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'כף ורדה', flag: 'cv', score: '-', outcome: 'pending' } },
         { team1: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' }, team2: { name: 'גאנה', flag: 'gh', score: '-', outcome: 'pending' } }
     ],
-    roundOf16: [
-        { team1: { name: 'ברזיל', flag: 'br', score: '-', outcome: 'pending' }, team2: { name: 'פרגוואי', flag: 'py', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' }, team2: { name: 'קנדה', flag: 'ca', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 77', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 78', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 79', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 80', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 81', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 82', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 83', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 84', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 85', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 86', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 87', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 88', flag: 'un', score: '-', outcome: 'pending' } }
+roundOf16: [
+        // משחק 89: פרגוואי מול צרפת (מנצחת 77)
+        { 
+            team1: { name: 'פרגוואי', flag: 'py', score: '-', outcome: 'pending' }, 
+            team2: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' } 
+        },
+        // משחק 90: קנדה מול מרוקו
+        { 
+            team1: { name: 'קנדה', flag: 'ca', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } 
+        },
+        // משחק 91: ברזיל מול נורווגיה (מנצחת 78)
+        { 
+            team1: { name: 'ברזיל', flag: 'br', score: '-', outcome: 'pending' }, 
+            team2: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' } 
+        },
+        // משחק 92: מקסיקו (מנצחת 79) מול מנצחת 80
+        { 
+            team1: { name: 'מקסיקו', flag: 'mx', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מנצחת 80', flag: '', score: '-', outcome: 'pending' } 
+        },
+        // משחק 93: מנצחת 83 מול מנצחת 84
+        { 
+            team1: { name: 'מנצחת 83', flag: '', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מנצחת 84', flag: '', score: '-', outcome: 'pending' } 
+        },
+        // משחק 94: מנצחת 81 מול מנצחת 82
+        { 
+            team1: { name: 'מנצחת 81', flag: '', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מנצחת 82', flag: '', score: '-', outcome: 'pending' } 
+        },
+        // משחק 95: מנצחת 86 מול מנצחת 88
+        { 
+            team1: { name: 'מנצחת 86', flag: '', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מנצחת 88', flag: '', score: '-', outcome: 'pending' } 
+        },
+        // משחק 96: מנצחת 85 מול מנצחת 87
+        { 
+            team1: { name: 'מנצחת 85', flag: '', score: '-', outcome: 'pending' }, 
+            team2: { name: 'מנצחת 87', flag: '', score: '-', outcome: 'pending' } 
+        }
     ]
 };
