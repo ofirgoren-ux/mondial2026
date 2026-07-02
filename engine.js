@@ -130,7 +130,6 @@ function renderMatches() {
     const db = getSafeDatabase();
     let htmlChunks = [];
 
-    // CSS מיוחד לעיצוב הפנדלים וההארכות החדש (דארק מוד נקי)
     const penStyles = `
     <style>
     .res-card-ui { background: #1e293b; border-radius: 10px; padding: 12px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; border: 1px solid rgba(255,255,255,0.05); }
@@ -150,7 +149,6 @@ function renderMatches() {
     .pen-dot.miss { background: #ef4444; box-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
     </style>
     `;
-    
     htmlChunks.push(penStyles);
 
     let filteredMatches = Object.entries(db).filter(([matchId, data]) => {
@@ -219,7 +217,7 @@ function renderMatches() {
         const awayXGD = (awayXG - homeXG).toFixed(2);
         
         let homeEff = '-', awayEff = '-';
-        if (isPast && data.score && data.score.actual.includes('-')) {
+        if (isPast && data.score && data.score.actual && data.score.actual.includes('-')) {
             const scores = data.score.actual.split('-');
             homeEff = homeXG > 0 ? (parseInt(scores[0]) / homeXG).toFixed(2) : '0';
             awayEff = awayXG > 0 ? (parseInt(scores[1]) / awayXG).toFixed(2) : '0';
@@ -240,20 +238,27 @@ function renderMatches() {
             
             let sumVisualHTML = `<div class="chart-container"><canvas id="chart-${matchId}-sum"></canvas></div>`;
             
-            // --- בניית ממשק ההכרעות החדש ---
             if (data.status === 'AET' || data.status === 'PEN') {
-                const score90Home = data.score.fulltime?.home ?? '-';
-                const score90Away = data.score.fulltime?.away ?? '-';
+                const score90Home = data.score.fulltime?.home ?? 0;
+                const score90Away = data.score.fulltime?.away ?? 0;
                 const score90Str = `${score90Home} - ${score90Away}`;
 
-                // Mock כרטיסים לצורך התצוגה (עד שיהיה מנוי מלא)
                 let hCardMocks = '<div class="res-card-y"></div><div class="res-card-y"></div>';
                 let aCardMocks = '<div class="res-card-y"></div>';
 
                 let extraTimeRow = '';
                 if (data.status === 'AET' || data.status === 'PEN') {
-                     const etHome = data.score.extratime?.home !== null ? data.score.extratime.home : (data.status === 'AET' ? data.goals?.home : score90Home);
-                     const etAway = data.score.extratime?.away !== null ? data.score.extratime.away : (data.status === 'AET' ? data.goals?.away : score90Away);
+                     // התיקון הקריטי: מחברים את שער ה-90 דקות עם שערי ההארכה (כי ה-API מדווח על תוספת בלבד)
+                     let etHome = parseInt(score90Home);
+                     let etAway = parseInt(score90Away);
+                     
+                     if (data.score.extratime && data.score.extratime.home !== null) {
+                         etHome += parseInt(data.score.extratime.home);
+                         etAway += parseInt(data.score.extratime.away);
+                     } else if (data.status === 'AET' && data.goals) {
+                         etHome = data.goals.home;
+                         etAway = data.goals.away;
+                     }
                      
                      extraTimeRow = `
                         <div class="res-row-ui">
@@ -459,7 +464,6 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-// שינוי ברירת המחדל כך שהדף ייפתח תמיד על שלב הנוקאאוט (r32)
 let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r32'; 
 
 window.applyFilters = function() { renderMatches(); }
@@ -474,7 +478,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (btn) btn.classList.add('active');
         switchView('matches');
     } else {
-        // מדליק את הכפתור של ה-32 כברירת מחדל
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
         const defaultBtn = document.querySelector(`.submenu-btn[data-md="r32"]`); 
         if (defaultBtn) defaultBtn.classList.add('active');
@@ -514,8 +517,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }));
 });
 
-window.renderStandings = function() { /* נשאר זהה לחלוטין */ }
-window.renderKnockout = function() { /* נשאר זהה לחלוטין */ }
-window.openJourneyModal = function(teamName, flagCode) { /* נשאר זהה לחלוטין */ }
-window.closeJourneyModal = function(e) { /* נשאר זהה לחלוטין */ }
-window.renderScorers = function() { /* נשאר זהה לחלוטין */ }
+window.renderStandings = function() { /* נשאר זהה */ }
+window.renderKnockout = function() { /* נשאר זהה */ }
+window.openJourneyModal = function(teamName, flagCode) { /* נשאר זהה */ }
+window.closeJourneyModal = function(e) { /* נשאר זהה */ }
+window.renderScorers = function() { /* נשאר זהה */ }

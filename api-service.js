@@ -150,43 +150,46 @@ async function fetchLiveUpdates() {
 
             let matchedId = null;
 
-            // התאמה חכמה נגד כפילויות: קודם כל מוודאים שלא נייצר משחק חדש אם הוא כבר קיים לפי שם!
+            // 1. קודם כל: התאמה לפי שמות מדויקים
             for (let id in window.matchDatabase) {
                 let dbMatch = window.matchDatabase[id];
                 let hName = dbMatch.teamHome?.name;
                 let aName = dbMatch.teamAway?.name;
                 
-                // בודקים אם שתי הקבוצות זהות (מונע שתי כרטיסיות של ארה"ב נגד בוסניה)
                 if ((hName === apiHomeInfo.he && aName === apiAwayInfo.he) || 
                     (hName === apiAwayInfo.he && aName === apiHomeInfo.he)) {
                     matchedId = id; break;
                 }
             }
 
-            // רק אם הקבוצות לא נמצאו לפי שם, ננסה להתאים לפי שעה (למשחקי נוקאאוט שטרם עודכנו)
+            // 2. אם לא מצאנו בשם (משחקים חסרים), נמצא לפי קירבת זמן! (מרווח של עד 24 שעות)
             if (!matchedId) {
+                let minTimeDiff = Infinity;
                 for (let id in window.matchDatabase) {
                     let dbMatch = window.matchDatabase[id];
-                    let dbTime = new Date(dbMatch.utcDate).getTime();
+                    if (dbMatch.stage !== 'נוקאאוט' || dbMatch.teamHome?.flagCode !== 'un') continue;
                     
-                    if (dbTime === apiTime && dbMatch.stage === 'נוקאאוט' && dbMatch.teamHome?.flagCode === 'un') {
-                        matchedId = id; break;
+                    let dbTime = new Date(dbMatch.utcDate).getTime();
+                    let timeDiff = Math.abs(dbTime - apiTime);
+                    
+                    if (timeDiff < 24 * 60 * 60 * 1000 && timeDiff < minTimeDiff) {
+                        minTimeDiff = timeDiff;
+                        matchedId = id;
                     }
                 }
             }
 
+            // מעדכנים את המשחק שנמצא
             if (matchedId) {
                 let dbMatch = window.matchDatabase[matchedId];
                 
-                if (dbMatch.stage === 'נוקאאוט' && apiHomeInfo.flag !== 'un') {
-                    dbMatch.teamHome.name = apiHomeInfo.he;
-                    dbMatch.teamHome.flagCode = apiHomeInfo.flag;
-                    dbMatch.teamHome.color = apiHomeInfo.color;
-                }
-                if (dbMatch.stage === 'נוקאאוט' && apiAwayInfo.flag !== 'un') {
-                    dbMatch.teamAway.name = apiAwayInfo.he;
-                    dbMatch.teamAway.flagCode = apiAwayInfo.flag;
-                    dbMatch.teamAway.color = apiAwayInfo.color;
+                if (dbMatch.stage === 'נוקאאוט') {
+                    if (apiHomeInfo.flag !== 'un') {
+                        dbMatch.teamHome.name = apiHomeInfo.he; dbMatch.teamHome.flagCode = apiHomeInfo.flag; dbMatch.teamHome.color = apiHomeInfo.color;
+                    }
+                    if (apiAwayInfo.flag !== 'un') {
+                        dbMatch.teamAway.name = apiAwayInfo.he; dbMatch.teamAway.flagCode = apiAwayInfo.flag; dbMatch.teamAway.color = apiAwayInfo.color;
+                    }
                 }
 
                 dbMatch.status = item.fixture.status.short;
@@ -202,8 +205,34 @@ async function fetchLiveUpdates() {
             }
         });
         
-        console.log("הפנדלים והנבחרות מהנוקאאוט הוזרקו בהצלחה!");
+        // 3. ניקוי כפילויות סופי ואגרסיבי (מוחק כרטיסיות גנריות אם כבר יש כרטיסיה עם שמות)
+        let seenMatches = new Set();
+        let idsToDelete = [];
+        
+        for (let id in window.matchDatabase) {
+            let match = window.matchDatabase[id];
+            let hName = match.teamHome?.name;
+            let aName = match.teamAway?.name;
+            
+            // בודק אם זו כרטיסיה עם נבחרות אמיתיות
+            if (hName && aName && hName !== "לא נקבע" && match.teamHome.flagCode !== 'un') {
+                let matchKey = [hName, aName].sort().join('|');
+                
+                if (seenMatches.has(matchKey)) {
+                    // מצאנו כפילות (המשתמש הזין ידנית + המערכת יצרה)
+                    idsToDelete.push(id);
+                } else {
+                    seenMatches.add(matchKey);
+                }
+            }
+        }
+        
+        // מוחק את הכפילויות
+        idsToDelete.forEach(id => { delete window.matchDatabase[id]; });
+
+        console.log("נתוני הלייב שולבו והכפילויות נוקו!");
         if (typeof renderMatches === 'function') renderMatches();
+        if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
         console.error("שגיאה במשיכת נתוני לייב:", error);
