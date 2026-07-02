@@ -1,25 +1,33 @@
-// מילון תרגום מנתוני ה-API לאנגלית אל המבנה העברי שלך בדאשבורד
+// ==========================================
+// 1. מילון תרגום מאוחד (תומך בשני ה-APIs)
+// ==========================================
 const teamDictionary = {
     "Mexico": { he: "מקסיקו", flag: "mx", color: "#006341" },
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
+    "South Korea": { he: "קוריאה הדרומית", flag: "kr", color: "#C60C30" },
     "Korea Republic": { he: "קוריאה הדרומית", flag: "kr", color: "#C60C30" },
     "Czechia": { he: "צ'כיה", flag: "cz", color: "#ED1B24" },
     "Canada": { he: "קנדה", flag: "ca", color: "#FF0000" },
     "Bosnia and Herzegovina": { he: "בוסניה", flag: "ba", color: "#002F6C" },
+    "Bosnia & Herzegovina": { he: "בוסניה", flag: "ba", color: "#002F6C" },
     "United States": { he: "ארצות הברית", flag: "us", color: "#002868" },
+    "USA": { he: "ארצות הברית", flag: "us", color: "#002868" },
     "Paraguay": { he: "פרגוואי", flag: "py", color: "#D52B1E" },
     "Haiti": { he: "האיטי", flag: "ht", color: "#00209F" },
     "Scotland": { he: "סקוטלנד", flag: "gb-sct", color: "#005EB8" },
     "Australia": { he: "אוסטרליה", flag: "au", color: "#FFCD00" },
     "Turkiye": { he: "טורקיה", flag: "tr", color: "#E30A17" },
+    "Türkiye": { he: "טורקיה", flag: "tr", color: "#E30A17" },
     "Brazil": { he: "ברזיל", flag: "br", color: "#FFD700" },
     "Morocco": { he: "מרוקו", flag: "ma", color: "#C1272D" },
     "Qatar": { he: "קטאר", flag: "qa", color: "#8A1538" },
     "Switzerland": { he: "שווייץ", flag: "ch", color: "#FF0000" },
     "Cote d'Ivoire": { he: "חוף השנהב", flag: "ci", color: "#FF8200" },
+    "Ivory Coast": { he: "חוף השנהב", flag: "ci", color: "#FF8200" },
     "Ecuador": { he: "אקוודור", flag: "ec", color: "#FFD100" },
     "Germany": { he: "גרמניה", flag: "de", color: "#FFFFFF" },
     "Curacao": { he: "קוראסאו", flag: "cw", color: "#002B7F" },
+    "Curaçao": { he: "קוראסאו", flag: "cw", color: "#002B7F" },
     "Netherlands": { he: "הולנד", flag: "nl", color: "#F36C21" },
     "Japan": { he: "יפן", flag: "jp", color: "#000555" },
     "Sweden": { he: "שוודיה", flag: "se", color: "#FFF200" },
@@ -28,7 +36,9 @@ const teamDictionary = {
     "Uruguay": { he: "אורוגוואי", flag: "uy", color: "#75AADB" },
     "Spain": { he: "ספרד", flag: "es", color: "#C60B1E" },
     "Cabo Verde": { he: "כף ורדה", flag: "cv", color: "#003893" },
+    "Cape Verde Islands": { he: "כף ורדה", flag: "cv", color: "#003893" },
     "IR Iran": { he: "איראן", flag: "ir", color: "#239F40" },
+    "Iran": { he: "איראן", flag: "ir", color: "#239F40" },
     "New Zealand": { he: "ניו זילנד", flag: "nz", color: "#000000" },
     "Belgium": { he: "בלגיה", flag: "be", color: "#E30613" },
     "Egypt": { he: "מצרים", flag: "eg", color: "#CE1126" },
@@ -50,16 +60,24 @@ const teamDictionary = {
     "Colombia": { he: "קולומביה", flag: "co", color: "#FCD116" }
 };
 
-// פונקציות עזר להמרת נתונים מה-API לעברית
+// פונקציית תרגום חכמה שיודעת לטפל גם בשמות זמניים מה-API
 function getTeamInfo(englishName) {
-    // זיהוי משחקי נוקאאוט שעוד לא נקבעו (כגון "מנצחת משחק 80")
-    if (!englishName || englishName.startsWith("Winner") || englishName.startsWith("Group") || englishName.startsWith("Loser")) {
-        return { he: englishName || "לא נקבע", flag: "un", color: "#888888" }; 
+    if (!englishName) return { he: "לא נקבע", flag: "un", color: "#888888" };
+    
+    // תרגום שמות גנריים (מנצחות וסגניות)
+    if (englishName.startsWith("Winner") || englishName.startsWith("Group") || englishName.startsWith("Loser")) {
+        let hebrewName = englishName;
+        if (englishName.includes("winners")) hebrewName = englishName.replace("Group ", "מנצחת בית ").replace(" winners", "");
+        else if (englishName.includes("runners-up") || englishName.includes("runner-up")) hebrewName = englishName.replace("Group ", "סגנית בית ").replace(" runners-up", "").replace(" runner-up", "");
+        else if (englishName.includes("third place")) hebrewName = "מקום 3 (בית " + englishName.replace("Group ", "").replace(" third place", "") + ")";
+        
+        return { he: hebrewName, flag: "un", color: "#334155" }; 
     }
+    
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
 
-// המרת תאריך מה-API לשעון ישראל
+// עזרים
 function formatMatchDate(utcString) {
     if (!utcString) return '';
     const d = new Date(utcString);
@@ -70,19 +88,6 @@ function formatMatchDate(utcString) {
     return `${day}/${month}/${d.getFullYear()} | ${hours}:${minutes} (שעון ישראל)`;
 }
 
-// קביעה אוטומטית אם המשחק בעבר או בעתיד
-function determineTimeStatus(utcDate, existingMatch) {
-    // קודם כל מתחשבים בהגדרת המשתמש מקבצי ה-Data אם היא קיימת ונקבעה כ-past
-    if (existingMatch && existingMatch.timeStatus === 'past') return 'past';
-    if (!utcDate) return 'future';
-    
-    const matchTime = new Date(utcDate).getTime();
-    const now = new Date().getTime();
-    // מגדיר משחק כ"בעבר" אם עברו שעתיים (7,200,000 אלפיות שנייה) מאז שריקת הפתיחה
-    return (now > matchTime + 7200000) ? 'past' : 'future';
-}
-
-// תרגום שלבי הטורניר
 function getMatchStageInfo(fixture) {
     if (fixture.stage === 'group-stage') return { matchday: 1, stage: fixture.group };
     if (fixture.stage === 'round-of-32') return { matchday: 'r32', stage: 'נוקאאוט' };
@@ -93,154 +98,124 @@ function getMatchStageInfo(fixture) {
     return { matchday: 1, stage: 'לא ידוע' };
 }
 
-// הפונקציה הראשית שמושכת מהשרת וממזגת נתונים
+// ==========================================
+// 2. בניית השלד הבסיסי (מהקובץ הסטטי)
+// ==========================================
 async function loadApiAndMergeData() {
-    console.log("מתחיל לשאוב נתוני אמת מקובץ ה-JSON בשרת...");
-    
     try {
-        // שאיבת הקובץ המקורי מתיקיית השרת (GitHub)
         const response = await fetch('world-cup-2026-fixtures.json');
-        
-        if (!response.ok) {
-            throw new Error(`שגיאה בגישה לקובץ: ${response.status}`);
-        }
-        
+        if (!response.ok) return;
         const apiData = await response.json();
         
-        // יצירה או איפוס של בסיס הנתונים
         window.matchDatabase = window.matchDatabase || {};
 
         apiData.fixtures.forEach(fixture => {
             const matchId = 'match' + fixture.matchNumber;
-            // שומר את הנתונים שלך (הכרטיסים, ה-xG, התחזיות, משפטי הפוסט-משחק וההארכות)
             let existingMatch = window.matchDatabase[matchId] || {}; 
 
             const tHomeInfo = getTeamInfo(fixture.homeTeam);
             const tAwayInfo = getTeamInfo(fixture.awayTeam);
             const stageInfo = getMatchStageInfo(fixture);
 
-            // מיזוג: השלד מה-API מתעדכן, התוכן האישי שלך נשמר!
             window.matchDatabase[matchId] = {
                 ...existingMatch, 
-
-                timeStatus: determineTimeStatus(fixture.kickoffUtc, existingMatch),
                 matchday: existingMatch.matchday || stageInfo.matchday,
                 stage: existingMatch.stage || stageInfo.stage,
                 dateText: formatMatchDate(fixture.kickoffUtc),
+                utcDate: fixture.kickoffUtc, // שומרים את הזמן המדויק לצורך התאמה בהמשך
                 
-                teamHome: {
-                    name: tHomeInfo.he,
-                    flagCode: tHomeInfo.flag,
-                    color: tHomeInfo.color,
-                    cards: existingMatch.teamHome?.cards || { yellow: [], red: [] }
+                teamHome: existingMatch.teamHome?.flagCode && existingMatch.teamHome.flagCode !== 'un' ? existingMatch.teamHome : {
+                    name: tHomeInfo.he, flagCode: tHomeInfo.flag, color: tHomeInfo.color, cards: { yellow: [], red: [] }
                 },
-                teamAway: {
-                    name: tAwayInfo.he,
-                    flagCode: tAwayInfo.flag,
-                    color: tAwayInfo.color,
-                    cards: existingMatch.teamAway?.cards || { yellow: [], red: [] }
+                teamAway: existingMatch.teamAway?.flagCode && existingMatch.teamAway.flagCode !== 'un' ? existingMatch.teamAway : {
+                    name: tAwayInfo.he, flagCode: tAwayInfo.flag, color: tAwayInfo.color, cards: { yellow: [], red: [] }
                 }
             };
 
-            // ערכי ברירת מחדל רק למשחקים שעוד לא נגעת בהם כלל
             if (!existingMatch.score) window.matchDatabase[matchId].score = { prediction: '-', actual: '', accuracyClass: 'pending' };
             if (!existingMatch.probabilities) window.matchDatabase[matchId].probabilities = { home: 33, draw: 34, away: 33 };
-            if (!existingMatch.insight) window.matchDatabase[matchId].insight = { prediction: 'טרם הוזנה תחזית.', actual: '' };
             if (!existingMatch.matchRisk) window.matchDatabase[matchId].matchRisk = 'Safe';
         });
-
-        console.log("הנתונים מוזגו בהצלחה! מרנדר את הדאשבורד מחדש.");
         
-        // ציור מחודש של הדאשבורד עם הנתונים הממוזגים
         if (typeof renderMatches === 'function') renderMatches();
-        if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
-        console.error("שגיאה במשיכת הנתונים. ודא שקובץ ה-JSON נמצא בתיקייה ומוגדר כראוי:", error);
+        console.error("שגיאה במשיכת שלד הנתונים:", error);
     }
 }
 
-// הפעלת הפונקציה ברגע שקובץ הסקריפט הזה נטען בדפדפן
-loadApiAndMergeData();
-
 // ==========================================
-// מנגנון חיבור נתוני לייב (API-Football)
+// 3. שאיבת לייב מ-API-Football והתאמה חכמה
 // ==========================================
 async function fetchLiveUpdates() {
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
-    console.log("מתחבר ל-API-Football לשאיבת נתוני אמת חיים...");
-
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: { 'x-apisports-key': apiKey }
-        });
-
+        const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
         if (!response.ok) throw new Error("שגיאה בחיבור לשרת הלייב");
-
-        const data = await response.json();
         
-        // מילון גישור: מתרגם את השמות באנגלית של ה-API לעברית של הדאשבורד שלך
-        const apiToHebrew = {
-            "Mexico": "מקסיקו", "South Africa": "דרום אפריקה", "South Korea": "קוריאה הדרומית",
-            "Czechia": "צ'כיה", "Canada": "קנדה", "Bosnia & Herzegovina": "בוסניה",
-            "USA": "ארצות הברית", "Paraguay": "פרגוואי", "Qatar": "קטאר", "Switzerland": "שווייץ",
-            "Brazil": "ברזיל", "Morocco": "מרוקו", "Haiti": "האיטי", "Scotland": "סקוטלנד",
-            "Australia": "אוסטרליה", "Türkiye": "טורקיה", "Germany": "גרמניה", "Curaçao": "קוראסאו",
-            "Netherlands": "הולנד", "Japan": "יפן", "Ivory Coast": "חוף השנהב", "Ecuador": "אקוודור",
-            "Sweden": "שוודיה", "Tunisia": "תוניסיה", "Spain": "ספרד", "Cape Verde Islands": "כף ורדה",
-            "Saudi Arabia": "ערב הסעודית", "Uruguay": "אורוגוואי", "Iran": "איראן", "New Zealand": "ניו זילנד",
-            "Egypt": "מצרים", "Congo DR": "קונגו", "Croatia": "קרואטיה", "Uzbekistan": "אוזבקיסטן",
-            "Colombia": "קולומביה", "England": "אנגליה", "Panama": "פנמה", "Algeria": "אלג'יריה",
-            "Austria": "אוסטריה", "Jordan": "ירדן", "Portugal": "פורטוגל", "France": "צרפת",
-            "Senegal": "סנגל", "Iraq": "עיראק", "Norway": "נורבגיה", "Argentina": "ארגנטינה"
-        };
+        const data = await response.json();
+        if (!window.matchDatabase || !data.response) return;
 
-        if (window.matchDatabase && data.response) {
-            data.response.forEach(item => {
-                const apiHome = apiToHebrew[item.teams.home.name];
-                const apiAway = apiToHebrew[item.teams.away.name];
+        data.response.forEach(item => {
+            const apiHomeInfo = getTeamInfo(item.teams.home.name);
+            const apiAwayInfo = getTeamInfo(item.teams.away.name);
+            const apiTime = new Date(item.fixture.date).getTime();
 
-                // סורק את המאגר שלנו ומחפש את המשחק שבו משחקות שתי הנבחרות האלו
-                for (let matchId in window.matchDatabase) {
-                    let dbMatch = window.matchDatabase[matchId];
-                    
-                    if (dbMatch.teamHome?.name === apiHome && dbMatch.teamAway?.name === apiAway) {
-                        
-                        // הזרקת הנתונים החיים פנימה!
-                        dbMatch.status = item.fixture.status.short; // שומר אם זה הארכה (AET) או פנדלים (PEN)
-                        dbMatch.score = item.score; // שומר את כל נתוני הפנדלים
-                        dbMatch.goals = item.goals;
-                        
-                        // מעדכן אוטומטית אם המשחק הסתיים, כדי שהעיצוב ישתנה בהתאם
-                        if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
-                            dbMatch.timeStatus = 'past';
-                        } else if (dbMatch.status === 'NS') {
-                            dbMatch.timeStatus = 'future';
-                        }
-                        
-                        // קובע את תוצאת הסיום שתוצג בראש הכרטיסייה
-                        if (dbMatch.timeStatus === 'past' && item.goals.home !== null) {
-                             dbMatch.score.actual = `${item.goals.home} - ${item.goals.away}`;
-                        }
-                    }
+            let matchedId = null;
+
+            // סריקה לאיתור המשחק במאגר שלנו
+            for (let id in window.matchDatabase) {
+                let dbMatch = window.matchDatabase[id];
+                let dbTime = new Date(dbMatch.utcDate).getTime();
+                
+                // אסטרטגיה 1: התאמה מושלמת לפי שמות הקבוצות (מעולה לבתים)
+                if (dbMatch.teamHome?.name === apiHomeInfo.he && dbMatch.teamAway?.name === apiAwayInfo.he) {
+                    matchedId = id; break;
                 }
-            });
-            
-            console.log("נתוני הלייב שולבו בהצלחה! הדאשבורד מעודכן.");
-            
-            // מצייר מחדש את המסך עם כל התוצאות, ההארכות וציר הזמן של הפנדלים
-            if (typeof renderMatches === 'function') renderMatches();
-            if (typeof renderStandings === 'function') renderStandings();
-        }
+                // אסטרטגיה 2: התאמה לפי זמן בעיטת הפתיחה. (מושלם לנוקאאוט!)
+                else if (dbTime === apiTime && dbMatch.stage === 'נוקאאוט') {
+                    matchedId = id; break;
+                }
+            }
+
+            if (matchedId) {
+                let dbMatch = window.matchDatabase[matchedId];
+                
+                // הזרקת שמות הנבחרות והדגלים האמיתיים במקום ה"מנצחות" הגנריות של הנוקאאוט!
+                if (dbMatch.stage === 'נוקאאוט' && apiHomeInfo.flag !== 'un') {
+                    dbMatch.teamHome.name = apiHomeInfo.he;
+                    dbMatch.teamHome.flagCode = apiHomeInfo.flag;
+                    dbMatch.teamHome.color = apiHomeInfo.color;
+                }
+                if (dbMatch.stage === 'נוקאאוט' && apiAwayInfo.flag !== 'un') {
+                    dbMatch.teamAway.name = apiAwayInfo.he;
+                    dbMatch.teamAway.flagCode = apiAwayInfo.flag;
+                    dbMatch.teamAway.color = apiAwayInfo.color;
+                }
+
+                // עדכון סטטוס ותוצאות מהלייב
+                dbMatch.status = item.fixture.status.short;
+                dbMatch.score = item.score;
+                dbMatch.goals = item.goals;
+                
+                if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
+                    dbMatch.timeStatus = 'past';
+                    if (item.goals.home !== null) dbMatch.score.actual = `${item.goals.home} - ${item.goals.away}`;
+                } else if (dbMatch.status === 'NS') {
+                    dbMatch.timeStatus = 'future';
+                }
+            }
+        });
+        
+        console.log("הפנדלים והנבחרות מהנוקאאוט הוזרקו בהצלחה!");
+        if (typeof renderMatches === 'function') renderMatches();
 
     } catch (error) {
         console.error("שגיאה במשיכת נתוני לייב:", error);
     }
 }
 
-// הפעלה אוטומטית של המשיכה החיה שנייה וחצי אחרי שהאתר עולה 
-// (כדי לתת לשלד הראשון לסיים להיטען לפני שמזריקים אליו לייב)
-setTimeout(fetchLiveUpdates, 1500);
+// הפעלה מסודרת: קודם בונים את השלד, ואז מזריקים אליו את הלייב העדכני
+loadApiAndMergeData().then(() => fetchLiveUpdates());
