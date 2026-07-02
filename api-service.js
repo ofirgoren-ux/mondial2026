@@ -1,6 +1,3 @@
-// ==========================================
-// 1. מילון תרגום מאוחד (תומך בשני ה-APIs)
-// ==========================================
 const teamDictionary = {
     "Mexico": { he: "מקסיקו", flag: "mx", color: "#006341" },
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
@@ -60,24 +57,18 @@ const teamDictionary = {
     "Colombia": { he: "קולומביה", flag: "co", color: "#FCD116" }
 };
 
-// פונקציית תרגום חכמה שיודעת לטפל גם בשמות זמניים מה-API
 function getTeamInfo(englishName) {
     if (!englishName) return { he: "לא נקבע", flag: "un", color: "#888888" };
-    
-    // תרגום שמות גנריים (מנצחות וסגניות)
     if (englishName.startsWith("Winner") || englishName.startsWith("Group") || englishName.startsWith("Loser")) {
         let hebrewName = englishName;
         if (englishName.includes("winners")) hebrewName = englishName.replace("Group ", "מנצחת בית ").replace(" winners", "");
         else if (englishName.includes("runners-up") || englishName.includes("runner-up")) hebrewName = englishName.replace("Group ", "סגנית בית ").replace(" runners-up", "").replace(" runner-up", "");
         else if (englishName.includes("third place")) hebrewName = "מקום 3 (בית " + englishName.replace("Group ", "").replace(" third place", "") + ")";
-        
         return { he: hebrewName, flag: "un", color: "#334155" }; 
     }
-    
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
 
-// עזרים
 function formatMatchDate(utcString) {
     if (!utcString) return '';
     const d = new Date(utcString);
@@ -98,9 +89,6 @@ function getMatchStageInfo(fixture) {
     return { matchday: 1, stage: 'לא ידוע' };
 }
 
-// ==========================================
-// 2. בניית השלד הבסיסי (מהקובץ הסטטי)
-// ==========================================
 async function loadApiAndMergeData() {
     try {
         const response = await fetch('world-cup-2026-fixtures.json');
@@ -122,7 +110,7 @@ async function loadApiAndMergeData() {
                 matchday: existingMatch.matchday || stageInfo.matchday,
                 stage: existingMatch.stage || stageInfo.stage,
                 dateText: formatMatchDate(fixture.kickoffUtc),
-                utcDate: fixture.kickoffUtc, // שומרים את הזמן המדויק לצורך התאמה בהמשך
+                utcDate: fixture.kickoffUtc,
                 
                 teamHome: existingMatch.teamHome?.flagCode && existingMatch.teamHome.flagCode !== 'un' ? existingMatch.teamHome : {
                     name: tHomeInfo.he, flagCode: tHomeInfo.flag, color: tHomeInfo.color, cards: { yellow: [], red: [] }
@@ -144,9 +132,6 @@ async function loadApiAndMergeData() {
     }
 }
 
-// ==========================================
-// 3. שאיבת לייב מ-API-Football והתאמה חכמה
-// ==========================================
 async function fetchLiveUpdates() {
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
@@ -165,25 +150,34 @@ async function fetchLiveUpdates() {
 
             let matchedId = null;
 
-            // סריקה לאיתור המשחק במאגר שלנו
+            // התאמה חכמה נגד כפילויות: קודם כל מוודאים שלא נייצר משחק חדש אם הוא כבר קיים לפי שם!
             for (let id in window.matchDatabase) {
                 let dbMatch = window.matchDatabase[id];
-                let dbTime = new Date(dbMatch.utcDate).getTime();
+                let hName = dbMatch.teamHome?.name;
+                let aName = dbMatch.teamAway?.name;
                 
-                // אסטרטגיה 1: התאמה מושלמת לפי שמות הקבוצות (מעולה לבתים)
-                if (dbMatch.teamHome?.name === apiHomeInfo.he && dbMatch.teamAway?.name === apiAwayInfo.he) {
+                // בודקים אם שתי הקבוצות זהות (מונע שתי כרטיסיות של ארה"ב נגד בוסניה)
+                if ((hName === apiHomeInfo.he && aName === apiAwayInfo.he) || 
+                    (hName === apiAwayInfo.he && aName === apiHomeInfo.he)) {
                     matchedId = id; break;
                 }
-                // אסטרטגיה 2: התאמה לפי זמן בעיטת הפתיחה. (מושלם לנוקאאוט!)
-                else if (dbTime === apiTime && dbMatch.stage === 'נוקאאוט') {
-                    matchedId = id; break;
+            }
+
+            // רק אם הקבוצות לא נמצאו לפי שם, ננסה להתאים לפי שעה (למשחקי נוקאאוט שטרם עודכנו)
+            if (!matchedId) {
+                for (let id in window.matchDatabase) {
+                    let dbMatch = window.matchDatabase[id];
+                    let dbTime = new Date(dbMatch.utcDate).getTime();
+                    
+                    if (dbTime === apiTime && dbMatch.stage === 'נוקאאוט' && dbMatch.teamHome?.flagCode === 'un') {
+                        matchedId = id; break;
+                    }
                 }
             }
 
             if (matchedId) {
                 let dbMatch = window.matchDatabase[matchedId];
                 
-                // הזרקת שמות הנבחרות והדגלים האמיתיים במקום ה"מנצחות" הגנריות של הנוקאאוט!
                 if (dbMatch.stage === 'נוקאאוט' && apiHomeInfo.flag !== 'un') {
                     dbMatch.teamHome.name = apiHomeInfo.he;
                     dbMatch.teamHome.flagCode = apiHomeInfo.flag;
@@ -195,7 +189,6 @@ async function fetchLiveUpdates() {
                     dbMatch.teamAway.color = apiAwayInfo.color;
                 }
 
-                // עדכון סטטוס ותוצאות מהלייב
                 dbMatch.status = item.fixture.status.short;
                 dbMatch.score = item.score;
                 dbMatch.goals = item.goals;
@@ -217,5 +210,4 @@ async function fetchLiveUpdates() {
     }
 }
 
-// הפעלה מסודרת: קודם בונים את השלד, ואז מזריקים אליו את הלייב העדכני
 loadApiAndMergeData().then(() => fetchLiveUpdates());
