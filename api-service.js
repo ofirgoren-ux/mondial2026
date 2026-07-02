@@ -50,12 +50,24 @@ const teamDictionary = {
     "Colombia": { he: "קולומביה", flag: "co", color: "#FCD116" }
 };
 
-// פונקציות עזר להמרת נתונים מה-API לעברית
+// פונקציה חכמה שמתרגמת גם נבחרות וגם שמות כלליים מה-API
 function getTeamInfo(englishName) {
-    // זיהוי משחקי נוקאאוט שעוד לא נקבעו (כגון "מנצחת משחק 80")
-    if (!englishName || englishName.startsWith("Winner") || englishName.startsWith("Group") || englishName.startsWith("Loser")) {
-        return { he: englishName || "לא נקבע", flag: "un", color: "#888888" }; 
+    if (!englishName) return { he: "לא נקבע", flag: "un", color: "#888888" };
+    
+    // מילון תרגום למשחקי נוקאאוט שעוד לא ידוע מי ישחק בהם
+    if (englishName.startsWith("Winner") || englishName.startsWith("Group") || englishName.startsWith("Loser")) {
+        let hebrewName = englishName;
+        
+        // החלפות טקסט חכמות לאנגלית של ה-API
+        if (englishName.includes("winners")) hebrewName = englishName.replace("Group ", "מנצחת בית ").replace(" winners", "");
+        else if (englishName.includes("runners-up")) hebrewName = englishName.replace("Group ", "סגנית בית ").replace(" runners-up", "");
+        else if (englishName.includes("third place")) hebrewName = "מקום 3 (בתים " + englishName.replace("Group ", "").replace(" third place", "") + ")";
+        else if (englishName.startsWith("Winner Match")) hebrewName = englishName.replace("Winner Match ", "מנצחת משחק ");
+        else if (englishName.startsWith("Loser Match")) hebrewName = englishName.replace("Loser Match ", "מפסידת משחק ");
+        
+        return { he: hebrewName, flag: "un", color: "#334155" }; 
     }
+    
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
 
@@ -72,13 +84,11 @@ function formatMatchDate(utcString) {
 
 // קביעה אוטומטית אם המשחק בעבר או בעתיד
 function determineTimeStatus(utcDate, existingMatch) {
-    // קודם כל מתחשבים בהגדרת המשתמש מקבצי ה-Data אם היא קיימת ונקבעה כ-past
     if (existingMatch && existingMatch.timeStatus === 'past') return 'past';
     if (!utcDate) return 'future';
     
     const matchTime = new Date(utcDate).getTime();
     const now = new Date().getTime();
-    // מגדיר משחק כ"בעבר" אם עברו שעתיים (7,200,000 אלפיות שנייה) מאז שריקת הפתיחה
     return (now > matchTime + 7200000) ? 'past' : 'future';
 }
 
@@ -98,28 +108,32 @@ async function loadApiAndMergeData() {
     console.log("מתחיל לשאוב נתוני אמת מקובץ ה-JSON בשרת...");
     
     try {
-        // שאיבת הקובץ המקורי מתיקיית השרת (GitHub)
         const response = await fetch('world-cup-2026-fixtures.json');
-        
-        if (!response.ok) {
-            throw new Error(`שגיאה בגישה לקובץ: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`שגיאה בגישה לקובץ: ${response.status}`);
         
         const apiData = await response.json();
-        
-        // יצירה או איפוס של בסיס הנתונים
         window.matchDatabase = window.matchDatabase || {};
 
         apiData.fixtures.forEach(fixture => {
             const matchId = 'match' + fixture.matchNumber;
-            // שומר את הנתונים שלך (הכרטיסים, ה-xG, התחזיות, משפטי הפוסט-משחק וההארכות)
             let existingMatch = window.matchDatabase[matchId] || {}; 
 
             const tHomeInfo = getTeamInfo(fixture.homeTeam);
             const tAwayInfo = getTeamInfo(fixture.awayTeam);
             const stageInfo = getMatchStageInfo(fixture);
 
-            // מיזוג: השלד מה-API מתעדכן, התוכן האישי שלך נשמר!
+            // ==========================================
+            // התיקון הקריטי: לא לדרוס את הנתונים שלך!
+            // אם במאגר הישן כבר יש לקבוצה שם בעברית (למשל 'ברזיל'), הוא ינצח את ה-API
+            // ==========================================
+            const finalHomeName = existingMatch.teamHome?.name || tHomeInfo.he;
+            const finalHomeFlag = existingMatch.teamHome?.flagCode || tHomeInfo.flag;
+            const finalHomeColor = existingMatch.teamHome?.color || tHomeInfo.color;
+
+            const finalAwayName = existingMatch.teamAway?.name || tAwayInfo.he;
+            const finalAwayFlag = existingMatch.teamAway?.flagCode || tAwayInfo.flag;
+            const finalAwayColor = existingMatch.teamAway?.color || tAwayInfo.color;
+
             window.matchDatabase[matchId] = {
                 ...existingMatch, 
 
@@ -129,20 +143,20 @@ async function loadApiAndMergeData() {
                 dateText: formatMatchDate(fixture.kickoffUtc),
                 
                 teamHome: {
-                    name: tHomeInfo.he,
-                    flagCode: tHomeInfo.flag,
-                    color: tHomeInfo.color,
+                    name: finalHomeName,
+                    flagCode: finalHomeFlag,
+                    color: finalHomeColor,
                     cards: existingMatch.teamHome?.cards || { yellow: [], red: [] }
                 },
                 teamAway: {
-                    name: tAwayInfo.he,
-                    flagCode: tAwayInfo.flag,
-                    color: tAwayInfo.color,
+                    name: finalAwayName,
+                    flagCode: finalAwayFlag,
+                    color: finalAwayColor,
                     cards: existingMatch.teamAway?.cards || { yellow: [], red: [] }
                 }
             };
 
-            // ערכי ברירת מחדל רק למשחקים שעוד לא נגעת בהם כלל
+            // ערכי ברירת מחדל רק למשחקים שעוד לא נגעת בהם
             if (!existingMatch.score) window.matchDatabase[matchId].score = { prediction: '-', actual: '', accuracyClass: 'pending' };
             if (!existingMatch.probabilities) window.matchDatabase[matchId].probabilities = { home: 33, draw: 34, away: 33 };
             if (!existingMatch.insight) window.matchDatabase[matchId].insight = { prediction: 'טרם הוזנה תחזית.', actual: '' };
@@ -151,14 +165,13 @@ async function loadApiAndMergeData() {
 
         console.log("הנתונים מוזגו בהצלחה! מרנדר את הדאשבורד מחדש.");
         
-        // ציור מחודש של הדאשבורד עם הנתונים הממוזגים
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
-        console.error("שגיאה במשיכת הנתונים. ודא שקובץ ה-JSON נמצא בתיקייה ומוגדר כראוי:", error);
+        console.error("שגיאה במשיכת הנתונים:", error);
     }
 }
 
-// הפעלת הפונקציה ברגע שקובץ הסקריפט הזה נטען בדפדפן
+// הפעלת הפונקציה
 loadApiAndMergeData();
