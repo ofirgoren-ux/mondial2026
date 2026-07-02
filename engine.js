@@ -218,6 +218,82 @@ function renderMatches() {
                 <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${data.score ? data.score.accuracyClass : ''}')">עומק</button>
                 <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'sum', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${data.score ? data.score.accuracyClass : ''}')">סיכום</button>
             `;
+            
+            // --- בניית תצוגת הכרעות (הארכות ופנדלים) חכמה ---
+            let sumVisualHTML = `<div class="chart-container"><canvas id="chart-${matchId}-sum"></canvas></div>`;
+            
+            // מזהים אם המשחק הלך להארכה (AET) או פנדלים (PEN) דרך הסטטוס ששמרנו מנתוני ה-API
+            if (data.status === 'AET' || data.status === 'PEN') {
+                
+                // --- מחלצים את הנתונים מתוך מה שידוע לנו מה-API הבסיסי ---
+                const score90Home = data.score.fulltime?.home ?? '-';
+                const score90Away = data.score.fulltime?.away ?? '-';
+                const score90Str = `${score90Home} - ${score90Away}`;
+
+                // נתוני הארכה יופיעו אם יש נתון אמת (AET או PEN)
+                let extraTimeHTML = '';
+                if (data.status === 'AET' || data.status === 'PEN') {
+                     // אם המשחק הלך לפנדלים, תוצאת ההארכה היא תוצאת ה-fulltime. אם הוכרע בהארכה, היא extratime (או היחסית אם חסר).
+                     const etHome = data.score.extratime?.home !== null ? data.score.extratime.home : (data.status === 'AET' ? data.goals?.home : score90Home);
+                     const etAway = data.score.extratime?.away !== null ? data.score.extratime.away : (data.status === 'AET' ? data.goals?.away : score90Away);
+                     
+                     extraTimeHTML = `
+                        <div class="phase-block animate-in" style="animation-delay: 0.1s">
+                            <div class="team-side-res"></div>
+                            <div>
+                                <div class="phase-title">⏳ סיום 120 דקות</div>
+                                <div class="phase-score">${etHome ?? '-'} - ${etAway ?? '-'}</div>
+                            </div>
+                            <div class="team-side-res"></div>
+                        </div>`;
+                }
+
+                // נתוני פנדלים
+                let penaltiesHTML = '';
+                if (data.status === 'PEN' && data.score.penalty) {
+                    const penHome = data.score.penalty.home ?? 0;
+                    const penAway = data.score.penalty.away ?? 0;
+                    
+                    // כרגע נייצר עיגולים ירוקים ("פגיעות") לפי כמות השערים שהובקעו. כשיהיה לנו API לעומק, נדע בדיוק איפה היו החטאות.
+                    const homeDots = '<div class="dot hit"></div>'.repeat(penHome);
+                    const awayDots = '<div class="dot hit"></div>'.repeat(penAway);
+
+                    penaltiesHTML = `
+                        <div class="phase-block penalties-block animate-in" style="animation-delay: 0.2s">
+                            <div class="team-side-res">
+                                <div class="penalty-dots" style="justify-content: flex-end;">${homeDots}</div>
+                            </div>
+                            <div>
+                                <div class="phase-title" style="color: var(--accent-cyan);">🎯 פנדלים</div>
+                                <div class="phase-score" style="color: #00f2fe;">${penHome} - ${penAway}</div>
+                            </div>
+                            <div class="team-side-res">
+                                <div class="penalty-dots">${awayDots}</div>
+                            </div>
+                        </div>`;
+                }
+
+                // הרכבת התצוגה המלאה במקום הרדאר
+                sumVisualHTML = `
+                    <div class="resolution-container">
+                        <div class="phase-block animate-in">
+                            <div class="team-side-res">
+                                <div class="team-name-res" style="color: ${tHome.color};">${tHome.name}</div>
+                            </div>
+                            <div>
+                                <div class="phase-title">⏱️ סיום 90 דקות</div>
+                                <div class="phase-score">${score90Str}</div>
+                            </div>
+                            <div class="team-side-res">
+                                <div class="team-name-res" style="color: ${tAway.color};">${tAway.name}</div>
+                            </div>
+                        </div>
+                        ${extraTimeHTML}
+                        ${penaltiesHTML}
+                    </div>
+                `;
+            }
+            
             visHTML = `
                 <div id="vis-${matchId}-pred" class="vis-content">
                     <div class="chart-container"><canvas id="chart-${matchId}-pred"></canvas></div>
@@ -235,7 +311,7 @@ function renderMatches() {
                     </div>
                 </div>
                 <div id="vis-${matchId}-sum" class="vis-content active">
-                    <div class="chart-container"><canvas id="chart-${matchId}-sum"></canvas></div>
+                    ${sumVisualHTML}
                 </div>
             `;
             txtHTML = `
@@ -301,6 +377,13 @@ function renderMatches() {
                 ['pred', 'sum'].forEach(suffix => {
                     const canvasElement = document.getElementById(`chart-${matchId}-${suffix}`);
                     if (canvasElement && data.radarStats) {
+                        
+                        // קוד ההשמדה - למניעת כפילויות על הקנבס
+                        let existingChart = Chart.getChart(canvasElement);
+                        if (existingChart) {
+                            existingChart.destroy();
+                        }
+                        
                         new Chart(canvasElement.getContext('2d'), { 
                             type: 'radar', data: { labels: lbls, datasets: [ 
                                 { data: data.radarStats.home || [0,0,0,0,0,0], borderColor: data.teamHome.color, backgroundColor: `${data.teamHome.color}4D`, pointBackgroundColor: data.teamHome.color, borderWidth: 2 }, 
@@ -313,9 +396,10 @@ function renderMatches() {
         }, 100);
     }
 }
+
 function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
     let formattedScore = currentScoreDisplay;
-    if (formattedScore.includes('-')) {
+    if (formattedScore && formattedScore.includes('-')) {
         let p = formattedScore.split('-');
         formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
@@ -362,7 +446,7 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     labelEl.innerText = labelText; 
     
     let formattedScore = scoreText;
-    if (formattedScore.includes('-')) {
+    if (formattedScore && formattedScore.includes('-')) {
         let p = formattedScore.split('-');
         formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
