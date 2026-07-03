@@ -113,36 +113,33 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // 1. שלב הבסיס: יציקת נתוני המקור (הטקסטים, הכרטיסים, והסטטיסטיקות שלך) - אלו ה"מגירות" הבטוחות.
-    if (typeof matchDatabase !== 'undefined') {
-        for (let id in matchDatabase) {
-            db[id] = JSON.parse(JSON.stringify(matchDatabase[id]));
-        }
+    // 1. שואבים אך ורק את המשחקים המקוריים שכתבת (היסודות)
+    let sourceDB = typeof knockoutMatches !== 'undefined' ? knockoutMatches : (typeof matchDatabase !== 'undefined' ? matchDatabase : {});
+    
+    for (let id in sourceDB) {
+        db[id] = JSON.parse(JSON.stringify(sourceDB[id]));
     }
     
-    // 2. שלב עדכון הפערים (Delta Updates): מזריקים פנימה רק את הנתונים החדשים מה-API.
+    // 2. עדכון פערים מה-API - ללא שכפולים!
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
             let apiMatch = window.matchDatabase[id];
             
+            // ההגנה: אם המזהה לא קיים בקובץ המקורי שלך - המערכת לא יוצרת כרטיס חדש!
             if (db[id]) {
-                // מעדכנים סטטוס ושערים מבלי לגעת בשאר האובייקט
                 if (apiMatch.status) db[id].status = apiMatch.status;
                 if (apiMatch.timeStatus) db[id].timeStatus = apiMatch.timeStatus;
                 if (apiMatch.goals) db[id].goals = apiMatch.goals;
                 
-                // עדכון זהיר של מגירת התוצאה
                 if (apiMatch.score) {
                     db[id].score = db[id].score || {};
                     if (apiMatch.score.fulltime !== undefined) db[id].score.fulltime = apiMatch.score.fulltime;
                     if (apiMatch.score.extratime !== undefined) db[id].score.extratime = apiMatch.score.extratime;
                     if (apiMatch.score.penalty !== undefined) db[id].score.penalty = apiMatch.score.penalty;
-                    if (apiMatch.score.actual !== undefined) db[id].score.actual = apiMatch.score.actual;
+                    if (apiMatch.score.actual !== undefined && apiMatch.score.actual !== '') {
+                        db[id].score.actual = apiMatch.score.actual;
+                    }
                 }
-                
-                // שימו לב: המערכת לא נוגעת ב-teamHome.cards, teamAway.cards או ב-insight. הכל נשמר!
-            } else {
-                db[id] = JSON.parse(JSON.stringify(apiMatch));
             }
         }
     }
