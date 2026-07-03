@@ -133,7 +133,7 @@ async function loadApiAndMergeData() {
 }
 
 async function fetchLiveUpdates() {
-    const apiKey = 'הכנס_כאן_את_המפתח_שלך'; 
+    const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
     try {
