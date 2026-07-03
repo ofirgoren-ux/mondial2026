@@ -134,7 +134,7 @@ function getSafeDatabase() {
             db[key].score.actual = recentUpdates[key].actual;
         }
         
-        // הרצת המחשבון לכל המשחקים כדי לוודא שאין טעויות בדיווח ידני
+        // הרצת המחשבון לכל המשחקים כדי לוודא שאין טעויות בדיווח
         if (db[key].timeStatus === 'past' && db[key].score && db[key].score.prediction && db[key].score.actual) {
             let penH = db[key].score.penalty?.home;
             let penA = db[key].score.penalty?.away;
@@ -170,12 +170,13 @@ function renderMatches() {
     const db = getSafeDatabase();
     let htmlChunks = [];
 
-    // העיצוב הנקי בדיוק מדהים של 51px, בלי שום גלגלת
+    // העיצוב המקורי של 51px, אך עם גובה נעול ל-vis-area וגלגלת לטקסט
     const penStyles = `
     <style>
+    .vis-area { height: 175px; min-height: 175px; max-height: 175px; display: flex; align-items: center; justify-content: center; width: 100%; overflow: hidden; }
     .res-card-wrapper { width: calc(100% - 36px); box-sizing: border-box; margin: 4px auto 0 auto; }
     .res-card-ui { background: #1e293b; border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 4px; border: 1px solid rgba(255,255,255,0.05); height: 100%; box-sizing: border-box; justify-content: space-evenly; }
-    .res-row-ui { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; height: 51px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid rgba(255,255,255,0.02); box-sizing: border-box; }
+    .res-row-ui { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; height: 51px; background: rgba(15, 23, 42, 0.6); border-radius: 6px; border: 1px solid rgba(255,255,255,0.02); box-sizing: border-box; margin: 0; }
     .res-pen-row { border: 1px solid rgba(0, 242, 254, 0.2); background: rgba(0, 242, 254, 0.05); }
     .res-team-ui { flex: 1; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: bold; position: relative; z-index: 10; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .res-team-ui.left { justify-content: flex-end; text-align: left; }
@@ -189,6 +190,11 @@ function renderMatches() {
     .pen-dot { width: 8px; height: 8px; border-radius: 50%; }
     .pen-dot.hit { background: #22c55e; box-shadow: 0 0 4px rgba(34, 197, 94, 0.5); }
     .pen-dot.miss { background: #ef4444; box-shadow: 0 0 4px rgba(239, 68, 68, 0.5); }
+    
+    /* הוספת הגלגלת במקרה של טקסטים ארוכים במיוחד */
+    .insight-text { max-height: 60px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(0, 242, 254, 0.3) transparent; }
+    .insight-text::-webkit-scrollbar { width: 4px; }
+    .insight-text::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.3); border-radius: 4px; }
     </style>
     `;
     htmlChunks.push(penStyles);
@@ -273,9 +279,9 @@ function renderMatches() {
         
         if (isPast) {
             tabsHTML = `
-                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
-                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${accClass}')">עומק</button>
-                <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'sum', '${data.score ? data.score.actual : '-'}', 'תוצאת סיום', '${accClass}')">סיכום</button>
+                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score && data.score.prediction ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
+                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score && data.score.actual ? data.score.actual : '-'}', 'תוצאת סיום', '${accClass}')">עומק</button>
+                <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'sum', '${data.score && data.score.actual ? data.score.actual : '-'}', 'תוצאת סיום', '${accClass}')">סיכום</button>
             `;
             
             let sumVisualHTML = `<div class="chart-container"><canvas id="chart-${matchId}-sum"></canvas></div>`;
@@ -365,13 +371,13 @@ function renderMatches() {
             `;
             txtHTML = `
                 <div id="txt-${matchId}-pred" class="txt-content">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight?.prediction || ''}</div></div>
                 </div>
                 <div id="txt-${matchId}-adv" class="txt-content">
                     <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">מדדי העומק מציגים את הפער האמיתי בין הנבחרות לאחר ניטרול רעשים ואקראיות.</div></div>
                 </div>
                 <div id="txt-${matchId}-sum" class="txt-content active">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${data.insight ? data.insight.actual : ''}</div></div>
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${data.insight?.actual || ''}</div></div>
                 </div>
             `;
             
@@ -383,8 +389,8 @@ function renderMatches() {
             htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accClass === 'pending' ? '' : `is-actual ${accClass}`, '0', visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML));
         } else {
             tabsHTML = `
-                <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
-                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">עומק</button>
+                <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score && data.score.prediction ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
+                <button class="inner-tab-btn" onclick="switchCardTab(this, '${matchId}', 'adv', '${data.score && data.score.prediction ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">עומק</button>
             `;
             visHTML = `
                 <div id="vis-${matchId}-pred" class="vis-content active">
@@ -404,7 +410,7 @@ function renderMatches() {
             `;
             txtHTML = `
                 <div id="txt-${matchId}-pred" class="txt-content active">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight?.prediction || ''}</div></div>
                 </div>
                 <div id="txt-${matchId}-adv" class="txt-content">
                     <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">המודל מבסס את התחזית על פערי ה-xGD והשליטה הצפויה במרכז המגרש (Field Tilt).</div></div>
