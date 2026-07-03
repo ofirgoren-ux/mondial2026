@@ -158,7 +158,7 @@ function getSafeDatabase() {
     }
     return db;
 }
-
+ 
 function renderStats() {
     const db = getSafeDatabase();
     let totalPast = 0, exactHits = 0, trendHits = 0;
