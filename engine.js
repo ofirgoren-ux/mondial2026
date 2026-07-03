@@ -112,22 +112,27 @@ window.switchView = function(viewName) {
 
 function getSafeDatabase() {
     let db = {};
-    // 1. טוענים קודם כל את הנתונים הקבועים (עם הטקסטים)
+    
+    // 1. טוענים קודם כל את הנתונים הקבועים (שומרים על הטקסטים)
     if (typeof matchDatabase !== 'undefined') {
         for (let id in matchDatabase) {
             db[id] = { ...matchDatabase[id] };
         }
     }
     
-    // 2. מעדכנים רק את מה שהגיע מה-API, אבל שומרים על הטקסטים (insight)
+    // 2. מעדכנים נתונים מה-API בצורה זהירה (מבלי למחוק את הטקסטים)
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
+            let apiMatch = window.matchDatabase[id];
+            
             if (!db[id]) {
-                db[id] = window.matchDatabase[id];
+                db[id] = { ...apiMatch };
             } else {
-                let savedInsight = db[id].insight; // שומרים את הטקסט בצד
-                Object.assign(db[id], window.matchDatabase[id]); // מעדכנים תוצאות
-                if (savedInsight) db[id].insight = savedInsight; // מחזירים את הטקסט
+                // מעדכנים רק שדות של תוצאות, לא נוגעים ב-insight
+                db[id].status = apiMatch.status || db[id].status;
+                db[id].score = apiMatch.score || db[id].score;
+                db[id].goals = apiMatch.goals || db[id].goals;
+                db[id].timeStatus = apiMatch.timeStatus || db[id].timeStatus;
             }
         }
     }
@@ -365,17 +370,17 @@ function renderMatches() {
                     ${sumVisualHTML}
                 </div>
             `;
-txtHTML = `
-    <div id="txt-${matchId}-pred" class="txt-content">
-        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : 'אין תחזית'}</div></div>
-    </div>
-    <div id="txt-${matchId}-adv" class="txt-content">
-        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">מדדי העומק מציגים את הפער האמיתי.</div></div>
-    </div>
-    <div id="txt-${matchId}-sum" class="txt-content active">
-        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${(data.insight && data.insight.actual) ? data.insight.actual : 'לא נמצא טקסט סיכום'}</div></div>
-    </div>
-`;
+            txtHTML = `
+                <div id="txt-${matchId}-pred" class="txt-content">
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
+                </div>
+                <div id="txt-${matchId}-adv" class="txt-content">
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">מדדי העומק מציגים את הפער האמיתי בין הנבחרות לאחר ניטרול רעשים ואקראיות.</div></div>
+                </div>
+                <div id="txt-${matchId}-sum" class="txt-content active">
+                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${data.insight ? data.insight.actual : ''}</div></div>
+                </div>
+            `;
             if (data.score && data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
             else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
             else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
@@ -690,6 +695,7 @@ window.renderKnockout = function() {
                     </div>
                 `;
             });
+            matchDiv.innerHTML = html;
             matchDiv.innerHTML = html;
             col.appendChild(matchDiv);
         });
