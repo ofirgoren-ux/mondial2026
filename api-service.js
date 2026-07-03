@@ -215,7 +215,8 @@ async function fetchLiveUpdates() {
 
                 dbMatch.status = item.fixture.status.short;
 
-                // שמירה הרמטית על נתוני החיזוי הידניים שלך
+               // שמירה הרמטית על הטקסט והתוצאות
+                let existingInsight = dbMatch.insight; // שומרים את הטקסט בצד שלא ימחק
                 let oldScore = dbMatch.score || {};
                 dbMatch.score = {
                     prediction: oldScore.prediction || '-',
@@ -225,6 +226,11 @@ async function fetchLiveUpdates() {
                     extratime: item.score.extratime,
                     penalty: item.score.penalty
                 };
+                
+                // אם היה טקסט, מחזירים אותו לאובייקט
+                if (existingInsight) {
+                    dbMatch.insight = existingInsight;
+                }
                 
                 dbMatch.goals = item.goals;
                 
