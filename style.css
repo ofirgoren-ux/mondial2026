@@ -230,7 +230,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .inner-tab-btn { flex: 1; background: transparent; border: none; padding: 4px 5px; color: var(--text-muted); font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; border-radius: 6px; }
 .inner-tab-btn.active { background-color: rgba(102, 252, 241, 0.1); color: var(--accent-cyan); }
 
-.text-area-wrapper { flex: 0 0 85px; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 0;}
+.text-area-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 0; padding-bottom: 5px; }
 .txt-content { display: none; flex-direction: column; height: 100%; }
 .txt-content.active { display: flex; animation: tabFadeIn 0.3s ease;}
 
