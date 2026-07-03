@@ -348,17 +348,17 @@ function renderMatches() {
                     ${sumVisualHTML}
                 </div>
             `;
-            txtHTML = `
-                <div id="txt-${matchId}-pred" class="txt-content">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : ''}</div></div>
-                </div>
-                <div id="txt-${matchId}-adv" class="txt-content">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">מדדי העומק מציגים את הפער האמיתי בין הנבחרות לאחר ניטרול רעשים ואקראיות.</div></div>
-                </div>
-                <div id="txt-${matchId}-sum" class="txt-content active">
-                    <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${data.insight ? data.insight.actual : ''}</div></div>
-                </div>
-            `;
+txtHTML = `
+    <div id="txt-${matchId}-pred" class="txt-content">
+        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">💡 תחזית המודל</div></div><div class="insight-text">${data.insight ? data.insight.prediction : 'אין תחזית'}</div></div>
+    </div>
+    <div id="txt-${matchId}-adv" class="txt-content">
+        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🔬 משמעות הנתונים</div></div><div class="insight-text">מדדי העומק מציגים את הפער האמיתי.</div></div>
+    </div>
+    <div id="txt-${matchId}-sum" class="txt-content active">
+        <div class="insight-text-wrapper"><div class="insight-header"><div class="insight-title">🎯 פוסט-משחק</div></div><div class="insight-text">${(data.insight && data.insight.actual) ? data.insight.actual : 'לא נמצא טקסט סיכום'}</div></div>
+    </div>
+`;
             if (data.score && data.score.accuracyClass === 'exact') statusBarHTML = `<div class="status-bar status-exact-ui">✔️ פגיעה מדויקת</div>`;
             else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
             else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
