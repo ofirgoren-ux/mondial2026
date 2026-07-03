@@ -113,22 +113,34 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // 1. טעינת נתונים קבועים (כולל טקסטים)
+    // 1. שלב הבסיס: יציקת נתוני המקור (הטקסטים, הכרטיסים, והסטטיסטיקות שלך) - אלו ה"מגירות" הבטוחות.
     if (typeof matchDatabase !== 'undefined') {
         for (let id in matchDatabase) {
             db[id] = JSON.parse(JSON.stringify(matchDatabase[id]));
         }
     }
     
-    // 2. עדכון נתונים מה-API בלי לדרוס את ה-insight
+    // 2. שלב עדכון הפערים (Delta Updates): מזריקים פנימה רק את הנתונים החדשים מה-API.
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
             let apiMatch = window.matchDatabase[id];
+            
             if (db[id]) {
-                db[id].status = apiMatch.status || db[id].status;
-                db[id].score = apiMatch.score || db[id].score;
-                db[id].goals = apiMatch.goals || db[id].goals;
-                db[id].timeStatus = apiMatch.timeStatus || db[id].timeStatus;
+                // מעדכנים סטטוס ושערים מבלי לגעת בשאר האובייקט
+                if (apiMatch.status) db[id].status = apiMatch.status;
+                if (apiMatch.timeStatus) db[id].timeStatus = apiMatch.timeStatus;
+                if (apiMatch.goals) db[id].goals = apiMatch.goals;
+                
+                // עדכון זהיר של מגירת התוצאה
+                if (apiMatch.score) {
+                    db[id].score = db[id].score || {};
+                    if (apiMatch.score.fulltime !== undefined) db[id].score.fulltime = apiMatch.score.fulltime;
+                    if (apiMatch.score.extratime !== undefined) db[id].score.extratime = apiMatch.score.extratime;
+                    if (apiMatch.score.penalty !== undefined) db[id].score.penalty = apiMatch.score.penalty;
+                    if (apiMatch.score.actual !== undefined) db[id].score.actual = apiMatch.score.actual;
+                }
+                
+                // שימו לב: המערכת לא נוגעת ב-teamHome.cards, teamAway.cards או ב-insight. הכל נשמר!
             } else {
                 db[id] = JSON.parse(JSON.stringify(apiMatch));
             }
