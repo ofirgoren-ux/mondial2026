@@ -201,21 +201,20 @@ async function fetchLiveUpdates() {
                 let dbMatch = window.matchDatabase[apiM.matchedId];
                 let item = apiM.item;
 
+                // עדכון שמות ודגלים במידה והיו חסרים
                 if (dbMatch.stage === 'נוקאאוט' || dbMatch.stage === 'knockout') {
                     dbMatch.teamHome.name = apiM.apiHome.he; dbMatch.teamHome.flagCode = apiM.apiHome.flag; dbMatch.teamHome.color = apiM.apiHome.color;
                     dbMatch.teamAway.name = apiM.apiAway.he; dbMatch.teamAway.flagCode = apiM.apiAway.flag; dbMatch.teamAway.color = apiM.apiAway.color;
                 }
 
                 dbMatch.status = item.fixture.status.short;
+                dbMatch.goals = item.goals;
 
-                // עדכון תוצאות בלבד
-                if (!dbMatch.score) dbMatch.score = {};
-                
+                // עדכון כירורגי של התוצאות בלבד. המגירה הזו תילקח על ידי ה-engine
+                dbMatch.score = dbMatch.score || {};
                 dbMatch.score.fulltime = item.score.fulltime;
                 dbMatch.score.extratime = item.score.extratime;
                 dbMatch.score.penalty = item.score.penalty;
-                
-                dbMatch.goals = item.goals;
                 
                 if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
                     dbMatch.timeStatus = 'past';
