@@ -110,7 +110,7 @@ async function loadApiAndMergeData() {
                 matchday: existingMatch.matchday || stageInfo.matchday,
                 stage: existingMatch.stage || stageInfo.stage,
                 dateText: formatMatchDate(fixture.kickoffUtc),
-                utcDate: fixture.kickoffUtc, // חשוב לשמירה על זמן מדויק
+                utcDate: fixture.kickoffUtc, 
                 
                 teamHome: existingMatch.teamHome?.flagCode && existingMatch.teamHome.flagCode !== 'un' ? existingMatch.teamHome : {
                     name: tHomeInfo.he, flagCode: tHomeInfo.flag, color: tHomeInfo.color, cards: { yellow: [], red: [] }
@@ -133,7 +133,7 @@ async function loadApiAndMergeData() {
 }
 
 async function fetchLiveUpdates() {
-    const apiKey = '52fe625c25992477365139c656148855'; 
+    const apiKey = 'הכנס_כאן_את_המפתח_שלך'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
     try {
@@ -150,9 +150,8 @@ async function fetchLiveUpdates() {
             item: item
         }));
 
-        let usedDbIds = new Set(); // שומר על מיפוי 1 ל-1 חסין תקלות!
+        let usedDbIds = new Set();
 
-        // שלב 1: התאמה מושלמת לפי שם
         apiMatches.forEach(apiM => {
             for (let id in window.matchDatabase) {
                 if (usedDbIds.has(id)) continue;
@@ -169,7 +168,6 @@ async function fetchLiveUpdates() {
             }
         });
 
-        // שלב 2: התאמה לפי קירבת זמן למשחקים שעוד מוגדרים כ"לא ידועים"
         apiMatches.filter(m => !m.matchedId).forEach(apiM => {
             let bestId = null;
             let minDiff = Infinity;
@@ -178,13 +176,11 @@ async function fetchLiveUpdates() {
                 if (usedDbIds.has(id)) continue;
                 let dbMatch = window.matchDatabase[id];
 
-                // מתאים רק למשחקי נוקאאוט פנויים
                 if (dbMatch.stage !== 'נוקאאוט' && dbMatch.stage !== 'knockout') continue;
 
                 let dbTime = new Date(dbMatch.utcDate).getTime();
                 let diff = Math.abs(dbTime - apiM.apiTime);
 
-                // מתאים אם מרווח הזמן הוא פחות מ-48 שעות
                 if (diff < minDiff && diff < 48 * 60 * 60 * 1000) {
                     minDiff = diff;
                     bestId = id;
@@ -197,13 +193,11 @@ async function fetchLiveUpdates() {
             }
         });
 
-        // החלת העדכונים בצורה בטוחה!
         apiMatches.forEach(apiM => {
             if (apiM.matchedId) {
                 let dbMatch = window.matchDatabase[apiM.matchedId];
                 let item = apiM.item;
 
-                // עדכון נבחרות רק לנוקאאוט
                 if (dbMatch.stage === 'נוקאאוט' || dbMatch.stage === 'knockout') {
                     dbMatch.teamHome.name = apiM.apiHome.he; dbMatch.teamHome.flagCode = apiM.apiHome.flag; dbMatch.teamHome.color = apiM.apiHome.color;
                     dbMatch.teamAway.name = apiM.apiAway.he; dbMatch.teamAway.flagCode = apiM.apiAway.flag; dbMatch.teamAway.color = apiM.apiAway.color;
@@ -211,7 +205,6 @@ async function fetchLiveUpdates() {
 
                 dbMatch.status = item.fixture.status.short;
 
-                // 🔥 התיקון הקריטי למתמטיקה: שמירה הרמטית על נתוני החיזוי הידניים שלך!
                 let oldScore = dbMatch.score || {};
                 dbMatch.score = {
                     prediction: oldScore.prediction || '-',
@@ -228,6 +221,13 @@ async function fetchLiveUpdates() {
                     dbMatch.timeStatus = 'past';
                     if (item.goals.home !== null) {
                         dbMatch.score.actual = `${item.goals.home} - ${item.goals.away}`;
+                        
+                        // קורא למחשבון מהמנוע כדי שינקד את המשחק במדויק!
+                        if (typeof window.calculateAccuracy === 'function') {
+                            let penH = item.score.penalty?.home;
+                            let penA = item.score.penalty?.away;
+                            dbMatch.score.accuracyClass = window.calculateAccuracy(dbMatch.score.prediction, dbMatch.score.actual, dbMatch.status, penH, penA);
+                        }
                     }
                 } else if (dbMatch.status === 'NS') {
                     dbMatch.timeStatus = 'future';
@@ -235,7 +235,27 @@ async function fetchLiveUpdates() {
             }
         });
         
-        console.log("נתוני הלייב שולבו, והאחוזים חזרו לעבוד!");
+        let seenMatches = new Set();
+        let idsToDelete = [];
+        
+        for (let id in window.matchDatabase) {
+            let match = window.matchDatabase[id];
+            let hName = match.teamHome?.name;
+            let aName = match.teamAway?.name;
+            
+            if (hName && aName && hName !== "לא נקבע" && match.teamHome.flagCode !== 'un') {
+                let matchKey = [hName, aName].sort().join('|');
+                if (seenMatches.has(matchKey)) {
+                    idsToDelete.push(id);
+                } else {
+                    seenMatches.add(matchKey);
+                }
+            }
+        }
+        
+        idsToDelete.forEach(id => { delete window.matchDatabase[id]; });
+
+        console.log("נתוני הלייב שולבו, וציוני התחזיות חושבו מחדש!");
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
