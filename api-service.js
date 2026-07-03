@@ -110,7 +110,7 @@ async function loadApiAndMergeData() {
                 matchday: existingMatch.matchday || stageInfo.matchday,
                 stage: existingMatch.stage || stageInfo.stage,
                 dateText: formatMatchDate(fixture.kickoffUtc),
-                utcDate: fixture.kickoffUtc, // חשוב לשמירה על זמן מדויק
+                utcDate: fixture.kickoffUtc, 
                 
                 teamHome: existingMatch.teamHome?.flagCode && existingMatch.teamHome.flagCode !== 'un' ? existingMatch.teamHome : {
                     name: tHomeInfo.he, flagCode: tHomeInfo.flag, color: tHomeInfo.color, cards: { yellow: [], red: [] }
@@ -150,15 +150,13 @@ async function fetchLiveUpdates() {
             item: item
         }));
 
-        let usedDbIds = new Set(); // שומר על מיפוי 1 ל-1 חסין תקלות!
+        let usedDbIds = new Set(); 
 
-        // שלב 1: התאמה מושלמת לפי שם
         apiMatches.forEach(apiM => {
             for (let id in window.matchDatabase) {
                 if (usedDbIds.has(id)) continue;
                 let dbMatch = window.matchDatabase[id];
                 
-                // התיקון שלנו: הגבלת החיפוש אך ורק לשלבי הנוקאאוט כדי לא לדרוס את שלב הבתים!
                 if (dbMatch.stage !== 'נוקאאוט' && dbMatch.stage !== 'knockout') continue;
 
                 let hName = dbMatch.teamHome?.name;
@@ -173,7 +171,6 @@ async function fetchLiveUpdates() {
             }
         });
 
-        // שלב 2: התאמה לפי קירבת זמן למשחקים שעוד מוגדרים כ"לא ידועים"
         apiMatches.filter(m => !m.matchedId).forEach(apiM => {
             let bestId = null;
             let minDiff = Infinity;
@@ -182,13 +179,11 @@ async function fetchLiveUpdates() {
                 if (usedDbIds.has(id)) continue;
                 let dbMatch = window.matchDatabase[id];
 
-                // מתאים רק למשחקי נוקאאוט פנויים
                 if (dbMatch.stage !== 'נוקאאוט' && dbMatch.stage !== 'knockout') continue;
 
                 let dbTime = new Date(dbMatch.utcDate).getTime();
                 let diff = Math.abs(dbTime - apiM.apiTime);
 
-                // מתאים אם מרווח הזמן הוא פחות מ-48 שעות
                 if (diff < minDiff && diff < 48 * 60 * 60 * 1000) {
                     minDiff = diff;
                     bestId = id;
@@ -201,13 +196,11 @@ async function fetchLiveUpdates() {
             }
         });
 
-        // החלת העדכונים בצורה בטוחה!
         apiMatches.forEach(apiM => {
             if (apiM.matchedId) {
                 let dbMatch = window.matchDatabase[apiM.matchedId];
                 let item = apiM.item;
 
-                // עדכון נבחרות רק לנוקאאוט
                 if (dbMatch.stage === 'נוקאאוט' || dbMatch.stage === 'knockout') {
                     dbMatch.teamHome.name = apiM.apiHome.he; dbMatch.teamHome.flagCode = apiM.apiHome.flag; dbMatch.teamHome.color = apiM.apiHome.color;
                     dbMatch.teamAway.name = apiM.apiAway.he; dbMatch.teamAway.flagCode = apiM.apiAway.flag; dbMatch.teamAway.color = apiM.apiAway.color;
@@ -215,22 +208,12 @@ async function fetchLiveUpdates() {
 
                 dbMatch.status = item.fixture.status.short;
 
-               // שמירה הרמטית על הטקסט והתוצאות
-                let existingInsight = dbMatch.insight; // שומרים את הטקסט בצד שלא ימחק
-                let oldScore = dbMatch.score || {};
-                dbMatch.score = {
-                    prediction: oldScore.prediction || '-',
-                    actual: oldScore.actual || '',
-                    accuracyClass: oldScore.accuracyClass || 'pending',
-                    fulltime: item.score.fulltime,
-                    extratime: item.score.extratime,
-                    penalty: item.score.penalty
-                };
+                // עדכון תוצאות בלבד
+                if (!dbMatch.score) dbMatch.score = {};
                 
-                // אם היה טקסט, מחזירים אותו לאובייקט
-                if (existingInsight) {
-                    dbMatch.insight = existingInsight;
-                }
+                dbMatch.score.fulltime = item.score.fulltime;
+                dbMatch.score.extratime = item.score.extratime;
+                dbMatch.score.penalty = item.score.penalty;
                 
                 dbMatch.goals = item.goals;
                 
@@ -245,7 +228,6 @@ async function fetchLiveUpdates() {
             }
         });
         
-        console.log("נתוני הלייב שולבו, והאחוזים חזרו לעבוד!");
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 

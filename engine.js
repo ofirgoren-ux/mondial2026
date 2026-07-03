@@ -113,26 +113,24 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // 1. טוענים קודם כל את הנתונים הקבועים (שומרים על הטקסטים)
+    // 1. טעינת נתונים קבועים (כולל טקסטים)
     if (typeof matchDatabase !== 'undefined') {
         for (let id in matchDatabase) {
-            db[id] = { ...matchDatabase[id] };
+            db[id] = JSON.parse(JSON.stringify(matchDatabase[id]));
         }
     }
     
-    // 2. מעדכנים נתונים מה-API בצורה זהירה (מבלי למחוק את הטקסטים)
+    // 2. עדכון נתונים מה-API בלי לדרוס את ה-insight
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
             let apiMatch = window.matchDatabase[id];
-            
-            if (!db[id]) {
-                db[id] = { ...apiMatch };
-            } else {
-                // מעדכנים רק שדות של תוצאות, לא נוגעים ב-insight
+            if (db[id]) {
                 db[id].status = apiMatch.status || db[id].status;
                 db[id].score = apiMatch.score || db[id].score;
                 db[id].goals = apiMatch.goals || db[id].goals;
                 db[id].timeStatus = apiMatch.timeStatus || db[id].timeStatus;
+            } else {
+                db[id] = JSON.parse(JSON.stringify(apiMatch));
             }
         }
     }
@@ -695,7 +693,6 @@ window.renderKnockout = function() {
                     </div>
                 `;
             });
-            matchDiv.innerHTML = html;
             matchDiv.innerHTML = html;
             col.appendChild(matchDiv);
         });
