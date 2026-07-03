@@ -112,8 +112,25 @@ window.switchView = function(viewName) {
 
 function getSafeDatabase() {
     let db = {};
-    if (typeof matchDatabase !== 'undefined') Object.assign(db, matchDatabase);
-    if (typeof window.matchDatabase !== 'undefined') Object.assign(db, window.matchDatabase);
+    // 1. טוענים קודם כל את הנתונים הקבועים (עם הטקסטים)
+    if (typeof matchDatabase !== 'undefined') {
+        for (let id in matchDatabase) {
+            db[id] = { ...matchDatabase[id] };
+        }
+    }
+    
+    // 2. מעדכנים רק את מה שהגיע מה-API, אבל שומרים על הטקסטים (insight)
+    if (typeof window.matchDatabase !== 'undefined') {
+        for (let id in window.matchDatabase) {
+            if (!db[id]) {
+                db[id] = window.matchDatabase[id];
+            } else {
+                let savedInsight = db[id].insight; // שומרים את הטקסט בצד
+                Object.assign(db[id], window.matchDatabase[id]); // מעדכנים תוצאות
+                if (savedInsight) db[id].insight = savedInsight; // מחזירים את הטקסט
+            }
+        }
+    }
 
     const hebrewToEnglish = {'א': 'A', "א'": 'A', 'ב': 'B', "ב'": 'B', 'ג': 'C', "ג'": 'C', 'ד': 'D', "ד'": 'D', 'ה': 'E', "ה'": 'E', 'ו': 'F', "ו'": 'F', 'ז': 'G', "ז'": 'G', 'ח': 'H', "ח'": 'H', 'ט': 'I', "ט'": 'I', 'י': 'J', "י'": 'J', 'יא': 'K', 'י"א': 'K', 'יב': 'L', 'י"ב': 'L'};
 
