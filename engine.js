@@ -113,7 +113,6 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // איחוד מלא: גם שלב הבתים וגם משחקי הנוקאאוט כדי למנוע העלמויות
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
             db[id] = JSON.parse(JSON.stringify(window.matchDatabase[id]));
@@ -133,8 +132,8 @@ function getSafeDatabase() {
         }
         
         if (db[key].timeStatus === 'past' && db[key].score && db[key].score.prediction && db[key].score.actual) {
-            let penH = db[key].score.penalty?.home;
-            let penA = db[key].score.penalty?.away;
+            let penH = (db[key].score && db[key].score.penalty) ? db[key].score.penalty.home : undefined;
+            let penA = (db[key].score && db[key].score.penalty) ? db[key].score.penalty.away : undefined;
             db[key].score.accuracyClass = window.calculateAccuracy(db[key].score.prediction, db[key].score.actual, db[key].status, penH, penA);
         }
     }
@@ -194,7 +193,6 @@ function renderMatches() {
         const isKnockoutMode = ['r32', 'r16', 'qf', 'sf', 'final'].includes(currentMdFilter);
         const sMatch = isKnockoutMode ? true : (currentStageFilter === 'all' || currentStageFilter === data.stage); 
         
-        // פילטר חכם שסולח על כתיבה בעברית או באנגלית
         const mdStr = String(data.matchday).toLowerCase();
         const stageStr = String(data.stage).toLowerCase();
         let mMatch = (currentMdFilter === 'all' || mdStr === currentMdFilter || stageStr === currentMdFilter);
@@ -287,8 +285,8 @@ function renderMatches() {
             let sumVisualHTML = `<div class="chart-container"><canvas id="chart-${matchId}-sum"></canvas></div>`;
             
             if (data.status === 'AET' || data.status === 'PEN') {
-                const score90Home = data.score.fulltime?.home !== null && data.score.fulltime?.home !== undefined ? data.score.fulltime.home : '-';
-                const score90Away = data.score.fulltime?.away !== null && data.score.fulltime?.away !== undefined ? data.score.fulltime.away : '-';
+                const score90Home = (data.score && data.score.fulltime && data.score.fulltime.home !== null && data.score.fulltime.home !== undefined) ? data.score.fulltime.home : '-';
+                const score90Away = (data.score && data.score.fulltime && data.score.fulltime.away !== null && data.score.fulltime.away !== undefined) ? data.score.fulltime.away : '-';
                 const score90Str = `${score90Home} - ${score90Away}`;
 
                 let hCardMocks = '<div class="res-card-y"></div><div class="res-card-y"></div>';
@@ -299,10 +297,10 @@ function renderMatches() {
                      let etHome = score90Home !== '-' ? parseInt(score90Home) : 0;
                      let etAway = score90Away !== '-' ? parseInt(score90Away) : 0;
                      
-                     if (data.score.extratime && data.score.extratime.home !== null) {
+                     if (data.score && data.score.extratime && data.score.extratime.home !== null && data.score.extratime.home !== undefined) {
                          etHome += parseInt(data.score.extratime.home);
                          etAway += parseInt(data.score.extratime.away);
-                     } else if (data.status === 'AET' && data.goals && data.goals.home !== null) {
+                     } else if (data.status === 'AET' && data.goals && data.goals.home !== null && data.goals.home !== undefined) {
                          etHome = data.goals.home;
                          etAway = data.goals.away;
                      }
@@ -319,9 +317,9 @@ function renderMatches() {
                 }
 
                 let penaltyRow = '';
-                if (data.status === 'PEN' && data.score.penalty) {
-                    const penHome = data.score.penalty.home ?? 0;
-                    const penAway = data.score.penalty.away ?? 0;
+                if (data.status === 'PEN' && data.score && data.score.penalty) {
+                    const penHome = (data.score.penalty.home !== undefined && data.score.penalty.home !== null) ? data.score.penalty.home : 0;
+                    const penAway = (data.score.penalty.away !== undefined && data.score.penalty.away !== null) ? data.score.penalty.away : 0;
                     
                     let homeDots = '<div class="pen-dot hit"></div>'.repeat(penHome) + '<div class="pen-dot miss"></div>'.repeat(Math.max(0, 5 - penHome));
                     let awayDots = '<div class="pen-dot hit"></div>'.repeat(penAway) + '<div class="pen-dot miss"></div>'.repeat(Math.max(0, 5 - penAway));
@@ -671,8 +669,8 @@ window.renderKnockout = function() {
         roundData.forEach((match, index) => {
             let positionClass = (index % 2 === 0) ? ' pair-top' : ' pair-bottom';
             let winClass = '';
-            if (match.team1?.outcome === 'winner') winClass = ' win-team1';
-            else if (match.team2?.outcome === 'winner') winClass = ' win-team2';
+            if (match.team1 && match.team1.outcome === 'winner') winClass = ' win-team1';
+            else if (match.team2 && match.team2.outcome === 'winner') winClass = ' win-team2';
             
             const matchDiv = document.createElement('div');
             matchDiv.className = `bracket-match${positionClass}${winClass}`;
@@ -707,7 +705,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     let gf = 0, ga = 0, pts = 0;
 
     Object.values(db).forEach(match => {
-        if (match.teamHome?.name === teamName || match.teamAway?.name === teamName) {
+        if ((match.teamHome && match.teamHome.name === teamName) || (match.teamAway && match.teamAway.name === teamName)) {
             if (match.timeStatus === 'past' && match.score && match.score.actual && match.score.actual.includes('-')) {
                 const isHome = match.teamHome.name === teamName;
                 const parts = match.score.actual.split('-');

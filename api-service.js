@@ -67,11 +67,10 @@ async function fetchLiveUpdates() {
         apiMatches.forEach(apiM => {
             let matchedId = null;
 
-            // 1. חיפוש התאמה מדויקת במאגר שלך כדי לא לדרוס בטעות משחקים קיימים
             for (let id in window.matchDatabase) {
                 let dbMatch = window.matchDatabase[id];
-                let hName = dbMatch.teamHome?.name;
-                let aName = dbMatch.teamAway?.name;
+                let hName = dbMatch.teamHome ? dbMatch.teamHome.name : undefined;
+                let aName = dbMatch.teamAway ? dbMatch.teamAway.name : undefined;
 
                 let isExactMatch = (hName === apiM.apiHome.he && aName === apiM.apiAway.he);
                 let isReversedMatch = (hName === apiM.apiAway.he && aName === apiM.apiHome.he);
@@ -110,7 +109,6 @@ async function fetchLiveUpdates() {
                 }
             }
 
-            // 2. יצירה בטוחה: אם ה-API מצא משחק עתידי מהנוקאאוט שלא קיים אצלך – הוא יוצר כרטיסיית הכנה 
             if (!matchedId) {
                 let apiRound = apiM.item.league.round || '';
                 let targetMd = null;
@@ -137,7 +135,6 @@ async function fetchLiveUpdates() {
                             insight: { prediction: 'ממתין לנתוני מודל (AI)...', actual: '' }
                         };
                     } else {
-                        // עדכון כרטיסיית ההכנה במידה והמשחק מתחיל
                         let genMatch = window.matchDatabase[newId];
                         genMatch.status = apiM.item.fixture.status.short;
                         if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(genMatch.status)) {
