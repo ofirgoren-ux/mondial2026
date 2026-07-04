@@ -1,4 +1,4 @@
-// המילון המדויק שהתאמנו לכל 32 הנבחרות שלך
+// המילון המדויק עם תוספות של וריאציות API (כמו כף ורדה)
 const teamDictionary = {
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
     "Canada": { he: "קנדה", flag: "ca", color: "#FF0000" },
@@ -35,9 +35,9 @@ const teamDictionary = {
     "Argentina": { he: "ארגנטינה", flag: "ar", color: "#43A1D5" },
     "Cabo Verde": { he: "כף ורדה", flag: "cv", color: "#003893" },
     "Cape Verde": { he: "כף ורדה", flag: "cv", color: "#003893" },
+    "Cape Verde Islands": { he: "כף ורדה", flag: "cv", color: "#003893" },
     "Colombia": { he: "קולומביה", flag: "co", color: "#FCD116" },
     "Ghana": { he: "גאנה", flag: "gh", color: "#006B3F" },
-    // גיבוי נוסף למקרה של קוריאה הדרומית משלב הבתים
     "Korea Republic": { he: "קוריאה הדרומית", flag: "kr", color: "#C60C30" },
     "South Korea": { he: "קוריאה הדרומית", flag: "kr", color: "#C60C30" }
 };
@@ -57,7 +57,6 @@ async function fetchLiveUpdates() {
         
         const data = await response.json();
         
-        // אם מאגר הנתונים שלך (מהקובץ knockoutData.js ואחרים) לא נטען, אין טעם להמשיך
         if (!window.matchDatabase || !data.response) return;
 
         let apiMatches = data.response.map(item => ({
@@ -66,7 +65,6 @@ async function fetchLiveUpdates() {
             item: item
         }));
 
-        // סריקה קפדנית של תוצאות ה-API מול המאגר שלך (100% התאמה בלבד)
         apiMatches.forEach(apiM => {
             for (let id in window.matchDatabase) {
                 let dbMatch = window.matchDatabase[id];
@@ -74,18 +72,12 @@ async function fetchLiveUpdates() {
                 let hName = dbMatch.teamHome?.name;
                 let aName = dbMatch.teamAway?.name;
 
-                // בדיקה אם השמות תואמים בדיוק כמו אצלך בקובץ
                 let isExactMatch = (hName === apiM.apiHome.he && aName === apiM.apiAway.he);
-                
-                // בדיקה אם השמות תואמים, אבל ה-API הפך את סדר המארחת/אורחת
                 let isReversedMatch = (hName === apiM.apiAway.he && aName === apiM.apiHome.he);
 
                 if (isExactMatch || isReversedMatch) {
                     let item = apiM.item;
 
-                    // DELTA UPDATE: עדכון כירורגי של תוצאות ומצב בלבד!
-                    // אנחנו *לא* נוגעים בשדות של teamHome, teamAway או insight
-                    
                     dbMatch.status = item.fixture.status.short;
                     
                     dbMatch.score = dbMatch.score || {};
@@ -97,13 +89,10 @@ async function fetchLiveUpdates() {
                         let homeGoals = item.goals.home !== null ? item.goals.home : 0;
                         let awayGoals = item.goals.away !== null ? item.goals.away : 0;
                         
-                        // אם יש התאמה מלאה - מכניסים כרגיל
                         if (isExactMatch) {
                             dbMatch.score.actual = `${homeGoals} - ${awayGoals}`;
                             dbMatch.goals = { home: homeGoals, away: awayGoals };
-                        } 
-                        // אם ה-API הפך את הקבוצות - אנחנו הופכים את התוצאה כדי שתתאים למסך שלך
-                        else if (isReversedMatch) {
+                        } else if (isReversedMatch) {
                             dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
                             dbMatch.goals = { home: awayGoals, away: homeGoals };
                         }
@@ -117,13 +106,11 @@ async function fetchLiveUpdates() {
                         dbMatch.timeStatus = 'future';
                     }
                     
-                    // ברגע שמצאנו התאמה מדויקת ועדכנו, אפשר לעצור את הלולאה הפנימית ולעבור לתוצאה הבאה
                     break; 
                 }
             }
         });
         
-        // ציור מחדש של המסך עם התוצאות המעודכנות (והטקסטים המקוריים שלך!)
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
@@ -132,5 +119,4 @@ async function fetchLiveUpdates() {
     }
 }
 
-// קריאה לפונקציה כדי להתחיל את העדכון
 fetchLiveUpdates();

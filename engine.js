@@ -113,43 +113,22 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // 1. שואבים אך ורק את המשחקים המקוריים שכתבת (היסודות)
-    let sourceDB = typeof knockoutMatches !== 'undefined' ? knockoutMatches : (typeof matchDatabase !== 'undefined' ? matchDatabase : {});
-    
-    for (let id in sourceDB) {
-        db[id] = JSON.parse(JSON.stringify(sourceDB[id]));
-    }
-    
-    // 2. עדכון פערים מה-API - ללא שכפולים!
+    // שואבים את כל הטורניר מתוך המאגר המאוחד (104 משחקים)
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
-            let apiMatch = window.matchDatabase[id];
-            
-            // ההגנה: אם המזהה לא קיים בקובץ המקורי שלך - המערכת לא יוצרת כרטיס חדש!
-            if (db[id]) {
-                if (apiMatch.status) db[id].status = apiMatch.status;
-                if (apiMatch.timeStatus) db[id].timeStatus = apiMatch.timeStatus;
-                if (apiMatch.goals) db[id].goals = apiMatch.goals;
-                
-                if (apiMatch.score) {
-                    db[id].score = db[id].score || {};
-                    if (apiMatch.score.fulltime !== undefined) db[id].score.fulltime = apiMatch.score.fulltime;
-                    if (apiMatch.score.extratime !== undefined) db[id].score.extratime = apiMatch.score.extratime;
-                    if (apiMatch.score.penalty !== undefined) db[id].score.penalty = apiMatch.score.penalty;
-                    if (apiMatch.score.actual !== undefined && apiMatch.score.actual !== '') {
-                        db[id].score.actual = apiMatch.score.actual;
-                    }
-                }
-            }
+            db[id] = JSON.parse(JSON.stringify(window.matchDatabase[id]));
         }
     }
 
+    // המרת אותיות לשלבי הבתים
     const hebrewToEnglish = {'א': 'A', "א'": 'A', 'ב': 'B', "ב'": 'B', 'ג': 'C', "ג'": 'C', 'ד': 'D', "ד'": 'D', 'ה': 'E', "ה'": 'E', 'ו': 'F', "ו'": 'F', 'ז': 'G', "ז'": 'G', 'ח': 'H', "ח'": 'H', 'ט': 'I', "ט'": 'I', 'י': 'J', "י'": 'J', 'יא': 'K', 'י"א': 'K', 'יב': 'L', 'י"ב': 'L'};
 
     for (let key in db) {
         if (db[key].stage && hebrewToEnglish[db[key].stage]) {
             db[key].stage = hebrewToEnglish[db[key].stage];
         }
+        
+        // חישוב רמת הדיוק למשחקי עבר
         if (db[key].timeStatus === 'past' && db[key].score && db[key].score.prediction && db[key].score.actual) {
             let penH = db[key].score.penalty?.home;
             let penA = db[key].score.penalty?.away;
