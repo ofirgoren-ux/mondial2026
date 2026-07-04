@@ -56,7 +56,6 @@ async function fetchLiveUpdates() {
         if (!response.ok) throw new Error("שגיאה בחיבור לשרת הלייב");
         
         const data = await response.json();
-        
         if (!window.matchDatabase || !data.response) return;
 
         let apiMatches = data.response.map(item => ({
@@ -66,9 +65,11 @@ async function fetchLiveUpdates() {
         }));
 
         apiMatches.forEach(apiM => {
+            let matchedId = null;
+
+            // 1. חיפוש התאמה מדויקת במאגר שלך כדי לא לדרוס בטעות משחקים קיימים
             for (let id in window.matchDatabase) {
                 let dbMatch = window.matchDatabase[id];
-                
                 let hName = dbMatch.teamHome?.name;
                 let aName = dbMatch.teamAway?.name;
 
@@ -76,10 +77,10 @@ async function fetchLiveUpdates() {
                 let isReversedMatch = (hName === apiM.apiAway.he && aName === apiM.apiHome.he);
 
                 if (isExactMatch || isReversedMatch) {
+                    matchedId = id;
                     let item = apiM.item;
 
                     dbMatch.status = item.fixture.status.short;
-                    
                     dbMatch.score = dbMatch.score || {};
                     dbMatch.score.fulltime = item.score.fulltime;
                     dbMatch.score.extratime = item.score.extratime;
@@ -105,8 +106,49 @@ async function fetchLiveUpdates() {
                     } else if (dbMatch.status === 'NS') {
                         dbMatch.timeStatus = 'future';
                     }
-                    
                     break; 
+                }
+            }
+
+            // 2. יצירה בטוחה: אם ה-API מצא משחק עתידי מהנוקאאוט שלא קיים אצלך – הוא יוצר כרטיסיית הכנה 
+            if (!matchedId) {
+                let apiRound = apiM.item.league.round || '';
+                let targetMd = null;
+                
+                if (apiRound.includes('16') || apiRound.includes('8th')) targetMd = 'r16';
+                else if (apiRound.includes('Quarter')) targetMd = 'qf';
+                else if (apiRound.includes('Semi')) targetMd = 'sf';
+                else if (apiRound.includes('Final')) targetMd = 'final';
+
+                if (targetMd) {
+                    let newId = 'api_gen_' + apiM.item.fixture.id;
+                    if (!window.matchDatabase[newId]) {
+                        window.matchDatabase[newId] = {
+                            matchday: targetMd,
+                            stage: targetMd,
+                            status: apiM.item.fixture.status.short,
+                            timeStatus: (['FT', 'AET', 'PEN'].includes(apiM.item.fixture.status.short)) ? 'past' : (apiM.item.fixture.status.short === 'NS' ? 'future' : 'live'),
+                            dateText: new Date(apiM.item.fixture.date).toLocaleDateString('he-IL') + ' | ' + new Date(apiM.item.fixture.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}),
+                            teamHome: apiM.apiHome,
+                            teamAway: apiM.apiAway,
+                            score: { prediction: '-', actual: '' },
+                            probabilities: { home: 33, draw: 34, away: 33 },
+                            advancedStats: { home: { xG: '-' }, away: { xG: '-' } },
+                            insight: { prediction: 'ממתין לנתוני מודל (AI)...', actual: '' }
+                        };
+                    } else {
+                        // עדכון כרטיסיית ההכנה במידה והמשחק מתחיל
+                        let genMatch = window.matchDatabase[newId];
+                        genMatch.status = apiM.item.fixture.status.short;
+                        if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(genMatch.status)) {
+                            let homeGoals = apiM.item.goals.home !== null ? apiM.item.goals.home : 0;
+                            let awayGoals = apiM.item.goals.away !== null ? apiM.item.goals.away : 0;
+                            genMatch.score.actual = `${homeGoals} - ${awayGoals}`;
+                            genMatch.timeStatus = ['FT', 'AET', 'PEN'].includes(genMatch.status) ? 'past' : 'live';
+                        } else if (genMatch.status === 'NS') {
+                            genMatch.timeStatus = 'future';
+                        }
+                    }
                 }
             }
         });
