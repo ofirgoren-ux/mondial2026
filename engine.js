@@ -1,7 +1,7 @@
 window.calculateAccuracy = function(prediction, actualStr, matchStatus, penHome, penAway) {
     if (!prediction || !actualStr || prediction === '-' || actualStr === '-' || !prediction.includes('-') || !actualStr.includes('-')) {
         return 'pending';
-    } 
+    }
     try {
         let pParts = prediction.split('-');
         let aParts = actualStr.split('-');
@@ -113,14 +113,18 @@ window.switchView = function(viewName) {
 function getSafeDatabase() {
     let db = {};
     
-    // שואבים את כל הטורניר מתוך המאגר המאוחד (104 משחקים)
+    // איחוד מלא: גם שלב הבתים וגם משחקי הנוקאאוט כדי למנוע העלמויות
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
             db[id] = JSON.parse(JSON.stringify(window.matchDatabase[id]));
         }
     }
+    if (typeof window.knockoutMatches !== 'undefined') {
+        for (let id in window.knockoutMatches) {
+            db[id] = JSON.parse(JSON.stringify(window.knockoutMatches[id]));
+        }
+    }
 
-    // המרת אותיות לשלבי הבתים
     const hebrewToEnglish = {'א': 'A', "א'": 'A', 'ב': 'B', "ב'": 'B', 'ג': 'C', "ג'": 'C', 'ד': 'D', "ד'": 'D', 'ה': 'E', "ה'": 'E', 'ו': 'F', "ו'": 'F', 'ז': 'G', "ז'": 'G', 'ח': 'H', "ח'": 'H', 'ט': 'I', "ט'": 'I', 'י': 'J', "י'": 'J', 'יא': 'K', 'י"א': 'K', 'יב': 'L', 'י"ב': 'L'};
 
     for (let key in db) {
@@ -128,7 +132,6 @@ function getSafeDatabase() {
             db[key].stage = hebrewToEnglish[db[key].stage];
         }
         
-        // חישוב רמת הדיוק למשחקי עבר
         if (db[key].timeStatus === 'past' && db[key].score && db[key].score.prediction && db[key].score.actual) {
             let penH = db[key].score.penalty?.home;
             let penA = db[key].score.penalty?.away;
@@ -190,7 +193,17 @@ function renderMatches() {
         const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === data.timeStatus); 
         const isKnockoutMode = ['r32', 'r16', 'qf', 'sf', 'final'].includes(currentMdFilter);
         const sMatch = isKnockoutMode ? true : (currentStageFilter === 'all' || currentStageFilter === data.stage); 
-        const mMatch = (currentMdFilter === 'all' || currentMdFilter === String(data.matchday)); 
+        
+        // פילטר חכם שסולח על כתיבה בעברית או באנגלית
+        const mdStr = String(data.matchday).toLowerCase();
+        const stageStr = String(data.stage).toLowerCase();
+        let mMatch = (currentMdFilter === 'all' || mdStr === currentMdFilter || stageStr === currentMdFilter);
+        
+        if (currentMdFilter === 'r16' && (mdStr.includes('16') || mdStr.includes('שמינית') || stageStr.includes('16') || stageStr.includes('שמינית'))) mMatch = true;
+        if (currentMdFilter === 'qf' && (mdStr.includes('qf') || mdStr.includes('רבע') || stageStr.includes('רבע'))) mMatch = true;
+        if (currentMdFilter === 'sf' && (mdStr.includes('sf') || mdStr.includes('חצי') || stageStr.includes('חצי'))) mMatch = true;
+        if (currentMdFilter === 'final' && (mdStr.includes('final') || mdStr.includes('גמר') || stageStr.includes('גמר'))) mMatch = true;
+
         return tMatch && sMatch && mMatch;
     });
 
