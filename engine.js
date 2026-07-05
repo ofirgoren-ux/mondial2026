@@ -115,6 +115,8 @@ function getSafeDatabase() {
     
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
+            // התיקון: סינון כרטיסיות הרפאים שנוצרות מה-API
+            if (id.startsWith('api_gen_')) continue;
             db[id] = JSON.parse(JSON.stringify(window.matchDatabase[id]));
         }
     }
@@ -491,7 +493,8 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     }
 
     const riskContainer = card.querySelector(`#risk-${cardId}`);
-    if (riskContainer) riskContainer.style.opacity = (tabType === 'sum') ? '0' : '1';
+    // התיקון: אטימות תגית ההפתעה נשארת קבועה על '1' בכל הלשוניות
+    if (riskContainer) riskContainer.style.opacity = '1';
 
     const labelEl = card.querySelector(`.score-label`);
     const scoreEl = card.querySelector(`.score-number`); 
@@ -517,7 +520,8 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r32'; 
+// התיקון: פתיחת העמוד מוגדרת למשתנה r16
+let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
 
 window.applyFilters = function() { renderMatches(); }
 
@@ -532,7 +536,8 @@ window.addEventListener('DOMContentLoaded', () => {
         switchView('matches');
     } else {
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-        const defaultBtn = document.querySelector(`.submenu-btn[data-md="r32"]`); 
+        // התיקון: כפתור שמינית הגמר מקבל את המחלקה הפעילה בטעינה הראשונית
+        const defaultBtn = document.querySelector(`.submenu-btn[data-md="r16"]`); 
         if (defaultBtn) defaultBtn.classList.add('active');
         switchView('matches');
     }
@@ -577,7 +582,8 @@ window.renderStandings = function() {
     Object.values(db).forEach(match => {
         if(!match.stage || !match.teamHome || !match.teamAway) return;
         const st = match.stage;
-        if (st === 'נוקאאוט' || st === 'knockout') return;
+        // התיקון: חסימה והעלמה של בתי הנוקאאוט מטבלת הבתים
+        if (st === 'נוקאאוט' || st === 'knockout' || st === 'r32' || st === 'r16' || st === 'qf' || st === 'sf' || st === 'final') return;
 
         if (!groups[st]) groups[st] = {};
         
