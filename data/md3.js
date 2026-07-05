@@ -2,7 +2,7 @@ window.matchDatabase = window.matchDatabase || {};
 const matchday3Database = {
     // ---- 6 המשחקים שכבר שוחקו (24-25 ביוני) ----
 
-'match49': {
+    'match49': {
         timeStatus: 'past', matchday: 3, stage: 'B', dateText: `24/06/2026 | 22:00 (שעון ישראל)`,
         teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: ['card'], red: [] } },
         teamAway: { name: `קנדה`, flagCode: 'ca', color: '#000000', cards: { yellow: ['card', 'card'], red: [] } },
@@ -151,13 +151,13 @@ const matchday3Database = {
     },
     'match61': {
         timeStatus: 'past', matchday: 3, stage: 'I', dateText: `26/06/2026 | 16:00 (שעון ישראל)`,
-        teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } },
+        teamHome: { name: `נורבגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } },
         teamAway: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: ['card'], red: [] } },
         score: { prediction: '1 - 2', actual: '1 - 4', accuracyClass: 'trend' },
         probabilities: { home: 25, draw: 30, away: 45 }, matchRisk: 'Safe',
         radarStats: { home: [68, 55, 75, 60, 85, 70], away: [90, 88, 80, 85, 78, 92] },
         advancedStats: { home: { xG: '1.15', corners: 3, altitudeImpact: '' }, away: { xG: '2.85', corners: 7, altitudeImpact: '' } },
-        insight: { prediction: `התנגשות ענקים בין האלנד לאמבפה.`, actual: `קונצרט כחול! צרפת פירקה את המערך הנורווגי.` },
+        insight: { prediction: `התנגשות ענקים בין האלנד לאמבפה.`, actual: `הטריקולור פשוט רקדו על המגרש. צרפת הוכיחה שוב את עומק הסגל הבלתי נגמר שלה, ניטרלה לחלוטין את משחק המעברים הנורווגי, ופירקה את הגנת היריבה בדרך ל-4-1 מוחץ שמעביר מסר לכל הטורניר.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match62': {
@@ -168,7 +168,7 @@ const matchday3Database = {
         probabilities: { home: 65, draw: 23, away: 12 }, matchRisk: 'Safe',
         radarStats: { home: [82, 70, 68, 85, 90, 75], away: [50, 45, 60, 55, 65, 48] },
         advancedStats: { home: { xG: '3.10', corners: 9, altitudeImpact: '' }, away: { xG: '0.45', corners: 1, altitudeImpact: '' } },
-        insight: { prediction: `העוצמה הפיזית של סנגל צפויה להכריע.`, actual: `דריסה אפריקאית מוחלטת של סנגל.` },
+        insight: { prediction: `העוצמה הפיזית של סנגל צפויה להכריע.`, actual: `דריסה אפריקאית מוחלטת שלא השאירה מקום לספק. סנגל השתלטה על מרכז השדה מהשנייה הראשונה, תרגמה את היתרון הפיזי לשליטה אבסולוטית ברחבה, וסגרה את הסיפור עם חמישייה מהדהדת לרשת העיראקית.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match63': {
@@ -179,7 +179,7 @@ const matchday3Database = {
         probabilities: { home: 30, draw: 35, away: 35 }, matchRisk: 'Draw Booster',
         radarStats: { home: [74, 68, 70, 92, 85, 76], away: [88, 92, 75, 78, 70, 85] },
         advancedStats: { home: { xG: '0.92', corners: 4, altitudeImpact: '' }, away: { xG: '1.65', corners: 5, altitudeImpact: '' } },
-        insight: { prediction: `משחק טקטי עצבני.`, actual: `קרב סוער שהוכרע על חודו של שער לטובת ספרד.` },
+        insight: { prediction: `משחק טקטי עצבני.`, actual: `קרב טקטי סוער שהוכרע בפרטים הקטנים. ספרד הצליחה להכתיב את הקצב דרך הנעת כדור סבלנית, והצליחה לפצח את ההגנה הדרום אמריקאית הקשוחה עם שער בודד ויקר שהעניק לה שלוש נקודות קריטיות.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match64': {
@@ -190,7 +190,7 @@ const matchday3Database = {
         probabilities: { home: 30, draw: 40, away: 30 }, matchRisk: 'Draw Booster',
         radarStats: { home: [62, 58, 65, 70, 72, 60], away: [65, 60, 68, 65, 70, 64] },
         advancedStats: { home: { xG: '0.80', corners: 3, altitudeImpact: '' }, away: { xG: '0.75', corners: 4, altitudeImpact: '' } },
-        insight: { prediction: `שתי נבחרות מאוזנות שנלחמות על נקודות.`, actual: `היסטוריה מטורפת! כף ורדה עמדה בלחץ.` },
+        insight: { prediction: `שתי נבחרות מאוזנות שנלחמות על נקודות.`, actual: `היסטוריה מטורפת ואופי אדיר של כף ורדה. למרות משחק אגרסיבי ולחץ מצד הסעודים, הנבחרת מאפריקה עמדה בפרץ, הפגינה משמעת טקטית מרשימה והבטיחה תיקו הירואי שממשיך את מסע הקסם שלה.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match65': {
@@ -201,7 +201,7 @@ const matchday3Database = {
         probabilities: { home: 5, draw: 15, away: 80 }, matchRisk: 'Safe',
         radarStats: { home: [45, 40, 65, 70, 75, 42], away: [88, 85, 82, 80, 84, 89] },
         advancedStats: { home: { xG: '0.65', corners: 1, altitudeImpact: '' }, away: { xG: '3.40', corners: 11, altitudeImpact: '' } },
-        insight: { prediction: `פערי רמות קיצוניים על הנייר.`, actual: `בלי רחמים. השדים האדומים נתנו קונצרט.` },
+        insight: { prediction: `פערי רמות קיצוניים על הנייר.`, actual: `בלי רחמים ובלי לעצור. השדים האדומים הציגו קונצרט התקפי יעיל, תרגמו את פערי האיכות התהומיים לחגיגת שערים, והוכיחו כי הם לא מתכוונים להוריד את הרגל מהגז בשלב הבתים.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match66': {
@@ -212,7 +212,7 @@ const matchday3Database = {
         probabilities: { home: 45, draw: 35, away: 20 }, matchRisk: 'Draw Booster',
         radarStats: { home: [78, 65, 72, 70, 68, 75], away: [65, 60, 70, 82, 85, 62] },
         advancedStats: { home: { xG: '1.45', corners: 5, altitudeImpact: '' }, away: { xG: '1.20', corners: 3, altitudeImpact: '' } },
-        insight: { prediction: `קרב ישיר ועצבני על הכרטיס לשלב הבא.`, actual: `דרמה מורטת עצבים עד השנייה האחרונה.` },
+        insight: { prediction: `קרב ישיר ועצבני על הכרטיס לשלב הבא.`, actual: `משחק מורט עצבים ששמר אותנו במתח עד לשריקת הסיום. היתרון הטכני של מצרים במחצית הראשונה נענה בלחימה איראנית עיקשת בשנייה, כשהחלוקה בנקודות משקפת מאבק שקול שבו שתי הנבחרות סירבו לוותר.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match67': {
@@ -223,7 +223,7 @@ const matchday3Database = {
         probabilities: { home: 6, draw: 13, away: 81 }, matchRisk: 'Upset Alert',
         radarStats: { home: [46, 20, 47, 46, 68, 17], away: [77, 73, 63, 77, 83, 37] },
         advancedStats: { home: { xG: '0.59', corners: 2, altitudeImpact: '' }, away: { xG: '2.61', corners: 6, altitudeImpact: '' } },
-        insight: { prediction: `משחק חד צדדי.`, actual: `אנגליה עשתה את העבודה ברוגע.` },
+        insight: { prediction: `משחק חד צדדי.`, actual: `יעילות אנגלית קלאסית במיטבה. נבחרת שלושת האריות לא נבהלה מהצפיפות של פנמה, שלטה בכדור בסבלנות מרובה, ועקצה פעמיים במצבים קריטיים כדי להבטיח את הניצחון ללא טיפת זיעה מיותרת.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match68': {
@@ -234,7 +234,7 @@ const matchday3Database = {
         probabilities: { home: 59, draw: 24, away: 17 }, matchRisk: 'Safe',
         radarStats: { home: [69, 40, 58, 69, 87, 40], away: [53, 53, 51, 53, 65, 25] },
         advancedStats: { home: { xG: '1.69', corners: 5, altitudeImpact: '' }, away: { xG: '0.79', corners: 3, altitudeImpact: '' } },
-        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה.`, actual: `קרואטיה הבטיחה את המקום השני.` },
+        insight: { prediction: `הקרואטים מנוסים, שקולים ואשפי שליטה.`, actual: `קרואטיה הוכיחה שוב שאין תחליף לניסיון. למרות המהירות והאתלטיות של גאנה שניסתה להפתיע במתפרצות, ניהול המשחק החכם של הקרואטים במרכז השדה הכריע את ההתמודדות והבטיח להם את הניצחון.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match69': {
@@ -245,7 +245,7 @@ const matchday3Database = {
         probabilities: { home: 23, draw: 26, away: 51 }, matchRisk: 'Upset Alert',
         radarStats: { home: [69, 47, 55, 69, 63, 17], away: [75, 33, 64, 75, 72, 45] },
         advancedStats: { home: { xG: '0.89', corners: 4, altitudeImpact: '' }, away: { xG: '1.49', corners: 5, altitudeImpact: '' } },
-        insight: { prediction: `משחק סופר-מעניין.`, actual: `תיקו מאופס איכותי.` },
+        insight: { prediction: `משחק סופר-מעניין.`, actual: `קרב מוחות ברמה הגבוהה ביותר שהסתיים ללא הכרעה. שתי הנבחרות גילו כבוד רב זו לזו, התמקדו בסגירת שטחים ונטרול הכלים ההתקפיים, מה שהוביל לתיקו מאופס, אך סופר-איכותי מבחינה טקטית.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match70': {
@@ -256,7 +256,7 @@ const matchday3Database = {
         probabilities: { home: 38, draw: 27, away: 35 }, matchRisk: 'Safe',
         radarStats: { home: [62, 60, 49, 62, 69, 22], away: [53, 47, 48, 53, 64, 15] },
         advancedStats: { home: { xG: '1.29', corners: 5, altitudeImpact: '' }, away: { xG: '1.24', corners: 3, altitudeImpact: '' } },
-        insight: { prediction: `קרב שקול לחלוטין.`, actual: `קאמבק ענק של קונגו מהמקום השלישי.` },
+        insight: { prediction: `קרב שקול לחלוטין.`, actual: `איזו תצוגת אופי של קונגו! לאחר שנקלעה לפיגור, הנבחרת האפריקאית סירבה להישבר, העלתה הילוך במחצית השנייה, וניצלה את העייפות האוזבקית כדי לרשום קאמבק אדיר עם שלישייה מרשימה.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match71': {
@@ -267,7 +267,7 @@ const matchday3Database = {
         probabilities: { home: 28, draw: 28, away: 44 }, matchRisk: 'Upset Alert',
         radarStats: { home: [73, 60, 54, 73, 73, 13], away: [71, 40, 53, 71, 59, 37] },
         advancedStats: { home: { xG: '1.98', corners: 6, altitudeImpact: '' }, away: { xG: '1.81', corners: 5, altitudeImpact: '' } },
-        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת.`, actual: `משחק פשוט משוגע של 3-3 דרמטי.` },
+        insight: { prediction: `האוסטרים מגיעים כקבוצה מאומנת.`, actual: `משחק משוגע, פתוח ולחלוטין נטול הגנות. אלג'יריה ואוסטריה סיפקו לנו את אחד המשחקים המרתקים של הטורניר, שבו המומנטום עבר מצד לצד עד לחלוקת נקודות ב-3-3 סופר דרמטי.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     },
     'match72': {
@@ -278,51 +278,7 @@ const matchday3Database = {
         probabilities: { home: 7, draw: 14, away: 79 }, matchRisk: 'Upset Alert',
         radarStats: { home: [40, 27, 46, 40, 80, 12], away: [89, 73, 65, 89, 55, 25] },
         advancedStats: { home: { xG: '0.59', corners: 1, altitudeImpact: '' }, away: { xG: '3.10', corners: 8, altitudeImpact: '' } },
-        insight: { prediction: `הבדלי איכות אדירים.`, actual: `ארגנטינה מטיילת עם כיבוש של מסי.` },
-        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    },
-'match73': {
-        timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `28/06/2026 | 22:00 (שעון ישראל)`,
-        teamHome: { name: `דרום אפריקה`, flagCode: 'za', color: '#007749', cards: { yellow: [], red: [] } },
-        teamAway: { name: `קנדה`, flagCode: 'ca', color: '#FF0000', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 25, draw: 30, away: 45 }, matchRisk: 'Safe',
-        radarStats: { home: [55, 45, 60, 65, 75, 50], away: [70, 60, 55, 70, 80, 68] },
-        advancedStats: { home: { xG: '0.85', corners: 0, altitudeImpact: '' }, away: { xG: '1.65', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `החזרה של אלפונסו דייוויס להרכב היא בוסט אדיר עבור קנדה[cite: 9]. האתלטיות והמהירות באגפים צפויים להכריע את דרום אפריקה, למרות ההגנה הקשוחה שלה.`, actual: `` },
-        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    },
-    'match74': {
-        timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `29/06/2026 | 23:30 (שעון ישראל)`,
-        teamHome: { name: `גרמניה`, flagCode: 'de', color: '#FFFFFF', cards: { yellow: [], red: [] } },
-        teamAway: { name: `פרגוואי`, flagCode: 'py', color: '#D52B1E', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 68, draw: 20, away: 12 }, matchRisk: 'Safe',
-        radarStats: { home: [88, 85, 80, 85, 78, 90], away: [65, 50, 60, 80, 85, 55] },
-        advancedStats: { home: { xG: '2.40', corners: 0, altitudeImpact: '' }, away: { xG: '0.60', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `גרמניה סיימה את שלב הבתים עם 10 שערים ומכונת ההתקפה שלה נראית משומנת[cite: 10, 11]. פרגוואי תנסה להסתגר, אך האיכות הגרמנית תמצא את הפרצה.`, actual: `` },
-        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    },
-    'match80': {
-        timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `01/07/2026 | 19:00 (שעון ישראל)`,
-        teamHome: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } },
-        teamAway: { name: `קונגו`, flagCode: 'cd', color: '#007A5E', cards: { yellow: [], red: [] } },
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 65, draw: 22, away: 13 }, matchRisk: 'Upset Alert',
-        radarStats: { home: [80, 75, 70, 78, 82, 88], away: [68, 55, 60, 75, 85, 60] },
-        advancedStats: { home: { xG: '1.90', corners: 0, altitudeImpact: '' }, away: { xG: '0.95', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `תומאס טוכל הבטיח שאנגליה תיראה טוב יותר אחרי הופעה פושרת בשלב הבתים[cite: 9]. קונגו הראתה אופי אדיר עם קאמבק מרשים[cite: 8, 9, 10], והיא תקשה מאוד על האנגלים עם פיזיות במרכז השדה.`, actual: `` },
-        goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
-    },
-    'match83': {
-        timeStatus: 'future', matchday: 'r32', stage: "נוקאאוט", dateText: `02/07/2026 | 02:00 (שעון ישראל)`,
-        teamHome: { name: `פורטוגל`, flagCode: 'pt', color: '#E42518', cards: { yellow: [], red: [] } },
-        teamAway: { name: `קרואטיה`, flagCode: 'hr', color: '#FF0000', cards: { yellow: [], red: [] } },
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' },
-        probabilities: { home: 40, draw: 35, away: 25 }, matchRisk: 'Draw Booster',
-        radarStats: { home: [82, 78, 75, 80, 70, 85], away: [80, 82, 70, 85, 72, 80] },
-        advancedStats: { home: { xG: '1.20', corners: 0, altitudeImpact: '' }, away: { xG: '1.15', corners: 0, altitudeImpact: '' } },
-        insight: { prediction: `משחק טקטי ברמה הגבוהה ביותר[cite: 8, 10, 11, 12]. קרואטיה תשלוט במרכז המגרש, בעוד פורטוגל תחפש את הכישרון האישי. פוטנציאל גבוה להארכה ופנדלים.`, actual: `` },
+        insight: { prediction: `הבדלי איכות אדירים.`, actual: `האלביסלסטה מטיילים ללא מאמץ מיוחד. ארגנטינה נהנתה מעליונות מוחלטת, שברה את הבונקר הירדני בשלב מוקדם, וסגרה את הסיפור עם כדורגל שוטף ומרשים ששולח מסר ברור להמשך הטורניר.` },
         goals: [], squads: { home: { predicted: [], actual: [] }, away: { predicted: [], actual: [] } }
     }
 };
