@@ -33,10 +33,10 @@ window.toggleMobileMenu = function() {
     const overlay = document.getElementById('sidebar-overlay');
     if (overlay.classList.contains('active')) {
         overlay.classList.remove('active');
-        setTimeout(function() { overlay.style.display = 'none'; }, 300); 
+        setTimeout(() => overlay.style.display = 'none', 300); 
     } else {
         overlay.style.display = 'block';
-        setTimeout(function() { overlay.classList.add('active'); }, 10);
+        setTimeout(() => overlay.classList.add('active'), 10);
     }
 }
 
@@ -49,7 +49,7 @@ function closeMobileMenuIfOpen() {
 window.switchView = function(viewName) {
     closeMobileMenuIfOpen();
     
-    ['matches-view', 'standings-view', 'bracket-view', 'scorers-view'].forEach(function(id) {
+    ['matches-view', 'standings-view', 'bracket-view', 'scorers-view'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = 'none';
     });
@@ -57,9 +57,7 @@ window.switchView = function(viewName) {
     const mainFilters = document.getElementById('main-filters');
     if(mainFilters) mainFilters.style.display = (viewName === 'matches') ? 'flex' : 'none';
 
-    document.querySelectorAll('.sidebar .nav-link').forEach(function(link) {
-        link.classList.remove('active');
-    });
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => link.classList.remove('active'));
     
     const groupSubmenu = document.getElementById('submenu-groups');
     const knockoutSubmenu = document.getElementById('submenu-knockout');
@@ -190,9 +188,7 @@ function renderMatches() {
     `;
     htmlChunks.push(penStyles);
 
-    let filteredMatches = Object.entries(db).filter(function(pair) {
-        const matchId = pair[0];
-        const data = pair[1];
+    let filteredMatches = Object.entries(db).filter(([matchId, data]) => {
         const tMatch = (currentTimeFilter === 'all' || currentTimeFilter === data.timeStatus); 
         const isKnockoutMode = ['r32', 'r16', 'qf', 'sf', 'final'].includes(currentMdFilter);
         const sMatch = isKnockoutMode ? true : (currentStageFilter === 'all' || currentStageFilter === data.stage); 
@@ -209,7 +205,7 @@ function renderMatches() {
         return tMatch && sMatch && mMatch;
     });
 
-    filteredMatches.sort(function(a, b) {
+    filteredMatches.sort((a, b) => {
         function getSortValue(match) {
             if (!match.dateText) return 0;
             try {
@@ -218,7 +214,7 @@ function renderMatches() {
                 let dateParts = parts[0].trim().split('/'); 
                 let timeString = parts[1].trim().substring(0, 5);
                 if (dateParts.length === 3) {
-                    return new Date(dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0] + "T" + timeString + ":00").getTime();
+                    return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T${timeString}:00`).getTime();
                 }
             } catch(e) {}
             return 0;
@@ -226,11 +222,8 @@ function renderMatches() {
         return getSortValue(a[1]) - getSortValue(b[1]);
     });
 
-    for (let i=0; i<filteredMatches.length; i++) {
-        const matchId = filteredMatches[i][0];
-        const data = filteredMatches[i][1];
-        
-        const adv = data.advancedStats || { home: { xG: '-' }, away: { xG: '-' } };
+    for (const [matchId, data] of filteredMatches) {
+        const adv = data.advancedStats || { home: { xG: '-', restDays: '-', altitudeImpact: '-' }, away: { xG: '-', restDays: '-', altitudeImpact: '-' } };
         const prob = data.probabilities || { home: 33, draw: 34, away: 33 };
         const tHome = data.teamHome || { name: 'Unknown', flagCode: 'unknown', color: '#000', cards: { yellow: [], red: [] } };
         const tAway = data.teamAway || { name: 'Unknown', flagCode: 'unknown', color: '#000', cards: { yellow: [], red: [] } };
@@ -242,17 +235,17 @@ function renderMatches() {
         if (isPast) {
             let hCards = '';
             if (tHome.cards) {
-                if (tHome.cards.yellow) tHome.cards.yellow.forEach(function() { hCards += '<div class="card-icon yellow-card"></div>'; });
-                if (tHome.cards.red) tHome.cards.red.forEach(function() { hCards += '<div class="card-icon red-card"></div>'; });
+                if (tHome.cards.yellow) tHome.cards.yellow.forEach(() => { hCards += `<div class="card-icon yellow-card"></div>`; });
+                if (tHome.cards.red) tHome.cards.red.forEach(() => { hCards += `<div class="card-icon red-card"></div>`; });
             }
-            if (hCards) homeCardsHTML = '<div class="cards-container">' + hCards + '</div>';
+            if (hCards) homeCardsHTML = `<div class="cards-container">${hCards}</div>`;
         
             let aCards = '';
             if (tAway.cards) {
-                if (tAway.cards.yellow) tAway.cards.yellow.forEach(function() { aCards += '<div class="card-icon yellow-card"></div>'; });
-                if (tAway.cards.red) tAway.cards.red.forEach(function() { aCards += '<div class="card-icon red-card"></div>'; });
+                if (tAway.cards.yellow) tAway.cards.yellow.forEach(() => { aCards += `<div class="card-icon yellow-card"></div>`; });
+                if (tAway.cards.red) tAway.cards.red.forEach(() => { aCards += `<div class="card-icon red-card"></div>`; });
             }
-            if (aCards) awayCardsHTML = '<div class="cards-container">' + aCards + '</div>';
+            if (aCards) awayCardsHTML = `<div class="cards-container">${aCards}</div>`;
         }
 
         const risk = data.matchRisk || 'Safe';
@@ -294,7 +287,7 @@ function renderMatches() {
             if (data.status === 'AET' || data.status === 'PEN') {
                 const score90Home = (data.score && data.score.fulltime && data.score.fulltime.home !== null && data.score.fulltime.home !== undefined) ? data.score.fulltime.home : '-';
                 const score90Away = (data.score && data.score.fulltime && data.score.fulltime.away !== null && data.score.fulltime.away !== undefined) ? data.score.fulltime.away : '-';
-                const score90Str = score90Home + " - " + score90Away;
+                const score90Str = `${score90Home} - ${score90Away}`;
 
                 let hCardMocks = '<div class="res-card-y"></div><div class="res-card-y"></div>';
                 let aCardMocks = '<div class="res-card-y"></div>';
@@ -432,20 +425,18 @@ function renderMatches() {
         const opts = { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, grid: { color: 'rgba(255,255,255,0.15)', lineWidth: 1.5 }, pointLabels: { font: { size: 11, weight: '800' }, color: '#e2e8f0' }, ticks: { display: false, min: 0, max: 100 } } }, plugins: { legend: { display: false } } };
         const lbls = ['טכניקה', 'החזקה', 'נייחים', 'מנטלי', 'פיזיות', 'איכות סגל'];
 
-        setTimeout(function() {
-            for (let i=0; i<filteredMatches.length; i++) {
-                const matchId = filteredMatches[i][0];
-                const data = filteredMatches[i][1];
-                ['pred', 'sum'].forEach(function(suffix) {
-                    const canvasElement = document.getElementById('chart-' + matchId + '-' + suffix);
+        setTimeout(() => {
+            for (const [matchId, data] of filteredMatches) { 
+                ['pred', 'sum'].forEach(suffix => {
+                    const canvasElement = document.getElementById(`chart-${matchId}-${suffix}`);
                     if (canvasElement && data.radarStats) {
                         let existingChart = Chart.getChart(canvasElement);
                         if (existingChart) existingChart.destroy();
                         
                         new Chart(canvasElement.getContext('2d'), { 
                             type: 'radar', data: { labels: lbls, datasets: [ 
-                                { data: data.radarStats.home || [0,0,0,0,0,0], borderColor: data.teamHome.color, backgroundColor: data.teamHome.color + '4D', pointBackgroundColor: data.teamHome.color, borderWidth: 2 }, 
-                                { data: data.radarStats.away || [0,0,0,0,0,0], borderColor: data.teamAway.color, backgroundColor: data.teamAway.color + '4D', pointBackgroundColor: data.teamAway.color, borderWidth: 2 } 
+                                { data: data.radarStats.home || [0,0,0,0,0,0], borderColor: data.teamHome.color, backgroundColor: `${data.teamHome.color}4D`, pointBackgroundColor: data.teamHome.color, borderWidth: 2 }, 
+                                { data: data.radarStats.away || [0,0,0,0,0,0], borderColor: data.teamAway.color, backgroundColor: `${data.teamAway.color}4D`, pointBackgroundColor: data.teamAway.color, borderWidth: 2 } 
                             ]}, options: opts 
                         });
                     }
@@ -455,23 +446,23 @@ function renderMatches() {
     }
 }
 
-function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML) {
+function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, initialRiskOpacity, visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML='', awayCardsHTML='') {
     let formattedScore = currentScoreDisplay;
     if (formattedScore && formattedScore.includes('-')) {
         let p = formattedScore.split('-');
-        formattedScore = '<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>' + p[1].trim() + '</span><span>-</span><span>' + p[0].trim() + '</span></span>';
+        formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
     
-    const hFlag = tHome.flagCode !== 'unknown' && tHome.flagCode !== 'un' ? '<img src="https://flagcdn.com/w80/' + tHome.flagCode + '.png" class="team-flag">' : '<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>';
-    const aFlag = tAway.flagCode !== 'unknown' && tAway.flagCode !== 'un' ? '<img src="https://flagcdn.com/w80/' + tAway.flagCode + '.png" class="team-flag">' : '<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>';
+    const hFlag = tHome.flagCode !== 'unknown' && tHome.flagCode !== 'un' ? `<img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag">` : `<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>`;
+    const aFlag = tAway.flagCode !== 'unknown' && tAway.flagCode !== 'un' ? `<img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag">` : `<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>`;
 
     return `
     <div class="match-card animate-in ${data.timeStatus === 'past' ? 'show-cards-tab' : ''}" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
-            <div class="team">${hFlag}<div class="team-name">${tHome.name}</div>${homeCardsHTML || ''}</div>
+            <div class="team">${hFlag}<div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
             <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;">${formattedScore}</div></div>
-            <div class="team">${aFlag}<div class="team-name">${tAway.name}</div>${awayCardsHTML || ''}</div>
+            <div class="team">${aFlag}<div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
             <div class="prob-labels"><span style="color: var(--accent-cyan)">1: ${prob.home}%</span><span style="color: var(--text-muted)">X: ${prob.draw}%</span><span style="color: #ff4d4d">2: ${prob.away}%</span></div>
@@ -487,11 +478,11 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
 
 window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accuracyLevel) { 
     const card = btn.closest('.match-card');
-    card.querySelectorAll('.inner-tab-btn').forEach(function(b) { b.classList.remove('active'); }); btn.classList.add('active');
-    card.querySelectorAll('.vis-content').forEach(function(v) { v.classList.remove('active'); });
-    const activeVis = card.querySelector('#vis-' + cardId + '-' + tabType); if(activeVis) activeVis.classList.add('active');
-    card.querySelectorAll('.txt-content').forEach(function(t) { t.classList.remove('active'); });
-    const activeTxt = card.querySelector('#txt-' + cardId + '-' + tabType); if(activeTxt) activeTxt.classList.add('active');
+    card.querySelectorAll('.inner-tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+    card.querySelectorAll('.vis-content').forEach(v => v.classList.remove('active'));
+    const activeVis = card.querySelector(`#vis-${cardId}-${tabType}`); if(activeVis) activeVis.classList.add('active');
+    card.querySelectorAll('.txt-content').forEach(t => t.classList.remove('active'));
+    const activeTxt = card.querySelector(`#txt-${cardId}-${tabType}`); if(activeTxt) activeTxt.classList.add('active');
     
     if (tabType === 'sum') {
         card.classList.add('show-cards-tab');
@@ -499,17 +490,17 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
         card.classList.remove('show-cards-tab');
     }
 
-    const riskContainer = card.querySelector('#risk-' + cardId);
+    const riskContainer = card.querySelector(`#risk-${cardId}`);
     if (riskContainer) riskContainer.style.opacity = (tabType === 'sum') ? '0' : '1';
 
-    const labelEl = card.querySelector('.score-label');
-    const scoreEl = card.querySelector('.score-number'); 
+    const labelEl = card.querySelector(`.score-label`);
+    const scoreEl = card.querySelector(`.score-number`); 
     labelEl.innerText = labelText; 
     
     let formattedScore = scoreText;
     if (formattedScore && formattedScore.includes('-')) {
         let p = formattedScore.split('-');
-        formattedScore = '<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>' + p[1].trim() + '</span><span>-</span><span>' + p[0].trim() + '</span></span>';
+        formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
     scoreEl.innerHTML = formattedScore; 
     
@@ -526,24 +517,22 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-// === הגדרת משתני הסינון וברירת המחדל (עודכן ל-r16) ===
-let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
+let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r32'; 
 
 window.applyFilters = function() { renderMatches(); }
 
-window.addEventListener('DOMContentLoaded', function() { 
+window.addEventListener('DOMContentLoaded', () => { 
     const urlParams = new URLSearchParams(window.location.search);
     const mdParam = urlParams.get('md');
     if (mdParam) {
         currentMdFilter = mdParam;
-        document.querySelectorAll('.submenu-btn').forEach(function(b) { b.classList.remove('active'); });
-        const btn = document.querySelector('.submenu-btn[data-md="' + mdParam + '"]'); 
+        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`); 
         if (btn) btn.classList.add('active');
         switchView('matches');
     } else {
-        document.querySelectorAll('.submenu-btn').forEach(function(b) { b.classList.remove('active'); });
-        // התיקון: כפתור שמינית הגמר מקבל את הסטטוס הפעיל בטעינה הראשונית
-        const defaultBtn = document.querySelector('.submenu-btn[data-md="r16"]'); 
+        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
+        const defaultBtn = document.querySelector(`.submenu-btn[data-md="r32"]`); 
         if (defaultBtn) defaultBtn.classList.add('active');
         switchView('matches');
     }
@@ -551,46 +540,44 @@ window.addEventListener('DOMContentLoaded', function() {
     const timeParam = urlParams.get('time');
     if (timeParam) {
         currentTimeFilter = timeParam;
-        document.querySelectorAll('.time-btn').forEach(function(b) { b.classList.remove('active'); });
-        const btn = document.querySelector('.time-btn[data-time="' + timeParam + '"]'); 
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
         if (btn) btn.classList.add('active');
     }
 
     const stageParam = urlParams.get('stage');
     if (stageParam) {
         currentStageFilter = stageParam;
-        document.querySelectorAll('.stage-btn').forEach(function(b) { b.classList.remove('active'); });
-        const btn = document.querySelector('.stage-btn[data-stage="' + stageParam + '"]'); 
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+        const btn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
         if (btn) btn.classList.add('active');
     }
     
     renderStats(); 
     renderMatches(); 
     
-    document.querySelectorAll('.time-btn').forEach(function(btn) { btn.addEventListener('click', function(e) { 
-        document.querySelectorAll('.time-btn').forEach(function(b) { b.classList.remove('active'); }); e.target.classList.add('active'); 
+    document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
-    });});
-    document.querySelectorAll('.stage-btn').forEach(function(btn) { btn.addEventListener('click', function(e) { 
-        document.querySelectorAll('.stage-btn').forEach(function(b) { b.classList.remove('active'); }); e.target.classList.add('active'); 
+    }));
+    document.querySelectorAll('.stage-btn').forEach(btn => btn.addEventListener('click', (e) => { 
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentStageFilter = e.target.getAttribute('data-stage'); applyFilters(); 
-    });});
-    document.querySelectorAll('.submenu-btn').forEach(function(btn) { btn.addEventListener('click', function(e) { 
-        document.querySelectorAll('.submenu-btn').forEach(function(b) { b.classList.remove('active'); }); e.target.classList.add('active'); 
+    }));
+    document.querySelectorAll('.submenu-btn').forEach(btn => btn.addEventListener('click', (e) => { 
+        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
-    });});
+    }));
 });
 
 window.renderStandings = function() {
     const db = getSafeDatabase();
     const groups = {};
     
-    Object.values(db).forEach(function(match) {
+    Object.values(db).forEach(match => {
         if(!match.stage || !match.teamHome || !match.teamAway) return;
         const st = match.stage;
-        
-        // התיקון: חסימת כל שלבי הנוקאאוט מלהיכנס לטבלת הבתים
-        if (st === 'נוקאאוט' || st === 'knockout' || st === 'r32' || st === 'r16' || st === 'qf' || st === 'sf' || st === 'final') return;
+        if (st === 'נוקאאוט' || st === 'knockout') return;
 
         if (!groups[st]) groups[st] = {};
         
@@ -618,9 +605,9 @@ window.renderStandings = function() {
     if(!container) return;
     
     let html = '';
-    Object.keys(groups).sort().forEach(function(st) {
+    Object.keys(groups).sort().forEach(st => {
         let teams = Object.values(groups[st]);
-        teams.sort(function(a,b) {
+        teams.sort((a,b) => {
             if(b.pts !== a.pts) return b.pts - a.pts;
             const gdA = a.gf - a.ga; const gdB = b.gf - b.ga;
             if(gdB !== gdA) return gdB - gdA;
@@ -630,8 +617,8 @@ window.renderStandings = function() {
         const hebrewGroups = {'A': "א'", 'B': "ב'", 'C': "ג'", 'D': "ד'", 'E': "ה'", 'F': "ו'", 'G': "ז'", 'H': "ח'", 'I': "ט'", 'J': "י'", 'K': 'י"א', 'L': 'י"ב'};
         const groupName = hebrewGroups[st] || st;
 
-        let rows = teams.map(function(t, idx) {
-            let goalsHtml = '<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>' + t.ga + '</span><span>-</span><span>' + t.gf + '</span></span>';
+        let rows = teams.map((t, idx) => {
+            let goalsHtml = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:4px;"><span>${t.ga}</span><span>-</span><span>${t.gf}</span></span>`;
             let diffHtml = t.gf - t.ga > 0 ? '+'+(t.gf-t.ga) : (t.gf-t.ga);
 
             return `
@@ -671,29 +658,29 @@ window.renderKnockout = function() {
     container.innerHTML = '';
     container.className = "tournament-bracket";
     
-    Object.keys(window.knockoutBracket).forEach(function(key) {
+    Object.keys(window.knockoutBracket).forEach(key => {
         const roundData = window.knockoutBracket[key];
         const col = document.createElement('div');
         col.className = 'bracket-column';
         
         let title = key === 'roundOf32' ? '32 הגדולות' : 'שמינית גמר';
-        col.innerHTML = '<div class="round-title">' + title + '</div>';
+        col.innerHTML = `<div class="round-title">${title}</div>`;
         
-        roundData.forEach(function(match, index) {
+        roundData.forEach((match, index) => {
             let positionClass = (index % 2 === 0) ? ' pair-top' : ' pair-bottom';
             let winClass = '';
             if (match.team1 && match.team1.outcome === 'winner') winClass = ' win-team1';
             else if (match.team2 && match.team2.outcome === 'winner') winClass = ' win-team2';
             
             const matchDiv = document.createElement('div');
-            matchDiv.className = 'bracket-match' + positionClass + winClass;
+            matchDiv.className = `bracket-match${positionClass}${winClass}`;
             
             let html = '';
-            ['team1', 'team2'].forEach(function(t) {
+            ['team1', 'team2'].forEach(t => {
                 let team = match[t] || { name: 'TBD', score: '-', outcome: 'pending', flag: 'unknown' };
-                let bgStyle = team.flag !== 'unknown' && team.flag !== 'un' ? "background-image: url('https://flagcdn.com/w160/" + team.flag + ".png')" : 'background: rgba(255,255,255,0.05);';
+                let bgStyle = team.flag !== 'unknown' && team.flag !== 'un' ? `background-image: url('https://flagcdn.com/w160/${team.flag}.png')` : 'background: rgba(255,255,255,0.05);';
                 let statusClass = team.outcome === 'winner' ? 'winner' : (team.outcome === 'loser' ? 'loser' : '');
-                let clickAttr = team.flag !== 'unknown' && team.flag !== 'un' ? "onclick=\"openJourneyModal('" + team.name + "', '" + team.flag + "')\"" : '';
+                let clickAttr = team.flag !== 'unknown' && team.flag !== 'un' ? `onclick="openJourneyModal('${team.name}', '${team.flag}')"` : '';
                 
                 html += `
                     <div class="bracket-team ${statusClass}" ${clickAttr}>
@@ -717,7 +704,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     let matchesPlayed = [];
     let gf = 0, ga = 0, pts = 0;
 
-    Object.values(db).forEach(function(match) {
+    Object.values(db).forEach(match => {
         if ((match.teamHome && match.teamHome.name === teamName) || (match.teamAway && match.teamAway.name === teamName)) {
             if (match.timeStatus === 'past' && match.score && match.score.actual && match.score.actual.includes('-')) {
                 const isHome = match.teamHome.name === teamName;
@@ -744,7 +731,7 @@ window.openJourneyModal = function(teamName, flagCode) {
 
                     let scoreLeft = isHome ? sA : sH; 
                     let scoreRight = isHome ? sH : sA; 
-                    let scoreHTML = '<span style="display:inline-flex; direction:ltr; align-items:center; gap:5px; font-weight:900; margin:0 8px;"><span>' + scoreLeft + '</span><span>-</span><span>' + scoreRight + '</span></span>';
+                    let scoreHTML = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:5px; font-weight:900; margin:0 8px;"><span>${scoreLeft}</span><span>-</span><span>${scoreRight}</span></span>`;
 
                     matchesPlayed.push(`
                         <div class="timeline-item">
@@ -764,7 +751,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     });
 
     const header = document.getElementById('journey-header');
-    if (header) header.style.backgroundImage = "url('https://flagcdn.com/w320/" + flagCode + ".png')";
+    if (header) header.style.backgroundImage = `url('https://flagcdn.com/w320/${flagCode}.png')`;
     const titleEl = document.getElementById('journey-title');
     if (titleEl) titleEl.innerText = teamName;
 
@@ -789,7 +776,7 @@ window.openJourneyModal = function(teamName, flagCode) {
     const modal = document.getElementById('teamJourneyModal');
     if (modal) {
         modal.style.display = 'flex';
-        setTimeout(function() { modal.style.opacity = '1'; }, 10);
+        setTimeout(() => modal.style.opacity = '1', 10);
     }
 }
 
@@ -798,7 +785,7 @@ window.closeJourneyModal = function(e) {
     const modal = document.getElementById('teamJourneyModal');
     if (modal) {
         modal.style.opacity = '0';
-        setTimeout(function() { modal.style.display = 'none'; }, 300);
+        setTimeout(() => modal.style.display = 'none', 300);
     }
 }
 
@@ -823,9 +810,9 @@ window.renderScorers = function() {
     const podiumOrder = [scorersData[1], scorersData[0], scorersData[2]];
     
     let podiumHTML = '<div class="podium-container">';
-    podiumOrder.forEach(function(player) {
+    podiumOrder.forEach(player => {
         let medalColor = player.rank === 1 ? '#FFD700' : (player.rank === 2 ? '#C0C0C0' : '#CD7F32');
-        let flagBg = "background-image: url('https://flagcdn.com/w320/" + player.flag + ".png');";
+        let flagBg = `background-image: url('https://flagcdn.com/w320/${player.flag}.png');`;
         
         podiumHTML += `
             <div class="podium-card podium-rank-${player.rank} animate-in">
@@ -861,5 +848,5 @@ window.renderScorers = function() {
     }
     listHTML += '</div>';
 
-    container.innerHTML = '<div class="scorers-dashboard">' + podiumHTML + listHTML + '</div>';
+    container.innerHTML = `<div class="scorers-dashboard">${podiumHTML}${listHTML}</div>`;
 }
