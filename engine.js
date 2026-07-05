@@ -115,7 +115,6 @@ function getSafeDatabase() {
     
     if (typeof window.matchDatabase !== 'undefined') {
         for (let id in window.matchDatabase) {
-            // התיקון: סינון כרטיסיות הרפאים שנוצרות מה-API
             if (id.startsWith('api_gen_')) continue;
             db[id] = JSON.parse(JSON.stringify(window.matchDatabase[id]));
         }
@@ -240,14 +239,15 @@ function renderMatches() {
                 if (tHome.cards.yellow) tHome.cards.yellow.forEach(() => { hCards += `<div class="card-icon yellow-card"></div>`; });
                 if (tHome.cards.red) tHome.cards.red.forEach(() => { hCards += `<div class="card-icon red-card"></div>`; });
             }
-            if (hCards) homeCardsHTML = `<div class="cards-container">${hCards}</div>`;
+            // הפיכת אזור הכרטיסים ללחיץ כולל Tooltip
+            if (hCards) homeCardsHTML = `<div class="cards-container clickable-box" onclick="openMatchEventsModal(event, '${matchId}', 'cards')" title="לחץ לפירוט כרטיסים">${hCards}</div>`;
         
             let aCards = '';
             if (tAway.cards) {
                 if (tAway.cards.yellow) tAway.cards.yellow.forEach(() => { aCards += `<div class="card-icon yellow-card"></div>`; });
                 if (tAway.cards.red) tAway.cards.red.forEach(() => { aCards += `<div class="card-icon red-card"></div>`; });
             }
-            if (aCards) awayCardsHTML = `<div class="cards-container">${aCards}</div>`;
+            if (aCards) awayCardsHTML = `<div class="cards-container clickable-box" onclick="openMatchEventsModal(event, '${matchId}', 'cards')" title="לחץ לפירוט כרטיסים">${aCards}</div>`;
         }
 
         const risk = data.matchRisk || 'Safe';
@@ -291,8 +291,17 @@ function renderMatches() {
                 const score90Away = (data.score && data.score.fulltime && data.score.fulltime.away !== null && data.score.fulltime.away !== undefined) ? data.score.fulltime.away : '-';
                 const score90Str = `${score90Home} - ${score90Away}`;
 
-                let hCardMocks = '<div class="res-card-y"></div><div class="res-card-y"></div>';
-                let aCardMocks = '<div class="res-card-y"></div>';
+                // התיקון: הסרת המוקים הקשיחים וציור כרטיסי אמת להארכה
+                let hCardMocks = '';
+                let aCardMocks = '';
+                if (tHome.cards) {
+                    if (tHome.cards.yellow) tHome.cards.yellow.forEach(() => hCardMocks += '<div class="res-card-y"></div>');
+                    if (tHome.cards.red) tHome.cards.red.forEach(() => hCardMocks += '<div class="res-card-r"></div>');
+                }
+                if (tAway.cards) {
+                    if (tAway.cards.yellow) tAway.cards.yellow.forEach(() => aCardMocks += '<div class="res-card-y"></div>');
+                    if (tAway.cards.red) tAway.cards.red.forEach(() => aCardMocks += '<div class="res-card-r"></div>');
+                }
 
                 let extraTimeRow = '';
                 if (data.status === 'AET' || data.status === 'PEN') {
@@ -314,7 +323,7 @@ function renderMatches() {
                         <div class="res-row-ui">
                              <div class="res-team-ui right"><div class="res-cards">${hCardMocks}</div></div>
                              <div class="res-center-ui"><div class="res-title-ui">⏳ סיום 120 דקות</div><div class="res-score-ui" dir="ltr">${displayHome} - ${displayAway}</div></div>
-                             <div class="res-team-ui left"><div class="res-cards"><div class="res-card-r"></div></div></div>
+                             <div class="res-team-ui left"><div class="res-cards">${aCardMocks}</div></div>
                         </div>`;
                 }
 
@@ -384,7 +393,7 @@ function renderMatches() {
             else if (data.score && data.score.accuracyClass === 'trend') statusBarHTML = `<div class="status-bar status-trend-ui">⚠️ פגיעה בכיוון</div>`;
             else statusBarHTML = `<div class="status-bar status-wrong-ui">❌ פספוס מוחלט</div>`;
 
-            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '0', visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML));
+            htmlChunks.push(createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScoreLabel, currentScoreDisplay, accuracyClassForActual, '1', visHTML, tabsHTML, txtHTML, statusBarHTML, homeCardsHTML, awayCardsHTML));
         } else {
             tabsHTML = `
                 <button class="inner-tab-btn active" onclick="switchCardTab(this, '${matchId}', 'pred', '${data.score ? data.score.prediction : '-'}', 'תחזית ו-xG מוקדם', '')">תחזית</button>
@@ -463,7 +472,11 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
         <div class="match-header">${data.dateText || '-'}</div>
         <div class="match-hero">
             <div class="team">${hFlag}<div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
-            <div class="score-center"><div class="score-label" id="${matchId}-label">${currentScoreLabel}</div><div class="score-number ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;">${formattedScore}</div></div>
+            <div class="score-center">
+                <div class="score-label" id="${matchId}-label">${currentScoreLabel}</div>
+                <!-- התיקון: קריאה למודל השערים בעת הלחיצה על התוצאה -->
+                <div class="score-number clickable-box ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;" onclick="openMatchEventsModal(event, '${matchId}', 'goals')" title="לחץ לפירוט שערים">${formattedScore}</div>
+            </div>
             <div class="team">${aFlag}<div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
         <div class="match-probabilities">
@@ -493,7 +506,6 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     }
 
     const riskContainer = card.querySelector(`#risk-${cardId}`);
-    // התיקון: אטימות תגית ההפתעה נשארת קבועה על '1' בכל הלשוניות
     if (riskContainer) riskContainer.style.opacity = '1';
 
     const labelEl = card.querySelector(`.score-label`);
@@ -520,46 +532,131 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-// התיקון: פתיחת העמוד מוגדרת למשתנה r16
+// --- פונקציות המודל החדש להצגת השערים והכרטיסים ---
+window.openMatchEventsModal = function(e, matchId, type) {
+    if (e) e.stopPropagation();
+    const db = getSafeDatabase();
+    const match = db[matchId];
+    if (!match) return;
+
+    let title = type === 'goals' ? 'פירוט שערים' : 'פירוט כרטיסים';
+    let contentHtml = '';
+    let eventsList = [];
+
+    if (type === 'goals') {
+        if (match.goals && Array.isArray(match.goals) && match.goals.length > 0) {
+            eventsList = match.goals.map(g => {
+                let minStr = (g.minute || '').replace(/\D/g, '');
+                let min = parseInt(minStr) || 999;
+                let displayMin = g.minute ? (g.minute.includes("'") ? g.minute : g.minute + "'") : '';
+                return { min: min, team: g.team, player: g.player, minuteStr: displayMin, type: 'goal' };
+            });
+        } else {
+            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted);">אין שערים רשומים למשחק זה.</div>';
+        }
+    } else if (type === 'cards') {
+        let parseCards = (teamName, cardsObj) => {
+            if (!cardsObj) return;
+            ['yellow', 'red'].forEach(color => {
+                if (cardsObj[color] && Array.isArray(cardsObj[color])) {
+                    cardsObj[color].forEach(cardStr => {
+                        let minMatch = cardStr.match(/\((\d+)/);
+                        let min = minMatch ? parseInt(minMatch[1]) : 999;
+                        let player = cardStr.includes('(') ? cardStr.split('(')[0].trim() : cardStr;
+                        if (player === 'card' || player === 'שחקן') player = 'שחקן (לא צוין שם)';
+                        let minStr = minMatch ? `${minMatch[1]}'` : '';
+                        eventsList.push({ min: min, team: teamName, player: player, minuteStr: minStr, type: color });
+                    });
+                }
+            });
+        };
+        parseCards(match.teamHome.name, match.teamHome.cards);
+        parseCards(match.teamAway.name, match.teamAway.cards);
+
+        if (eventsList.length === 0) {
+            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted);">לא נשלפו כרטיסים במשחק זה.</div>';
+        }
+    }
+
+    if (eventsList.length > 0) {
+        // סידור כרונולוגי לפי הדקה
+        eventsList.sort((a, b) => a.min - b.min);
+        contentHtml = '<div class="events-list">';
+        eventsList.forEach(ev => {
+            let icon = '';
+            if (ev.type === 'goal') icon = '⚽';
+            else if (ev.type === 'yellow') icon = '<div class="card-icon yellow-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px;"></div>';
+            else if (ev.type === 'red') icon = '<div class="card-icon red-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px;"></div>';
+
+            let flag = match.teamHome.name === ev.team ? match.teamHome.flagCode : match.teamAway.flagCode;
+
+            contentHtml += `
+                <div class="event-item">
+                    <div class="event-min" dir="ltr" style="text-align:right;">${ev.minuteStr}</div>
+                    <div class="event-icon">${icon}</div>
+                    <div class="event-player">${ev.player}</div>
+                    <div class="event-team"><img src="https://flagcdn.com/w20/${flag}.png" style="width:18px; border-radius:2px;"> ${ev.team}</div>
+                </div>
+            `;
+        });
+        contentHtml += '</div>';
+    }
+
+    document.getElementById('events-title').innerText = `${title} | ${match.teamHome.name} - ${match.teamAway.name}`;
+    document.getElementById('events-body-content').innerHTML = contentHtml;
+    
+    const modal = document.getElementById('matchEventsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.style.opacity = '1', 10);
+    }
+};
+
+window.closeMatchEventsModal = function(e) {
+    if (e) e.stopPropagation();
+    const modal = document.getElementById('matchEventsModal');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+};
+// --- סוף תוספת המודל ---
+
 let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
 
 window.applyFilters = function() { renderMatches(); }
 
-window.addEventListener('DOMContentLoaded', () => { 
+function initApp() {
     const urlParams = new URLSearchParams(window.location.search);
     const mdParam = urlParams.get('md');
     if (mdParam) {
         currentMdFilter = mdParam;
-        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`.submenu-btn[data-md="${mdParam}"]`); 
-        if (btn) btn.classList.add('active');
-        switchView('matches');
     } else {
-        document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-        // התיקון: כפתור שמינית הגמר מקבל את המחלקה הפעילה בטעינה הראשונית
-        const defaultBtn = document.querySelector(`.submenu-btn[data-md="r16"]`); 
-        if (defaultBtn) defaultBtn.classList.add('active');
-        switchView('matches');
+        currentMdFilter = 'r16';
     }
-
+    
+    document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`.submenu-btn[data-md="${currentMdFilter}"]`); 
+    if (btn) btn.classList.add('active');
+    
     const timeParam = urlParams.get('time');
     if (timeParam) {
         currentTimeFilter = timeParam;
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
-        if (btn) btn.classList.add('active');
+        const timeBtn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
+        if (timeBtn) timeBtn.classList.add('active');
     }
 
     const stageParam = urlParams.get('stage');
     if (stageParam) {
         currentStageFilter = stageParam;
         document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
-        if (btn) btn.classList.add('active');
+        const stageBtn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
+        if (stageBtn) stageBtn.classList.add('active');
     }
     
     renderStats(); 
-    renderMatches(); 
+    switchView('matches');
     
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
@@ -573,7 +670,13 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
-});
+}
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
 
 window.renderStandings = function() {
     const db = getSafeDatabase();
@@ -582,7 +685,7 @@ window.renderStandings = function() {
     Object.values(db).forEach(match => {
         if(!match.stage || !match.teamHome || !match.teamAway) return;
         const st = match.stage;
-        // התיקון: חסימה והעלמה של בתי הנוקאאוט מטבלת הבתים
+        
         if (st === 'נוקאאוט' || st === 'knockout' || st === 'r32' || st === 'r16' || st === 'qf' || st === 'sf' || st === 'final') return;
 
         if (!groups[st]) groups[st] = {};
