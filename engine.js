@@ -1,7 +1,7 @@
 window.calculateAccuracy = function(prediction, actualStr, matchStatus, penHome, penAway) {
     if (!prediction || !actualStr || prediction === '-' || actualStr === '-' || !prediction.includes('-') || !actualStr.includes('-')) {
         return 'pending';
-    } 
+    }
     try {
         let pParts = prediction.split('-');
         let aParts = actualStr.split('-');
