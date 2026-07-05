@@ -1,4 +1,4 @@
-// המילון המדויק עם תוספות של וריאציות API (כמו כף ורדה)
+// המילון המדויק עם תוספות של וריאציות API
 const teamDictionary = {
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
     "Canada": { he: "קנדה", flag: "ca", color: "#FF0000" },
@@ -127,8 +127,9 @@ async function fetchLiveUpdates() {
                             status: apiM.item.fixture.status.short,
                             timeStatus: (['FT', 'AET', 'PEN'].includes(apiM.item.fixture.status.short)) ? 'past' : (apiM.item.fixture.status.short === 'NS' ? 'future' : 'live'),
                             dateText: new Date(apiM.item.fixture.date).toLocaleDateString('he-IL') + ' | ' + new Date(apiM.item.fixture.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}),
-                            teamHome: apiM.apiHome,
-                            teamAway: apiM.apiAway,
+                            // התיקון: מיפוי למבנה הנכון שלך שמונע undefined
+                            teamHome: { name: apiM.apiHome.he, flagCode: apiM.apiHome.flag, color: apiM.apiHome.color, cards: {yellow:[], red:[]} },
+                            teamAway: { name: apiM.apiAway.he, flagCode: apiM.apiAway.flag, color: apiM.apiAway.color, cards: {yellow:[], red:[]} },
                             score: { prediction: '-', actual: '' },
                             probabilities: { home: 33, draw: 34, away: 33 },
                             advancedStats: { home: { xG: '-' }, away: { xG: '-' } },
