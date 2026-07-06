@@ -268,14 +268,18 @@ const knockoutMatches = {
         goals: [] 
     },
     'match92': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 03:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 03:00 (שעון ישראל)`, 
         teamHome: { name: `מקסיקו`, flagCode: 'mx', color: '#006341', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '1 - 1', actual: '2 - 3', accuracyClass: 'wrong' }, 
         probabilities: { home: 25, draw: 35, away: 40 }, matchRisk: 'Draw Booster', 
         radarStats: { home: [80, 75, 70, 85, 75, 75], away: [80, 80, 75, 80, 80, 85] }, 
         advancedStats: { home: { xG: '1.20', corners: 0 }, away: { xG: '1.60', corners: 0 } }, 
-        insight: { prediction: `אנגליה אולי מתקשה להרשים, אבל תחת טוכל היא יודעת לעשות את העבודה במאני-טיים. המקסיקנים יביאו איתם אמוציות ודחיפה אדירה מהיציעים. התחזית מצביעה על משחק צמוד מאוד, ללא פערים משמעותיים, שיכול בהחלט להיגרר להארכה מרתקת.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `אנגליה אולי מתקשה להרשים, אבל תחת טוכל היא יודעת לעשות את העבודה במאני-טיים. המקסיקנים יביאו איתם אמוציות ודחיפה אדירה מהיציעים. התחזית מצביעה על משחק צמוד מאוד, ללא פערים משמעותיים, שיכול בהחלט להיגרר להארכה מרתקת.`, 
+            actual: `איזה מותחן פסיכי! מקסיקו נתנה פייט הירואי ודחפה את האנגלים לקצה, אבל נבחרת שלושת האריות הוכיחה שוב ווינריות אמיתית. במשחק קצבי ורב שערים, האיכות של אנגליה בחלק הקדמי הכריעה את הכף עם ניצחון 3-2 דרמטי, והשאירה את התחזית השמרנית של המודל הרחק מאחור.` 
+        }, 
+        goals: [] 
     },
     'match93': { 
         timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 22:00 (שעון ישראל)`, 
@@ -344,7 +348,7 @@ window.knockoutBracket = {
         { team1: { name: 'פרגוואי', flag: 'py', score: '0', outcome: 'loser' }, team2: { name: 'צרפת', flag: 'fr', score: '1', outcome: 'winner' } },
         { team1: { name: 'קנדה', flag: 'ca', score: '0', outcome: 'loser' }, team2: { name: 'מרוקו', flag: 'ma', score: '3', outcome: 'winner' } },
         { team1: { name: 'ברזיל', flag: 'br', score: '1', outcome: 'loser' }, team2: { name: 'נורווגיה', flag: 'no', score: '2', outcome: 'winner' } },
-        { team1: { name: 'מקסיקו', flag: 'mx', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '3', outcome: 'winner' } },
         { team1: { name: 'ארצות הברית', flag: 'us', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
         { team1: { name: 'פורטוגל', flag: 'pt', score: '-', outcome: 'pending' }, team2: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'מצרים', flag: 'eg', score: '-', outcome: 'pending' } },
@@ -352,7 +356,7 @@ window.knockoutBracket = {
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
-        { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 92', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת 93', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 94', flag: 'un', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
     ]
