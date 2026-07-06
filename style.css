@@ -410,13 +410,10 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 
 .clickable-box { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease; }
 .clickable-box:hover { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.5); }
-/* --- מסך טעינה Lottie --- */
-#lottie-loader-overlay {
+/* --- מסך טעינה חסין תקלות (Pure CSS) --- */
+#loader-overlay {
     position: fixed;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-color: var(--bg-color);
     z-index: 99999;
     display: flex;
@@ -425,22 +422,59 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     justify-content: center;
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
 }
-#lottie-loader-overlay.hidden {
-    opacity: 0;
+#loader-overlay.hidden {
+    opacity: 0; 
     visibility: hidden;
 }
-#lottie-container {
-    width: 250px;
-    height: 250px;
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 180px; 
+}
+.soccer-ball {
+    font-size: 65px;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    animation: bounce 0.6s infinite alternate cubic-bezier(0.5, 0.05, 1, 0.5), spin 1.2s infinite linear;
+}
+.soccer-ball::after {
+    content: '⚽';
+    display: block;
+}
+.ball-shadow {
+    width: 45px; 
+    height: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    top: 100px;
+    animation: shadow 0.6s infinite alternate cubic-bezier(0.5, 0.05, 1, 0.5);
 }
 .loader-text {
-    margin-top: 10px;
+    position: absolute;
+    top: 140px;
     color: var(--accent-cyan);
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.4rem; 
+    font-weight: 800; 
     letter-spacing: 1.5px;
     text-shadow: 0 0 15px rgba(102, 252, 241, 0.4);
     animation: pulseText 1.2s infinite alternate;
+}
+
+@keyframes bounce {
+    from { top: 50px; }
+    to { top: -10px; }
+}
+@keyframes shadow {
+    from { transform: scale(1); opacity: 1; filter: blur(2px); }
+    to { transform: scale(0.3); opacity: 0.2; filter: blur(0px); }
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 @keyframes pulseText {
     0% { opacity: 0.5; transform: scale(0.98); }
