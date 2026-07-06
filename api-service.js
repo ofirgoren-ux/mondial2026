@@ -1,4 +1,3 @@
-// api-service.js
 // המילון המדויק עם תוספות של וריאציות API
 const teamDictionary = {
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
@@ -74,6 +73,9 @@ function findMatchInDatabases(homeHe, awayHe) {
     return null;
 }
 
+// פונקציית השהיה (Delay) ליצירת תור משיכות יציב מול השרת
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 // קריאה ייעודית למשיכת אירועים (שערים וכרטיסים) ממשחק ספציפי
 async function fetchMatchEvents(fixtureId, matchObj, apiKey) {
     try {
@@ -119,7 +121,7 @@ async function fetchMatchEvents(fixtureId, matchObj, apiKey) {
     }
 }
 
-// תשתית משיכת מלך השערים והכנת משתנה גלובלי לשימוש במנוע הרינדור של הדשבורד
+// תשתית משיכת מלך השערים והכנת משתנה גלובלי לשימוש במנוע הרינדור
 window.apiTopScorers = []; 
 async function fetchTopScorers(apiKey) {
     try {
@@ -146,7 +148,6 @@ async function fetchTopScorers(apiKey) {
                 };
             });
             
-            // עדכון חזותי במידה והפונקציה קיימת ונטענה
             if (typeof renderScorers === 'function') {
                 renderScorers();
             }
@@ -157,13 +158,26 @@ async function fetchTopScorers(apiKey) {
 }
 
 async function fetchLiveUpdates() {
+    // הפעלת האנימציה של Lottie מיד עם תחילת הטעינה
+    const lottieContainer = document.getElementById('lottie-container');
+    if (lottieContainer) {
+        lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            // כתובת URL ציבורית אמינה של אנימציית כדורגל תלת מימד נעימה
+            path: 'https://lottie.host/8db06cc4-6997-4475-8126-78b1ce2f2e51/1s6rO5n0T9.json'
+        });
+    }
+
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
-    // משיכת נתוני מלך השערים במקביל
-    fetchTopScorers(apiKey);
-
     try {
+        // משיכת נתוני מלך השערים במקביל להקמת התשתית
+        let topScorersPromise = fetchTopScorers(apiKey);
+
         const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
         if (!response.ok) throw new Error("שגיאה בחיבור לשרת הלייב");
         
@@ -176,7 +190,7 @@ async function fetchLiveUpdates() {
             item: item
         }));
 
-        let eventsPromises = [];
+        let fixturesToFetch = [];
 
         apiMatches.forEach(apiM => {
             let dbMatch = findMatchInDatabases(apiM.apiHome.he, apiM.apiAway.he);
@@ -210,9 +224,9 @@ async function fetchLiveUpdates() {
                     dbMatch.timeStatus = 'future';
                 }
 
-                // עבור כל משחק שהתחיל או הסתיים נריץ קריאת אירועים
+                // מוסיף את המשחק לתור המשיכות אם הוא התחיל או הסתיים
                 if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
-                    eventsPromises.push(fetchMatchEvents(item.fixture.id, dbMatch, apiKey));
+                    fixturesToFetch.push({ id: item.fixture.id, matchObj: dbMatch });
                 }
 
             } else {
@@ -256,20 +270,35 @@ async function fetchLiveUpdates() {
 
                     let genMatch = window.matchDatabase[newId];
                     if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
-                        eventsPromises.push(fetchMatchEvents(item.fixture.id, genMatch, apiKey));
+                        fixturesToFetch.push({ id: item.fixture.id, matchObj: genMatch });
                     }
                 }
             }
         });
         
-        await Promise.all(eventsPromises);
+        // --- מנגנון תור מסודר ובטוח (Sequential Queue) ---
+        for (let fixture of fixturesToFetch) {
+            await fetchMatchEvents(fixture.id, fixture.matchObj, apiKey);
+            await delay(250); // המתנה קלה של 250ms בין משחק למשחק למניעת חסימת שרת
+        }
 
+        // מוודא שגם מלך השערים סיים למשוך
+        await topScorersPromise;
+
+        // מרענן את התצוגה אחרי שכל הנתונים הוטענו בהצלחה
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
         console.error("שגיאה במשיכת נתוני לייב:", error);
+    } finally {
+        // העלמת מסך הטעינה רק אחרי שכל התהליך הסתיים (או נכשל)
+        const loader = document.getElementById('lottie-loader-overlay');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
     }
 }
 
+// התנעת המערכת והטעינה
 fetchLiveUpdates();

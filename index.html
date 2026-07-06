@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUNDIAL 2026 AI Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ייבוא ספריית Lottie לאנימציות -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
+
+    <!-- מסך הטעינה החדש עם אנימציית Lottie -->
+    <div id="lottie-loader-overlay">
+        <div id="lottie-container"></div>
+        <div class="loader-text">מעדכן נתוני מונדיאל חמים...</div>
+    </div>
 
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
 
@@ -152,7 +160,7 @@
         </div>
     </div>
 
-    <!-- מודל חדש: פירוט אירועי משחק (שערים וכרטיסים) -->
+    <!-- מודל פירוט אירועי משחק (שערים וכרטיסים) -->
     <div id="matchEventsModal" class="modal-overlay" onclick="closeMatchEventsModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header" style="padding: 20px; border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.2); position:relative;">
