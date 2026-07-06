@@ -301,4 +301,4 @@ async function fetchLiveUpdates() {
 }
 
 // התנעת המערכת והטעינה
-fetchLiveUpdates();
+fetchLiveUpdates(); 
