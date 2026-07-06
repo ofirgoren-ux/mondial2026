@@ -261,7 +261,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
 .round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
 .bracket-match { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 260px; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; overflow: hidden;}
-.bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); }
+    .bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); }
 .round-of-16 .bracket-match::after { display: none; }
 .bracket-team { display: flex; align-items: center; padding: 14px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;}
 .bracket-team:hover { transform: scale(1.02); z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border-radius: 4px;}
@@ -410,6 +410,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 
 .clickable-box { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease; }
 .clickable-box:hover { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+
 /* --- מסך טעינה חסין תקלות (Pure CSS) --- */
 #loader-overlay {
     position: fixed;
@@ -423,7 +424,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
 }
 #loader-overlay.hidden {
-    opacity: 0; 
+    opacity: 0;
     visibility: hidden;
 }
 .loader-content {
@@ -431,7 +432,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     flex-direction: column;
     align-items: center;
     position: relative;
-    height: 180px; 
+    height: 180px;
 }
 .soccer-ball {
     font-size: 65px;
@@ -445,7 +446,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     display: block;
 }
 .ball-shadow {
-    width: 45px; 
+    width: 45px;
     height: 12px;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
@@ -457,11 +458,12 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     position: absolute;
     top: 140px;
     color: var(--accent-cyan);
-    font-size: 1.4rem; 
-    font-weight: 800; 
+    font-size: 1.4rem;
+    font-weight: 800;
     letter-spacing: 1.5px;
     text-shadow: 0 0 15px rgba(102, 252, 241, 0.4);
     animation: pulseText 1.2s infinite alternate;
+    white-space: nowrap; /* מונע שבירת שורות */
 }
 
 @keyframes bounce {
