@@ -285,7 +285,7 @@ async function fetchLiveUpdates() {
             loader.classList.add('hidden');
         }
     }
-}
+} 
 
 // התנעת המערכת והטעינה
 fetchLiveUpdates();
