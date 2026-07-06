@@ -158,24 +158,11 @@ async function fetchTopScorers(apiKey) {
 }
 
 async function fetchLiveUpdates() {
-    // הפעלת האנימציה של Lottie מיד עם תחילת הטעינה
-    const lottieContainer = document.getElementById('lottie-container');
-    if (lottieContainer) {
-        lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            // כתובת URL ציבורית אמינה של אנימציית כדורגל תלת מימד נעימה
-            path: 'https://lottie.host/8db06cc4-6997-4475-8126-78b1ce2f2e51/1s6rO5n0T9.json'
-        });
-    }
-
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
     try {
-        // משיכת נתוני מלך השערים במקביל להקמת התשתית
+        // משיכת נתוני מלך השערים במקביל
         let topScorersPromise = fetchTopScorers(apiKey);
 
         const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
@@ -293,7 +280,7 @@ async function fetchLiveUpdates() {
         console.error("שגיאה במשיכת נתוני לייב:", error);
     } finally {
         // העלמת מסך הטעינה רק אחרי שכל התהליך הסתיים (או נכשל)
-        const loader = document.getElementById('lottie-loader-overlay');
+        const loader = document.getElementById('loader-overlay');
         if (loader) {
             loader.classList.add('hidden');
         }
@@ -301,4 +288,4 @@ async function fetchLiveUpdates() {
 }
 
 // התנעת המערכת והטעינה
-fetchLiveUpdates(); 
+fetchLiveUpdates();
