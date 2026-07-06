@@ -1,3 +1,4 @@
+// api-service.js
 // המילון המדויק עם תוספות של וריאציות API
 const teamDictionary = {
     "South Africa": { he: "דרום אפריקה", flag: "za", color: "#007749" },
@@ -73,9 +74,94 @@ function findMatchInDatabases(homeHe, awayHe) {
     return null;
 }
 
+// קריאה ייעודית למשיכת אירועים (שערים וכרטיסים) ממשחק ספציפי
+async function fetchMatchEvents(fixtureId, matchObj, apiKey) {
+    try {
+        const res = await fetch(`https://v3.football.api-sports.io/fixtures/events?fixture=${fixtureId}`, {
+            headers: { 'x-apisports-key': apiKey }
+        });
+        const data = await res.json();
+        
+        if (data.response && data.response.length > 0) {
+            let detailedGoals = [];
+            let hCards = { yellow: [], red: [] };
+            let aCards = { yellow: [], red: [] };
+
+            data.response.forEach(ev => {
+                let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
+                let evTeamHe = getTeamInfo(ev.team.name).he;
+
+                if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
+                    detailedGoals.push({
+                        team: evTeamHe,
+                        player: ev.player.name,
+                        minute: minStr,
+                        sortMin: ev.time.elapsed
+                    });
+                } else if (ev.type === 'Card') {
+                    let cardStr = `${ev.player.name} (${minStr})`;
+                    if (ev.detail.includes('Yellow')) {
+                        if (evTeamHe === matchObj.teamHome.name) hCards.yellow.push(cardStr);
+                        else aCards.yellow.push(cardStr);
+                    } else if (ev.detail.includes('Red')) {
+                        if (evTeamHe === matchObj.teamHome.name) hCards.red.push(cardStr);
+                        else aCards.red.push(cardStr);
+                    }
+                }
+            });
+
+            matchObj.goals = detailedGoals;
+            matchObj.teamHome.cards = hCards;
+            matchObj.teamAway.cards = aCards;
+        }
+    } catch (error) {
+        console.error("שגיאה במשיכת אירועים למשחק:", fixtureId, error);
+    }
+}
+
+// תשתית משיכת מלך השערים והכנת משתנה גלובלי לשימוש במנוע הרינדור של הדשבורד
+window.apiTopScorers = []; 
+async function fetchTopScorers(apiKey) {
+    try {
+        const res = await fetch(`https://v3.football.api-sports.io/players/topscorers?league=1&season=2026`, {
+            headers: { 'x-apisports-key': apiKey }
+        });
+        const data = await res.json();
+        
+        if (data.response && data.response.length > 0) {
+            window.apiTopScorers = data.response.map((item, index) => {
+                let player = item.player;
+                let stats = item.statistics[0];
+                let teamInfo = getTeamInfo(stats.team.name);
+                
+                return {
+                    rank: index + 1,
+                    name: player.name,
+                    team: teamInfo.he,
+                    flag: teamInfo.flag,
+                    goals: stats.goals.total || 0,
+                    xg: '-', 
+                    shots: stats.shots.total || 0,
+                    playerImg: player.photo
+                };
+            });
+            
+            // עדכון חזותי במידה והפונקציה קיימת ונטענה
+            if (typeof renderScorers === 'function') {
+                renderScorers();
+            }
+        }
+    } catch (error) {
+        console.error("שגיאה במשיכת נתוני מלך השערים:", error);
+    }
+}
+
 async function fetchLiveUpdates() {
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
+
+    // משיכת נתוני מלך השערים במקביל
+    fetchTopScorers(apiKey);
 
     try {
         const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
@@ -90,19 +176,22 @@ async function fetchLiveUpdates() {
             item: item
         }));
 
+        let eventsPromises = [];
+
         apiMatches.forEach(apiM => {
             let dbMatch = findMatchInDatabases(apiM.apiHome.he, apiM.apiAway.he);
             let item = apiM.item;
+            let matchStatus = item.fixture.status.short;
 
             if (dbMatch) {
                 let isExactMatch = (dbMatch.teamHome.name === apiM.apiHome.he);
-                dbMatch.status = item.fixture.status.short;
+                dbMatch.status = matchStatus;
                 dbMatch.score = dbMatch.score || {};
                 dbMatch.score.fulltime = item.score.fulltime;
                 dbMatch.score.extratime = item.score.extratime;
                 dbMatch.score.penalty = item.score.penalty;
 
-                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(dbMatch.status)) {
+                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
                     let homeGoals = item.goals.home !== null ? item.goals.home : 0;
                     let awayGoals = item.goals.away !== null ? item.goals.away : 0;
                     
@@ -112,50 +201,18 @@ async function fetchLiveUpdates() {
                         dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
                     }
 
-                    if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
+                    if (['FT', 'AET', 'PEN'].includes(matchStatus)) {
                         dbMatch.timeStatus = 'past';
                     } else {
                         dbMatch.timeStatus = 'live'; 
                     }
-                } else if (dbMatch.status === 'NS') {
+                } else if (matchStatus === 'NS') {
                     dbMatch.timeStatus = 'future';
                 }
 
-                if (item.events && item.events.length > 0) {
-                    let detailedGoals = [];
-                    let hCards = { yellow: [], red: [] };
-                    let aCards = { yellow: [], red: [] };
-
-                    item.events.forEach(ev => {
-                        let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
-                        let evTeamHe = getTeamInfo(ev.team.name).he;
-
-                        if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
-                            detailedGoals.push({
-                                team: evTeamHe,
-                                player: ev.player.name,
-                                minute: minStr,
-                                sortMin: ev.time.elapsed
-                            });
-                        } else if (ev.type === 'Card') {
-                            let cardStr = `${ev.player.name} (${minStr})`;
-                            if (ev.detail.includes('Yellow')) {
-                                if (evTeamHe === dbMatch.teamHome.name) hCards.yellow.push(cardStr);
-                                else aCards.yellow.push(cardStr);
-                            } else if (ev.detail.includes('Red')) {
-                                if (evTeamHe === dbMatch.teamHome.name) hCards.red.push(cardStr);
-                                else aCards.red.push(cardStr);
-                            }
-                        }
-                    });
-
-                    dbMatch.goals = detailedGoals;
-                    dbMatch.teamHome.cards = hCards;
-                    dbMatch.teamAway.cards = aCards;
-                } else {
-                    dbMatch.goals = [];
-                    dbMatch.teamHome.cards = { yellow: [], red: [] };
-                    dbMatch.teamAway.cards = { yellow: [], red: [] };
+                // עבור כל משחק שהתחיל או הסתיים נריץ קריאת אירועים
+                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
+                    eventsPromises.push(fetchMatchEvents(item.fixture.id, dbMatch, apiKey));
                 }
 
             } else {
@@ -174,8 +231,8 @@ async function fetchLiveUpdates() {
                         window.matchDatabase[newId] = {
                             matchday: targetMd,
                             stage: targetMd,
-                            status: apiM.item.fixture.status.short,
-                            timeStatus: (['FT', 'AET', 'PEN'].includes(apiM.item.fixture.status.short)) ? 'past' : (apiM.item.fixture.status.short === 'NS' ? 'future' : 'live'),
+                            status: matchStatus,
+                            timeStatus: (['FT', 'AET', 'PEN'].includes(matchStatus)) ? 'past' : (matchStatus === 'NS' ? 'future' : 'live'),
                             dateText: new Date(apiM.item.fixture.date).toLocaleDateString('he-IL') + ' | ' + new Date(apiM.item.fixture.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}),
                             teamHome: { name: apiM.apiHome.he, flagCode: apiM.apiHome.flag, color: apiM.apiHome.color, cards: {yellow:[], red:[]} },
                             teamAway: { name: apiM.apiAway.he, flagCode: apiM.apiAway.flag, color: apiM.apiAway.color, cards: {yellow:[], red:[]} },
@@ -186,7 +243,7 @@ async function fetchLiveUpdates() {
                         };
                     } else {
                         let genMatch = window.matchDatabase[newId];
-                        genMatch.status = apiM.item.fixture.status.short;
+                        genMatch.status = matchStatus;
                         if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(genMatch.status)) {
                             let homeGoals = apiM.item.goals.home !== null ? apiM.item.goals.home : 0;
                             let awayGoals = apiM.item.goals.away !== null ? apiM.item.goals.away : 0;
@@ -198,46 +255,15 @@ async function fetchLiveUpdates() {
                     }
 
                     let genMatch = window.matchDatabase[newId];
-                    if (item.events && item.events.length > 0) {
-                        let detailedGoals = [];
-                        let hCards = { yellow: [], red: [] };
-                        let aCards = { yellow: [], red: [] };
-
-                        item.events.forEach(ev => {
-                            let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
-                            let evTeamHe = getTeamInfo(ev.team.name).he;
-
-                            if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
-                                detailedGoals.push({
-                                    team: evTeamHe,
-                                    player: ev.player.name,
-                                    minute: minStr,
-                                    sortMin: ev.time.elapsed
-                                });
-                            } else if (ev.type === 'Card') {
-                                let cardStr = `${ev.player.name} (${minStr})`;
-                                if (ev.detail.includes('Yellow')) {
-                                    if (evTeamHe === genMatch.teamHome.name) hCards.yellow.push(cardStr);
-                                    else aCards.yellow.push(cardStr);
-                                } else if (ev.detail.includes('Red')) {
-                                    if (evTeamHe === genMatch.teamHome.name) hCards.red.push(cardStr);
-                                    else aCards.red.push(cardStr);
-                                }
-                            }
-                        });
-
-                        genMatch.goals = detailedGoals;
-                        genMatch.teamHome.cards = hCards;
-                        genMatch.teamAway.cards = aCards;
-                    } else {
-                        genMatch.goals = [];
-                        genMatch.teamHome.cards = { yellow: [], red: [] };
-                        genMatch.teamAway.cards = { yellow: [], red: [] };
+                    if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
+                        eventsPromises.push(fetchMatchEvents(item.fixture.id, genMatch, apiKey));
                     }
                 }
             }
         });
         
+        await Promise.all(eventsPromises);
+
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
