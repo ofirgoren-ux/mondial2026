@@ -38,7 +38,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 /* --- Main Area & Sticky Header --- */
 .main-content { margin-right: 260px; flex: 1; min-height: 100vh; padding: 30px 40px; display: flex; flex-direction: column; width: calc(100% - 260px); }
 
-/* --- עיצוב עליון משודרג (Header, כותרות וקופסאות הסטטיסטיקה) --- */
+/* --- עיצוב עליון משודרג --- */
 .top-header { 
     background: linear-gradient(135deg, rgba(30, 35, 46, 0.7) 0%, rgba(21, 26, 40, 0.95) 100%);
     border: 1px solid rgba(102, 252, 241, 0.15);
@@ -49,16 +49,15 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* ביטלנו את ה-wrap כדי להכריח אותם להישאר בשורה אחת בדסקטופ */
     gap: 20px;
 }
 
 .header-titles {
-    flex: 1; /* נותן לטקסט לקחת את כל המקום הנותר */
+    flex: 1;
 }
 
 .header-titles h1 { 
-    font-size: 2.2rem; /* קצת קטן יותר כדי לפנות מקום */
+    font-size: 2.2rem; 
     font-weight: 900; 
     color: var(--text-main); 
     margin: 0 0 5px 0;
@@ -76,21 +75,21 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 /* שורת קוביות הסטטיסטיקה */
 .stats-row { 
     display: flex; 
-    gap: 10px; /* הקטנו את הרווח בין הקוביות */
+    gap: 10px; 
     margin-bottom: 0; 
-    flex-shrink: 0; /* מונע מהקוביות להתכווץ יותר מדי */
+    flex-shrink: 0; 
 }
 
 .stat-box { 
     background: rgba(0, 0, 0, 0.45); 
     border: 1px solid rgba(255, 255, 255, 0.08); 
-    padding: 12px 15px; /* הקטנו את הריווח הפנימי משמעותית */
+    padding: 12px 15px; 
     border-radius: 12px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: center;
-    min-width: 100px; /* הקטנו את הרוחב המינימלי */
+    min-width: 100px; 
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.2);
     transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
@@ -102,7 +101,7 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 }
 
 .stat-val { 
-    font-size: 1.6rem; /* הקטנו את המספרים */
+    font-size: 1.6rem; 
     font-weight: 900; 
     line-height: 1; 
     margin-bottom: 4px; 
@@ -110,54 +109,11 @@ body { background-color: var(--bg-color); color: var(--text-main); margin: 0; di
 }
 
 .stat-lbl { 
-    font-size: 0.75rem; /* הקטנו את הטקסט */
+    font-size: 0.75rem; 
     color: var(--text-muted); 
     font-weight: 800; 
     text-transform: uppercase;
     letter-spacing: 0.5px;
-}
-
-/* --- התאמות קריטיות למובייל עבור החלק העליון --- */
-@media (max-width: 900px) {
-    .top-header {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 15px; /* ריווח קטן מאוד למובייל */
-        gap: 20px;
-    }
-
-    .header-titles {
-        text-align: center;
-    }
-
-    .header-titles h1 { 
-        font-size: 1.8rem; 
-    }
-    
-    .header-titles p { 
-        font-size: 0.9rem; 
-    }
-
-    /* רשת 2x2 קומפקטית מאוד למובייל */
-    .stats-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 8px; /* מרווח מינימלי בין הקוביות */
-        width: 100%;
-    }
-
-    .stat-box {
-        min-width: 0; 
-        padding: 10px 5px; /* ריווח פנימי אפסי במובייל */
-    }
-
-    .stat-val {
-        font-size: 1.4rem; /* מספרים קטנים במובייל */
-    }
-    
-    .stat-lbl {
-        font-size: 0.7rem; /* טקסט זעיר במובייל */
-    }
 }
 
 /* Filters Container */
@@ -443,15 +399,14 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .bracket-team.loser .flag-bg { opacity: 0.42; }
 .bracket-team.loser .team-info { opacity: 0.7; }
 
-/* --- CSS חדש: חלונית אירועי משחק (שערים וכרטיסים) --- */
+/* --- CSS חדש: חלונית אירועי משחק והפיכת אזורים ללחיצים --- */
 .events-list { display: flex; flex-direction: column; gap: 8px; }
 .event-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
 .event-item:hover { background: rgba(102, 252, 241, 0.05); }
-.event-min { font-weight: 900; color: var(--accent-cyan); width: 45px; font-size: 1.1rem; }
+.event-min { font-weight: 900; color: var(--accent-cyan); width: 55px; font-size: 1.1rem; }
 .event-icon { font-size: 1.2rem; display: flex; align-items: center; justify-content: center; width: 24px;}
 .event-player { font-weight: 800; color: var(--text-main); flex-grow: 1; text-align: right; font-size: 1.05rem; }
 .event-team { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
 
-/* הגדרת אלמנטים לחיצים בכרטיסייה */
-.clickable-box { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.clickable-box:hover { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+.clickable-box { cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, text-shadow 0.2s ease; }
+.clickable-box:hover { transform: scale(1.05); text-shadow: 0 0 15px rgba(255,255,255,0.5); }

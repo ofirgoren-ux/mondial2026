@@ -47,6 +47,32 @@ function getTeamInfo(englishName) {
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
 
+function findMatchInDatabases(homeHe, awayHe) {
+    if (window.matchDatabase) {
+        for (let id in window.matchDatabase) {
+            let m = window.matchDatabase[id];
+            if (m.teamHome && m.teamAway) {
+                if ((m.teamHome.name === homeHe && m.teamAway.name === awayHe) || 
+                    (m.teamHome.name === awayHe && m.teamAway.name === homeHe)) {
+                    return m;
+                }
+            }
+        }
+    }
+    if (window.knockoutMatches) {
+        for (let id in window.knockoutMatches) {
+            let m = window.knockoutMatches[id];
+            if (m.teamHome && m.teamAway) {
+                if ((m.teamHome.name === homeHe && m.teamAway.name === awayHe) || 
+                    (m.teamHome.name === awayHe && m.teamAway.name === homeHe)) {
+                    return m;
+                }
+            }
+        }
+    }
+    return null;
+}
+
 async function fetchLiveUpdates() {
     const apiKey = '52fe625c25992477365139c656148855'; 
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
@@ -56,7 +82,7 @@ async function fetchLiveUpdates() {
         if (!response.ok) throw new Error("שגיאה בחיבור לשרת הלייב");
         
         const data = await response.json();
-        if (!window.matchDatabase || !data.response) return;
+        if (!data.response) return;
 
         let apiMatches = data.response.map(item => ({
             apiHome: getTeamInfo(item.teams.home.name),
@@ -65,51 +91,74 @@ async function fetchLiveUpdates() {
         }));
 
         apiMatches.forEach(apiM => {
-            let matchedId = null;
+            let dbMatch = findMatchInDatabases(apiM.apiHome.he, apiM.apiAway.he);
+            let item = apiM.item;
 
-            for (let id in window.matchDatabase) {
-                let dbMatch = window.matchDatabase[id];
-                let hName = dbMatch.teamHome ? dbMatch.teamHome.name : undefined;
-                let aName = dbMatch.teamAway ? dbMatch.teamAway.name : undefined;
+            if (dbMatch) {
+                let isExactMatch = (dbMatch.teamHome.name === apiM.apiHome.he);
+                dbMatch.status = item.fixture.status.short;
+                dbMatch.score = dbMatch.score || {};
+                dbMatch.score.fulltime = item.score.fulltime;
+                dbMatch.score.extratime = item.score.extratime;
+                dbMatch.score.penalty = item.score.penalty;
 
-                let isExactMatch = (hName === apiM.apiHome.he && aName === apiM.apiAway.he);
-                let isReversedMatch = (hName === apiM.apiAway.he && aName === apiM.apiHome.he);
-
-                if (isExactMatch || isReversedMatch) {
-                    matchedId = id;
-                    let item = apiM.item;
-
-                    dbMatch.status = item.fixture.status.short;
-                    dbMatch.score = dbMatch.score || {};
-                    dbMatch.score.fulltime = item.score.fulltime;
-                    dbMatch.score.extratime = item.score.extratime;
-                    dbMatch.score.penalty = item.score.penalty;
-
-                    if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(dbMatch.status)) {
-                        let homeGoals = item.goals.home !== null ? item.goals.home : 0;
-                        let awayGoals = item.goals.away !== null ? item.goals.away : 0;
-                        
-                        if (isExactMatch) {
-                            dbMatch.score.actual = `${homeGoals} - ${awayGoals}`;
-                            dbMatch.goals = { home: homeGoals, away: awayGoals };
-                        } else if (isReversedMatch) {
-                            dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
-                            dbMatch.goals = { home: awayGoals, away: homeGoals };
-                        }
-
-                        if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
-                            dbMatch.timeStatus = 'past';
-                        } else {
-                            dbMatch.timeStatus = 'live'; 
-                        }
-                    } else if (dbMatch.status === 'NS') {
-                        dbMatch.timeStatus = 'future';
+                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(dbMatch.status)) {
+                    let homeGoals = item.goals.home !== null ? item.goals.home : 0;
+                    let awayGoals = item.goals.away !== null ? item.goals.away : 0;
+                    
+                    if (isExactMatch) {
+                        dbMatch.score.actual = `${homeGoals} - ${awayGoals}`;
+                    } else {
+                        dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
                     }
-                    break; 
-                }
-            }
 
-            if (!matchedId) {
+                    if (['FT', 'AET', 'PEN'].includes(dbMatch.status)) {
+                        dbMatch.timeStatus = 'past';
+                    } else {
+                        dbMatch.timeStatus = 'live'; 
+                    }
+                } else if (dbMatch.status === 'NS') {
+                    dbMatch.timeStatus = 'future';
+                }
+
+                if (item.events && item.events.length > 0) {
+                    let detailedGoals = [];
+                    let hCards = { yellow: [], red: [] };
+                    let aCards = { yellow: [], red: [] };
+
+                    item.events.forEach(ev => {
+                        let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
+                        let evTeamHe = getTeamInfo(ev.team.name).he;
+
+                        if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
+                            detailedGoals.push({
+                                team: evTeamHe,
+                                player: ev.player.name,
+                                minute: minStr,
+                                sortMin: ev.time.elapsed
+                            });
+                        } else if (ev.type === 'Card') {
+                            let cardStr = `${ev.player.name} (${minStr})`;
+                            if (ev.detail.includes('Yellow')) {
+                                if (evTeamHe === dbMatch.teamHome.name) hCards.yellow.push(cardStr);
+                                else aCards.yellow.push(cardStr);
+                            } else if (ev.detail.includes('Red')) {
+                                if (evTeamHe === dbMatch.teamHome.name) hCards.red.push(cardStr);
+                                else aCards.red.push(cardStr);
+                            }
+                        }
+                    });
+
+                    dbMatch.goals = detailedGoals;
+                    dbMatch.teamHome.cards = hCards;
+                    dbMatch.teamAway.cards = aCards;
+                } else {
+                    dbMatch.goals = [];
+                    dbMatch.teamHome.cards = { yellow: [], red: [] };
+                    dbMatch.teamAway.cards = { yellow: [], red: [] };
+                }
+
+            } else {
                 let apiRound = apiM.item.league.round || '';
                 let targetMd = null;
                 
@@ -120,6 +169,7 @@ async function fetchLiveUpdates() {
 
                 if (targetMd) {
                     let newId = 'api_gen_' + apiM.item.fixture.id;
+                    if (!window.matchDatabase) window.matchDatabase = {};
                     if (!window.matchDatabase[newId]) {
                         window.matchDatabase[newId] = {
                             matchday: targetMd,
@@ -127,7 +177,6 @@ async function fetchLiveUpdates() {
                             status: apiM.item.fixture.status.short,
                             timeStatus: (['FT', 'AET', 'PEN'].includes(apiM.item.fixture.status.short)) ? 'past' : (apiM.item.fixture.status.short === 'NS' ? 'future' : 'live'),
                             dateText: new Date(apiM.item.fixture.date).toLocaleDateString('he-IL') + ' | ' + new Date(apiM.item.fixture.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}),
-                            // התיקון: מיפוי למבנה הנכון שלך שמונע undefined
                             teamHome: { name: apiM.apiHome.he, flagCode: apiM.apiHome.flag, color: apiM.apiHome.color, cards: {yellow:[], red:[]} },
                             teamAway: { name: apiM.apiAway.he, flagCode: apiM.apiAway.flag, color: apiM.apiAway.color, cards: {yellow:[], red:[]} },
                             score: { prediction: '-', actual: '' },
@@ -146,6 +195,44 @@ async function fetchLiveUpdates() {
                         } else if (genMatch.status === 'NS') {
                             genMatch.timeStatus = 'future';
                         }
+                    }
+
+                    let genMatch = window.matchDatabase[newId];
+                    if (item.events && item.events.length > 0) {
+                        let detailedGoals = [];
+                        let hCards = { yellow: [], red: [] };
+                        let aCards = { yellow: [], red: [] };
+
+                        item.events.forEach(ev => {
+                            let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
+                            let evTeamHe = getTeamInfo(ev.team.name).he;
+
+                            if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
+                                detailedGoals.push({
+                                    team: evTeamHe,
+                                    player: ev.player.name,
+                                    minute: minStr,
+                                    sortMin: ev.time.elapsed
+                                });
+                            } else if (ev.type === 'Card') {
+                                let cardStr = `${ev.player.name} (${minStr})`;
+                                if (ev.detail.includes('Yellow')) {
+                                    if (evTeamHe === genMatch.teamHome.name) hCards.yellow.push(cardStr);
+                                    else aCards.yellow.push(cardStr);
+                                } else if (ev.detail.includes('Red')) {
+                                    if (evTeamHe === genMatch.teamHome.name) hCards.red.push(cardStr);
+                                    else aCards.red.push(cardStr);
+                                }
+                            }
+                        });
+
+                        genMatch.goals = detailedGoals;
+                        genMatch.teamHome.cards = hCards;
+                        genMatch.teamAway.cards = aCards;
+                    } else {
+                        genMatch.goals = [];
+                        genMatch.teamHome.cards = { yellow: [], red: [] };
+                        genMatch.teamAway.cards = { yellow: [], red: [] };
                     }
                 }
             }

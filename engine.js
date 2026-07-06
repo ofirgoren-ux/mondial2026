@@ -239,7 +239,6 @@ function renderMatches() {
                 if (tHome.cards.yellow) tHome.cards.yellow.forEach(() => { hCards += `<div class="card-icon yellow-card"></div>`; });
                 if (tHome.cards.red) tHome.cards.red.forEach(() => { hCards += `<div class="card-icon red-card"></div>`; });
             }
-            // הפיכת אזור הכרטיסים ללחיץ כולל Tooltip
             if (hCards) homeCardsHTML = `<div class="cards-container clickable-box" onclick="openMatchEventsModal(event, '${matchId}', 'cards')" title="לחץ לפירוט כרטיסים">${hCards}</div>`;
         
             let aCards = '';
@@ -291,7 +290,7 @@ function renderMatches() {
                 const score90Away = (data.score && data.score.fulltime && data.score.fulltime.away !== null && data.score.fulltime.away !== undefined) ? data.score.fulltime.away : '-';
                 const score90Str = `${score90Home} - ${score90Away}`;
 
-                // התיקון: הסרת המוקים הקשיחים וציור כרטיסי אמת להארכה
+                // כרטיסי ההארכה מושכים את נתוני האמת במקום דמה, והופכים ללחיצים
                 let hCardMocks = '';
                 let aCardMocks = '';
                 if (tHome.cards) {
@@ -321,9 +320,9 @@ function renderMatches() {
 
                      extraTimeRow = `
                         <div class="res-row-ui">
-                             <div class="res-team-ui right"><div class="res-cards">${hCardMocks}</div></div>
+                             <div class="res-team-ui right"><div class="res-cards clickable-box" onclick="openMatchEventsModal(event, '${matchId}', 'cards')" title="לחץ לפירוט כרטיסים">${hCardMocks}</div></div>
                              <div class="res-center-ui"><div class="res-title-ui">⏳ סיום 120 דקות</div><div class="res-score-ui" dir="ltr">${displayHome} - ${displayAway}</div></div>
-                             <div class="res-team-ui left"><div class="res-cards">${aCardMocks}</div></div>
+                             <div class="res-team-ui left"><div class="res-cards clickable-box" onclick="openMatchEventsModal(event, '${matchId}', 'cards')" title="לחץ לפירוט כרטיסים">${aCardMocks}</div></div>
                         </div>`;
                 }
 
@@ -467,6 +466,9 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
     const hFlag = tHome.flagCode !== 'unknown' && tHome.flagCode !== 'un' ? `<img src="https://flagcdn.com/w80/${tHome.flagCode}.png" class="team-flag">` : `<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>`;
     const aFlag = tAway.flagCode !== 'unknown' && tAway.flagCode !== 'un' ? `<img src="https://flagcdn.com/w80/${tAway.flagCode}.png" class="team-flag">` : `<div class="team-flag" style="background:rgba(255,255,255,0.1); border-radius:3px;"></div>`;
 
+    let clickScoreAttr = data.timeStatus === 'past' ? `onclick="openMatchEventsModal(event, '${matchId}', 'goals')"` : '';
+    let cursorClass = data.timeStatus === 'past' ? 'clickable-box' : '';
+
     return `
     <div class="match-card animate-in ${data.timeStatus === 'past' ? 'show-cards-tab' : ''}" data-time="${data.timeStatus}" data-stage="${data.stage}" data-md="${data.matchday || 1}">
         <div class="match-header">${data.dateText || '-'}</div>
@@ -474,8 +476,7 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
             <div class="team">${hFlag}<div class="team-name">${tHome.name}</div>${homeCardsHTML}</div>
             <div class="score-center">
                 <div class="score-label" id="${matchId}-label">${currentScoreLabel}</div>
-                <!-- התיקון: קריאה למודל השערים בעת הלחיצה על התוצאה -->
-                <div class="score-number clickable-box ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;" onclick="openMatchEventsModal(event, '${matchId}', 'goals')" title="לחץ לפירוט שערים">${formattedScore}</div>
+                <div class="score-number ${cursorClass} ${accuracyClassForActual}" id="${matchId}-score" dir="ltr" style="direction: ltr; unicode-bidi: bidi-override; display: inline-block;" ${clickScoreAttr} title="${data.timeStatus === 'past' ? 'לחץ לפירוט שערים' : ''}">${formattedScore}</div>
             </div>
             <div class="team">${aFlag}<div class="team-name">${tAway.name}</div>${awayCardsHTML}</div>
         </div>
@@ -532,12 +533,12 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-// --- פונקציות המודל החדש להצגת השערים והכרטיסים ---
+// === הפעלת החלונית (Modal) להצגת שערים וכרטיסים כרונולוגית ===
 window.openMatchEventsModal = function(e, matchId, type) {
     if (e) e.stopPropagation();
     const db = getSafeDatabase();
     const match = db[matchId];
-    if (!match) return;
+    if (!match || match.timeStatus === 'future') return;
 
     let title = type === 'goals' ? 'פירוט שערים' : 'פירוט כרטיסים';
     let contentHtml = '';
@@ -546,13 +547,13 @@ window.openMatchEventsModal = function(e, matchId, type) {
     if (type === 'goals') {
         if (match.goals && Array.isArray(match.goals) && match.goals.length > 0) {
             eventsList = match.goals.map(g => {
-                let minStr = (g.minute || '').replace(/\D/g, '');
-                let min = parseInt(minStr) || 999;
+                let minMatch = (g.minute || '').match(/(\d+)/);
+                let min = minMatch ? parseInt(minMatch[1]) : 999;
                 let displayMin = g.minute ? (g.minute.includes("'") ? g.minute : g.minute + "'") : '';
-                return { min: min, team: g.team, player: g.player, minuteStr: displayMin, type: 'goal' };
+                return { min: g.sortMin || min, team: g.team, player: g.player, minuteStr: displayMin, type: 'goal' };
             });
         } else {
-            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted);">אין שערים רשומים למשחק זה.</div>';
+            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:1.1rem; font-weight:800;">אין שערים רשומים למשחק זה.</div>';
         }
     } else if (type === 'cards') {
         let parseCards = (teamName, cardsObj) => {
@@ -560,12 +561,14 @@ window.openMatchEventsModal = function(e, matchId, type) {
             ['yellow', 'red'].forEach(color => {
                 if (cardsObj[color] && Array.isArray(cardsObj[color])) {
                     cardsObj[color].forEach(cardStr => {
-                        let minMatch = cardStr.match(/\((\d+)/);
-                        let min = minMatch ? parseInt(minMatch[1]) : 999;
+                        let minMatch = cardStr.match(/\(([^)]+)\)/); 
+                        let minStrExtract = minMatch ? minMatch[1] : '';
+                        let numMatch = minStrExtract.match(/(\d+)/);
+                        let min = numMatch ? parseInt(numMatch[1]) : 999;
                         let player = cardStr.includes('(') ? cardStr.split('(')[0].trim() : cardStr;
                         if (player === 'card' || player === 'שחקן') player = 'שחקן (לא צוין שם)';
-                        let minStr = minMatch ? `${minMatch[1]}'` : '';
-                        eventsList.push({ min: min, team: teamName, player: player, minuteStr: minStr, type: color });
+                        
+                        eventsList.push({ min: min, team: teamName, player: player, minuteStr: minStrExtract, type: color });
                     });
                 }
             });
@@ -574,19 +577,18 @@ window.openMatchEventsModal = function(e, matchId, type) {
         parseCards(match.teamAway.name, match.teamAway.cards);
 
         if (eventsList.length === 0) {
-            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted);">לא נשלפו כרטיסים במשחק זה.</div>';
+            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:1.1rem; font-weight:800;">לא נשלפו כרטיסים במשחק זה.</div>';
         }
     }
 
     if (eventsList.length > 0) {
-        // סידור כרונולוגי לפי הדקה
-        eventsList.sort((a, b) => a.min - b.min);
+        eventsList.sort((a, b) => a.min - b.min); // סידור כרונולוגי של הדקות
         contentHtml = '<div class="events-list">';
         eventsList.forEach(ev => {
             let icon = '';
             if (ev.type === 'goal') icon = '⚽';
-            else if (ev.type === 'yellow') icon = '<div class="card-icon yellow-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px;"></div>';
-            else if (ev.type === 'red') icon = '<div class="card-icon red-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px;"></div>';
+            else if (ev.type === 'yellow') icon = '<div class="card-icon yellow-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);"></div>';
+            else if (ev.type === 'red') icon = '<div class="card-icon red-card" style="display:inline-block; vertical-align:middle; width:14px; height:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);"></div>';
 
             let flag = match.teamHome.name === ev.team ? match.teamHome.flagCode : match.teamAway.flagCode;
 
@@ -620,7 +622,6 @@ window.closeMatchEventsModal = function(e) {
         setTimeout(() => modal.style.display = 'none', 300);
     }
 };
-// --- סוף תוספת המודל ---
 
 let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
 
