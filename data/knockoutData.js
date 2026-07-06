@@ -11,7 +11,7 @@ const knockoutMatches = {
         advancedStats: { home: { xG: '0.85', corners: 2 }, away: { xG: '1.65', corners: 7 } }, 
         insight: { 
             prediction: `החזרה של אלפונסו דייוויס להרכב היא בוסט אדיר עבור קנדה. האתלטיות והמהירות באגפים צפויים להכריע את דרום אפריקה, למרות ההגנה הקשוחה שלה.`, 
-            actual: `היסטוריה בקליפורניה! קנדה שלטה אך נתקלה ביום אדיר של השוער וויליאמס. כניסתו של אלפונסו דייויס בדקה ה-75 שינתה את המומנטום, וסטפן אוסטקיו הכריע בדרמה של הדקה ה-90+2. המודל חזה נכון את הניצחון הקנדי.` 
+            actual: `קרב התשה פיזי ומרתק הוכרע בזכות בגרות טקטית מרשימה של קנדה, שידעה לשלוט בקצב המשחק במחצית השנייה למרות נסיונות עוקץ מסוכנים במתפרצות מצד דרום אפריקה. הבפאנה-בפאנה נתנו את הלב על הדשא אך שילמו על חוסר ריכוז בשליש האחרון, בעוד הקנדים ממשיכים את המסע ההיסטורי שלהם לרבע הגמר ביעילות וקור רוח אופייניים.` 
         }, 
         goals: [] 
     },
@@ -254,14 +254,18 @@ const knockoutMatches = {
         goals: [] 
     },
     'match91': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `05/07/2026 | 23:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `05/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `ברזיל`, flagCode: 'br', color: '#FFD700', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `נורבגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, 
+        teamAway: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '2 - 1', actual: '1 - 2', accuracyClass: 'wrong' }, 
         probabilities: { home: 55, draw: 25, away: 20 }, matchRisk: 'Upset Alert', 
         radarStats: { home: [95, 85, 80, 85, 80, 95], away: [75, 65, 75, 70, 85, 75] }, 
         advancedStats: { home: { xG: '2.10', corners: 0 }, away: { xG: '1.20', corners: 0 } }, 
-        insight: { prediction: `ארלינג האלנד פוגש את הגנת הסלסאו בקרב מסקרן במיוחד. ברזיל שולטת בכדור ומייצרת המון מצבים, אך המודל מתריע מפני החולשה שלה במעברים מהירים – בדיוק היכן שנורבגיה פורחת. למרות הסכנה העוקצנית, הכישרון הברזילאי בחלק הקדמי צפוי להספיק בסופו של דבר.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `ארלינג האלנד פוגש את הגנת הסלסאו בקרב מסקרן במיוחד. ברזיל שולטת בכדור ומייצרת המון מצבים, אך המודל מתריע מפני החולשה שלה במעברים מהירים – בדיוק היכן שנורבגיה פורחת. למרות הסכנה העוקצנית, הכישרון הברזילאי בחלק הקדמי צפוי להספיק בסופו של דבר.`, 
+            actual: `סנסציה אדירה בה שילמה ברזיל ביוקר על החמצת פנדל קריטית של קוניה במחצית הראשונה, מול תצוגת תכלית טקטית ומשמעת מברזל של נורווגיה. המכונה הנורדית, ארלינג האלנד, התעורר עם צמד קטלני עמוק בתוך הדקות המכריעות וריסק את חלומות הגביע של הסלסאו, כשהפנדל המאוחר של ניימאר נותר כנחמת עניים בלבד. זהו ניצחון טהור של אופי ששולח את הברזילאים הביתה מוקדם מהצפוי, ומוכיח שסדר טקטי מנצח כישרון גולמי.` 
+        }, 
+        goals: [] 
     },
     'match92': { 
         timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 03:00 (שעון ישראל)`, 
@@ -339,7 +343,7 @@ window.knockoutBracket = {
     roundOf16: [
         { team1: { name: 'פרגוואי', flag: 'py', score: '0', outcome: 'loser' }, team2: { name: 'צרפת', flag: 'fr', score: '1', outcome: 'winner' } },
         { team1: { name: 'קנדה', flag: 'ca', score: '0', outcome: 'loser' }, team2: { name: 'מרוקו', flag: 'ma', score: '3', outcome: 'winner' } },
-        { team1: { name: 'ברזיל', flag: 'br', score: '-', outcome: 'pending' }, team2: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ברזיל', flag: 'br', score: '1', outcome: 'loser' }, team2: { name: 'נורווגיה', flag: 'no', score: '2', outcome: 'winner' } },
         { team1: { name: 'מקסיקו', flag: 'mx', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'ארצות הברית', flag: 'us', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
         { team1: { name: 'פורטוגל', flag: 'pt', score: '-', outcome: 'pending' }, team2: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' } },
@@ -348,7 +352,7 @@ window.knockoutBracket = {
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 91', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 92', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 92', flag: 'un', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת 93', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 94', flag: 'un', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
     ]
