@@ -73,7 +73,7 @@ function findMatchInDatabases(homeHe, awayHe) {
     return null;
 }
 
-// פונקציית השהיה (Delay) ליצירת תור משיכות יציב מול השרת
+// פונקציית השהיה (Delay)
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // קריאה ייעודית למשיכת אירועים (שערים וכרטיסים) ממשחק ספציפי
@@ -162,7 +162,6 @@ async function fetchLiveUpdates() {
     const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
 
     try {
-        // משיכת נתוני מלך השערים במקביל
         let topScorersPromise = fetchTopScorers(apiKey);
 
         const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
@@ -211,7 +210,6 @@ async function fetchLiveUpdates() {
                     dbMatch.timeStatus = 'future';
                 }
 
-                // מוסיף את המשחק לתור המשיכות אם הוא התחיל או הסתיים
                 if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
                     fixturesToFetch.push({ id: item.fixture.id, matchObj: dbMatch });
                 }
@@ -263,23 +261,25 @@ async function fetchLiveUpdates() {
             }
         });
         
-        // --- מנגנון תור מסודר ובטוח (Sequential Queue) ---
-        for (let fixture of fixturesToFetch) {
-            await fetchMatchEvents(fixture.id, fixture.matchObj, apiKey);
-            await delay(250); // המתנה קלה של 250ms בין משחק למשחק למניעת חסימת שרת
+        // --- מנגנון תור מהיר (Batching) לקיצור זמן הטעינה ---
+        // שיגור של 5 בקשות במקביל, המתנה קצרה, ואז 5 הבאות
+        const batchSize = 5;
+        for (let i = 0; i < fixturesToFetch.length; i += batchSize) {
+            const batch = fixturesToFetch.slice(i, i + batchSize);
+            await Promise.all(batch.map(fixture => fetchMatchEvents(fixture.id, fixture.matchObj, apiKey)));
+            await delay(300); // השהיה קצרה של 300ms בין קבוצה לקבוצה
         }
 
         // מוודא שגם מלך השערים סיים למשוך
         await topScorersPromise;
 
-        // מרענן את התצוגה אחרי שכל הנתונים הוטענו בהצלחה
+        // מרענן את התצוגה אחרי שכל הנתונים הוטענו
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
         console.error("שגיאה במשיכת נתוני לייב:", error);
     } finally {
-        // העלמת מסך הטעינה רק אחרי שכל התהליך הסתיים (או נכשל)
         const loader = document.getElementById('loader-overlay');
         if (loader) {
             loader.classList.add('hidden');
