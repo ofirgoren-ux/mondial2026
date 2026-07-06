@@ -903,21 +903,21 @@ window.renderScorers = function() {
     const container = document.getElementById('scorers-view');
     if (!container) return;
 
-    const scorersData = [
-        { rank: 1, name: "קיליאן אמבפה", team: "צרפת", flag: "fr", goals: 6, xg: 2.89, shots: 13, playerImg: "images/Kylian-Mbappe.jpeg" },
-        { rank: 2, name: "ליונל מסי", team: "ארגנטינה", flag: "ar", goals: 6, xg: 2.41, shots: 7, playerImg: "images/lionel-messi.jpeg" },
-        { rank: 3, name: "ארלינג האלנד", team: "נורבגיה", flag: "no", goals: 5, xg: 3.38, shots: 9, playerImg: "images/erlin-haaland.jpeg" },
-        { rank: 4, name: "ויניסיוס ג'וניור", team: "ברזיל", flag: "br", goals: 4, xg: 2.50, shots: 10 },
-        { rank: 5, name: "עוסמאן דמבלה", team: "צרפת", flag: "fr", goals: 4, xg: 0.95, shots: 5, playerImg: "images/ousmane-dembele.jpeg" },
-        { rank: 6, name: "מתיאוס קוניה", team: "ברזיל", flag: "br", goals: 3, xg: 1.18, shots: 5 },
-        { rank: 7, name: "איסמעילה סאר", team: "סנגל", flag: "sn", goals: 3, xg: 1.94, shots: 6 },
-        { rank: 8, name: "קאי האברץ", team: "גרמניה", flag: "de", goals: 3, xg: 2.18, shots: 7 },
-        { rank: 9, name: "קודי גאקפו", team: "הולנד", flag: "nl", goals: 3, xg: 1.18, shots: 6 },
-        { rank: 10, name: "יואן ויסה", team: "קונגו", flag: "cd", goals: 3, xg: 1.47, shots: 3 }
-    ];
+    // 1. אם הנתונים מה-API עדיין לא נטענו, נציג הודעת טעינה אלגנטית
+    if (!window.apiTopScorers || window.apiTopScorers.length === 0) {
+        container.innerHTML = '<div style="text-align: center; margin-top: 50px; color: var(--accent-cyan); font-size: 1.2rem; font-weight: bold;">טוען נתוני מלך השערים...</div>';
+        return;
+    }
 
-    const topGoalCount = scorersData[0].goals;
-    const podiumOrder = [scorersData[1], scorersData[0], scorersData[2]];
+    // 2. שאיבת הנתונים החיים מה-API במקום המערך הסטטי
+    const scorersData = window.apiTopScorers;
+    const topGoalCount = scorersData[0].goals; // שומר את כמות השערים של המקום הראשון לטובת חישוב הפס
+    
+    // 3. סידור הפודיום (מקום 2, מקום 1, מקום 3)
+    const podiumOrder = [];
+    if (scorersData[1]) podiumOrder.push(scorersData[1]);
+    if (scorersData[0]) podiumOrder.push(scorersData[0]);
+    if (scorersData[2]) podiumOrder.push(scorersData[2]);
     
     let podiumHTML = '<div class="podium-container">';
     podiumOrder.forEach(player => {
@@ -933,7 +933,7 @@ window.renderScorers = function() {
                     <div class="podium-name">${player.name}</div>
                     <div class="podium-team"><img src="https://flagcdn.com/w20/${player.flag}.png" style="width:16px; margin-left:4px;">${player.team}</div>
                     <div class="podium-goals" style="color: ${medalColor}">${player.goals} <span>שערים</span></div>
-                    <div class="podium-stats">xG: ${player.xg} | בעיטות: ${player.shots}</div>
+                    <div class="podium-stats">בעיטות: ${player.shots}</div>
                 </div>
             </div>
         `;
@@ -941,9 +941,12 @@ window.renderScorers = function() {
     podiumHTML += '</div>';
 
     let listHTML = '<div class="lb-container">';
+    // 4. בניית הרשימה החל ממקום 4 ומטה
     for (let i = 3; i < scorersData.length; i++) {
         let player = scorersData[i];
-        let progressWidth = (player.goals / topGoalCount) * 100;
+        // חישוב רוחב פס ההתקדמות (מינימום 5% כדי שהפס יראה תמיד)
+        let progressWidth = Math.max((player.goals / topGoalCount) * 100, 5); 
+        
         listHTML += `
             <div class="lb-row animate-in" style="animation-delay: ${i * 0.05}s">
                 <div class="lb-rank">${player.rank}</div>
