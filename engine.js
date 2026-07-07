@@ -572,7 +572,6 @@ window.openMatchEventsModal = async function(e, matchId, type) {
 
     let eventsList = [];
     
-    // משיכה דינמית מ-API במידה והנתונים הסטטיים ריקים
     try {
         const apiKey = '52fe625c25992477365139c656148855'; 
         const headers = { 'x-apisports-key': apiKey };
@@ -994,7 +993,8 @@ window.renderScorers = function() {
 }
 
 // =========================================================================
-// מודול חלונית סגל מתקדם - עיצוב סייבר קוהרנטי (שחקן יחיד, נתונים בקובייה)
+// מודול חלונית סגל מתקדם - עיצוב סייבר קוהרנטי 
+// (דגל מלא בפייד, קוביות כהות, תפקידים מודגשים, שורות חילופים זהות)
 // =========================================================================
 
 window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, oppTeamName) {
@@ -1009,28 +1009,44 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
             #team-squad-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; direction: rtl; }
             #team-squad-modal.active { opacity: 1; pointer-events: auto; }
             .tsm-content { position: relative; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; overflow-y: auto; overflow-x: hidden; display: block; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-            .tsm-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 380px; background-size: cover; background-position: center top; z-index: 0; opacity: 0.15; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 100%); pointer-events: none; }
+            
+            /* עיצוב הדגל: אטום למעלה ונמוג עד לאזור השחקנים */
+            .tsm-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 500px; background-size: cover; background-position: center top; z-index: 0; opacity: 0.6; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0) 100%); pointer-events: none; }
+            
             .tsm-inner { position: relative; z-index: 10; padding: 40px 20px 20px 20px; }
             .tsm-header { text-align: center; margin-bottom: 25px; }
-            .tsm-title { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-            .tsm-subtitle { font-size: 0.95rem; color: var(--accent-cyan, #00e5ff); margin-top: 5px; font-weight: bold; }
-            .tsm-close { position: absolute; top: 15px; left: 15px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; z-index: 20; opacity: 0.7; transition: opacity 0.2s; }
+            .tsm-title { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
+            .tsm-subtitle { font-size: 1rem; color: var(--accent-cyan, #00e5ff); margin-top: 5px; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+            .tsm-close { position: absolute; top: 15px; left: 15px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; z-index: 20; opacity: 0.7; transition: opacity 0.2s; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
             .tsm-close:hover { opacity: 1; }
+            
+            /* קוביות נתונים: גודל אחיד, כהות עם שקיפות עדינה וכתב גדול */
             .tsm-stats-row { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; width: 100%; }
-            .tsm-stats-row .geek-stat-box { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 2px; box-sizing: border-box; text-align: center; }
-            .tsm-stats-row .geek-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--accent-cyan, #00e5ff); line-height: 1; }
-            .tsm-stats-row .geek-stat-lbl { font-size: 0.75rem; color: #aaa; margin-top: 6px; text-align: center; }
-            .squad-section-title { color: #888; font-size: 0.9rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; text-align: center; }
-            .squad-player-row { display: flex; align-items: center; padding: 10px 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; }
+            .tsm-stats-row .geek-stat-box { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 16px 5px; box-sizing: border-box; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+            .tsm-stats-row .geek-stat-val { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan, #00e5ff); line-height: 1; }
+            .tsm-stats-row .geek-stat-lbl { font-size: 0.85rem; color: #cbd5e1; margin-top: 8px; text-align: center; font-weight: bold; }
+            
+            .squad-section-title { color: #888; font-size: 0.95rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; text-align: center; }
+            
+            /* שורות שחקנים אחידות לחלוטין - חילוף לא משנה את צורת השורה */
+            .squad-player-row { display: flex; align-items: center; padding: 12px 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.02); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; }
             .squad-player-row:hover { background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.2); }
-            .squad-player-row.is-sub-in { margin-right: 15px; border-right: 2px solid #22c55e; background: rgba(34, 197, 94, 0.08); padding: 6px 12px; }
-            .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 26px; height: 26px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 12px; font-size: 0.85rem; box-shadow: 0 0 10px rgba(0,229,255,0.3); }
-            .squad-player-name { flex: 1; font-size: 0.95rem; font-weight: 500; color: #e2e8f0; display: flex; align-items: center; }
-            .squad-player-pos { font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; margin-right: 6px; vertical-align: middle; }
-            .squad-player-events { display: flex; align-items: center; gap: 8px; }
+            
+            .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 14px; font-size: 0.9rem; box-shadow: 0 0 10px rgba(0,229,255,0.2); flex-shrink:0; }
+            
+            /* תפקיד המגרש: ברור, קריא ומתמזג עם הטקסט */
+            .squad-player-name { flex: 1; font-size: 1rem; font-weight: 500; color: #e2e8f0; display: flex; align-items: center; justify-content: flex-end; flex-direction: row-reverse; gap: 8px;}
+            .squad-player-pos { font-size: 0.75rem; color: #cbd5e1; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px;}
+            
+            .squad-player-events { display: flex; align-items: center; gap: 8px; margin-left: auto;}
+            
             .tsm-event-goal { color: var(--accent-cyan, #00e5ff); font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
             .tsm-event-goal::before { content: '⚽'; font-size: 1rem; }
-            .tsm-event-sub-out { color: #ef4444; font-size: 0.8rem; font-weight: bold; }
+            
+            /* חצים לחילופים */
+            .tsm-event-sub-out { color: #ef4444; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 4px;}
+            .tsm-event-sub-in { color: #22c55e; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 4px;}
+            
             .tsm-loader { text-align: center; padding: 40px; color: var(--accent-cyan, #00e5ff); font-weight: bold; letter-spacing: 1px; }
         `;
         document.head.appendChild(style);
@@ -1098,6 +1114,7 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
 
         let bodyHtml = '';
 
+        // --- רינדור סטטיסטיקות ---
         if (teamStats) {
             const getStat = (key) => {
                 let s = teamStats.statistics.find(stat => stat.type === key);
@@ -1119,6 +1136,7 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
             `;
         }
 
+        // --- רינדור סגל ---
         if (teamLineup) {
             const posOrder = { 'G': 1, 'D': 2, 'M': 3, 'F': 4 };
             const posHebrew = { 'G': 'שוער', 'D': 'הגנה', 'M': 'קישור', 'F': 'התקפה' };
@@ -1131,7 +1149,7 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                 teamLineup.substitutes.forEach(p => { subPlayersMap[p.player.name] = p.player; });
             }
 
-            const getPlayerIcons = (playerName) => {
+            const getPlayerIcons = (playerName, isSubInCheck = false) => {
                 let iconsHtml = '';
                 if(!eventsData.response) return iconsHtml;
                 eventsData.response.forEach(e => {
@@ -1141,13 +1159,16 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                             iconsHtml += `<span class="tsm-event-goal" dir="ltr">${min}</span>`;
                         }
                         if (e.player.name === playerName && e.type === 'Card' && e.detail.includes('Yellow')) {
-                            iconsHtml += `<div class="card-icon yellow-card" style="display:inline-block; width:10px; height:14px; margin:0 2px; vertical-align:middle; box-shadow: 0 1px 3px rgba(0,0,0,0.8);"></div>`;
+                            iconsHtml += `<div class="card-icon yellow-card" style="display:inline-block; width:12px; height:16px; margin:0 2px; vertical-align:middle; box-shadow: 0 1px 3px rgba(0,0,0,0.8); border-radius:2px;"></div>`;
                         }
                         if (e.player.name === playerName && e.type === 'Card' && e.detail.includes('Red')) {
-                            iconsHtml += `<div class="card-icon red-card" style="display:inline-block; width:10px; height:14px; margin:0 2px; vertical-align:middle; box-shadow: 0 1px 3px rgba(0,0,0,0.8);"></div>`;
+                            iconsHtml += `<div class="card-icon red-card" style="display:inline-block; width:12px; height:16px; margin:0 2px; vertical-align:middle; box-shadow: 0 1px 3px rgba(0,0,0,0.8); border-radius:2px;"></div>`;
                         }
-                        if (e.player.name === playerName && e.type === 'subst') {
-                            iconsHtml += `<span class="tsm-event-sub-out" dir="ltr">▼ ${min}</span>`;
+                        if (e.player.name === playerName && e.type === 'subst' && !isSubInCheck) {
+                            iconsHtml += `<span class="tsm-event-sub-out" dir="ltr"><span style="font-size:1.1rem;">▼</span> ${min}</span>`;
+                        }
+                        if (e.assist.name === playerName && e.type === 'subst' && isSubInCheck) {
+                            iconsHtml += `<span class="tsm-event-sub-in" dir="ltr"><span style="font-size:1.1rem;">▲</span> ${min}</span>`;
                         }
                     }
                 });
@@ -1155,21 +1176,23 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
             };
 
             let renderedSubNames = new Set();
+            
+            // פונקציית רינדור שורה אחידה
             const renderPlayerRow = (player, isSubIn = false) => {
-                let icons = getPlayerIcons(player.name);
+                let icons = getPlayerIcons(player.name, isSubIn);
                 let posText = posHebrew[player.pos] || player.pos || '';
-                let rowClass = isSubIn ? 'squad-player-row is-sub-in' : 'squad-player-row';
+                
                 let html = `
-                    <div class="${rowClass}">
+                    <div class="squad-player-row">
                         <div class="squad-player-num" ${isSubIn ? 'style="background:#22c55e; color:#000;"' : ''}>${player.number || '-'}</div>
+                        <div class="squad-player-events">${icons}</div>
                         <div class="squad-player-name">
                             ${player.name} <span class="squad-player-pos">${posText}</span>
                         </div>
-                        <div class="squad-player-events">${icons}</div>
                     </div>
                 `;
                 
-                // בדיקת חילופים נכנסים לשחקן הזה ועיבודם היררכית
+                // טיפול בחילוף כרונולוגי מיד מתחת
                 let outEvent = subEvents.find(e => e.player.name === player.name);
                 if (outEvent && outEvent.assist.name) {
                     let inPlayerName = outEvent.assist.name;
@@ -1193,7 +1216,7 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                 unusedSubs.forEach(p => {
                     let posText = posHebrew[p.player.pos] || p.player.pos || '';
                     bodyHtml += `
-                        <div class="squad-player-row" style="opacity: 0.6;">
+                        <div class="squad-player-row" style="opacity: 0.5;">
                             <div class="squad-player-num" style="background:#333; color:#fff;">${p.player.number || '-'}</div>
                             <div class="squad-player-name">
                                 ${p.player.name} <span class="squad-player-pos">${posText}</span>
