@@ -993,7 +993,7 @@ window.renderScorers = function() {
 }
 
 // =========================================================================
-// מודול חלונית סגל מתקדם - עריכה מלאה ויציבה (HTML טבעי, ללא שבירת עיצוב)
+// מודול חלונית סגל מתקדם - תיקון כרונולוגי ויישור סופי של ה-API
 // =========================================================================
 
 window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, oppTeamName) {
@@ -1025,87 +1025,23 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
             
             .squad-section-title { color: #888; font-size: 0.95rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; text-align: center; }
             
-            /* מבנה שורת השחקן מחדש: HTML טבעי כדי למנוע התנגשויות RTL */
-            .squad-player-row { 
-                display: flex; 
-                align-items: center; 
-                padding: 12px 14px; 
-                background: rgba(15, 23, 42, 0.6); 
-                border: 1px solid rgba(255,255,255,0.02); 
-                margin-bottom: 6px; 
-                border-radius: 6px; 
-                transition: background 0.2s;
-                direction: rtl;
-            }
+            .squad-player-row { display: flex; align-items: center; padding: 10px 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.02); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; direction: rtl; }
             .squad-player-row:hover { background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.2); }
             
-            /* המספר בצד ימין (ראשון ב-HTML ב-RTL) */
-            .squad-player-num { 
-                background: var(--accent-cyan, #00e5ff); 
-                color: #000; 
-                font-weight: bold; 
-                width: 28px; 
-                height: 28px; 
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                border-radius: 4px; 
-                margin-left: 15px; 
-                font-size: 0.9rem; 
-                flex-shrink: 0; 
-                box-shadow: 0 0 10px rgba(0,229,255,0.2);
-            }
+            /* המספר בצד ימין המוחלט בסדר אלמנטים טבעי */
+            .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 15px; font-size: 0.9rem; box-shadow: 0 0 10px rgba(0,229,255,0.2); flex-shrink: 0; }
             
-            /* שם ותפקיד באמצע */
-            .squad-player-info { 
-                display: flex; 
-                align-items: center; 
-                gap: 12px; 
-            }
-            .squad-player-name { 
-                font-size: 1rem; 
-                font-weight: 500; 
-                color: #e2e8f0; 
-                display: flex; 
-                align-items: center; 
-            }
-            .squad-player-pos { 
-                font-size: 0.75rem; 
-                color: #cbd5e1; 
-                background: rgba(255,255,255,0.1); 
-                padding: 3px 8px; 
-                border-radius: 4px; 
-                font-weight: 600; 
-            }
+            .squad-player-info { display: flex; align-items: center; gap: 8px; flex: 1; }
+            .squad-player-name { font-size: 1rem; font-weight: 500; color: #e2e8f0; display: flex; align-items: center; }
             
-            /* תג קפטן */
-            .captain-badge { 
-                color: #fbbf24; 
-                font-weight: bold; 
-                font-size: 0.8rem; 
-                margin-left: 6px; 
-                display: inline-flex; 
-                align-items: center; 
-                justify-content: center; 
-                background: rgba(251, 191, 36, 0.1); 
-                width: 20px; 
-                height: 20px; 
-                border-radius: 50%; 
-                border: 1px solid rgba(251, 191, 36, 0.3);
-            }
+            .captain-badge { color: #fbbf24; font-weight: bold; font-size: 0.8rem; margin-left: 6px; display: inline-flex; align-items: center; justify-content: center; background: rgba(251, 191, 36, 0.1); width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(251, 191, 36, 0.3); }
+            .squad-player-pos { font-size: 0.75rem; color: #cbd5e1; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-weight: 600; margin-right: 10px; }
             
-            /* אירועים נדחפים שמאלה וכיוון LTR לשמירת הסדר */
-            .squad-player-events { 
-                display: flex; 
-                align-items: center; 
-                gap: 8px; 
-                margin-right: auto; /* דוחף עד הסוף שמאלה */
-                direction: ltr; /* שומר שהאירועים יקראו משמאל לימין כמו מספרים */
-            }
+            /* אירועי זמן מיושרים לשמאל, בתוך מיכל ltr כדי לשמור על קריאה כרונולוגית */
+            .squad-player-events { display: flex; align-items: center; gap: 8px; margin-right: auto; justify-content: flex-end; direction: ltr; }
             
             .tsm-event-goal { color: var(--accent-cyan, #00e5ff); font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
             .tsm-event-goal::before { content: '⚽'; font-size: 1rem; }
-            
             .tsm-event-sub-out { color: #ef4444; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 4px;}
             .tsm-event-sub-in { color: #22c55e; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; gap: 4px;}
             
@@ -1198,7 +1134,6 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
         }
 
         if (teamLineup) {
-            const posOrder = { 'G': 1, 'D': 2, 'M': 3, 'F': 4 };
             const posHebrew = { 'G': 'שוער', 'D': 'הגנה', 'M': 'קישור', 'F': 'התקפה' };
             
             let subEvents = eventsData.response ? eventsData.response.filter(e => e.team.id === apiTeamId && e.type === 'subst') : [];
@@ -1220,7 +1155,6 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                 eventsData.response.forEach(e => {
                     if (e.team.id !== apiTeamId) return;
                     
-                    // זיהוי השחקן בצורה בטוחה (ID תחילה, ואם אין אז שם)
                     let isPlayerMatch = (e.player && playerObj && e.player.id === playerObj.id) || 
                                         (e.player && e.player.name === playerObj.name);
                     
@@ -1232,25 +1166,24 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
 
                     if (isPlayerMatch) {
                         if (e.type === 'Goal' && e.detail !== 'Missed Penalty') {
-                            iconsList.push({ time: elapsed, html: `<span class="tsm-event-goal" dir="ltr">${min}</span>` });
+                            iconsList.push({ time: elapsed, html: `<span class="tsm-event-goal">${min}</span>` });
                         }
                         if (e.type === 'Card' && e.detail.includes('Yellow')) {
-                            iconsList.push({ time: elapsed, html: `<span style="color:#eab308; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:4px;" dir="ltr"><div style="width:12px; height:16px; background:#eab308; border-radius:2px; box-shadow:0 1px 3px rgba(0,0,0,0.8);"></div>${min}</span>` });
+                            iconsList.push({ time: elapsed, html: `<span style="color:#eab308; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:4px;"><div style="width:12px; height:16px; background:#eab308; border-radius:2px; box-shadow:0 1px 3px rgba(0,0,0,0.8);"></div>${min}</span>` });
                         }
                         if (e.type === 'Card' && e.detail.includes('Red')) {
-                            iconsList.push({ time: elapsed, html: `<span style="color:#ef4444; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:4px;" dir="ltr"><div style="width:12px; height:16px; background:#ef4444; border-radius:2px; box-shadow:0 1px 3px rgba(0,0,0,0.8);"></div>${min}</span>` });
+                            iconsList.push({ time: elapsed, html: `<span style="color:#ef4444; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:4px;"><div style="width:12px; height:16px; background:#ef4444; border-radius:2px; box-shadow:0 1px 3px rgba(0,0,0,0.8);"></div>${min}</span>` });
                         }
                         if (e.type === 'subst' && !isSubInCheck) {
-                            iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-out" dir="ltr"><span style="font-size:1.1rem;">▼</span> ${min}</span>` });
+                            iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-out"><span style="font-size:1.1rem;">▼</span> ${min}</span>` });
                         }
                     }
                     
                     if (isAssistMatch && e.type === 'subst' && isSubInCheck) {
-                        iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-in" dir="ltr"><span style="font-size:1.1rem;">▲</span> ${min}</span>` });
+                        iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-in"><span style="font-size:1.1rem;">▲</span> ${min}</span>` });
                     }
                 });
                 
-                // סידור כרונולוגי של האירועים כך שיוצגו נכון משמאל לימין
                 iconsList.sort((a,b) => a.time - b.time);
                 return iconsList.map(item => item.html).join('');
             };
@@ -1271,7 +1204,6 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                     captainHtml = `<span class="captain-badge" title="קפטן הנבחרת">C</span>`; 
                 }
                 
-                // מבנה HTML תקין שמונע שבירת LTR/RTL
                 let html = `
                     <div class="squad-player-row">
                         <div class="squad-player-num">${playerObj.number || '-'}</div>
@@ -1283,7 +1215,6 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                     </div>
                 `;
                 
-                // בדיקת חילוף - השחקן הנכנס יופיע מיד למטה באותו עיצוב
                 let outEvent = subEvents.find(e => {
                     return (e.player && e.player.id === playerObj.id) || (e.player && e.player.name === playerObj.name);
                 });
@@ -1296,56 +1227,16 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                 return html;
             };
 
-            // יצירת מנגנון סידור כרונולוגי של שחקני ההרכב (בקשתך לסדר זמנים הגיוני)
-            teamLineup.startXI.forEach(p => {
-                let earliest = 999;
-                if (eventsData.response) {
-                    eventsData.response.forEach(e => {
-                        if (e.team.id === apiTeamId && e.player) {
-                            let isMatch = (e.player.id === p.player.id) || (e.player.name === p.player.name);
-                            if (isMatch && e.time.elapsed < earliest) {
-                                earliest = e.time.elapsed;
-                            }
-                        }
-                    });
-                }
-                p.earliestEventTime = earliest;
-            });
-
-            let captainName = "";
-            let captainId = null;
-            teamLineup.startXI.forEach(p => {
-               if(p.player.name.includes('(c)') || p.player.name.includes('(C)')) {
-                   captainName = p.player.name;
-                   captainId = p.player.id;
-               } 
-            });
-
-            // מיון: קפטן ראשון -> אירועים לפי סדר כרונולוגי (1 עד 120) -> כל השאר לפי עמדות
-            let startXISorted = [...teamLineup.startXI].sort((a, b) => {
-                let isCapA = (a.player.id === captainId) || (a.player.name === captainName) || (captainName === "" && a.player.pos === 'G');
-                let isCapB = (b.player.id === captainId) || (b.player.name === captainName) || (captainName === "" && b.player.pos === 'G');
-                
-                if (isCapA && !isCapB) return -1;
-                if (!isCapA && isCapB) return 1;
-                
-                if (a.earliestEventTime !== b.earliestEventTime) {
-                    return a.earliestEventTime - b.earliestEventTime;
-                }
-                
-                return (posOrder[a.player.pos] || 5) - (posOrder[b.player.pos] || 5);
-            });
-
             bodyHtml += `<div class="squad-section-title">הרכב פותח (${teamLineup.formation})</div>`;
-            startXISorted.forEach((p, index) => {
-                let isCap = (p.player.id === captainId) || (p.player.name === captainName) || (captainName === "" && index === 0);
-                bodyHtml += renderPlayerRow(p.player, false, isCap);
+            
+            let startXI = teamLineup.startXI;
+            startXI.forEach((p, index) => {
+                bodyHtml += renderPlayerRow(p.player, false, false);
             });
 
             let unusedSubs = teamLineup.substitutes.filter(p => !renderedSubNames.has(p.player.name));
             if (unusedSubs.length > 0) {
                 bodyHtml += `<div class="squad-section-title" style="margin-top:25px;">ספסל (לא שותפו)</div>`;
-                unusedSubs.sort((a, b) => (posOrder[a.player.pos] || 5) - (posOrder[b.player.pos] || 5));
                 unusedSubs.forEach(p => {
                     let posText = posHebrew[p.player.pos] || p.player.pos || '';
                     bodyHtml += `
