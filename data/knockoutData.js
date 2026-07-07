@@ -282,24 +282,32 @@ const knockoutMatches = {
         goals: [] 
     },
     'match93': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 22:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `06/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `פורטוגל`, flagCode: 'pt', color: '#E42518', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '1 - 2', actual: '0 - 1', accuracyClass: 'trend' }, 
         probabilities: { home: 30, draw: 30, away: 40 }, matchRisk: 'Upset Alert', 
         radarStats: { home: [85, 80, 75, 85, 75, 85], away: [90, 90, 75, 85, 75, 85] }, 
         advancedStats: { home: { xG: '1.40', corners: 0 }, away: { xG: '1.70', corners: 0 } }, 
-        insight: { prediction: `הדרבי האיברי מגיע לשלב הנוקאאוט בקרב סגנונות מובהק. ספרד תכתיב את הקצב באמצעות הטיקי-טאקה המוכר, בעוד פורטוגל תמתין בסבלנות למתפרצות קטלניות דרך האגפים. המודל מזהה יעילות התקפית עדיפה אצל הספרדים, מה שנותן להם יתרון זעיר.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `הדרבי האיברי מגיע לשלב הנוקאאוט בקרב סגנונות מובהק. ספרד תכתיב את הקצב באמצעות הטיקי-טאקה המוכר, בעוד פורטוגל תמתין בסבלנות למתפרצות קטלניות דרך האגפים. המודל מזהה יעילות התקפית עדיפה אצל הספרדים, מה שנותן להם יתרון זעיר.`, 
+            actual: `ספרד הוכיחה שוב שהטיקי-טאקה עדיין חי ובועט עם ניצחון קטן-גדול בדרבי האיברי. פורטוגל ניסתה לעקוץ במתפרצות בדיוק כפי שחזינו, אך נתקלה בחומה ספרדית בצורה ובשליטה מוחלטת של לה רוחה במרכז השדה. המודל פגע בול במגמה כשהעניק את היתרון לספרדים, שממשיכים לרבע הגמר ביעילות אופיינית.` 
+        }, 
+        goals: [] 
     },
     'match94': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 03:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 03:00 (שעון ישראל)`, 
         teamHome: { name: `ארצות הברית`, flagCode: 'us', color: '#002868', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '1 - 1', actual: '1 - 4', accuracyClass: 'wrong' }, 
         probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Draw Booster', 
         radarStats: { home: [75, 70, 70, 80, 75, 75], away: [85, 80, 75, 75, 70, 85] }, 
         advancedStats: { home: { xG: '1.50', corners: 0 }, away: { xG: '1.50', corners: 0 } }, 
-        insight: { prediction: `ארה"ב מגיעה עם תמיכה ביתית אדירה ורצון לעשות היסטוריה במונדיאל הביתי שלה. מנגד, בלגיה מחזיקה באיכות מסירה וארגון במרכז השדה שיכולים לנטרל את ההתלהבות האמריקאית. זהו משחק בעל סבירות גבוהה לתיקו, בו המומנטום עשוי להתהפך פעמים רבות.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `ארה"ב מגיעה עם תמיכה ביתית אדירה ורצון לעשות היסטוריה במונדיאל הביתי שלה. מנגד, בלגיה מחזיקה באיכות מסירה וארגון במרכז השדה שיכולים לנטרל את ההתלהבות האמריקאית. זהו משחק בעל סבירות גבוהה לתיקו, בו המומנטום עשוי להתהפך פעמים רבות.`, 
+            actual: `התפרקות מוחלטת של החלום האמריקאי מול תצוגת תכלית דורסנית של השדים האדומים! למרות הדחיפה האדירה מהיציעים, ארה"ב קרסה מול איכות המסירה והיעילות הקטלנית של הבלגים שניצלו כל טעות בהגנה המקומית. המודל, שצפה משחק שקול והארכה, נותר המום יחד עם האוהדים המקומיים מול הקונצרט הבלגי בדרך לרבע הגמר.` 
+        }, 
+        goals: [] 
     },
     'match95': { 
         timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 19:00 (שעון ישראל)`, 
@@ -349,15 +357,15 @@ window.knockoutBracket = {
         { team1: { name: 'קנדה', flag: 'ca', score: '0', outcome: 'loser' }, team2: { name: 'מרוקו', flag: 'ma', score: '3', outcome: 'winner' } },
         { team1: { name: 'ברזיל', flag: 'br', score: '1', outcome: 'loser' }, team2: { name: 'נורווגיה', flag: 'no', score: '2', outcome: 'winner' } },
         { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '3', outcome: 'winner' } },
-        { team1: { name: 'ארצות הברית', flag: 'us', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
-        { team1: { name: 'פורטוגל', flag: 'pt', score: '-', outcome: 'pending' }, team2: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ארצות הברית', flag: 'us', score: '1', outcome: 'loser' }, team2: { name: 'בלגיה', flag: 'be', score: '4', outcome: 'winner' } },
+        { team1: { name: 'פורטוגל', flag: 'pt', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '1', outcome: 'winner' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'מצרים', flag: 'eg', score: '-', outcome: 'pending' } },
         { team1: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 93', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 94', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
     ]
 };
