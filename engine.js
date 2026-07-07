@@ -1,3 +1,22 @@
+window.hebrewToEnglishMap = {
+    "דרום אפריקה": ["South Africa"], "קנדה": ["Canada"], "ברזיל": ["Brazil"], "יפן": ["Japan"],
+    "גרמניה": ["Germany"], "פרגוואי": ["Paraguay"], "הולנד": ["Netherlands"], "מרוקו": ["Morocco"],
+    "חוף השנהב": ["Ivory Coast", "Cote d'Ivoire"], "נורבגיה": ["Norway"], "נורווגיה": ["Norway"],
+    "צרפת": ["France"], "שוודיה": ["Sweden"], "מקסיקו": ["Mexico"], "אקוודור": ["Ecuador"],
+    "אנגליה": ["England"], "קונגו": ["Congo DR", "DR Congo"], "ארצות הברית": ["USA", "United States"],
+    "בוסניה": ["Bosnia and Herzegovina", "Bosnia & Herzegovina", "Bosnia"],
+    "בוסניה והרצגובינה": ["Bosnia and Herzegovina", "Bosnia & Herzegovina"],
+    "בלגיה": ["Belgium"], "סנגל": ["Senegal"], "פורטוגל": ["Portugal"], "קרואטיה": ["Croatia"],
+    "ספרד": ["Spain"], "אוסטריה": ["Austria"], "שווייץ": ["Switzerland"], "אלג'יריה": ["Algeria"],
+    "אוסטרליה": ["Australia"], "מצרים": ["Egypt"], "ארגנטינה": ["Argentina"], 
+    "כף ורדה": ["Cabo Verde", "Cape Verde", "Cape Verde Islands"], "קולומביה": ["Colombia"],
+    "גאנה": ["Ghana"], "קוריאה הדרומית": ["Korea Republic", "South Korea"],
+    "קוראסאו": ["Curaçao", "Curacao"], "ניו זילנד": ["New Zealand"], "עיראק": ["Iraq"],
+    "איראן": ["Iran"], "קטאר": ["Qatar"], "צ'כיה": ["Czechia", "Czech Republic"],
+    "תוניסיה": ["Tunisia"], "טורקיה": ["Türkiye", "Turkey"], "ירדן": ["Jordan"], "אוזבקיסטן": ["Uzbekistan"],
+    "האיטי": ["Haiti"], "פנמה": ["Panama"]
+};
+
 window.calculateAccuracy = function(prediction, actualStr, matchStatus, penHome, penAway) {
     if (!prediction || !actualStr || prediction === '-' || actualStr === '-' || !prediction.includes('-') || !actualStr.includes('-')) {
         return 'pending';
@@ -462,7 +481,6 @@ function createCardHTML(matchId, data, tHome, tAway, prob, riskHTML, currentScor
         formattedScore = `<span style="display:inline-flex; direction:ltr; align-items:center; gap:6px;"><span>${p[1].trim()}</span><span>-</span><span>${p[0].trim()}</span></span>`;
     }
     
-    // קריאה למודול הסגל והנתונים המעודכן שלנו!
     const hFlagAttr = (tHome.flagCode !== 'unknown' && tHome.flagCode !== 'un' && data.timeStatus === 'past') ? `onclick="if(window.openTeamSquadModal) window.openTeamSquadModal('${tHome.name}', '${tHome.flagCode}', '${tAway.name}')" style="cursor:pointer;" title="לחץ לסגל ונתוני המשחק"` : '';
     const aFlagAttr = (tAway.flagCode !== 'unknown' && tAway.flagCode !== 'un' && data.timeStatus === 'past') ? `onclick="if(window.openTeamSquadModal) window.openTeamSquadModal('${tAway.name}', '${tAway.flagCode}', '${tHome.name}')" style="cursor:pointer;" title="לחץ לסגל ונתוני המשחק"` : '';
     
@@ -536,55 +554,76 @@ window.switchCardTab = function(btn, cardId, tabType, scoreText, labelText, accu
     } else { labelEl.style.color = 'var(--accent-cyan)'; } 
 }
 
-window.openMatchEventsModal = function(e, matchId, type) {
+window.openMatchEventsModal = async function(e, matchId, type) {
     if (e) e.stopPropagation();
     const db = getSafeDatabase();
     const match = db[matchId];
     if (!match || match.timeStatus === 'future') return;
 
     let title = type === 'goals' ? 'פירוט שערים' : 'פירוט כרטיסים';
-    let contentHtml = '';
-    let eventsList = [];
-
-    if (type === 'goals') {
-        if (match.goals && Array.isArray(match.goals) && match.goals.length > 0) {
-            eventsList = match.goals.map(g => {
-                let minMatch = (g.minute || '').match(/(\d+)/);
-                let min = minMatch ? parseInt(minMatch[1]) : 999;
-                let displayMin = g.minute ? (g.minute.includes("'") ? g.minute : g.minute + "'") : '';
-                return { min: g.sortMin || min, team: g.team, player: g.player, minuteStr: displayMin, type: 'goal' };
-            });
-        } else {
-            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:1.1rem; font-weight:800;">אין שערים רשומים למשחק זה.</div>';
-        }
-    } else if (type === 'cards') {
-        let parseCards = (teamName, cardsObj) => {
-            if (!cardsObj) return;
-            ['yellow', 'red'].forEach(color => {
-                if (cardsObj[color] && Array.isArray(cardsObj[color])) {
-                    cardsObj[color].forEach(cardStr => {
-                        let minMatch = cardStr.match(/\(([^)]+)\)/); 
-                        let minStrExtract = minMatch ? minMatch[1] : '';
-                        let numMatch = minStrExtract.match(/(\d+)/);
-                        let min = numMatch ? parseInt(numMatch[1]) : 999;
-                        let player = cardStr.includes('(') ? cardStr.split('(')[0].trim() : cardStr;
-                        if (player === 'card' || player === 'שחקן') player = 'שחקן (לא צוין שם)';
-                        
-                        eventsList.push({ min: min, team: teamName, player: player, minuteStr: minStrExtract, type: color });
-                    });
-                }
-            });
-        };
-        parseCards(match.teamHome.name, match.teamHome.cards);
-        parseCards(match.teamAway.name, match.teamAway.cards);
-
-        if (eventsList.length === 0) {
-            contentHtml = '<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:1.1rem; font-weight:800;">לא נשלפו כרטיסים במשחק זה.</div>';
-        }
+    
+    const modal = document.getElementById('matchEventsModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.style.opacity = '1', 10);
+        document.getElementById('events-title').innerText = `${title} | ${match.teamHome.name} - ${match.teamAway.name}`;
+        document.getElementById('events-body-content').innerHTML = '<div style="text-align:center; padding: 20px; color: var(--accent-cyan);">טוען נתונים... ⏳</div>';
     }
 
-    if (eventsList.length > 0) {
-        eventsList.sort((a, b) => a.min - b.min); // סידור כרונולוגי של הדקות
+    let eventsList = [];
+    
+    // משיכה דינמית מ-API במידה והנתונים הסטטיים ריקים
+    try {
+        const apiKey = '52fe625c25992477365139c656148855'; 
+        const headers = { 'x-apisports-key': apiKey };
+        
+        if (!window.apiFixturesCache) {
+            const res = await fetch('https://v3.football.api-sports.io/fixtures?league=1&season=2026', { headers });
+            const data = await res.json();
+            window.apiFixturesCache = data.response;
+        }
+
+        let fixtureId = null;
+        for (let item of window.apiFixturesCache) {
+            let homeNames = window.hebrewToEnglishMap[match.teamHome.name] || [match.teamHome.name];
+            let awayNames = window.hebrewToEnglishMap[match.teamAway.name] || [match.teamAway.name];
+            
+            if ((homeNames.includes(item.teams.home.name) && awayNames.includes(item.teams.away.name)) ||
+                (homeNames.includes(item.teams.away.name) && awayNames.includes(item.teams.home.name))) {
+                fixtureId = item.fixture.id;
+                break;
+            }
+        }
+
+        if (fixtureId) {
+            const evRes = await fetch(`https://v3.football.api-sports.io/fixtures/events?fixture=${fixtureId}`, { headers });
+            const evData = await evRes.json();
+            
+            if (evData.response) {
+                evData.response.forEach(ev => {
+                    let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
+                    let evTeamHe = match.teamHome.name;
+                    let homeNames = window.hebrewToEnglishMap[match.teamHome.name] || [match.teamHome.name];
+                    if (!homeNames.includes(ev.team.name)) evTeamHe = match.teamAway.name;
+
+                    if (type === 'goals' && ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
+                        eventsList.push({ min: ev.time.elapsed, team: evTeamHe, player: ev.player.name, minuteStr: minStr, type: 'goal' });
+                    } else if (type === 'cards' && ev.type === 'Card') {
+                        let cType = ev.detail.includes('Yellow') ? 'yellow' : 'red';
+                        eventsList.push({ min: ev.time.elapsed, team: evTeamHe, player: ev.player.name, minuteStr: minStr, type: cType });
+                    }
+                });
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching live events:", err);
+    }
+
+    let contentHtml = '';
+    if (eventsList.length === 0) {
+         contentHtml = `<div style="text-align:center; padding: 20px; color: var(--text-muted); font-size:1.1rem; font-weight:800;">אין ${type === 'goals' ? 'שערים רשומים' : 'כרטיסים שנשלפו'} למשחק זה.</div>`;
+    } else {
+        eventsList.sort((a, b) => a.min - b.min);
         contentHtml = '<div class="events-list">';
         eventsList.forEach(ev => {
             let icon = '';
@@ -606,14 +645,7 @@ window.openMatchEventsModal = function(e, matchId, type) {
         contentHtml += '</div>';
     }
 
-    document.getElementById('events-title').innerText = `${title} | ${match.teamHome.name} - ${match.teamAway.name}`;
     document.getElementById('events-body-content').innerHTML = contentHtml;
-    
-    const modal = document.getElementById('matchEventsModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        setTimeout(() => modal.style.opacity = '1', 10);
-    }
 };
 
 window.closeMatchEventsModal = function(e) {
@@ -976,24 +1008,28 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
         style.innerHTML = `
             #team-squad-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; direction: rtl; }
             #team-squad-modal.active { opacity: 1; pointer-events: auto; }
-            .tsm-content { background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-            .tsm-hero { padding: 40px 20px 20px 20px; text-align: center; position: relative; background-size: cover; background-position: center; border-bottom: 2px solid var(--accent-cyan, #00e5ff); }
-            .tsm-overlay { position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to bottom, rgba(13,17,23,0.3), #0d1117); }
-            .tsm-title { position: relative; z-index: 10; margin: 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-            .tsm-subtitle { position: relative; z-index: 10; font-size: 0.95rem; color: var(--accent-cyan, #00e5ff); margin-top: 5px; font-weight: bold; }
+            .tsm-content { position: relative; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; width: 95%; max-width: 500px; max-height: 90vh; overflow-y: auto; overflow-x: hidden; display: block; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+            .tsm-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 380px; background-size: cover; background-position: center top; z-index: 0; opacity: 0.15; mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 100%); pointer-events: none; }
+            .tsm-inner { position: relative; z-index: 10; padding: 40px 20px 20px 20px; }
+            .tsm-header { text-align: center; margin-bottom: 25px; }
+            .tsm-title { margin: 0; font-size: 1.8rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+            .tsm-subtitle { font-size: 0.95rem; color: var(--accent-cyan, #00e5ff); margin-top: 5px; font-weight: bold; }
             .tsm-close { position: absolute; top: 15px; left: 15px; background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; z-index: 20; opacity: 0.7; transition: opacity 0.2s; }
             .tsm-close:hover { opacity: 1; }
-            .tsm-body { padding: 20px; overflow-y: auto; flex: 1; }
-            .tsm-stats-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; }
-            .squad-section-title { color: #888; font-size: 0.9rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; }
+            .tsm-stats-row { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 30px; width: 100%; }
+            .tsm-stats-row .geek-stat-box { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 2px; box-sizing: border-box; text-align: center; }
+            .tsm-stats-row .geek-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--accent-cyan, #00e5ff); line-height: 1; }
+            .tsm-stats-row .geek-stat-lbl { font-size: 0.75rem; color: #aaa; margin-top: 6px; text-align: center; }
+            .squad-section-title { color: #888; font-size: 0.9rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; text-align: center; }
             .squad-player-row { display: flex; align-items: center; padding: 10px 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; }
             .squad-player-row:hover { background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.2); }
+            .squad-player-row.is-sub-in { margin-right: 15px; border-right: 2px solid #22c55e; background: rgba(34, 197, 94, 0.08); padding: 6px 12px; }
             .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 26px; height: 26px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 12px; font-size: 0.85rem; box-shadow: 0 0 10px rgba(0,229,255,0.3); }
-            .squad-player-name { flex: 1; font-size: 0.95rem; font-weight: 500; color: #e2e8f0; }
+            .squad-player-name { flex: 1; font-size: 0.95rem; font-weight: 500; color: #e2e8f0; display: flex; align-items: center; }
+            .squad-player-pos { font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; margin-right: 6px; vertical-align: middle; }
             .squad-player-events { display: flex; align-items: center; gap: 8px; }
             .tsm-event-goal { color: var(--accent-cyan, #00e5ff); font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
             .tsm-event-goal::before { content: '⚽'; font-size: 1rem; }
-            .tsm-event-sub-in { color: #22c55e; font-size: 0.8rem; font-weight: bold; }
             .tsm-event-sub-out { color: #ef4444; font-size: 0.8rem; font-weight: bold; }
             .tsm-loader { text-align: center; padding: 40px; color: var(--accent-cyan, #00e5ff); font-weight: bold; letter-spacing: 1px; }
         `;
@@ -1005,14 +1041,16 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
     
     modal.innerHTML = `
         <div class="tsm-content">
-            <div class="tsm-hero" style="background-image: url('https://flagcdn.com/w320/${selectedTeamFlag}.png');">
-                <div class="tsm-overlay"></div>
+            <div class="tsm-hero-bg" style="background-image: url('https://flagcdn.com/w320/${selectedTeamFlag}.png');"></div>
+            <div class="tsm-inner">
                 <button class="tsm-close" onclick="document.getElementById('team-squad-modal').classList.remove('active')">&times;</button>
-                <h2 class="tsm-title">הסגל של ${selectedTeamName}</h2>
-                <div class="tsm-subtitle">במשחק מול ${oppTeamName}</div>
-            </div>
-            <div class="tsm-body">
-                <div class="tsm-loader">שואב נתונים מהשרת... ⏳</div>
+                <div class="tsm-header">
+                    <h2 class="tsm-title">הסגל של ${selectedTeamName}</h2>
+                    <div class="tsm-subtitle">במשחק מול ${oppTeamName}</div>
+                </div>
+                <div class="tsm-body">
+                    <div class="tsm-loader">שואב נתונים מהשרת... ⏳</div>
+                </div>
             </div>
         </div>
     `;
@@ -1032,12 +1070,13 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
         let apiTeamId = null;
         
         for (let item of window.apiFixturesCache) {
-            let apiHomeHe = typeof getTeamInfo === 'function' ? getTeamInfo(item.teams.home.name).he : item.teams.home.name;
-            let apiAwayHe = typeof getTeamInfo === 'function' ? getTeamInfo(item.teams.away.name).he : item.teams.away.name;
+            let homeNames = window.hebrewToEnglishMap[selectedTeamName] || [selectedTeamName];
+            let awayNames = window.hebrewToEnglishMap[oppTeamName] || [oppTeamName];
             
-            if ((apiHomeHe === selectedTeamName && apiAwayHe === oppTeamName) || (apiHomeHe === oppTeamName && apiAwayHe === selectedTeamName)) {
+            if ((homeNames.includes(item.teams.home.name) && awayNames.includes(item.teams.away.name)) || 
+                (homeNames.includes(item.teams.away.name) && awayNames.includes(item.teams.home.name))) {
                 fixtureId = item.fixture.id;
-                apiTeamId = (apiHomeHe === selectedTeamName) ? item.teams.home.id : item.teams.away.id;
+                apiTeamId = homeNames.includes(item.teams.home.name) ? item.teams.home.id : item.teams.away.id;
                 break;
             }
         }
@@ -1081,6 +1120,17 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
         }
 
         if (teamLineup) {
+            const posOrder = { 'G': 1, 'D': 2, 'M': 3, 'F': 4 };
+            const posHebrew = { 'G': 'שוער', 'D': 'הגנה', 'M': 'קישור', 'F': 'התקפה' };
+            
+            let subEvents = eventsData.response ? eventsData.response.filter(e => e.team.id === apiTeamId && e.type === 'subst') : [];
+            subEvents.sort((a,b) => a.time.elapsed - b.time.elapsed);
+            
+            let subPlayersMap = {};
+            if (teamLineup.substitutes) {
+                teamLineup.substitutes.forEach(p => { subPlayersMap[p.player.name] = p.player; });
+            }
+
             const getPlayerIcons = (playerName) => {
                 let iconsHtml = '';
                 if(!eventsData.response) return iconsHtml;
@@ -1099,36 +1149,60 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                         if (e.player.name === playerName && e.type === 'subst') {
                             iconsHtml += `<span class="tsm-event-sub-out" dir="ltr">▼ ${min}</span>`;
                         }
-                        if (e.assist.name === playerName && e.type === 'subst') {
-                            iconsHtml += `<span class="tsm-event-sub-in" dir="ltr">▲ ${min}</span>`;
-                        }
                     }
                 });
                 return iconsHtml;
             };
 
-            bodyHtml += `<div class="squad-section-title">הרכב פותח (${teamLineup.formation})</div>`;
-            teamLineup.startXI.forEach(p => {
-                bodyHtml += `
-                    <div class="squad-player-row">
-                        <div class="squad-player-num">${p.player.number}</div>
-                        <div class="squad-player-name">${p.player.name}</div>
-                        <div class="squad-player-events">${getPlayerIcons(p.player.name)}</div>
-                    </div>
-                `;
-            });
-
-            bodyHtml += `<div class="squad-section-title" style="margin-top:25px;">ספסל</div>`;
-            teamLineup.substitutes.forEach(p => {
-                let icons = getPlayerIcons(p.player.name);
-                bodyHtml += `
-                    <div class="squad-player-row" style="opacity: ${icons ? '1' : '0.6'};">
-                        <div class="squad-player-num" style="background:#333; color:#fff;">${p.player.number}</div>
-                        <div class="squad-player-name">${p.player.name}</div>
+            let renderedSubNames = new Set();
+            const renderPlayerRow = (player, isSubIn = false) => {
+                let icons = getPlayerIcons(player.name);
+                let posText = posHebrew[player.pos] || player.pos || '';
+                let rowClass = isSubIn ? 'squad-player-row is-sub-in' : 'squad-player-row';
+                let html = `
+                    <div class="${rowClass}">
+                        <div class="squad-player-num" ${isSubIn ? 'style="background:#22c55e; color:#000;"' : ''}>${player.number || '-'}</div>
+                        <div class="squad-player-name">
+                            ${player.name} <span class="squad-player-pos">${posText}</span>
+                        </div>
                         <div class="squad-player-events">${icons}</div>
                     </div>
                 `;
+                
+                // בדיקת חילופים נכנסים לשחקן הזה ועיבודם היררכית
+                let outEvent = subEvents.find(e => e.player.name === player.name);
+                if (outEvent && outEvent.assist.name) {
+                    let inPlayerName = outEvent.assist.name;
+                    let inPlayerObj = subPlayersMap[inPlayerName] || { name: inPlayerName, number: '-', pos: '' };
+                    renderedSubNames.add(inPlayerName);
+                    html += renderPlayerRow(inPlayerObj, true);
+                }
+                return html;
+            };
+
+            bodyHtml += `<div class="squad-section-title">הרכב פותח (${teamLineup.formation})</div>`;
+            let startXISorted = [...teamLineup.startXI].sort((a, b) => (posOrder[a.player.pos] || 5) - (posOrder[b.player.pos] || 5));
+            startXISorted.forEach(p => {
+                bodyHtml += renderPlayerRow(p.player, false);
             });
+
+            let unusedSubs = teamLineup.substitutes.filter(p => !renderedSubNames.has(p.player.name));
+            if (unusedSubs.length > 0) {
+                bodyHtml += `<div class="squad-section-title" style="margin-top:25px;">ספסל (לא שותפו)</div>`;
+                unusedSubs.sort((a, b) => (posOrder[a.player.pos] || 5) - (posOrder[b.player.pos] || 5));
+                unusedSubs.forEach(p => {
+                    let posText = posHebrew[p.player.pos] || p.player.pos || '';
+                    bodyHtml += `
+                        <div class="squad-player-row" style="opacity: 0.6;">
+                            <div class="squad-player-num" style="background:#333; color:#fff;">${p.player.number || '-'}</div>
+                            <div class="squad-player-name">
+                                ${p.player.name} <span class="squad-player-pos">${posText}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
         } else {
             bodyHtml += `<div style="text-align:center; color:#888; padding:20px;">נתוני הסגל טרם עודכנו בשרת.</div>`;
         }
