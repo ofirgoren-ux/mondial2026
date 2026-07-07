@@ -993,7 +993,7 @@ window.renderScorers = function() {
 }
 
 // =========================================================================
-// מודול חלונית סגל מתקדם - תיקון כרונולוגי ויישור סופי של ה-API
+// מודול חלונית סגל מתקדם - לוגיקת זמן כרונולוגית מדויקת (ללא תתי-שורות)
 // =========================================================================
 
 window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, oppTeamName) {
@@ -1025,20 +1025,18 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
             
             .squad-section-title { color: #888; font-size: 0.95rem; border-bottom: 1px solid #222; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; text-align: center; }
             
-            .squad-player-row { display: flex; align-items: center; padding: 10px 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.02); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; direction: rtl; }
+            .squad-player-row { display: flex; align-items: center; padding: 12px 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.02); margin-bottom: 6px; border-radius: 6px; transition: background 0.2s; direction: rtl; }
             .squad-player-row:hover { background: rgba(0,229,255,0.05); border-color: rgba(0,229,255,0.2); }
             
-            /* המספר בצד ימין המוחלט בסדר אלמנטים טבעי */
-            .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 15px; font-size: 0.9rem; box-shadow: 0 0 10px rgba(0,229,255,0.2); flex-shrink: 0; }
+            .squad-player-num { background: var(--accent-cyan, #00e5ff); color: #000; font-weight: bold; width: 28px; height: 28px; display: flex; justify-content: center; align-items: center; border-radius: 4px; margin-left: 15px; font-size: 0.9rem; flex-shrink: 0; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
             
-            .squad-player-info { display: flex; align-items: center; gap: 8px; flex: 1; }
+            .squad-player-info { display: flex; align-items: center; gap: 12px; }
             .squad-player-name { font-size: 1rem; font-weight: 500; color: #e2e8f0; display: flex; align-items: center; }
+            .squad-player-pos { font-size: 0.75rem; color: #cbd5e1; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-weight: 600; }
             
             .captain-badge { color: #fbbf24; font-weight: bold; font-size: 0.8rem; margin-left: 6px; display: inline-flex; align-items: center; justify-content: center; background: rgba(251, 191, 36, 0.1); width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(251, 191, 36, 0.3); }
-            .squad-player-pos { font-size: 0.75rem; color: #cbd5e1; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; font-weight: 600; margin-right: 10px; }
             
-            /* אירועי זמן מיושרים לשמאל, בתוך מיכל ltr כדי לשמור על קריאה כרונולוגית */
-            .squad-player-events { display: flex; align-items: center; gap: 8px; margin-right: auto; justify-content: flex-end; direction: ltr; }
+            .squad-player-events { display: flex; align-items: center; gap: 8px; margin-right: auto; direction: ltr; }
             
             .tsm-event-goal { color: var(--accent-cyan, #00e5ff); font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
             .tsm-event-goal::before { content: '⚽'; font-size: 1rem; }
@@ -1136,33 +1134,96 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
         if (teamLineup) {
             const posHebrew = { 'G': 'שוער', 'D': 'הגנה', 'M': 'קישור', 'F': 'התקפה' };
             
-            let subEvents = eventsData.response ? eventsData.response.filter(e => e.team.id === apiTeamId && e.type === 'subst') : [];
-            subEvents.sort((a,b) => a.time.elapsed - b.time.elapsed);
-            
-            let subPlayersMap = {};
-            let subPlayersMapById = {};
+            // איסוף כל השחקנים (הרכב ומחליפים) ושיוך האירועים שלהם
+            let allPlayers = [];
+            teamLineup.startXI.forEach((p, idx) => {
+                allPlayers.push({ data: p.player, isStarter: true, apiOrder: idx, events: [] });
+            });
             if (teamLineup.substitutes) {
-                teamLineup.substitutes.forEach(p => { 
-                    subPlayersMap[p.player.name] = p.player; 
-                    if(p.player.id) subPlayersMapById[p.player.id] = p.player;
+                teamLineup.substitutes.forEach((p, idx) => {
+                    allPlayers.push({ data: p.player, isStarter: false, apiOrder: 100 + idx, events: [] });
                 });
             }
 
-            const getPlayerIcons = (playerObj, isSubInCheck = false) => {
-                let iconsList = [];
-                if(!eventsData.response) return '';
-                
+            let subbedInNames = new Set();
+            if (eventsData.response) {
                 eventsData.response.forEach(e => {
-                    if (e.team.id !== apiTeamId) return;
-                    
-                    let isPlayerMatch = (e.player && playerObj && e.player.id === playerObj.id) || 
-                                        (e.player && e.player.name === playerObj.name);
-                    
-                    let isAssistMatch = (e.assist && playerObj && e.assist.id === playerObj.id) || 
-                                        (e.assist && e.assist.name === playerObj.name);
+                    if (e.team.id === apiTeamId) {
+                        if (e.player && e.player.name) {
+                            let p = allPlayers.find(pl => (e.player.id && pl.data.id === e.player.id) || pl.data.name === e.player.name);
+                            if (p) p.events.push(e);
+                        }
+                        if (e.type === 'subst' && e.assist && e.assist.name) {
+                            let p = allPlayers.find(pl => (e.assist.id && pl.data.id === e.assist.id) || pl.data.name === e.assist.name);
+                            if (p) {
+                                p.events.push(e);
+                                subbedInNames.add(p.data.name);
+                            }
+                        }
+                    }
+                });
+            }
 
+            // חלוקה למשתתפים (הרכב + מחליפים שנכנסו) מול ספסל שומם
+            let participatingPlayers = [];
+            let unusedSubs = [];
+
+            allPlayers.forEach(p => {
+                if (p.isStarter || subbedInNames.has(p.data.name)) {
+                    if (p.events.length > 0) {
+                        // חותמת הזמן מחושבת על פי האירוע הראשון (הכי מוקדם)
+                        p.firstEventTime = Math.min(...p.events.map(e => e.time.elapsed));
+                    } else {
+                        // שחקני הרכב ללא אירועים מקבלים חותמת זמן 0 (מופיעים בראש הרשימה)
+                        p.firstEventTime = p.isStarter ? 0 : 999;
+                    }
+                    participatingPlayers.push(p);
+                } else {
+                    unusedSubs.push(p);
+                }
+            });
+
+            // מיון השחקנים המשתתפים לפי חותמת הזמן שלהם (כרונולוגי אמיתי).
+            // שובר שוויון (לאותה דקה): סדר הקבלה המקורי מה-API.
+            participatingPlayers.sort((a, b) => {
+                if (a.firstEventTime !== b.firstEventTime) {
+                    return a.firstEventTime - b.firstEventTime;
+                }
+                return a.apiOrder - b.apiOrder;
+            });
+
+            let captainName = "";
+            let captainId = null;
+            teamLineup.startXI.forEach(p => {
+                if (p.player.name.includes('(c)') || p.player.name.includes('(C)')) {
+                    captainName = p.player.name;
+                    captainId = p.player.id;
+                }
+            });
+
+            // פונקציית רינדור לשורה בודדת שטוחה ובלתי תלויה
+            const renderPlayerRow = (pItem) => {
+                let playerObj = pItem.data;
+                let posText = posHebrew[playerObj.pos] || playerObj.pos || '';
+                let captainHtml = '';
+                
+                let displayName = playerObj.name;
+                if (displayName.includes('(c)') || displayName.includes('(C)')) {
+                    displayName = displayName.replace(/\(c\)/gi, '').trim();
+                }
+                let isCaptain = (playerObj.id === captainId) || (playerObj.name === captainName) || (!pItem.isStarter === false && posText === 'שוער' && playerObj.number === 1);
+                
+                if (isCaptain) { 
+                    captainHtml = `<span class="captain-badge" title="קפטן הנבחרת">C</span>`; 
+                }
+
+                // רינדור אירועי השחקן (ממוינים פנימית לפי דקה)
+                let iconsList = [];
+                pItem.events.forEach(e => {
                     let min = e.time.elapsed + (e.time.extra ? '+' + e.time.extra : '') + "'";
                     let elapsed = e.time.elapsed;
+                    let isPlayerMatch = (e.player && e.player.id === playerObj.id) || (e.player && e.player.name === playerObj.name);
+                    let isAssistMatch = (e.assist && e.assist.id === playerObj.id) || (e.assist && e.assist.name === playerObj.name);
 
                     if (isPlayerMatch) {
                         if (e.type === 'Goal' && e.detail !== 'Missed Penalty') {
@@ -1174,76 +1235,47 @@ window.openTeamSquadModal = async function(selectedTeamName, selectedTeamFlag, o
                         if (e.type === 'Card' && e.detail.includes('Red')) {
                             iconsList.push({ time: elapsed, html: `<span style="color:#ef4444; font-weight:bold; font-size:0.85rem; display:flex; align-items:center; gap:4px;"><div style="width:12px; height:16px; background:#ef4444; border-radius:2px; box-shadow:0 1px 3px rgba(0,0,0,0.8);"></div>${min}</span>` });
                         }
-                        if (e.type === 'subst' && !isSubInCheck) {
+                        if (e.type === 'subst') {
                             iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-out"><span style="font-size:1.1rem;">▼</span> ${min}</span>` });
                         }
                     }
-                    
-                    if (isAssistMatch && e.type === 'subst' && isSubInCheck) {
+                    if (isAssistMatch && e.type === 'subst') {
                         iconsList.push({ time: elapsed, html: `<span class="tsm-event-sub-in"><span style="font-size:1.1rem;">▲</span> ${min}</span>` });
                     }
                 });
                 
                 iconsList.sort((a,b) => a.time - b.time);
-                return iconsList.map(item => item.html).join('');
-            };
+                let iconsHtml = iconsList.map(item => item.html).join('');
 
-            let renderedSubNames = new Set();
-            
-            const renderPlayerRow = (playerObj, isSubIn = false, isCaptain = false) => {
-                let icons = getPlayerIcons(playerObj, isSubIn);
-                let posText = posHebrew[playerObj.pos] || playerObj.pos || '';
-                let captainHtml = '';
-                
-                let displayName = playerObj.name;
-                if (displayName.includes('(c)') || displayName.includes('(C)')) {
-                    displayName = displayName.replace(/\(c\)/gi, '').trim();
-                    isCaptain = true;
-                }
-                if (isCaptain || (!isSubIn && posText === 'שוער' && playerObj.number === 1)) { 
-                    captainHtml = `<span class="captain-badge" title="קפטן הנבחרת">C</span>`; 
-                }
-                
-                let html = `
+                return `
                     <div class="squad-player-row">
                         <div class="squad-player-num">${playerObj.number || '-'}</div>
                         <div class="squad-player-info">
                             <div class="squad-player-name">${captainHtml} ${displayName}</div>
                             <span class="squad-player-pos">${posText}</span>
                         </div>
-                        <div class="squad-player-events">${icons}</div>
+                        <div class="squad-player-events">${iconsHtml}</div>
                     </div>
                 `;
-                
-                let outEvent = subEvents.find(e => {
-                    return (e.player && e.player.id === playerObj.id) || (e.player && e.player.name === playerObj.name);
-                });
-                if (outEvent && outEvent.assist && outEvent.assist.name) {
-                    let inPlayerName = outEvent.assist.name;
-                    let inPlayerObj = subPlayersMapById[outEvent.assist.id] || subPlayersMap[inPlayerName] || { name: inPlayerName, number: '-', pos: '' };
-                    renderedSubNames.add(inPlayerName);
-                    html += renderPlayerRow(inPlayerObj, true, false);
-                }
-                return html;
             };
 
-            bodyHtml += `<div class="squad-section-title">הרכב פותח (${teamLineup.formation})</div>`;
-            
-            let startXI = teamLineup.startXI;
-            startXI.forEach((p, index) => {
-                bodyHtml += renderPlayerRow(p.player, false, false);
+            // הצגת השחקנים שהשתתפו במשחק (ממוין כרונולוגית)
+            bodyHtml += `<div class="squad-section-title">שחקנים שותפו (לפי סדר התרחשויות)</div>`;
+            participatingPlayers.forEach(pItem => {
+                bodyHtml += renderPlayerRow(pItem);
             });
 
-            let unusedSubs = teamLineup.substitutes.filter(p => !renderedSubNames.has(p.player.name));
+            // הצגת שחקני ספסל שלא קיבלו דקות
             if (unusedSubs.length > 0) {
                 bodyHtml += `<div class="squad-section-title" style="margin-top:25px;">ספסל (לא שותפו)</div>`;
-                unusedSubs.forEach(p => {
-                    let posText = posHebrew[p.player.pos] || p.player.pos || '';
+                unusedSubs.forEach(pItem => {
+                    let playerObj = pItem.data;
+                    let posText = posHebrew[playerObj.pos] || playerObj.pos || '';
                     bodyHtml += `
                         <div class="squad-player-row" style="opacity: 0.5;">
-                            <div class="squad-player-num" style="background:#333; color:#fff; box-shadow:none;">${p.player.number || '-'}</div>
+                            <div class="squad-player-num" style="background:#333; color:#fff; box-shadow:none;">${playerObj.number || '-'}</div>
                             <div class="squad-player-info">
-                                <div class="squad-player-name" style="color:#888;">${p.player.name}</div>
+                                <div class="squad-player-name" style="color:#888;">${playerObj.name}</div>
                                 <span class="squad-player-pos" style="background: rgba(255,255,255,0.05); color:#666;">${posText}</span>
                             </div>
                             <div class="squad-player-events"></div>
