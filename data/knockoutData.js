@@ -416,13 +416,20 @@ window.knockoutBracket = {
         { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '3', outcome: 'winner' } },
         { team1: { name: 'ארצות הברית', flag: 'us', score: '1', outcome: 'loser' }, team2: { name: 'בלגיה', flag: 'be', score: '4', outcome: 'winner' } },
         { team1: { name: 'פורטוגל', flag: 'pt', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '1', outcome: 'winner' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'מצרים', flag: 'eg', score: '2', outcome: 'loser' } },
-        { team1: { name: 'שווייץ', flag: 'ch', score: '0 (3)', outcome: 'loser' }, team2: { name: 'קולומביה', flag: 'co', score: '0 (4)', outcome: 'winner' } }
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'מצרים', flag: 'eg', score: '-', outcome: 'pending' } },
+        { team1: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
+        { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
+    ],
+    semiFinals: [
+        { team1: { name: 'מנצחת רבע גמר 1', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 2', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת רבע גמר 3', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
+    ],
+    final: [
+        { team1: { name: 'מנצחת חצי גמר 1', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת חצי גמר 2', flag: 'un', score: '-', outcome: 'pending' } }
     ]
 };
