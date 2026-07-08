@@ -395,8 +395,8 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     .podium-stats { font-size: 0.55rem; padding: 4px 2px; width: 100%; border-radius: 8px; letter-spacing: -0.2px; }
 }
 
-#dynamic-bracket { display: flex; flex-direction: row; flex-wrap: nowrap !important; align-items: stretch; gap: 50px; min-width: 800px; padding: 40px 0 20px 0; }
-.bracket-column { display: flex; flex-direction: column; justify-content: space-around; width: 250px; flex: none; position: relative; }
+/*#dynamic-bracket { display: flex; flex-direction: row; flex-wrap: nowrap !important; align-items: stretch; gap: 50px; min-width: 800px; padding: 40px 0 20px 0; }
+.bracket-column { display: flex; flex-direction: column; justify-content: space-around; width: 250px; flex: none; position: relative; }*/
 .round-title { position: absolute; top: -35px; left: 0; right: 0; text-align: center; margin: 0; }
 .bracket-match { position: relative; margin: 10px 0; z-index: 2; overflow: visible !important; }
 .bracket-match::before, .bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); display: none !important; }
