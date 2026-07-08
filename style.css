@@ -255,22 +255,19 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
 
 /* --- Bracket --- */
+/* --- Bracket --- */
 #bracket-view {
     width: 100%;
-    overflow: hidden; /* חובה ל-Panzoom כדי שלא יהיו התנגשויות */
-    position: relative;
-    touch-action: none; /* מעביר את השליטה באצבעות לסקריפט */
-    padding-bottom: 20px; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px;
     animation: tabFadeIn 0.4s ease;
 }
 .knockout-container { background-color: transparent; border-radius: 12px; padding: 10px; }
 .tournament-bracket {
     display: flex;
     min-width: max-content;
-    cursor: grab;
-}
-.tournament-bracket:active {
-    cursor: grabbing;
 }
 .bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
 .round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
@@ -395,8 +392,8 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     .podium-stats { font-size: 0.55rem; padding: 4px 2px; width: 100%; border-radius: 8px; letter-spacing: -0.2px; }
 }
 
-/*#dynamic-bracket { display: flex; flex-direction: row; flex-wrap: nowrap !important; align-items: stretch; gap: 50px; min-width: 800px; padding: 40px 0 20px 0; }
-.bracket-column { display: flex; flex-direction: column; justify-content: space-around; width: 250px; flex: none; position: relative; }*/
+#dynamic-bracket { display: flex; flex-direction: row; flex-wrap: nowrap !important; align-items: stretch; gap: 50px; min-width: 800px; padding: 40px 0 20px 0; }
+.bracket-column { display: flex; flex-direction: column; justify-content: space-around; width: 250px; flex: none; position: relative; }
 .round-title { position: absolute; top: -35px; left: 0; right: 0; text-align: center; margin: 0; }
 .bracket-match { position: relative; margin: 10px 0; z-index: 2; overflow: visible !important; }
 .bracket-match::before, .bracket-match::after { content: ''; position: absolute; left: -2rem; top: 50%; width: 2rem; border-bottom: 2px solid var(--border-color); display: none !important; }
