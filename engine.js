@@ -853,7 +853,7 @@ window.renderKnockout = function() {
         if (elem) {
             Panzoom(elem, {
                 maxScale: 2,
-                minScale: 0.25, // מאפשר הקטנה משמעותית של המסך
+                    minScale: 0.1, // מאפשר הקטנה משמעותית של המסך
                 contain: 'outside'
             });
         }
