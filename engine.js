@@ -120,7 +120,7 @@ window.switchView = function(viewName) {
         renderStandings();
     } else if (viewName === 'bracket') {
         document.getElementById('bracket-view').style.display = 'block';
-        if(titleEl) titleEl.innerText = "עץ הנוקאאוט - 32 הגדולות";
+        if(titleEl) titleEl.innerText = "עץ הנוקאאוט - שלבי הטורניר";
         renderKnockout();
     } else if (viewName === 'scorers') {
         document.getElementById('scorers-view').style.display = 'block';
@@ -804,9 +804,15 @@ window.renderKnockout = function() {
     Object.keys(window.knockoutBracket).forEach(key => {
         const roundData = window.knockoutBracket[key];
         const col = document.createElement('div');
-        col.className = 'bracket-column';
+        col.className = 'bracket-column round-' + key;
         
-        let title = key === 'roundOf32' ? '32 הגדולות' : 'שמינית גמר';
+        let title = '';
+        if (key === 'roundOf32') title = '32 הגדולות';
+        else if (key === 'roundOf16') title = 'שמינית גמר';
+        else if (key === 'quarterFinals') title = 'רבע גמר';
+        else if (key === 'semiFinals') title = 'חצי גמר';
+        else if (key === 'final') title = 'הגמר הגדול';
+
         col.innerHTML = `<div class="round-title">${title}</div>`;
         
         roundData.forEach((match, index) => {
