@@ -1,5 +1,5 @@
 window.hebrewToEnglishMap = {
-    "דרום אפריקה": ["South Africa"], "קנדה": ["Canada"], "ברזיל": ["Brazil"], "יפן": ["Japan"],
+    "דרום אפריקה": ["South Africa"], "קנדה": ["Canada"], "ברזיל": ["Brazil"], "יפן": ["Japan"], 
     "גרמניה": ["Germany"], "פרגוואי": ["Paraguay"], "הולנד": ["Netherlands"], "מרוקו": ["Morocco"],
     "חוף השנהב": ["Ivory Coast", "Cote d'Ivoire"], "נורבגיה": ["Norway"], "נורווגיה": ["Norway"],
     "צרפת": ["France"], "שוודיה": ["Sweden"], "מקסיקו": ["Mexico"], "אקוודור": ["Ecuador"],
