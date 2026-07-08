@@ -261,13 +261,18 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     animation: tabFadeIn 0.4s ease;
 }
 .knockout-container { background-color: transparent; border-radius: 12px; padding: 10px; }
 .tournament-bracket {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+    gap: 50px;
     min-width: max-content;
+    padding: 40px 20px 20px 20px;
 }
 .bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
 .round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
