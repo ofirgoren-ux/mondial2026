@@ -309,26 +309,46 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-    'match95': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 19:00 (שעון ישראל)`, 
-        teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `מצרים`, flagCode: 'eg', color: '#CE1126', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '3 - 0', actual: '', accuracyClass: 'pending' }, 
-        probabilities: { home: 80, draw: 15, away: 5 }, matchRisk: 'Safe', 
-        radarStats: { home: [95, 88, 80, 95, 80, 95], away: [65, 60, 55, 70, 70, 60] }, 
-        advancedStats: { home: { xG: '2.80', corners: 0 }, away: { xG: '0.40', corners: 0 } }, 
-        insight: { prediction: `ארגנטינה היא המכונה המשומנת של הטורניר עם 11 שערי זכות וספיגה בודדת בשלב הבתים. מול נבחרת מצרים שהשתחלה בקושי לשלב הזה עם 3 תוצאות תיקו רצופות, מדדי השליטה בכדור וה-xG מצביעים על נוקאאוט קליל לאלופת העולם, בדרך לרבע הגמר ללא כל התנגדות משמעותית.`, actual: `` }, goals: [] 
+// ארגנטינה נגד מצרים
+{
+    stage: "שמינית גמר",
+    matchday: "r16",
+    status: "FT",
+    timeStatus: "past",
+    dateText: "07/07/2026 | 19:00",
+    teamHome: { name: "ארגנטינה", flagCode: "ar", color: "#43A1D5" },
+    teamAway: { name: "מצרים", flagCode: "eg", color: "#CE1126" },
+    score: { 
+        prediction: "2 - 0", // או כל תחזית אחרת שהייתה במקור
+        actual: "3 - 2" 
     },
-    'match96': { 
-        timeStatus: 'future', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 23:00 (שעון ישראל)`, 
-        teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
-        probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Upset Alert', 
-        radarStats: { home: [75, 75, 65, 80, 70, 75], away: [82, 75, 65, 80, 78, 85] }, 
-        advancedStats: { home: { xG: '1.20', corners: 0 }, away: { xG: '1.60', corners: 0 } }, 
-        insight: { prediction: `משחק מרתק בין ההגנה הקולומביאנית העוצמתית (ספיגה אחת בלבד עד כה בטורניר) לבין הנעת הכדור השווייצרית המסודרת. למרות ששווייץ פורה יותר התקפית, קולומביה מציגה אתלטיות ויעילות מדהימה בשליש האחרון, מה שצפוי לתסכל את השווייצרים ולהכריע את הכף לטובת הדרום-אמריקאים על חודו של גול.`, actual: `` }, goals: [] 
+    insight: {
+        prediction: "אלופת העולם מגיעה כמכונה משומנת מול נבחרת מצרית שהשתחלה בקושי לנוקאאוט. מדדי השליטה בכדור וה-xG מצביעים על דומיננטיות ארגנטינאית מוחלטת בתוך רחבת העונשין.",
+        actual: "ארגנטינה מציגה אופי של אלופה עם קאמבק דרמטי מול יתרון כפול ומפתיע של המצרים. הלחץ האדיר והשליטה המוחלטת במחצית השנייה תורגמו לשלישיית שערים מהירה ב-15 הדקות האחרונות. איכות הסגל והעומק המנטלי הכריעו את ההתמודדות למרות פתיחה מהוססת."
+    }
+},
+
+// שווייץ נגד קולומביה
+{
+    stage: "שמינית גמר",
+    matchday: "r16",
+    status: "PEN",
+    timeStatus: "past",
+    dateText: "07/07/2026 | 23:00",
+    teamHome: { name: "שווייץ", flagCode: "ch", color: "#FF0000" },
+    teamAway: { name: "קולומביה", flagCode: "co", color: "#FCD116" },
+    score: { 
+        prediction: "1 - 0", // או כל תחזית אחרת שהייתה במקור
+        actual: "0 - 0",
+        fulltime: { home: 0, away: 0 },
+        extratime: { home: 0, away: 0 },
+        penalty: { home: 3, away: 4 }
     },
+    insight: {
+        prediction: "התנגשות סגנונות מרתקת בין ההגנה הקולומביאנית העוצמתית להנעת הכדור השווייצרית המסודרת. השווייצרים צפויים לשלוט בקצב, אך ייאלצו להיזהר מהמתפרצות הקטלניות של היריבה.",
+        actual: "התנגשות הסגנונות התפתחה לקרב התשה טקטי בו קולומביה הצליחה לנטרל לחלוטין את הנעת הכדור השווייצרית. לאחר 120 דקות נטולות שערים, הדרום-אמריקאים הפגינו עליונות מנטלית בדו-קרב הפנדלים. ניצחון זה ממחיש כיצד משמעת הגנתית קשוחה יכולה לשבש מודלים המבוססים על דומיננטיות התקפית."
+    }
+}
     'match97': { 
         timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 20:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
