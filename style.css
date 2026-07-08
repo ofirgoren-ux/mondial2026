@@ -9,7 +9,7 @@
 }
 
 * { box-sizing: border-box; font-family: 'Heebo', sans-serif; }
-body { background-color: var(--bg-color); color: var(--text-main); margin: 0; display: flex; direction: rtl; overflow-x: hidden; }
+body { background-color: var(--bg-color); color: var(--text-main); margin: 0; display: flex; direction: rtl; overflow-x: auto; }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 10px;}
