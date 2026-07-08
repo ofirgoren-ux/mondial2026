@@ -255,19 +255,16 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
 .lb-goals { font-size: 1.6rem; font-weight: 900; color: var(--accent-cyan); width: 40px; text-align: center; }
 
 /* --- Bracket --- */
-/*#bracket-view { width: 100%; overflow-x: auto; padding-bottom: 20px; animation: tabFadeIn 0.4s ease; }*/
-#bracket-view {
-    width: 100%;
-    overflow-x: auto; /* מאפשר גלילה אופקית עצמאית רק לאזור זה */
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch; /* גלילה חלקה וטבעית במכשירי אפל/מובייל */
-    padding-bottom: 15px; /* מונע מפס הגלילה להסתיר תוכן */
+#bracket-view { 
+    width: 100%; 
+    overflow: visible; 
+    padding-bottom: 20px; 
+    animation: tabFadeIn 0.4s ease; 
 }
 .knockout-container { background-color: transparent; border-radius: 12px; padding: 10px; }
-/*.tournament-bracket { display: flex; flex-direction: row; align-items: center; gap: 4rem; direction: rtl; min-width: 800px; }*/
 .tournament-bracket {
     display: flex;
-    min-width: max-content; /* כופה על העץ לשמור על הרוחב המלא שלו ולא להימעך */
+    min-width: max-content; 
 }
 .bracket-column { display: flex; flex-direction: column; justify-content: space-around; gap: 2.5rem; }
 .round-title { text-align: center; font-size: 1.1rem; color: var(--accent-cyan); margin-bottom: 1.5rem; font-weight: 800; }
@@ -372,7 +369,8 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     .score-number { font-size: 1.6rem; padding: 4px 14px; }
     .sidebar { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; border-left: none; width: 280px; }
     .sidebar.open { transform: translateX(0); box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
-    .main-content { margin-right: 0; width: 100%; max-width: 100vw; padding: 15px 10px; overflow-x: hidden; }
+    /* כאן התיקון שמונע את החסימה במובייל */
+    .main-content { margin-right: 0; width: 100%; max-width: 100vw; padding: 15px 10px; overflow-x: visible; }
 }
 
 @media (max-width: 900px) {
@@ -474,7 +472,7 @@ canvas { max-height: 190px !important; width: 100% !important; margin: auto; }
     letter-spacing: 1.5px;
     text-shadow: 0 0 15px rgba(102, 252, 241, 0.4);
     animation: pulseText 1.2s infinite alternate;
-    white-space: nowrap; /* מונע שבירת שורות */
+    white-space: nowrap;
 }
 
 @keyframes bounce {
