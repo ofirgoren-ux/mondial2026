@@ -846,8 +846,19 @@ window.renderKnockout = function() {
         });
         container.appendChild(col);
     });
-}
 
+    // הפעלת מנוע Panzoom לאחר ציור העץ
+    if (typeof Panzoom !== 'undefined') {
+        const elem = document.querySelector('.tournament-bracket');
+        if (elem) {
+            Panzoom(elem, {
+                maxScale: 2,
+                minScale: 0.25, // מאפשר הקטנה משמעותית של המסך
+                contain: 'outside'
+            });
+        }
+    }
+}
 window.openJourneyModal = function(teamName, flagCode) {
     const db = getSafeDatabase();
     let matchesPlayed = [];
