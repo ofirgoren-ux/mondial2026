@@ -309,46 +309,43 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-// ארגנטינה נגד מצרים
-{
-    stage: "שמינית גמר",
-    matchday: "r16",
-    status: "FT",
-    timeStatus: "past",
-    dateText: "07/07/2026 | 19:00",
-    teamHome: { name: "ארגנטינה", flagCode: "ar", color: "#43A1D5" },
-    teamAway: { name: "מצרים", flagCode: "eg", color: "#CE1126" },
-    score: { 
-        prediction: "2 - 0", // או כל תחזית אחרת שהייתה במקור
-        actual: "3 - 2" 
+    'match95': {
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 19:00 (שעון ישראל)`,
+        teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } },
+        teamAway: { name: `מצרים`, flagCode: 'eg', color: '#CE1126', cards: { yellow: [], red: [] } },
+        status: "FT",
+        score: { prediction: '3 - 1', actual: '3 - 2', accuracyClass: 'trend' },
+        probabilities: { home: 80, draw: 15, away: 5 }, matchRisk: 'Safe',
+        radarStats: { home: [90, 85, 80, 95, 75, 95], away: [70, 60, 65, 70, 80, 65] },
+        advancedStats: { home: { xG: '2.85', corners: 0 }, away: { xG: '1.10', corners: 0 } },
+        insight: {
+            prediction: `אלופת העולם מגיעה כמכונה משומנת מול נבחרת מצרית שהשתחלה בקושי לנוקאאוט. מדדי השליטה בכדור וה-xG מצביעים על דומיננטיות ארגנטינאית מוחלטת בתוך רחבת העונשין.`,
+            actual: `ארגנטינה הוכיחה אופי של אלופה עם קאמבק דרמטי מול יתרון כפול ומפתיע של המצרים. הלחץ האדיר במחצית השנייה תורגם לשלישיית שערים מהירה, כולל שער ניצחון של אנזו פרננדס עמוק בתוספת הזמן. איכות הסגל והעומק המנטלי הכריעו את ההתמודדות.`
+        },
+        goals: []
     },
-    insight: {
-        prediction: "אלופת העולם מגיעה כמכונה משומנת מול נבחרת מצרית שהשתחלה בקושי לנוקאאוט. מדדי השליטה בכדור וה-xG מצביעים על דומיננטיות ארגנטינאית מוחלטת בתוך רחבת העונשין.",
-        actual: "ארגנטינה מציגה אופי של אלופה עם קאמבק דרמטי מול יתרון כפול ומפתיע של המצרים. הלחץ האדיר והשליטה המוחלטת במחצית השנייה תורגמו לשלישיית שערים מהירה ב-15 הדקות האחרונות. איכות הסגל והעומק המנטלי הכריעו את ההתמודדות למרות פתיחה מהוססת."
-    }
-},
-
-// שווייץ נגד קולומביה
-{
-    stage: "שמינית גמר",
-    matchday: "r16",
-    status: "PEN",
-    timeStatus: "past",
-    dateText: "07/07/2026 | 23:00",
-    teamHome: { name: "שווייץ", flagCode: "ch", color: "#FF0000" },
-    teamAway: { name: "קולומביה", flagCode: "co", color: "#FCD116" },
-    score: { 
-        prediction: "1 - 0", // או כל תחזית אחרת שהייתה במקור
-        actual: "0 - 0",
-        fulltime: { home: 0, away: 0 },
-        extratime: { home: 0, away: 0 },
-        penalty: { home: 3, away: 4 }
+    'match96': {
+        timeStatus: 'past', matchday: 'r16', stage: "r16", dateText: `07/07/2026 | 23:00 (שעון ישראל)`,
+        teamHome: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } },
+        teamAway: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } },
+        status: "PEN",
+        score: { 
+            prediction: '1 - 0', 
+            actual: '0 - 0', 
+            accuracyClass: 'wrong',
+            fulltime: { home: 0, away: 0 },
+            extratime: { home: 0, away: 0 },
+            penalty: { home: 3, away: 4 }
+        },
+        probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Upset Alert',
+        radarStats: { home: [75, 80, 70, 80, 75, 75], away: [80, 70, 75, 85, 85, 80] },
+        advancedStats: { home: { xG: '1.05', corners: 0 }, away: { xG: '1.15', corners: 0 } },
+        insight: {
+            prediction: `התנגשות סגנונות מרתקת בין ההגנה הקולומביאנית העוצמתית להנעת הכדור השווייצרית המסודרת. השווייצרים צפויים לשלוט בקצב, אך ייאלצו להיזהר מהמתפרצות הקטלניות של היריבה.`,
+            actual: `קרב התשה טקטי בו קולומביה הצליחה לנטרל לחלוטין את הנעת הכדור השווייצרית. לאחר 120 דקות נטולות שערים, הדרום-אמריקאים הפגינו עליונות מנטלית בדו-קרב הפנדלים והכריעו את המשחק. הניצחון ממחיש כיצד משמעת הגנתית קשוחה יכולה לשבש מערכים מבוססי החזקת כדור.`
+        },
+        goals: []
     },
-    insight: {
-        prediction: "התנגשות סגנונות מרתקת בין ההגנה הקולומביאנית העוצמתית להנעת הכדור השווייצרית המסודרת. השווייצרים צפויים לשלוט בקצב, אך ייאלצו להיזהר מהמתפרצות הקטלניות של היריבה.",
-        actual: "התנגשות הסגנונות התפתחה לקרב התשה טקטי בו קולומביה הצליחה לנטרל לחלוטין את הנעת הכדור השווייצרית. לאחר 120 דקות נטולות שערים, הדרום-אמריקאים הפגינו עליונות מנטלית בדו-קרב הפנדלים. ניצחון זה ממחיש כיצד משמעת הגנתית קשוחה יכולה לשבש מודלים המבוססים על דומיננטיות התקפית."
-    }
-}
     'match97': { 
         timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 20:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
@@ -381,8 +378,8 @@ const knockoutMatches = {
     },
     'match100': { 
         timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 21:00 (שעון ישראל)`, 
-        teamHome: { name: `מנצחת 95`, flagCode: 'un', color: '#888888', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `מנצחת 96`, flagCode: 'un', color: '#888888', cards: { yellow: [], red: [] } }, 
+        teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } }, 
         score: { prediction: '- - -', actual: '', accuracyClass: 'pending' }, 
         probabilities: { home: 33, draw: 34, away: 33 }, matchRisk: 'Safe', 
         radarStats: { home: [50, 50, 50, 50, 50, 50], away: [50, 50, 50, 50, 50, 50] }, 
@@ -419,13 +416,13 @@ window.knockoutBracket = {
         { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '3', outcome: 'winner' } },
         { team1: { name: 'ארצות הברית', flag: 'us', score: '1', outcome: 'loser' }, team2: { name: 'בלגיה', flag: 'be', score: '4', outcome: 'winner' } },
         { team1: { name: 'פורטוגל', flag: 'pt', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '1', outcome: 'winner' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'מצרים', flag: 'eg', score: '-', outcome: 'pending' } },
-        { team1: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'מצרים', flag: 'eg', score: '2', outcome: 'loser' } },
+        { team1: { name: 'שווייץ', flag: 'ch', score: '0 (3)', outcome: 'loser' }, team2: { name: 'קולומביה', flag: 'co', score: '0 (4)', outcome: 'winner' } }
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
     ]
 };
