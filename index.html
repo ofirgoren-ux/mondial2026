@@ -2,187 +2,68 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUNDIAL 2026 AI Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <link rel="stylesheet" href="style.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundial 2026 Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- מסך טעינה חסין תקלות (Pure CSS) -->
-    <div id="loader-overlay">
-        <div class="loader-content">
-            <div class="soccer-ball"></div>
-            <div class="ball-shadow"></div>
-            <div class="loader-text">מעדכן נתוני מונדיאל חמים...</div>
-        </div>
-    </div>
-
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
-
-    <aside class="sidebar" id="main-sidebar">
-        <div class="sidebar-brand">
-            MUNDIAL 2026<br>
-            <span>AI Dashboard</span>
-        </div>
-        
-        <div class="nav-title">ניווט ראשי</div>
-        
-        <div class="nav-item">
-            <a href="#" class="nav-link active" id="nav-matches" onclick="currentMdFilter='all'; switchView('matches'); applyFilters();">
-                <span class="icon">🏟️</span> שלב הבתים
-            </a>
-            <div class="submenu" id="submenu-groups" style="display: flex;">
-                <a href="#" class="submenu-btn active" data-md="all" onclick="currentMdFilter='all'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">כל המשחקים</a>
-                <a href="#" class="submenu-btn" data-md="1" onclick="currentMdFilter='1'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 1</a>
-                <a href="#" class="submenu-btn" data-md="2" onclick="currentMdFilter='2'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 2</a>
-                <a href="#" class="submenu-btn" data-md="3" onclick="currentMdFilter='3'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">מחזור 3</a>
-            </div>
-        </div>
-
-        <div class="nav-item">
-            <a href="#" class="nav-link" id="nav-standings" onclick="switchView('standings')">
-                <span class="icon">📊</span> טבלת בתים
-            </a>
-        </div>
-
-        <div class="nav-item">
-            <a href="#" class="nav-link" id="nav-scorers" onclick="switchView('scorers')">
-                <span class="icon">⚽</span> מלך השערים
-            </a>
-        </div>
-
-        <div class="nav-item">
-            <a href="#" class="nav-link" id="nav-bracket" onclick="switchView('bracket')">
-                <span class="icon">🏆</span> עץ הנוקאאוט
-            </a>
-            <div class="submenu bracket-submenu" id="submenu-knockout" style="display: none;">
-                <a href="#" class="submenu-btn" data-md="r32" onclick="currentMdFilter='r32'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">32 הגדולות</a>
-                <a href="#" class="submenu-btn" data-md="r16" onclick="currentMdFilter='r16'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">16 הגדולות</a>
-                <a href="#" class="submenu-btn" data-md="qf" onclick="currentMdFilter='qf'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">רבע גמר (8)</a>
-                <a href="#" class="submenu-btn" data-md="sf" onclick="currentMdFilter='sf'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">חצי גמר</a>
-                <a href="#" class="submenu-btn" data-md="final" onclick="currentMdFilter='final'; switchView('matches'); applyFilters(); closeMobileMenuIfOpen();">הגמר</a>
-            </div>
-        </div>
-
+    <div class="sidebar">
+        <div class="sidebar-brand">Mundial <span>2026</span></div>
+        <div class="nav-title">Navigation</div>
+        <div class="nav-link active" onclick="showView('matches')">Matches</div>
+        <div class="nav-link" onclick="showView('standings')">Standings</div>
+        <div class="nav-link" onclick="showView('bracket')">Knockout</div>
+        <div class="nav-link" onclick="showView('scorers')">Scorers</div>
         <div class="model-info-box">
-            <h4>מודל הניבוי</h4>
+            <h4>AI Insights</h4>
             <ol>
-                <li>איסוף נתוני קבוצות ו-xG</li>
-                <li>שקלול מדדי כושר (רדאר)</li>
-                <li>הפקת הסתברות ותחזית</li>
+                <li>Tournament Stats</li>
+                <li>Match Predictions</li>
+                <li>Player Analysis</li>
             </ol>
         </div>
-    </aside>
+    </div>
 
-    <main class="main-content">
-        
-        <div class="mobile-nav-toggle" onclick="toggleMobileMenu()">
-            <span>☰</span> תפריט
-        </div>
-
-        <header class="top-header">
+    <div class="main-content">
+        <div class="top-header">
             <div class="header-titles">
-                <h1 id="main-title">שלב הבתים – מודל הסתברותי</h1>
-                <p>סקירה וניתוח סטטיסטי של משחקי הטורניר, מבוסס מודל למידת מכונה (AI).</p>
+                <h1>Tournament Overview</h1>
+                <p>Real-time updates and AI-driven projections</p>
             </div>
-
-            <div class="stats-row">
-                <div class="stat-box">
-                    <div class="stat-val" style="color: #00ff88" id="stat-overall">0%</div>
-                    <div class="stat-lbl">אחוזי הצלחה</div>
+            <div class="stats-row" id="top-stats">
                 </div>
-                <div class="stat-box">
-                    <div class="stat-val" style="color: #ffd700" id="stat-trend">0%</div>
-                    <div class="stat-lbl">כיוון נכון</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-val" style="color: #00ff88" id="stat-exact">0%</div>
-                    <div class="stat-lbl">פגיעה מדויקת</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-val" id="stat-total">0</div>
-                    <div class="stat-lbl">סה"כ משחקים</div>
-                </div>
-            </div>
-        </header>
-
-        <div class="filters-row" id="main-filters">
-            <div class="filter-group">
-                <span class="filter-label">זמן:</span>
-                <button class="time-btn active" data-time="all">הכל</button>
-                <button class="time-btn" data-time="past">שוחקו</button>
-                <button class="time-btn" data-time="future">עתיד</button>
-            </div>
-            <div class="filter-group" id="filter-stages-container">
-                <span class="filter-label">בתים:</span>
-                <button class="stage-btn active" data-stage="all">הכל</button>
-                <button class="stage-btn" data-stage="A">א'</button>
-                <button class="stage-btn" data-stage="B">ב'</button>
-                <button class="stage-btn" data-stage="C">ג'</button>
-                <button class="stage-btn" data-stage="D">ד'</button>
-                <button class="stage-btn" data-stage="E">ה'</button>
-                <button class="stage-btn" data-stage="F">ו'</button>
-                <button class="stage-btn" data-stage="G">ז'</button>
-                <button class="stage-btn" data-stage="H">ח'</button>
-                <button class="stage-btn" data-stage="I">ט'</button>
-                <button class="stage-btn" data-stage="J">י'</button>
-                <button class="stage-btn" data-stage="K">י"א</button>
-                <button class="stage-btn" data-stage="L">י"ב</button>
-            </div>
         </div>
 
-        <div id="matches-view">
+        <div id="matches-view" class="view-content">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <span class="filter-label">Stage</span>
+                    <button class="stage-btn active">Group</button>
+                    <button class="stage-btn">Knockout</button>
+                </div>
+            </div>
             <div class="matches-grid" id="matches-container"></div>
         </div>
-        
-        <div id="standings-view" class="standings-grid" style="display:none;"></div>
-        
-        <div id="scorers-view" style="display:none;"></div>
-        
-        <div id="bracket-view" style="display:none;">
-            <div id="dynamic-bracket" class="bracket-container"></div>
+
+        <div id="standings-view" class="view-content" style="display:none;"></div>
+
+        <div id="bracket-view" class="view-content" style="display:none;">
+            <div class="knockout-container" id="dynamic-bracket"></div>
         </div>
 
-    </main>
-
-    <!-- מודל "מסע הנבחרת" הקיים -->
-    <div id="teamJourneyModal" class="modal-overlay" onclick="closeJourneyModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header" id="journey-header">
-                <div class="modal-close" onclick="closeJourneyModal()">×</div>
-                <h2 id="journey-title">שם נבחרת</h2>
-            </div>
-            <div class="modal-body">
-                <div class="geek-stats-row" id="journey-stats"></div>
-                <h3 style="margin: 20px 0 10px; font-size: 1.1rem; color: var(--text-main);">מסע הנבחרת:</h3>
-                <div class="timeline" id="journey-timeline"></div>
-            </div>
+        <div id="scorers-view" class="view-content" style="display:none;">
+            <div class="scorers-dashboard" id="scorers-container"></div>
         </div>
     </div>
 
-    <!-- מודל פירוט אירועי משחק (שערים וכרטיסים) -->
-    <div id="matchEventsModal" class="modal-overlay" onclick="closeMatchEventsModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header" style="padding: 20px; border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.2); position:relative;">
-                <div class="modal-close" onclick="closeMatchEventsModal()">×</div>
-                <h2 id="events-title" style="margin: 0; font-size: 1.3rem; color: var(--accent-cyan); text-align: center; font-weight:900;">אירועי משחק</h2>
-            </div>
-            <div class="modal-body" id="events-body-content" style="padding: 20px; max-height: 400px; overflow-y: auto;">
-                <!-- התוכן המפורט והכרונולוגי יוזרק לכאן אוטומטית -->
-            </div>
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content" id="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modal-body" class="modal-body"></div>
         </div>
     </div>
 
-    <!-- טעינת הנתונים -->
-    <script src="api-service.js"></script>
-    <script src="data/md1.js"></script>
-    <script src="data/md2.js"></script>
-    <script src="data/knockoutData.js"></script>
-    <script src="data/md3.js"></script>
-    <script src="data/squadsData.js"></script>
+    <script src="knockoutData.js"></script>
     <script src="engine.js"></script>
-   
 </body>
 </html>
