@@ -846,9 +846,8 @@ window.renderKnockout = function() {
         });
         container.appendChild(col);
     });
-
-  
 }
+
 window.openJourneyModal = function(teamName, flagCode) {
     const db = getSafeDatabase();
     let matchesPlayed = [];
