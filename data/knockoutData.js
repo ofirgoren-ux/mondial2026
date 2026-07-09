@@ -347,7 +347,7 @@ const knockoutMatches = {
         goals: []
     },
     'match97': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 20:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
@@ -357,7 +357,7 @@ const knockoutMatches = {
         insight: { prediction: `צרפת מגיעה לרבע הגמר כפייבוריטית מוחלטת אחרי שדרסה את הטורניר עם 10 שערי זכות וספיגה בודדת. המרוקאים מביאים המון לב והגנה חזקה, אך מדדי ה-xG והעומק הצרפתי מצביעים על עליונות טקטית ופיזית שתכריע את המשחק מוקדם יחסית ותשלח את הטריקולור לחצי הגמר.`, actual: `` }, goals: [] 
     },
     'match98': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 21:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
         teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
         score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
@@ -367,7 +367,7 @@ const knockoutMatches = {
         insight: { prediction: `התנגשות אדירה בין המכונה ההתקפית של נורווגיה והאלנד לבין האופי והווינריות של אנגליה במאני-טיים. הסטטיסטיקה מראה שוויון כמעט מוחלט, אך יעילות הקישור האנגלי והניסיון במעמדים אלו עשויים להעניק לאנגלים ניצחון דרמטי על חודו של גול במשחק שיוכרע בפרטים הקטנים.`, actual: `` }, goals: [] 
     },
     'match99': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 19:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, 
