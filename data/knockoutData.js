@@ -419,10 +419,16 @@ window.knockoutBracket = {
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'מצרים', flag: 'eg', score: '2', outcome: 'loser' } },
         { team1: { name: 'שווייץ', flag: 'ch', score: '0 (3)', outcome: 'loser' }, team2: { name: 'קולומביה', flag: 'co', score: '0 (4)', outcome: 'winner' } }
     ],
-    quarterFinals: [
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מרוקו', flag: 'ma', score: '-', outcome: 'pending' } },
+   quarterFinals: [
+        // משחק 1 המעודכן: צרפת מנצחת 2-0 ומרוקו מודחת
+        { team1: { name: 'צרפת', flag: 'fr', score: '2', outcome: 'winner' }, team2: { name: 'מרוקו', flag: 'ma', score: '0', outcome: 'loser' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'קולומביה', flag: 'co', score: '-', outcome: 'pending' } }
-    ]
+        { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
+    ],
+    semiFinals: [
+        // חצי גמר 1: צרפת תופסת את מקומה וממתינה למנצחת בין נורווגיה לאנגליה
+        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 2', flag: 'un', score: '-', outcome: 'pending' } },
+        { team1: { name: 'מנצחת רבע גמר 3', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
+    ],
 };
