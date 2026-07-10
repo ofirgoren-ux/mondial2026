@@ -656,35 +656,42 @@ window.closeMatchEventsModal = function(e) {
     }
 };
 
-let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'qf'; 
+let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
 
 window.applyFilters = function() { renderMatches(); }
 
 function initApp() {
-    // 1. דריסה קשיחה של הסטטוס לרבע הגמר (ללא קריאה משורת הכתובת)
-    currentMdFilter = 'qf'; 
-    currentTimeFilter = 'all';
-    currentStageFilter = 'all';
+    const urlParams = new URLSearchParams(window.location.search);
+    const mdParam = urlParams.get('md');
+    if (mdParam) {
+        currentMdFilter = mdParam;
+    } else {
+        currentMdFilter = 'r16';
+    }
     
-    // 2. סימון ויזואלי של כפתור רבע הגמר בתפריט תת-הנוקאאוט
     document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-    const activeSubmenuBtn = document.querySelector(`.submenu-btn[data-md="qf"]`); 
-    if (activeSubmenuBtn) activeSubmenuBtn.classList.add('active');
+    const btn = document.querySelector(`.submenu-btn[data-md="${currentMdFilter}"]`); 
+    if (btn) btn.classList.add('active');
     
-    // 3. איפוס ועיצוב כפתורי הסינון
-    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-    const timeBtn = document.querySelector(`.time-btn[data-time="all"]`); 
-    if (timeBtn) timeBtn.classList.add('active');
+    const timeParam = urlParams.get('time');
+    if (timeParam) {
+        currentTimeFilter = timeParam;
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        const timeBtn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
+        if (timeBtn) timeBtn.classList.add('active');
+    }
 
-    document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-    const stageBtn = document.querySelector(`.stage-btn[data-stage="all"]`); 
-    if (stageBtn) stageBtn.classList.add('active');
-
-    // 4. טעינת הנתונים והפעלת התצוגה (זה יפתח את עץ הנוקאאוט ויעדכן כותרת)
+    const stageParam = urlParams.get('stage');
+    if (stageParam) {
+        currentStageFilter = stageParam;
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+        const stageBtn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
+        if (stageBtn) stageBtn.classList.add('active');
+    }
+    
     renderStats(); 
     switchView('matches');
     
-    // 5. אתחול מאזיני לחיצה
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
@@ -697,6 +704,12 @@ function initApp() {
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
+}
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
 }
 
 window.renderStandings = function() {
