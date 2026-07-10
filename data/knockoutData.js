@@ -346,15 +346,19 @@ const knockoutMatches = {
         },
         goals: []
     },
-    'match97': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
+'match97': { 
+        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '2 - 0', actual: '2 - 0', accuracyClass: 'exact' }, 
         probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe', 
         radarStats: { home: [92, 85, 80, 90, 85, 95], away: [70, 65, 60, 85, 80, 65] }, 
         advancedStats: { home: { xG: '2.50', corners: 0 }, away: { xG: '0.80', corners: 0 } }, 
-        insight: { prediction: `צרפת מגיעה לרבע הגמר כפייבוריטית מוחלטת אחרי שדרסה את הטורניר עם 10 שערי זכות וספיגה בודדת. המרוקאים מביאים המון לב והגנה חזקה, אך מדדי ה-xG והעומק הצרפתי מצביעים על עליונות טקטית ופיזית שתכריע את המשחק מוקדם יחסית ותשלח את הטריקולור לחצי הגמר.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `צרפת מגיעה לרבע הגמר כפייבוריטית מוחלטת אחרי שדרסה את הטורניר עם 10 שערי זכות וספיגה בודדת. המרוקאים מביאים המון לב והגנה חזקה, אך מדדי ה-xG והעומק הצרפתי מצביעים על עליונות טקטית ופיזית שתכריע את המשחק מוקדם יחסית ותשלח את הטריקולור לחצי הגמר.`, 
+            actual: `פגיעה מדויקת של המודל! צרפת שלטה במגרש ורשמה ניצחון 2:0 אלגנטי בדיוק לפי התחזית. מסי שבר את הקרח בדקה ה-60 בביצוע אדיר, ודמבלה (66') חתם את התוצאה תוך שש דקות ושלח את הצרפתים לחצי הגמר.` 
+        }, 
+        goals: [] 
     },
     'match98': { 
         timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
