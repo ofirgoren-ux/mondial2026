@@ -661,37 +661,31 @@ let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilt
 window.applyFilters = function() { renderMatches(); }
 
 function initApp() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const mdParam = urlParams.get('md');
-    if (mdParam) {
-        currentMdFilter = mdParam;
-    } else {
-        currentMdFilter = 'qf'; // כאן שונתה ברירת המחדל לרבע הגמר
-    }
+    // כפייה מוחלטת של סטטוס 'רבע גמר' מיד בעליית הדף כדי שהתפריט והכותרת יתעדכנו כראוי
+    currentMdFilter = 'qf'; 
     
+    // סימון ויזואלי של כפתור רבע הגמר בתפריט הצד
     document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
-    const btn = document.querySelector(`.submenu-btn[data-md="${currentMdFilter}"]`); 
-    if (btn) btn.classList.add('active');
+    const activeSubmenuBtn = document.querySelector(`.submenu-btn[data-md="qf"]`); 
+    if (activeSubmenuBtn) activeSubmenuBtn.classList.add('active');
     
-    const timeParam = urlParams.get('time');
-    if (timeParam) {
-        currentTimeFilter = timeParam;
-        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-        const timeBtn = document.querySelector(`.time-btn[data-time="${timeParam}"]`); 
-        if (timeBtn) timeBtn.classList.add('active');
-    }
+    // איפוס מסנני זמן ושלב למצב "הכל"
+    currentTimeFilter = 'all';
+    document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+    const timeBtn = document.querySelector(`.time-btn[data-time="all"]`); 
+    if (timeBtn) timeBtn.classList.add('active');
 
-    const stageParam = urlParams.get('stage');
-    if (stageParam) {
-        currentStageFilter = stageParam;
-        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
-        const stageBtn = document.querySelector(`.stage-btn[data-stage="${stageParam}"]`); 
-        if (stageBtn) stageBtn.classList.add('active');
-    }
+    currentStageFilter = 'all';
+    document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+    const stageBtn = document.querySelector(`.stage-btn[data-stage="all"]`); 
+    if (stageBtn) stageBtn.classList.add('active');
     
     renderStats(); 
+    
+    // הקריאה הזו מבטיחה שתפריט הנוקאאוט ייפתח והכותרת תשתנה ל"רבע הגמר"
     switchView('matches');
     
+    // הפעלת מאזיני לחיצה לכפתורי הסינון
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
