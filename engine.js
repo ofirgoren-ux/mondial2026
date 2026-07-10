@@ -661,31 +661,30 @@ let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilt
 window.applyFilters = function() { renderMatches(); }
 
 function initApp() {
-    // כפייה מוחלטת של סטטוס 'רבע גמר' מיד בעליית הדף כדי שהתפריט והכותרת יתעדכנו כראוי
+    // 1. דריסה קשיחה של הסטטוס לרבע הגמר (ללא קריאה משורת הכתובת)
     currentMdFilter = 'qf'; 
+    currentTimeFilter = 'all';
+    currentStageFilter = 'all';
     
-    // סימון ויזואלי של כפתור רבע הגמר בתפריט הצד
+    // 2. סימון ויזואלי של כפתור רבע הגמר בתפריט תת-הנוקאאוט
     document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
     const activeSubmenuBtn = document.querySelector(`.submenu-btn[data-md="qf"]`); 
     if (activeSubmenuBtn) activeSubmenuBtn.classList.add('active');
     
-    // איפוס מסנני זמן ושלב למצב "הכל"
-    currentTimeFilter = 'all';
+    // 3. איפוס ועיצוב כפתורי הסינון
     document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
     const timeBtn = document.querySelector(`.time-btn[data-time="all"]`); 
     if (timeBtn) timeBtn.classList.add('active');
 
-    currentStageFilter = 'all';
     document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
     const stageBtn = document.querySelector(`.stage-btn[data-stage="all"]`); 
     if (stageBtn) stageBtn.classList.add('active');
-    
+
+    // 4. טעינת הנתונים והפעלת התצוגה (זה יפתח את עץ הנוקאאוט ויעדכן כותרת)
     renderStats(); 
-    
-    // הקריאה הזו מבטיחה שתפריט הנוקאאוט ייפתח והכותרת תשתנה ל"רבע הגמר"
     switchView('matches');
     
-    // הפעלת מאזיני לחיצה לכפתורי הסינון
+    // 5. אתחול מאזיני לחיצה
     document.querySelectorAll('.time-btn').forEach(btn => btn.addEventListener('click', (e) => { 
         document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentTimeFilter = e.target.getAttribute('data-time'); applyFilters(); 
