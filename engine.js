@@ -656,7 +656,7 @@ window.closeMatchEventsModal = function(e) {
     }
 };
 
-let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'r16'; 
+let currentTimeFilter = 'all'; let currentStageFilter = 'all'; let currentMdFilter = 'qf'; 
 
 window.applyFilters = function() { renderMatches(); }
 
@@ -666,7 +666,7 @@ function initApp() {
     if (mdParam) {
         currentMdFilter = mdParam;
     } else {
-        currentMdFilter = 'r16';
+        currentMdFilter = 'qf'; // כאן שונתה ברירת המחדל לרבע הגמר
     }
     
     document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active'));
@@ -704,12 +704,6 @@ function initApp() {
         document.querySelectorAll('.submenu-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); 
         currentMdFilter = e.target.getAttribute('data-md'); switchView('matches'); applyFilters(); closeMobileMenuIfOpen();
     }));
-}
-
-if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', initApp);
-} else {
-    initApp();
 }
 
 window.renderStandings = function() {
