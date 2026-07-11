@@ -385,7 +385,7 @@ const knockoutMatches = {
         goals: [] 
     },
     'match100': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 21:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
