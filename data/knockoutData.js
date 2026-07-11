@@ -381,7 +381,7 @@ const knockoutMatches = {
         insight: { prediction: `קרב טיטאנים אירופאי קלאסי! הטיקי-טאקה והשליטה האבסולוטית של ספרד במרכז השדה פוגשים התקפה בלגית דורסנית שכובשת בצרורות. המודל מתריע מפני משחק פתוח לחלוטין, בו משמעת הברזל הספרדית צפויה לתסכל את השדים האדומים ולהכריע את הכף בזכות תנועה חכמה בשליש האחרון.`, actual: `` }, goals: [] 
     },
     'match100': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 21:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
