@@ -335,18 +335,18 @@ const knockoutMatches = {
             accuracyClass: 'wrong',
             fulltime: { home: 0, away: 0 },
             extratime: { home: 0, away: 0 },
-            penalty: { home: 3, away: 4 }
+            penalty: { home: 4, away: 3 }
         },
         probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Upset Alert',
         radarStats: { home: [75, 80, 70, 80, 75, 75], away: [80, 70, 75, 85, 85, 80] },
         advancedStats: { home: { xG: '1.05', corners: 0 }, away: { xG: '1.15', corners: 0 } },
         insight: {
             prediction: `התנגשות סגנונות מרתקת בין ההגנה הקולומביאנית העוצמתית להנעת הכדור השווייצרית המסודרת. השווייצרים צפויים לשלוט בקצב, אך ייאלצו להיזהר מהמתפרצות הקטלניות של היריבה.`,
-            actual: `קרב התשה טקטי בו קולומביה הצליחה לנטרל לחלוטין את הנעת הכדור השווייצרית. לאחר 120 דקות נטולות שערים, הדרום-אמריקאים הפגינו עליונות מנטלית בדו-קרב הפנדלים והכריעו את המשחק. הניצחון ממחיש כיצד משמעת הגנתית קשוחה יכולה לשבש מערכים מבוססי החזקת כדור.`
+            actual: `קרב התשה טקטי שהוכרע מהנקודה הלבנה! לאחר 120 דקות נטולות שערים שבהן שתי הנבחרות הציגו הגנות ברזל, השווייצרים הראו עליונות מנטלית וקור רוח אופייני בדו-קרב הפנדלים (4-3) והבטיחו את המקום ברבע הגמר מול ארגנטינה.`
         },
         goals: []
     },
-'match97': { 
+    'match97': { 
         timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
@@ -383,12 +383,12 @@ const knockoutMatches = {
     'match100': { 
         timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 21:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `קולומביה`, flagCode: 'co', color: '#FCD116', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '- - -', actual: '', accuracyClass: 'pending' }, 
-        probabilities: { home: 33, draw: 34, away: 33 }, matchRisk: 'Safe', 
-        radarStats: { home: [50, 50, 50, 50, 50, 50], away: [50, 50, 50, 50, 50, 50] }, 
-        advancedStats: { home: { xG: '-', corners: 0 }, away: { xG: '-', corners: 0 } }, 
-        insight: { prediction: `ממתין לסיום משחקי שמינית הגמר כדי לשקלל נתונים ולהפיק תחזית...`, actual: `` }, goals: [] 
+        teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe', 
+        radarStats: { home: [92, 88, 80, 95, 80, 95], away: [75, 80, 70, 80, 75, 75] }, 
+        advancedStats: { home: { xG: '2.40', corners: 0 }, away: { xG: '0.90', corners: 0 } }, 
+        insight: { prediction: `ארגנטינה מגיעה כפייבוריטית ברורה עם מומנטום התקפי אדיר ומדד xG גבוה מאוד. שווייץ תציג הגנה צפופה ומשמעת טקטית מברזל, אך העייפות מ-120 הדקות בשמינית הגמר צפויה להכריע במחצית השנייה ולאפשר לאלביסלסטה למצוא את הפרצה לחצי הגמר.`, actual: `` }, goals: [] 
     }
 };
 
@@ -421,17 +421,15 @@ window.knockoutBracket = {
         { team1: { name: 'ארצות הברית', flag: 'us', score: '1', outcome: 'loser' }, team2: { name: 'בלגיה', flag: 'be', score: '4', outcome: 'winner' } },
         { team1: { name: 'פורטוגל', flag: 'pt', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '1', outcome: 'winner' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'מצרים', flag: 'eg', score: '2', outcome: 'loser' } },
-        { team1: { name: 'שווייץ', flag: 'ch', score: '0 (3)', outcome: 'loser' }, team2: { name: 'קולומביה', flag: 'co', score: '0 (4)', outcome: 'winner' } }
+        { team1: { name: 'שווייץ', flag: 'ch', score: '0 (4)', outcome: 'winner' }, team2: { name: 'קולומביה', flag: 'co', score: '0 (3)', outcome: 'loser' } }
     ],
-   quarterFinals: [
-        // משחק 1 המעודכן: צרפת מנצחת 2-0 ומרוקו מודחת
+    quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '2', outcome: 'winner' }, team2: { name: 'מרוקו', flag: 'ma', score: '0', outcome: 'loser' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת 95', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת 96', flag: 'un', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' } }
     ],
     semiFinals: [
-        // חצי גמר 1: צרפת תופסת את מקומה וממתינה למנצחת בין נורווגיה לאנגליה
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 2', flag: 'un', score: '-', outcome: 'pending' } },
         { team1: { name: 'מנצחת רבע גמר 3', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
     ],
