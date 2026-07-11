@@ -371,17 +371,21 @@ const knockoutMatches = {
         insight: { prediction: `התנגשות אדירה בין המכונה ההתקפית של נורווגיה והאלנד לבין האופי והווינריות של אנגליה במאני-טיים. הסטטיסטיקה מראה שוויון כמעט מוחלט, אך יעילות הקישור האנגלי והניסיון במעמדים אלו עשויים להעניק לאנגלים ניצחון דרמטי על חודו של גול במשחק שיוכרע בפרטים הקטנים.`, actual: `` }, goals: [] 
     },
     'match99': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
+        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '2 - 1', actual: '2 - 1', accuracyClass: 'exact' }, 
         probabilities: { home: 45, draw: 25, away: 30 }, matchRisk: 'Upset Alert', 
         radarStats: { home: [92, 95, 75, 85, 75, 90], away: [85, 80, 80, 80, 75, 88] }, 
         advancedStats: { home: { xG: '2.10', corners: 0 }, away: { xG: '1.80', corners: 0 } }, 
-        insight: { prediction: `קרב טיטאנים אירופאי קלאסי! הטיקי-טאקה והשליטה האבסולוטית של ספרד במרכז השדה פוגשים התקפה בלגית דורסנית שכובשת בצרורות. המודל מתריע מפני משחק פתוח לחלוטין, בו משמעת הברזל הספרדית צפויה לתסכל את השדים האדומים ולהכריע את הכף בזכות תנועה חכמה בשליש האחרון.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `קרב טיטאנים אירופאי קלאסי! הטיקי-טאקה והשליטה האבסולוטית של ספרד במרכז השדה פוגשים התקפה בלגית דורסנית שכובשת בצרורות. המודל מתריע מפני משחק פתוח לחלוטין, בו משמעת הברזל הספרדית צפויה לתסכל את השדים האדומים ולהכריע את הכף בזכות תנועה חכמה בשליש האחרון.`, 
+            actual: `פגיעה מדויקת של המודל (Exact)! ספרד עומדת בתחזית ומנצחת 2:1 בקונצרט טקטי מרתק. הטיקי-טאקה הספרדי ידע לשלוט בקצב ולבלום את הניסיונות של השדים האדומים לעקוץ במעברים מהירים. לה רוחה מוכיחה ווינריות אמיתית, מנצלת את היתרונות שלה בשליש האחרון ומבטיחה את הכרטיס היוקרתי לחצי הגמר.` 
+        }, 
+        goals: [] 
     },
     'match100': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 21:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
@@ -426,11 +430,11 @@ window.knockoutBracket = {
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '2', outcome: 'winner' }, team2: { name: 'מרוקו', flag: 'ma', score: '0', outcome: 'loser' } },
         { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
-        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'בלגיה', flag: 'be', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' }, team2: { name: 'בלגיה', flag: 'be', score: '1', outcome: 'loser' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' } }
     ],
     semiFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 2', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'מנצחת רבע גמר 3', flag: 'un', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
     ],
 };
