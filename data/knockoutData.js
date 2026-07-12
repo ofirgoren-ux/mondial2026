@@ -361,7 +361,7 @@ const knockoutMatches = {
         goals: [] 
     },
     'match98': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 00:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 00:00 (שעון ישראל)`, 
         teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
         score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
