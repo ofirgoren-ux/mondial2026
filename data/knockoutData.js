@@ -347,7 +347,7 @@ const knockoutMatches = {
         goals: []
     },
     'match97': { 
-        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '2 - 0', accuracyClass: 'exact' }, 
@@ -361,7 +361,7 @@ const knockoutMatches = {
         goals: [] 
     },
     'match98': { 
-        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
         teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
         score: { prediction: '1 - 2', actual: '1 - 2', accuracyClass: 'exact' }, 
@@ -375,7 +375,7 @@ const knockoutMatches = {
         goals: [] 
     },
     'match99': { 
-        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `בלגיה`, flagCode: 'be', color: '#E30613', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 1', actual: '2 - 1', accuracyClass: 'exact' }, 
@@ -389,7 +389,7 @@ const knockoutMatches = {
         goals: [] 
     },
     'match100': { 
-        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
         score: { prediction: '2 - 0', actual: '3 - 1', accuracyClass: 'trend' }, 
