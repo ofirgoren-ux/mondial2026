@@ -361,20 +361,19 @@ const knockoutMatches = {
         goals: [] 
     },
     'match98': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
+        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `11/07/2026 | 24:00 (שעון ישראל)`, 
         teamHome: { name: `נורווגיה`, flagCode: 'no', color: '#C8102E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '1 - 2', actual: '1 - 2', accuracyClass: 'exact' }, 
         probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Draw Booster', 
         radarStats: { home: [75, 65, 75, 75, 85, 80], away: [82, 80, 75, 85, 82, 88] }, 
         advancedStats: { home: { xG: '1.40', corners: 0 }, away: { xG: '1.70', corners: 0 } }, 
-        insight: { prediction: `התנגשות אדירה בין המכונה ההתקפית של נורווגיה והאלנד לבין האופי והווינריות של אנגליה במאני-טיים. הסטטיסטיקה מראה שוויון כמעט מוחלט, אך יעילות הקישור האנגלי והניסיון במעמדים אלו עשויים להעניק לאנגלים ניצחון דרמטי על חודו של גול במשחק שיוכרע בפרטים הקטנים.`, actual: ``
-        
-    }, 
-    
-    goals: [] 
+        insight: { 
+            prediction: `התנגשות אדירה בין המכונה ההתקפית של נורווגיה והאלנד לבין האופי והווינריות של אנגליה במאני-טיים. הסטטיסטיקה מראה שוויון כמעט מוחלט, אך יעילות הקישור האנגלי והניסיון במעמדים אלו עשויים להעניק לאנגלים ניצחון דרמטי על חודו של גול במשחק שיוכרע בפרטים הקטנים.`, 
+            actual: `פגיעה מדויקת של המודל (Exact)! אנגליה שוב מוכיחה את האופי והווינריות שלה במשחקי הנוקאאוט תחת תומאס טוכל. במשחק טקטי וקצבי, נבחרת שלושת האריות הצליחה להכיל את האיומים של האלנד ונורווגיה, והכריעה את ההתמודדות ברגעים הקריטיים עם ניצחון 2:1 ששולח אותה למפגש ענק מול צרפת בחצי הגמר.` 
+        }, 
+        goals: [] 
     },
-    
     'match99': { 
         timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `10/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
@@ -390,14 +389,38 @@ const knockoutMatches = {
         goals: [] 
     },
     'match100': { 
-        timeStatus: 'future', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
+        timeStatus: 'finished', matchday: 'qf', stage: "qf", dateText: `12/07/2026 | 04:00 (שעון ישראל)`, 
         teamHome: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `שווייץ`, flagCode: 'ch', color: '#FF0000', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '2 - 0', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '2 - 0', actual: '3 - 1', accuracyClass: 'trend' }, 
         probabilities: { home: 65, draw: 25, away: 10 }, matchRisk: 'Safe', 
         radarStats: { home: [92, 88, 80, 95, 80, 95], away: [75, 80, 70, 80, 75, 75] }, 
         advancedStats: { home: { xG: '2.40', corners: 0 }, away: { xG: '0.90', corners: 0 } }, 
-        insight: { prediction: `ארגנטינה מגיעה כפייבוריטית ברורה עם מומנטום התקפי אדיר ומדד xG גבוה מאוד. שווייץ תציג הגנה צפופה ומשמעת טקטית מברזל, אך העייפות מ-120 הדקות בשמינית הגמר צפויה להכריע במחצית השנייה ולאפשר לאלביסלסטה למצוא את הפרצה לחצי הגמר.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `ארגנטינה מגיעה כפייבוריטית ברורה עם מומנטום התקפי אדיר ומדד xG גבוה מאוד. שווייץ תציג הגנה צפופה ומשמעת טקטית מברזל, אך העייפות מ-120 הדקות בשמינית הגמר צפויה להכריע במחצית השנייה ולאפשר לאלביסלסטה למצוא את הפרצה לחצי הגמר.`, 
+            actual: `פגיעה במגמת הניצחון (Trend)! אלופת העולם מציגה עליונות התקפית מוחלטת ומפרקה את חומת המגן השווייצרית בדרך ל-3:1 מרשים. העייפות השווייצרית מ-120 הדקות בשלב הקודם אכן נתנה את אותותיה, בעוד מסי וחבריו שלטו בקצב, תרגמו את יתרון ה-xG לשערים מכריעים וקבעו פגישת ענק מול ספרד בחצי הגמר.` 
+        }, 
+        goals: [] 
+    },
+    'match101': { 
+        timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `14/07/2026 | 22:00 (שעון ישראל)`, 
+        teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 45, draw: 30, away: 25 }, matchRisk: 'Draw Booster', 
+        radarStats: { home: [94, 88, 82, 92, 88, 95], away: [84, 82, 78, 88, 84, 90] }, 
+        advancedStats: { home: { xG: '1.90', corners: 0 }, away: { xG: '1.50', corners: 0 } }, 
+        insight: { prediction: `קלאסיקה אירופית עצומה ("Le Crunch") במאבק על כרטיס לגמר המונדיאל! צרפת מציגה את ההגנה החזקה בטורניר לצד ההתקפה הקטלנית בהנהגת אמבפה ודמבלה. אנגליה של טוכל מגיעה באמונה שיא אחרי ווינריות מוכחת בנוקאאוט, אך מדדי העומק והאיכות מעניקים לטריקולור יתרון טקטי קל שיכול להכריע את המשחק ב-90 דקות או בהארכה קצבית.`, actual: `` }, goals: [] 
+    },
+    'match102': { 
+        timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `15/07/2026 | 22:00 (שעון ישראל)`, 
+        teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Upset Alert', 
+        radarStats: { home: [94, 95, 78, 88, 78, 92], away: [92, 88, 82, 96, 82, 96] }, 
+        advancedStats: { home: { xG: '1.80', corners: 0 }, away: { xG: '2.00', corners: 0 } }, 
+        insight: { prediction: `התנגשות הטיטאנים האולטימטיבית: אלופת אירופה מול אלופת העולם המכהנת! הטיקי-טאקה הספרדי, קצב המשחק המסחרר ויצירת המצבים יפגשו את האופי הבלתי שביר, העומק המנטלי והקסם של מסי וארגנטינה. המודל מתקשה להפריד בין השתיים וצופה קרב מוחות אדיר של שוויון כוחות, אך הניסיון במעמדי גמר עולמיים מעניק לאלביסלסטה יתרון זעיר ודרמטי על חודו של שער.`, actual: `` }, goals: [] 
     }
 };
 
@@ -434,12 +457,12 @@ window.knockoutBracket = {
     ],
     quarterFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '2', outcome: 'winner' }, team2: { name: 'מרוקו', flag: 'ma', score: '0', outcome: 'loser' } },
-        { team1: { name: 'נורווגיה', flag: 'no', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
+        { team1: { name: 'נורווגיה', flag: 'no', score: '1', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '2', outcome: 'winner' } },
         { team1: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' }, team2: { name: 'בלגיה', flag: 'be', score: '1', outcome: 'loser' } },
-        { team1: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' }, team2: { name: 'שווייץ', flag: 'ch', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'שווייץ', flag: 'ch', score: '1', outcome: 'loser' } }
     ],
     semiFinals: [
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 2', flag: 'un', score: '-', outcome: 'pending' } },
-        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'מנצחת רבע גמר 4', flag: 'un', score: '-', outcome: 'pending' } }
+        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
+        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
     ],
 };
