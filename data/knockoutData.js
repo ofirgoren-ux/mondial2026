@@ -409,25 +409,25 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-    'match101': { 
+'match101': { 
         timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `14/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '2 - 1', actual: '', accuracyClass: 'pending' }, 
-        probabilities: { home: 45, draw: 30, away: 25 }, matchRisk: 'Draw Booster', 
-        radarStats: { home: [94, 88, 82, 92, 88, 95], away: [84, 82, 78, 88, 84, 90] }, 
-        advancedStats: { home: { xG: '1.90', corners: 0 }, away: { xG: '1.50', corners: 0 } }, 
-        insight: { prediction: `קלאסיקה אירופית עצומה ("Le Crunch") במאבק על כרטיס לגמר המונדיאל! צרפת מציגה את ההגנה החזקה בטורניר לצד ההתקפה הקטלנית בהנהגת אמבפה ודמבלה. אנגליה של טוכל מגיעה באמונה שיא אחרי ווינריות מוכחת בנוקאאוט, אך מדדי העומק והאיכות מעניקים לטריקולור יתרון טקטי קל שיכול להכריע את המשחק ב-90 דקות או בהארכה קצבית.`, actual: `` }, goals: [] 
+        teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 35, draw: 35, away: 30 }, matchRisk: 'Draw Booster', 
+        radarStats: { home: [94, 88, 82, 92, 88, 95], away: [94, 95, 78, 88, 78, 92] }, 
+        advancedStats: { home: { xG: '1.65', corners: 0 }, away: { xG: '1.80', corners: 0 } }, 
+        insight: { prediction: `גמר מוקדם! התנגשות סגנונות מרתקת בין הטיקי-טאקה והשליטה הספרדית במרכז השדה, לבין העוצמה והמתפרצות הקטלניות של הטריקולור. המודל צופה משחק טקטי וזהיר מאוד שבו שתי הנבחרות יפחדו לטעות, עם סבירות גבוהה מאוד לתיקו 1:1 ב-90 דקות שישלח אותנו להארכה מורטת עצבים.`, actual: `` }, goals: [] 
     },
     'match102': { 
         timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `15/07/2026 | 22:00 (שעון ישראל)`, 
-        teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
+        teamHome: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
-        probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Upset Alert', 
-        radarStats: { home: [94, 95, 78, 88, 78, 92], away: [92, 88, 82, 96, 82, 96] }, 
-        advancedStats: { home: { xG: '1.80', corners: 0 }, away: { xG: '2.00', corners: 0 } }, 
-        insight: { prediction: `התנגשות הטיטאנים האולטימטיבית: אלופת אירופה מול אלופת העולם המכהנת! הטיקי-טאקה הספרדי, קצב המשחק המסחרר ויצירת המצבים יפגשו את האופי הבלתי שביר, העומק המנטלי והקסם של מסי וארגנטינה. המודל מתקשה להפריד בין השתיים וצופה קרב מוחות אדיר של שוויון כוחות, אך הניסיון במעמדי גמר עולמיים מעניק לאלביסלסטה יתרון זעיר ודרמטי על חודו של שער.`, actual: `` }, goals: [] 
+        probabilities: { home: 30, draw: 25, away: 45 }, matchRisk: 'Upset Alert', 
+        radarStats: { home: [84, 82, 78, 88, 84, 90], away: [92, 88, 82, 96, 82, 96] }, 
+        advancedStats: { home: { xG: '1.40', corners: 0 }, away: { xG: '2.10', corners: 0 } }, 
+        insight: { prediction: `שחזור של אינספור קרבות היסטוריים. אנגליה של טוכל מגיעה עם הגנת ברזל ואופי ווינרי, אבל אלופת העולם ארגנטינה נראית בלתי ניתנת לעצירה. הכישרון של מסי והשליטה של האלביסלסטה בקצב המשחק צפויים להכריע את האנגלים עם ניצחון דחוק של 2:1 שישלח את ארגנטינה לגמר נוסף.`, actual: `` }, goals: [] 
     }
 };
 
@@ -468,8 +468,8 @@ window.knockoutBracket = {
         { team1: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' }, team2: { name: 'בלגיה', flag: 'be', score: '1', outcome: 'loser' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'שווייץ', flag: 'ch', score: '1', outcome: 'loser' } }
     ],
-    semiFinals: [
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } },
-        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
+semiFinals: [
+        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' } },
+        { team1: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
     ],
 };
