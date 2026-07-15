@@ -410,14 +410,18 @@ const knockoutMatches = {
         goals: [] 
     },
 'match101': { 
-        timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `14/07/2026 | 22:00 (שעון ישראל)`, 
-        teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
-        teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 1', actual: '', accuracyClass: 'pending' }, 
+        timeStatus: 'past', matchday: 'sf', stage: "sf", dateText: `14/07/2026 | 22:00 (שעון ישראל)`, 
+        teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: ['y', 'y'], red: [] } }, 
+        teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: ['y'], red: [] } }, 
+        score: { prediction: '1 - 1', actual: '0 - 2', accuracyClass: 'wrong' }, 
         probabilities: { home: 35, draw: 35, away: 30 }, matchRisk: 'Draw Booster', 
         radarStats: { home: [94, 88, 82, 92, 88, 95], away: [94, 95, 78, 88, 78, 92] }, 
         advancedStats: { home: { xG: '1.65', corners: 0 }, away: { xG: '1.80', corners: 0 } }, 
-        insight: { prediction: `גמר מוקדם! התנגשות סגנונות מרתקת בין הטיקי-טאקה והשליטה הספרדית במרכז השדה, לבין העוצמה והמתפרצות הקטלניות של הטריקולור. המודל צופה משחק טקטי וזהיר מאוד שבו שתי הנבחרות יפחדו לטעות, עם סבירות גבוהה מאוד לתיקו 1:1 ב-90 דקות שישלח אותנו להארכה מורטת עצבים.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `גמר מוקדם! התנגשות סגנונות מרתקת בין הטיקי-טאקה והשליטה הספרדית במרכז השדה, לבין העוצמה והמתפרצות הקטלניות של הטריקולור. המודל צופה משחק טקטי וזהיר מאוד שבו שתי הנבחרות יפחדו לטעות, עם סבירות גבוהה מאוד לתיקו 1:1 ב-90 דקות שישלח אותנו להארכה מורטת עצבים.`, 
+            actual: `איזו תצוגת תכלית ספרדית! לה רוחה מפרקת את חומת ההגנה הצרפתית ורושמת ניצחון 2-0 חלק ב-90 דקות, בניגוד מוחלט לתחזית המודל שלנו. מיקל אויארסבאל נתן את האות לחגיגה עם שער מוקדם בדקה ה-22, ופדרו פורו (58') סגר את הסיפור במחצית השנייה. הטיקי-טאקה ניצח את המתפרצות, וספרד היא העולה הראשונה לגמר הגדול!` 
+        }, 
+        goals: [] 
     },
     'match102': { 
         timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `15/07/2026 | 22:00 (שעון ישראל)`, 
