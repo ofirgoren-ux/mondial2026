@@ -370,7 +370,7 @@ const knockoutMatches = {
         advancedStats: { home: { xG: '1.40', corners: 0 }, away: { xG: '1.70', corners: 0 } }, 
         insight: { 
             prediction: `התנגשות אדירה בין המכונה ההתקפית של נורווגיה והאלנד לבין האופי והווינריות של אנגליה במאני-טיים. הסטטיסטיקה מראה שוויון כמעט מוחלט, אך יעילות הקישור האנגלי והניסיון במעמדים אלו עשויים להעניק לאנגלים ניצחון דרמטי על חודו של גול במשחק שיוכרע בפרטים הקטנים.`, 
-            actual: `בינגו בתחזית! אנגליה שוב מוכיחה את האופי והווינריות שלה במשחקי הנוקאאוט תחת תומאס טוכל. במשחק טקטי וקצבי, נבחרת שלושת האריות הצליחה להכיל את האיומים של האלנד ונורווגיה, והכריעה את ההתמודדות ברגעים הקריטיים עם 2-1 ששולח אותה למפגש ענק מול צרפת בחצי הגמר.` 
+            actual: `בינגו בתחזית! אנגליה שוב מוכיחה את האופי והווינריות שלה במשחקי הנוקאאוט תחת תומאס טוכל. במשחק טקטי וקצבי, נבחרת שלושת האריות הצליחה להכיל את האיומים של האלנד ונורווגיה, והכריעה את ההתמודדות ברגעים הקריטיים עם 2-1 ששולח אותה למפגש ענק מול ארגנטינה בחצי הגמר.` 
         }, 
         goals: [] 
     },
@@ -405,7 +405,7 @@ const knockoutMatches = {
         advancedStats: { home: { xG: '2.40', corners: 0 }, away: { xG: '0.90', corners: 0 } }, 
         insight: { 
             prediction: `ארגנטינה מגיעה כפייבוריטית ברורה עם מומנטום התקפי אדיר ומדד xG גבוה מאוד. שווייץ תציג הגנה צפופה ומשמעת טקטית מברזל, אך העייפות מ-120 הדקות בשמינית הגמר צפויה להכריע במחצית השנייה ולאפשר לאלביסלסטה למצוא את הפרצה לחצי הגמר.`, 
-            actual: `שווייץ הצליחה לגרור את אלופת העולם להארכה מותחת אחרי 1-1 ב-90 דקות, אבל שם נגמר לה האוויר. ארגנטינה הציגה עליונות התקפית מוחלטת בתוספת הזמן, פירקה את חומת המגן השווייצרית בדרך ל-3-1 מרשים, וקבעה פגישת ענק מול ספרד בחצי הגמר.` 
+            actual: `שווייץ הצליחה לגרור את אלופת העולם להארכה מותחת אחרי 1-1 ב-90 דקות, אבל שם נגמר לה האוויר. ארגנטינה הציגה עליונות התקפית מוחלטת בתוספת הזמן, פירקה את חומת המגן השווייצרית בדרך ל-3-1 מרשים, וקבעה פגישת ענק מול אנגליה בחצי הגמר.` 
         }, 
         goals: [] 
     },
@@ -424,14 +424,28 @@ const knockoutMatches = {
         goals: [] 
     },
     'match102': { 
-        timeStatus: 'future', matchday: 'sf', stage: "sf", dateText: `15/07/2026 | 22:00 (שעון ישראל)`, 
+        timeStatus: 'past', matchday: 'sf', stage: "sf", dateText: `15/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        score: { prediction: '1 - 2', actual: '1 - 2', accuracyClass: 'exact' }, 
         probabilities: { home: 30, draw: 25, away: 45 }, matchRisk: 'Upset Alert', 
         radarStats: { home: [84, 82, 78, 88, 84, 90], away: [92, 88, 82, 96, 82, 96] }, 
         advancedStats: { home: { xG: '1.40', corners: 0 }, away: { xG: '2.10', corners: 0 } }, 
-        insight: { prediction: `שחזור של אינספור קרבות היסטוריים. אנגליה של טוכל מגיעה עם הגנת ברזל ואופי ווינרי, אבל אלופת העולם ארגנטינה נראית בלתי ניתנת לעצירה. הכישרון של מסי והשליטה של האלביסלסטה בקצב המשחק צפויים להכריע את האנגלים עם ניצחון דחוק של 2:1 שישלח את ארגנטינה לגמר נוסף.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `שחזור של אינספור קרבות היסטוריים. אנגליה של טוכל מגיעה עם הגנת ברזל ואופי ווינרי, אבל אלופת העולם ארגנטינה נראית בלתי ניתנת לעצירה. הכישרון של מסי והשליטה של האלביסלסטה בקצב המשחק צפויים להכריע את האנגלים עם ניצחון דחוק של 2:1 שישלח את ארגנטינה לגמר נוסף.`, 
+            actual: `מחצית ראשונה מאופסת וטקטית התפוצצה לדרמת ענק במחצית השנייה. אנתוני גורדון העלה את האנגלים ליתרון (55'), אבל אלופת העולם הוכיחה שוב אופי מברזל. אנסו פרננדס השווה בדקה ה-86, ולאוטרו מרטינס השלים מהפך דרמטי עמוק בתוספת הזמן (90+2') ששולח את ארגנטינה לגמר מול ספרד. בינגו מושלם של המודל בתחזית!` 
+        }, 
+        goals: [] 
+    },
+    'match103': { 
+        timeStatus: 'future', matchday: 'final', stage: "final", dateText: `19/07/2026 | 21:00 (שעון ישראל)`, 
+        teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Safe', 
+        radarStats: { home: [94, 95, 78, 88, 78, 92], away: [92, 88, 82, 96, 82, 96] }, 
+        advancedStats: { home: { xG: '1.75', corners: 0 }, away: { xG: '1.85', corners: 0 } }, 
+        insight: { prediction: `הגמר הגדול מגיע! אלופת אירופה מול אלופת העולם בקרב על כל הקופה. הטיקי-טאקה הספרדי בשיאו מול האופי והווינריות הבלתי נגמרת של ארגנטינה. המודל צופה משחק שקול ומרתק, אך מעניק יתרון זעיר למסי וחבריו בדרך להנפת גביע שני ברציפות, במשחק שיוכרע בפרטים הקטנים של השליש האחרון.`, actual: `` }, goals: [] 
     }
 };
 
@@ -472,8 +486,11 @@ window.knockoutBracket = {
         { team1: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' }, team2: { name: 'בלגיה', flag: 'be', score: '1', outcome: 'loser' } },
         { team1: { name: 'ארגנטינה', flag: 'ar', score: '3', outcome: 'winner' }, team2: { name: 'שווייץ', flag: 'ch', score: '1', outcome: 'loser' } }
     ],
-semiFinals: [
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' } },
-        { team1: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
+    semiFinals: [
+        { team1: { name: 'צרפת', flag: 'fr', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' } },
+        { team1: { name: 'אנגליה', flag: 'gb-eng', score: '1', outcome: 'loser' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '2', outcome: 'winner' } }
+    ],
+    final: [
+        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
     ],
 };
