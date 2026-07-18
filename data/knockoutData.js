@@ -346,7 +346,7 @@ const knockoutMatches = {
         },
         goals: []
     },
-'match97': { 
+    'match97': { 
         timeStatus: 'past', matchday: 'qf', stage: "qf", dateText: `09/07/2026 | 23:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `מרוקו`, flagCode: 'ma', color: '#C1272D', cards: { yellow: [], red: [] } }, 
@@ -409,7 +409,7 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-'match101': { 
+    'match101': { 
         timeStatus: 'past', matchday: 'sf', stage: "sf", dateText: `14/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: ['y', 'y'], red: [] } }, 
         teamAway: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: ['y'], red: [] } }, 
@@ -438,7 +438,17 @@ const knockoutMatches = {
         goals: [] 
     },
     'match103': { 
-        timeStatus: 'future', matchday: 'final', stage: "final", dateText: `19/07/2026 | 21:00 (שעון ישראל)`, 
+        timeStatus: 'future', matchday: 'thirdPlace', stage: "thirdPlace", dateText: `19/07/2026 | 00:00 (שעון ישראל)`, 
+        teamHome: { name: `צרפת`, flagCode: 'fr', color: '#002654', cards: { yellow: [], red: [] } }, 
+        teamAway: { name: `אנגליה`, flagCode: 'gb-eng', color: '#FFFFFF', cards: { yellow: [], red: [] } }, 
+        score: { prediction: '3 - 2', actual: '', accuracyClass: 'pending' }, 
+        probabilities: { home: 45, draw: 20, away: 35 }, matchRisk: 'Safe', 
+        radarStats: { home: [94, 88, 82, 92, 88, 95], away: [84, 82, 78, 88, 84, 90] }, 
+        advancedStats: { home: { xG: '2.20', corners: 0 }, away: { xG: '1.90', corners: 0 } }, 
+        insight: { prediction: `משחק על המקום השלישי הוא תמיד חגיגה התקפית ומשוחררת מלחצים. שתי מעצמות אירופאיות שמגיעות עם כבוד פגוע אחרי ההדחה בחצי הגמר ירצו לסיים את הטורניר בטעם מתוק. צרפת מחזיקה ביתרון של עומק בספסל ואיכות יצירת מצבים (xG גבוה), ואנחנו צופים כאן משחק פתוח ורווי שערים שבו הטריקולור יצאו כשידם על העליונה בסופו של דבר.`, actual: `` }, goals: [] 
+    },
+    'match104': { 
+        timeStatus: 'future', matchday: 'final', stage: "final", dateText: `19/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
         score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
@@ -471,7 +481,7 @@ window.knockoutBracket = {
         { team1: { name: 'קולומביה', flag: 'co', score: '2', outcome: 'winner' }, team2: { name: 'גאנה', flag: 'gh', score: '1', outcome: 'loser' } }
     ],
     roundOf16: [
-        { team1: { name: 'פרגוואי', flag: 'py', score: '0', outcome: 'loser' }, team2: { name: 'צרפת', flag: 'fr', score: '1', outcome: 'winner' } },
+        { team1: { name: 'פרגוואי', py: 'py', score: '0', outcome: 'loser' }, team2: { name: 'צרפת', flag: 'fr', score: '1', outcome: 'winner' } },
         { team1: { name: 'קנדה', flag: 'ca', score: '0', outcome: 'loser' }, team2: { name: 'מרוקו', flag: 'ma', score: '3', outcome: 'winner' } },
         { team1: { name: 'ברזיל', flag: 'br', score: '1', outcome: 'loser' }, team2: { name: 'נורווגיה', flag: 'no', score: '2', outcome: 'winner' } },
         { team1: { name: 'מקסיקו', flag: 'mx', score: '2', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '3', outcome: 'winner' } },
@@ -489,6 +499,9 @@ window.knockoutBracket = {
     semiFinals: [
         { team1: { name: 'צרפת', flag: 'fr', score: '0', outcome: 'loser' }, team2: { name: 'ספרד', flag: 'es', score: '2', outcome: 'winner' } },
         { team1: { name: 'אנגליה', flag: 'gb-eng', score: '1', outcome: 'loser' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '2', outcome: 'winner' } }
+    ],
+    thirdPlace: [
+        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } }
     ],
     final: [
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
