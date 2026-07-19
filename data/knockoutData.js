@@ -505,7 +505,7 @@ window.knockoutBracket = {
         { team1: { name: 'אנגליה', flag: 'gb-eng', score: '1', outcome: 'loser' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '2', outcome: 'winner' } }
     ],
     thirdPlace: [
-        { team1: { name: 'צרפת', flag: 'fr', score: '-', outcome: 'pending' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '-', outcome: 'pending' } }
+        { team1: { name: 'צרפת', flag: 'fr', score: '4', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '6', outcome: 'winner' } }
     ],
     final: [
         { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
