@@ -46,14 +46,12 @@ function getTeamInfo(englishName) {
     if (!englishName) return { he: "לא נקבע", flag: "un", color: "#888888" };
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
-// פונקציה מרכזית אחת שטוענת הכל מקומית מהקובץ שלנו!
-async function loadLocalData() {
+function loadLocalData() {
     try {
-        // 1. קריאה מהירה לקובץ הסטטי שהורדנו
-        const response = await fetch('./worldcup_data_final.json');
-        const data = await response.json();
+        // הנתונים זמינים כעת ישירות מהמשתנה שהגדרנו בקובץ ללא צורך ב-fetch!
+        const data = localWorldCupData;
 
-        // 2. עדכון מלך השערים (מושך מיד מהקובץ)
+        // 2. עדכון מלך השערים
         if (data.topScorers && data.topScorers.length > 0) {
             window.apiTopScorers = data.topScorers.map((item, index) => {
                 let player = item.player;
@@ -89,7 +87,7 @@ async function loadLocalData() {
                     dbMatch.score.extratime = item.score.extratime;
                     dbMatch.score.penalty = item.score.penalty;
 
-                    // אם המשחק הסתיים, מעדכנים תוצאה ומעבירים לסטטוס "past"
+                    // אם המשחק הסתיים, מעדכנים תוצאה
                     if (['FT', 'AET', 'PEN'].includes(matchStatus)) {
                         let homeGoals = item.goals.home !== null ? item.goals.home : 0;
                         let awayGoals = item.goals.away !== null ? item.goals.away : 0;
@@ -101,7 +99,7 @@ async function loadLocalData() {
                         }
                         dbMatch.timeStatus = 'past';
 
-                        // שליפת האירועים (שערים/כרטיסים) מתוך המידע השמור בקובץ
+                        // שליפת אירועים (שערים/כרטיסים)
                         let fixDetails = data.matchDetails[item.fixture.id];
                         if (fixDetails && fixDetails.events) {
                             let detailedGoals = [];
@@ -148,14 +146,13 @@ async function loadLocalData() {
     } catch (error) {
         console.error("שגיאה במשיכת נתונים מהקובץ המקומי:", error);
     } finally {
-        // הסרת מסך הטעינה ברגע שהכל סיים
-        const loader = document.getElementById('loader-overlay');
-        if (loader) {
-            loader.classList.add('hidden');
-        }
+        // הסרת מסך הטעינה (גיבוי למספר שמות ID אפשריים)
+        const loader1 = document.getElementById('loader-overlay');
+        const loader2 = document.getElementById('loader');
+        if (loader1) { loader1.classList.add('hidden'); loader1.style.display = 'none'; }
+        if (loader2) { loader2.classList.add('hidden'); loader2.style.display = 'none'; }
     }
 }
 
-// התנעת המערכת - הפעלה לוקאלית
-loadLocalData();התנעת המערכת והטעינה
-fetchLiveUpdates();
+// התנעת המערכת
+loadLocalData();
