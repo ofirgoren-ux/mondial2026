@@ -77,12 +77,17 @@ function findMatchInDatabases(homeHe, awayHe) {
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // קריאה ייעודית למשיכת אירועים (שערים וכרטיסים) ממשחק ספציפי
-async function fetchMatchEvents(fixtureId, matchObj, apiKey) {
+async function fetchMatchEvents(fixtureId, matchObj) {
     try {
-        const res = await fetch(`https://v3.football.api-sports.io/fixtures/events?fixture=${fixtureId}`, {
-            headers: { 'x-apisports-key': apiKey }
-        });
-        const data = await res.json();
+        let eventsData = [];
+        if (typeof localWorldCupData !== 'undefined' && localWorldCupData.matchDetails) {
+            let matchData = localWorldCupData.matchDetails[fixtureId];
+            if (matchData && matchData.events) {
+                eventsData = matchData.events;
+            }
+        }
+        
+        const data = { response: eventsData };
         
         if (data.response && data.response.length > 0) {
             let detailedGoals = [];
