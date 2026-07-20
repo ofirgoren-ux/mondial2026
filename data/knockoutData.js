@@ -451,15 +451,26 @@ const knockoutMatches = {
         }, 
         goals: [] 
     },
-    'match104': { 
-        timeStatus: 'future', matchday: 'final', stage: "גמר", dateText: `19/07/2026 | 22:00 (שעון ישראל)`, 
+'match104': { 
+        timeStatus: 'past', matchday: 'final', stage: "גמר", dateText: `19/07/2026 | 22:00 (שעון ישראל)`, 
         teamHome: { name: `ספרד`, flagCode: 'es', color: '#C60B1E', cards: { yellow: [], red: [] } }, 
         teamAway: { name: `ארגנטינה`, flagCode: 'ar', color: '#43A1D5', cards: { yellow: [], red: [] } }, 
-        score: { prediction: '1 - 2', actual: '', accuracyClass: 'pending' }, 
+        status: "AET",
+        score: { 
+            prediction: '1 - 2', 
+            actual: '1 - 0', 
+            accuracyClass: 'wrong',
+            fulltime: { home: 0, away: 0 },
+            extratime: { home: 1, away: 0 }
+        }, 
         probabilities: { home: 35, draw: 30, away: 35 }, matchRisk: 'Safe', 
         radarStats: { home: [94, 95, 78, 88, 78, 92], away: [92, 88, 82, 96, 82, 96] }, 
         advancedStats: { home: { xG: '1.75', corners: 0 }, away: { xG: '1.85', corners: 0 } }, 
-        insight: { prediction: `הגמר הגדול מגיע! אלופת אירופה מול אלופת העולם בקרב על כל הקופה. הטיקי-טאקה הספרדי בשיאו מול האופי והווינריות הבלתי נגמרת של ארגנטינה. המודל צופה משחק שקול ומרתק, אך מעניק יתרון זעיר למסי וחבריו בדרך להנפת גביע שני ברציפות, במשחק שיוכרע בפרטים הקטנים של השליש האחרון.`, actual: `` }, goals: [] 
+        insight: { 
+            prediction: `הגמר הגדול מגיע! אלופת אירופה מול אלופת העולם בקרב על כל הקופה. הטיקי-טאקה הספרדי בשיאו מול האופי והווינריות הבלתי נגמרת של ארגנטינה. המודל צופה משחק שקול ומרתק, אך מעניק יתרון זעיר למסי וחבריו בדרך להנפת גביע שני ברציפות, במשחק שיוכרע בפרטים הקטנים של השליש האחרון.`, 
+            actual: `יש לנו אלופת עולם חדשה! אחרי 90 דקות טקטיות ומאופסות שבהן שתי הגלדיאטוריות נלחמו על כל כדור, הגמר הגדול של מונדיאל 2026 הלך להארכה דרמטית ומורטת עצבים. ואז, בדקה ה-106, הגיע הרגע של פראן טורס: התקפה ספרדית קטלנית הסתיימה בשער ניצחון היסטורי שהרעיד את הרשת של האלביסלסטה ושבר את הלבבות בארגנטינה. ספרד מנשלת את מסי וחבריו מכתר אלופת העולם ומוכתרת לאלופת העולם בסטייל אדיר. המודל שלנו הימר על הניסיון והמסורת של ארגנטינה, אבל הטיקי-טאקה והאופי הספרדי צחקו אחרון ובענק!` 
+        }, 
+        goals: [] 
     }
 };
 
@@ -508,6 +519,6 @@ window.knockoutBracket = {
         { team1: { name: 'צרפת', flag: 'fr', score: '4', outcome: 'loser' }, team2: { name: 'אנגליה', flag: 'gb-eng', score: '6', outcome: 'winner' } }
     ],
     final: [
-        { team1: { name: 'ספרד', flag: 'es', score: '-', outcome: 'pending' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '-', outcome: 'pending' } }
+        { team1: { name: 'ספרד', flag: 'es', score: '1', outcome: 'winner' }, team2: { name: 'ארגנטינה', flag: 'ar', score: '0', outcome: 'loser' } }
     ],
 };
