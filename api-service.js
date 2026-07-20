@@ -46,92 +46,16 @@ function getTeamInfo(englishName) {
     if (!englishName) return { he: "לא נקבע", flag: "un", color: "#888888" };
     return teamDictionary[englishName] || { he: englishName, flag: "un", color: "#888888" };
 }
-
-function findMatchInDatabases(homeHe, awayHe) {
-    if (window.matchDatabase) {
-        for (let id in window.matchDatabase) {
-            let m = window.matchDatabase[id];
-            if (m.teamHome && m.teamAway) {
-                if ((m.teamHome.name === homeHe && m.teamAway.name === awayHe) || 
-                    (m.teamHome.name === awayHe && m.teamAway.name === homeHe)) {
-                    return m;
-                }
-            }
-        }
-    }
-    if (window.knockoutMatches) {
-        for (let id in window.knockoutMatches) {
-            let m = window.knockoutMatches[id];
-            if (m.teamHome && m.teamAway) {
-                if ((m.teamHome.name === homeHe && m.teamAway.name === awayHe) || 
-                    (m.teamHome.name === awayHe && m.teamAway.name === homeHe)) {
-                    return m;
-                }
-            }
-        }
-    }
-    return null;
-}
-
-// פונקציית השהיה (Delay)
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
-// קריאה ייעודית למשיכת אירועים (שערים וכרטיסים) ממשחק ספציפי
-async function fetchMatchEvents(fixtureId, matchObj, apiKey) {
+// פונקציה מרכזית אחת שטוענת הכל מקומית מהקובץ שלנו!
+async function loadLocalData() {
     try {
-        const res = await fetch(`https://v3.football.api-sports.io/fixtures/events?fixture=${fixtureId}`, {
-            headers: { 'x-apisports-key': apiKey }
-        });
-        const data = await res.json();
-        
-        if (data.response && data.response.length > 0) {
-            let detailedGoals = [];
-            let hCards = { yellow: [], red: [] };
-            let aCards = { yellow: [], red: [] };
+        // 1. קריאה מהירה לקובץ הסטטי שהורדנו
+        const response = await fetch('./worldcup_data_final.json');
+        const data = await response.json();
 
-            data.response.forEach(ev => {
-                let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
-                let evTeamHe = getTeamInfo(ev.team.name).he;
-
-                if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
-                    detailedGoals.push({
-                        team: evTeamHe,
-                        player: ev.player.name,
-                        minute: minStr,
-                        sortMin: ev.time.elapsed
-                    });
-                } else if (ev.type === 'Card') {
-                    let cardStr = `${ev.player.name} (${minStr})`;
-                    if (ev.detail.includes('Yellow')) {
-                        if (evTeamHe === matchObj.teamHome.name) hCards.yellow.push(cardStr);
-                        else aCards.yellow.push(cardStr);
-                    } else if (ev.detail.includes('Red')) {
-                        if (evTeamHe === matchObj.teamHome.name) hCards.red.push(cardStr);
-                        else aCards.red.push(cardStr);
-                    }
-                }
-            });
-
-            matchObj.goals = detailedGoals;
-            matchObj.teamHome.cards = hCards;
-            matchObj.teamAway.cards = aCards;
-        }
-    } catch (error) {
-        console.error("שגיאה במשיכת אירועים למשחק:", fixtureId, error);
-    }
-}
-
-// תשתית משיכת מלך השערים והכנת משתנה גלובלי לשימוש במנוע הרינדור
-window.apiTopScorers = []; 
-async function fetchTopScorers(apiKey) {
-    try {
-        const res = await fetch(`https://v3.football.api-sports.io/players/topscorers?league=1&season=2026`, {
-            headers: { 'x-apisports-key': apiKey }
-        });
-        const data = await res.json();
-        
-        if (data.response && data.response.length > 0) {
-            window.apiTopScorers = data.response.map((item, index) => {
+        // 2. עדכון מלך השערים (מושך מיד מהקובץ)
+        if (data.topScorers && data.topScorers.length > 0) {
+            window.apiTopScorers = data.topScorers.map((item, index) => {
                 let player = item.player;
                 let stats = item.statistics[0];
                 let teamInfo = getTeamInfo(stats.team.name);
@@ -147,145 +71,91 @@ async function fetchTopScorers(apiKey) {
                     playerImg: player.photo
                 };
             });
-            
-            if (typeof renderScorers === 'function') {
-                renderScorers();
-            }
         }
-    } catch (error) {
-        console.error("שגיאה במשיכת נתוני מלך השערים:", error);
-    }
-}
 
-async function fetchLiveUpdates() {
-    const apiKey = '52fe625c25992477365139c656148855'; 
-    const url = 'https://v3.football.api-sports.io/fixtures?league=1&season=2026';
+        // 3. עדכון תוצאות, שערים וכרטיסים מתוך המשחקים
+        if (data.fixtures) {
+            data.fixtures.forEach(item => {
+                let apiHome = getTeamInfo(item.teams.home.name);
+                let apiAway = getTeamInfo(item.teams.away.name);
+                let dbMatch = findMatchInDatabases(apiHome.he, apiAway.he);
+                let matchStatus = item.fixture.status.short;
 
-    try {
-        let topScorersPromise = fetchTopScorers(apiKey);
+                if (dbMatch) {
+                    let isExactMatch = (dbMatch.teamHome.name === apiHome.he);
+                    dbMatch.status = matchStatus;
+                    dbMatch.score = dbMatch.score || {};
+                    dbMatch.score.fulltime = item.score.fulltime;
+                    dbMatch.score.extratime = item.score.extratime;
+                    dbMatch.score.penalty = item.score.penalty;
 
-        const response = await fetch(url, { method: 'GET', headers: { 'x-apisports-key': apiKey } });
-        if (!response.ok) throw new Error("שגיאה בחיבור לשרת הלייב");
-        
-        const data = await response.json();
-        if (!data.response) return;
-
-        let apiMatches = data.response.map(item => ({
-            apiHome: getTeamInfo(item.teams.home.name),
-            apiAway: getTeamInfo(item.teams.away.name),
-            item: item
-        }));
-
-        let fixturesToFetch = [];
-
-        apiMatches.forEach(apiM => {
-            let dbMatch = findMatchInDatabases(apiM.apiHome.he, apiM.apiAway.he);
-            let item = apiM.item;
-            let matchStatus = item.fixture.status.short;
-
-            if (dbMatch) {
-                let isExactMatch = (dbMatch.teamHome.name === apiM.apiHome.he);
-                dbMatch.status = matchStatus;
-                dbMatch.score = dbMatch.score || {};
-                dbMatch.score.fulltime = item.score.fulltime;
-                dbMatch.score.extratime = item.score.extratime;
-                dbMatch.score.penalty = item.score.penalty;
-
-                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
-                    let homeGoals = item.goals.home !== null ? item.goals.home : 0;
-                    let awayGoals = item.goals.away !== null ? item.goals.away : 0;
-                    
-                    if (isExactMatch) {
-                        dbMatch.score.actual = `${homeGoals} - ${awayGoals}`;
-                    } else {
-                        dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
-                    }
-
+                    // אם המשחק הסתיים, מעדכנים תוצאה ומעבירים לסטטוס "past"
                     if (['FT', 'AET', 'PEN'].includes(matchStatus)) {
+                        let homeGoals = item.goals.home !== null ? item.goals.home : 0;
+                        let awayGoals = item.goals.away !== null ? item.goals.away : 0;
+                        
+                        if (isExactMatch) {
+                            dbMatch.score.actual = `${homeGoals} - ${awayGoals}`;
+                        } else {
+                            dbMatch.score.actual = `${awayGoals} - ${homeGoals}`;
+                        }
                         dbMatch.timeStatus = 'past';
-                    } else {
-                        dbMatch.timeStatus = 'live'; 
-                    }
-                } else if (matchStatus === 'NS') {
-                    dbMatch.timeStatus = 'future';
-                }
 
-                if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
-                    fixturesToFetch.push({ id: item.fixture.id, matchObj: dbMatch });
-                }
+                        // שליפת האירועים (שערים/כרטיסים) מתוך המידע השמור בקובץ
+                        let fixDetails = data.matchDetails[item.fixture.id];
+                        if (fixDetails && fixDetails.events) {
+                            let detailedGoals = [];
+                            let hCards = { yellow: [], red: [] };
+                            let aCards = { yellow: [], red: [] };
 
-            } else {
-                let apiRound = apiM.item.league.round || '';
-                let targetMd = null;
-                
-                if (apiRound.includes('16') || apiRound.includes('8th')) targetMd = 'r16';
-                else if (apiRound.includes('Quarter')) targetMd = 'qf';
-                else if (apiRound.includes('Semi')) targetMd = 'sf';
-                else if (apiRound.includes('Final')) targetMd = 'final';
+                            fixDetails.events.forEach(ev => {
+                                let minStr = ev.time.elapsed + (ev.time.extra ? '+' + ev.time.extra : '') + "'";
+                                let evTeamHe = getTeamInfo(ev.team.name).he;
 
-                if (targetMd) {
-                    let newId = 'api_gen_' + apiM.item.fixture.id;
-                    if (!window.matchDatabase) window.matchDatabase = {};
-                    if (!window.matchDatabase[newId]) {
-                        window.matchDatabase[newId] = {
-                            matchday: targetMd,
-                            stage: targetMd,
-                            status: matchStatus,
-                            timeStatus: (['FT', 'AET', 'PEN'].includes(matchStatus)) ? 'past' : (matchStatus === 'NS' ? 'future' : 'live'),
-                            dateText: new Date(apiM.item.fixture.date).toLocaleDateString('he-IL') + ' | ' + new Date(apiM.item.fixture.date).toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'}),
-                            teamHome: { name: apiM.apiHome.he, flagCode: apiM.apiHome.flag, color: apiM.apiHome.color, cards: {yellow:[], red:[]} },
-                            teamAway: { name: apiM.apiAway.he, flagCode: apiM.apiAway.flag, color: apiM.apiAway.color, cards: {yellow:[], red:[]} },
-                            score: { prediction: '-', actual: '' },
-                            probabilities: { home: 33, draw: 34, away: 33 },
-                            advancedStats: { home: { xG: '-' }, away: { xG: '-' } },
-                            insight: { prediction: 'ממתין לנתוני מודל (AI)...', actual: '' }
-                        };
-                    } else {
-                        let genMatch = window.matchDatabase[newId];
-                        genMatch.status = matchStatus;
-                        if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(genMatch.status)) {
-                            let homeGoals = apiM.item.goals.home !== null ? apiM.item.goals.home : 0;
-                            let awayGoals = apiM.item.goals.away !== null ? apiM.item.goals.away : 0;
-                            genMatch.score.actual = `${homeGoals} - ${awayGoals}`;
-                            genMatch.timeStatus = ['FT', 'AET', 'PEN'].includes(genMatch.status) ? 'past' : 'live';
-                        } else if (genMatch.status === 'NS') {
-                            genMatch.timeStatus = 'future';
+                                if (ev.type === 'Goal' && ev.detail !== 'Missed Penalty') {
+                                    detailedGoals.push({
+                                        team: evTeamHe,
+                                        player: ev.player.name,
+                                        minute: minStr,
+                                        sortMin: ev.time.elapsed
+                                    });
+                                } else if (ev.type === 'Card') {
+                                    let cardStr = `${ev.player.name} (${minStr})`;
+                                    if (ev.detail.includes('Yellow')) {
+                                        if (evTeamHe === dbMatch.teamHome.name) hCards.yellow.push(cardStr);
+                                        else aCards.yellow.push(cardStr);
+                                    } else if (ev.detail.includes('Red')) {
+                                        if (evTeamHe === dbMatch.teamHome.name) hCards.red.push(cardStr);
+                                        else aCards.red.push(cardStr);
+                                    }
+                                }
+                            });
+
+                            dbMatch.goals = detailedGoals;
+                            dbMatch.teamHome.cards = hCards;
+                            dbMatch.teamAway.cards = aCards;
                         }
                     }
-
-                    let genMatch = window.matchDatabase[newId];
-                    if (['FT', 'AET', 'PEN', '1H', '2H', 'HT', 'ET'].includes(matchStatus)) {
-                        fixturesToFetch.push({ id: item.fixture.id, matchObj: genMatch });
-                    }
                 }
-            }
-        });
-        
-        // --- מנגנון תור מהיר (Batching) לקיצור זמן הטעינה ---
-        // שיגור של 5 בקשות במקביל, המתנה קצרה, ואז 5 הבאות
-        const batchSize = 5;
-        for (let i = 0; i < fixturesToFetch.length; i += batchSize) {
-            const batch = fixturesToFetch.slice(i, i + batchSize);
-            await Promise.all(batch.map(fixture => fetchMatchEvents(fixture.id, fixture.matchObj, apiKey)));
-            await delay(300); // השהיה קצרה של 300ms בין קבוצה לקבוצה
+            });
         }
 
-        // מוודא שגם מלך השערים סיים למשוך
-        await topScorersPromise;
-
-        // מרענן את התצוגה אחרי שכל הנתונים הוטענו
+        // 4. ריענון כל המסכים באתר באופן מיידי
+        if (typeof renderScorers === 'function') renderScorers();
         if (typeof renderMatches === 'function') renderMatches();
         if (typeof renderStats === 'function') renderStats();
 
     } catch (error) {
-        console.error("שגיאה במשיכת נתוני לייב:", error);
+        console.error("שגיאה במשיכת נתונים מהקובץ המקומי:", error);
     } finally {
+        // הסרת מסך הטעינה ברגע שהכל סיים
         const loader = document.getElementById('loader-overlay');
         if (loader) {
             loader.classList.add('hidden');
         }
     }
-} 
+}
 
-// התנעת המערכת והטעינה
+// התנעת המערכת - הפעלה לוקאלית
+loadLocalData();התנעת המערכת והטעינה
 fetchLiveUpdates();
